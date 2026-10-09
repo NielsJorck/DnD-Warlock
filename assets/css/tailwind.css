@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-obsidian-950 font-sans text-parchment antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(214, 168, 79, 0.13), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(79, 179, 154, 0.06), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 0% 60%, rgba(166, 130, 220, 0.05), transparent 60%);
+    background-attachment: fixed;
+  }
+  ::selection {
+    @apply bg-gold/30 text-parchment;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold/70 ring-offset-2 ring-offset-obsidian-950;
+  }
+  summary {
+    @apply cursor-pointer list-none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-gold/15 bg-obsidian-900/80 shadow-panel backdrop-blur-sm;
+  }
+  .panel-inset {
+    @apply rounded-xl border border-obsidian-600/60 bg-obsidian-950/60;
+  }
+  .eyebrow {
+    @apply font-sans text-[10.5px] font-semibold uppercase tracking-[0.22em] text-gold/80;
+  }
+  .heading {
+    @apply font-display font-semibold tracking-wide text-parchment;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-obsidian-500/70 bg-obsidian-800/80 px-2.5 py-0.5 text-[11px] font-medium text-dim;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-obsidian-500 bg-obsidian-800 px-3 py-1.5 text-xs font-medium text-parchment transition hover:border-gold/50 hover:bg-obsidian-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-gold {
+    @apply border-gold/60 bg-gradient-to-b from-gold/25 to-gold/10 text-gold-light hover:border-gold hover:from-gold/35;
+  }
+  .stat-num {
+    @apply font-display font-semibold tabular-nums text-parchment;
+  }
+  .link {
+    @apply text-gold-light underline decoration-gold/30 underline-offset-4 transition hover:decoration-gold;
+  }
+  .divider {
+    @apply flex items-center gap-3 text-gold/50;
+  }
+  .divider::before,
+  .divider::after {
+    content: '';
+    @apply h-px flex-1 bg-gradient-to-r from-transparent via-gold/30 to-transparent;
+  }
+  .field {
+    @apply w-full rounded-lg border border-obsidian-500 bg-obsidian-950/70 px-3 py-2 text-sm text-parchment placeholder:text-faint focus:border-gold/60 focus:outline-none;
+  }
+  .lore {
+    @apply font-serif text-[1.18rem] leading-relaxed text-parchment/90;
+  }
+}
+
+@layer utilities {
+  .text-gilded {
+    background: linear-gradient(180deg, #f6dfa6 0%, #d6a84f 55%, #9a7430 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
