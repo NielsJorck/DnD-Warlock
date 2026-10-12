@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { character } from '~/data/character'
-import { items, type Item } from '~/data/items'
+import { items, variantOf, bySlot, type Item } from '~/data/items'
 import { dmQuestions } from '~/data/lore'
 import { verdictLabels } from '~/composables/useDmReview'
 
@@ -8,10 +8,14 @@ useHead({ title: 'DM Review — Lucan Beryll' })
 
 const { state, reset } = useDmReview()
 
-const equipped = items.filter(i => i.group === 'attuned' || i.group === 'gear')
+// Items already on the sheet first, then the rest in data order
+const requested = [
+  ...items.filter(i => i.group !== 'vessel' && i.onSheet),
+  ...items.filter(i => i.group !== 'vessel' && !i.onSheet)
+]
 const vesselStores = items.filter(i => i.group === 'vessel')
-const wishlist = items.filter(i => i.group === 'suggestion').sort((a, b) => Number(!!b.priority) - Number(!!a.priority))
-const reviewable = [...equipped, ...wishlist, ...vesselStores]
+// The Genie Vessel ring is a class feature, shown for the ring count only
+const reviewable = [...requested, ...vesselStores].filter(i => i.group !== 'gear')
 
 const topics = [...new Set(dmQuestions.map(q => q.topic))]
 const itemName = Object.fromEntries(items.map(i => [i.slug, i.name]))
@@ -27,9 +31,13 @@ const verdictMark = { allow: '✓', discuss: '?', deny: '✕' } as const
 
 function itemLines(list: Item[]) {
   return list.map(i => {
+    if (i.group === 'gear') return `✓ ${i.name}: already accepted (class feature)`
     const v = state.value.verdicts[i.slug]
     const note = state.value.notes[i.slug]?.trim()
-    return `${v ? verdictMark[v] : '·'} ${i.name}: ${v ? verdictLabels[v] : 'no verdict'}${note ? `. ${note}` : ''}`
+    const picked = variantOf(i, state.value.variants[i.slug])
+    const asked = variantOf(i)
+    const version = !picked ? '' : picked.id === asked?.id ? ` (${picked.label})` : ` (${picked.label}, changed from ${asked?.label})`
+    return `${v ? verdictMark[v] : '·'} ${i.name}${version}: ${v ? verdictLabels[v] : 'no verdict'}${note ? `. ${note}` : ''}`
   })
 }
 
@@ -38,11 +46,8 @@ function summary() {
     'DM review for Lucan Beryll',
     '✓ allowed   ? let’s talk   ✕ not allowed   · no verdict',
     '',
-    'EQUIPPED',
-    ...itemLines(equipped),
-    '',
-    'WISHLIST',
-    ...itemLines(wishlist),
+    'REQUESTED ITEMS',
+    ...bySlot(requested).flatMap(g => [`${g.label} (${g.rule.toLowerCase()})`, ...itemLines(g.items).map(l => `  ${l}`)]),
     '',
     'VESSEL STORES',
     ...itemLines(vesselStores),
@@ -71,8 +76,8 @@ function confirmReset() {
       <p class="eyebrow">For the Dungeon Master · attunement {{ character.attunement.used }} / {{ character.attunement.max }}</p>
       <h1 class="mt-2 font-display text-4xl font-bold tracking-wide sm:text-5xl"><span class="text-gilded">DM Review</span></h1>
       <p class="mt-3 max-w-2xl font-serif text-lg text-dim">
-        Everything Lucan has and everything he would like to have, in one place. Mark each item
-        <span class="text-jade">✓ allowed</span>, <span class="text-topaz">? let’s talk</span> or <span class="text-ruby">✕ not allowed</span>, answer the open questions, then copy the result and send it back.
+        Every item Lucan asks for, in one list. The site treats each one as accepted until you rule on it. Mark each item
+        <span class="text-jade">✓ allowed</span>, <span class="text-topaz">? let’s talk</span> or <span class="text-ruby">✕ not allowed</span>, pick a different version where an item comes in several, answer the open questions, then copy the result and send it back.
       </p>
       <div class="mt-5 flex flex-wrap items-center gap-2">
         <span class="chip border-jade/40 px-3 py-1 text-xs text-jade">✓ {{ tally.allow }}</span>
@@ -84,30 +89,26 @@ function confirmReset() {
         <button type="button" class="btn" @click="confirmReset">Clear</button>
         <button type="button" class="btn btn-gold" @click="copy">{{ copied ? 'Copied ✓' : 'Copy for the player' }}</button>
       </div>
-      <p class="mt-3 text-[11px] text-faint">Verdicts, notes and answers are saved in this browser only.</p>
+      <p class="mt-3 text-[11px] text-faint">Verdicts, versions, notes and answers are saved in this browser only.</p>
     </header>
 
     <section class="mt-10">
-      <SectionHeading id="equipped" eyebrow="What Lucan has now" title="Equipped Items">
-        <a href="#wishlist" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">Wishlist ↓</a>
+      <SectionHeading id="requested" eyebrow="Assumed accepted until you rule" title="Requested Items">
         <a href="#questions" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">Questions ↓</a>
       </SectionHeading>
-      <DmItemTable :items="equipped" />
+      <p class="-mt-2 mb-4 max-w-3xl text-[13px] text-dim">
+        Items are grouped by where they are worn. Lucan can wear one cloak, one pair of bracers and so on, and up to four rings as allowed at this table. Items marked <span class="text-gold-light">On the sheet</span> are the ones the character sheet’s numbers already use. Where an item has several versions, the dropdown starts on the one Lucan requests. Notes in amber are the catches already spotted.
+      </p>
+      <DmItemTable :items="requested" grouped />
 
-      <details class="group mt-4">
+      <details class="group mt-4" open>
         <summary class="inline-flex items-center gap-1.5 text-[12.5px] text-dim transition hover:text-gold-light">
-          <span class="transition group-open:rotate-90">▸</span> Vessel stores: {{ vesselStores.length }} household items kept inside the Genie Vessel
+          <span class="transition group-open:rotate-90">▸</span> Vessel stores: {{ vesselStores.length }} household items kept inside the Genie Vessel, assumed accepted
         </summary>
         <div class="mt-3">
           <DmItemTable :items="vesselStores" />
         </div>
       </details>
-    </section>
-
-    <section class="mt-12">
-      <SectionHeading id="wishlist" eyebrow="Not owned yet" title="Wishlist" />
-      <p class="-mt-2 mb-4 max-w-3xl text-[13px] text-dim">Items that would fit the build. <span class="text-gold">★</span> marks the ones Lucan wants most. Notes in amber are the catches already spotted.</p>
-      <DmItemTable :items="wishlist" />
     </section>
 
     <section class="mt-12">

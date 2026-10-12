@@ -33,7 +33,8 @@ export const vessel = {
     },
     {
       name: 'Bag of Holding function',
-      text: 'The Vessel can store and retrieve objects like a Bag of Holding. Stored items stay part of its contents until moved out.'
+      text: 'The Vessel can store and retrieve objects like a Bag of Holding: Lucan can take an item out as he would from the bag and use it as normal. Assumed accepted until the DM confirms it.',
+      homebrew: true
     },
     {
       name: 'Enter at will',
@@ -51,7 +52,7 @@ export const vessel = {
   ],
   rules: [
     'Furnishings and created provisions are meant to be used inside the Vessel.',
-    'A magic item taken out of the Vessel stays part of its inventory, and the DM rules on how it works outside.',
+    'Items can be taken out of the Vessel as from a Bag of Holding and work as normal outside. They stay part of its inventory.',
     'A separate Bag of Holding isn’t needed. Any other extradimensional item needs a DM ruling on how it interacts with the Vessel.'
   ]
 }

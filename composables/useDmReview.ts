@@ -3,12 +3,13 @@ export type Verdict = 'allow' | 'discuss' | 'deny'
 interface DmReviewState {
   verdicts: Record<string, Verdict> // item slug → verdict
   notes: Record<string, string> // item slug → DM note
+  variants: Record<string, string> // item slug → variant id, when the DM changes it
   answers: Record<string, string> // question id → DM answer
 }
 
 const STORAGE_KEY = 'codex-dm-review-v1'
 
-const fresh = (): DmReviewState => ({ verdicts: {}, notes: {}, answers: {} })
+const fresh = (): DmReviewState => ({ verdicts: {}, notes: {}, variants: {}, answers: {} })
 
 export const verdictLabels: Record<Verdict, string> = {
   allow: 'Allowed',

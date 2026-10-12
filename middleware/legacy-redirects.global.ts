@@ -24,7 +24,15 @@ const renamedItems: Record<string, string> = {
   'barrier-tattoo-rare': '/items/barrier-tattoo',
   'rod-of-the-pact-keeper-plus-2': '/items/rod-of-the-pact-keeper',
   'bag-of-holding-function': '/vessel',
-  'dagger-shaped-rod': '/items/rod-of-the-pact-keeper'
+  'dagger-shaped-rod': '/items/rod-of-the-pact-keeper',
+  // Merged into one item with versions
+  'barrier-tattoo-large': '/items/barrier-tattoo',
+  'rod-of-the-pact-keeper-3': '/items/rod-of-the-pact-keeper',
+  'stirring-scaled-ornament': '/items/scaled-ornament',
+  // No longer requested
+  ...Object.fromEntries(
+    ['pearl-of-power', 'mind-crystal', 'mind-crystal-quickened', 'wand-of-web', 'dragon-touched-focus', 'stirring-dragon-touched-focus', 'orb-of-skoraeus', 'robe-of-the-archmagi', 'tome-of-leadership-and-influence', 'belt-of-dwarvenkind'].map(s => [s, '/items'])
+  )
 }
 
 function legacyTarget(path: string): string | undefined {

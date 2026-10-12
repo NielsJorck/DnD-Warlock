@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { character, type AbilityKey } from '~/data/character'
-import { spells, levelLabel } from '~/data/spells'
+import { spells, knownSources, levelLabel } from '~/data/spells'
 import { appearance } from '~/data/lore'
 
 useHead({ title: 'Lucan Beryll — Character Sheet' })
@@ -13,7 +13,7 @@ const vitals = [
   { label: 'Initiative', value: signed(derived.initiative), sub: 'DEX + Stone', roll: `1d20+${derived.initiative}` },
   { label: 'Speed', value: `${character.speed}`, sub: 'ft · fly 30 (Gift)' },
   { label: 'Proficiency', value: signed(character.proficiencyBonus), sub: 'Level 10' },
-  { label: 'Pact Slots', value: `${character.pactSlots.count}×5th`, sub: 'Short rest' }
+  { label: 'Pact Slots', value: `${character.pactSlots.count}×5th`, sub: `Short rest · +${character.savantSlot.count} Savant` }
 ]
 
 const allSkills: { name: string; ability: AbilityKey }[] = [
@@ -41,8 +41,16 @@ const skills = allSkills.map(s => {
   return { ...s, proficient: !!prof, source: prof?.source, bonus: skillBonus(s.ability, !!prof) }
 })
 
-const leveled = spells.filter(s => s.status === 'known' && s.level > 0).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
-const cantrips = spells.filter(s => s.status === 'known' && s.level === 0)
+const known = spells.filter(s => s.status === 'known')
+const cantrips = knownSources
+  .map(k => ({ ...k, spells: known.filter(s => s.level === 0 && k.access.includes(s.access)) }))
+  .filter(k => k.spells.length)
+const leveled = knownSources
+  .map(k => ({
+    ...k,
+    spells: known.filter(s => s.level > 0 && k.access.includes(s.access)).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
+  }))
+  .filter(k => k.spells.length)
 
 const sections = [
   { id: 'abilities', label: 'Abilities' },
@@ -145,37 +153,49 @@ const sections = [
           <div class="mb-5 grid grid-cols-3 gap-2 text-center">
             <div class="panel-inset py-3"><div class="eyebrow text-dim">Save DC</div><div class="stat-num text-3xl">{{ derived.spellDc }}</div></div>
             <div class="panel-inset py-3"><div class="eyebrow text-dim">Attack</div><div class="stat-num text-3xl">{{ signed(derived.spellAttack) }}</div></div>
-            <div class="panel-inset py-3"><div class="eyebrow text-dim">Slots</div><div class="stat-num text-3xl">2 × 5th</div></div>
+            <div class="panel-inset py-3">
+              <div class="eyebrow text-dim">Slots</div>
+              <div class="stat-num text-3xl">{{ character.pactSlots.count }} × 5th</div>
+              <div class="text-[11px] text-faint">+{{ character.savantSlot.count }} Spell Savant · long rest</div>
+            </div>
           </div>
 
           <p class="eyebrow mb-2 text-dim">Cantrips · at will</p>
-          <div class="mb-5 flex flex-wrap gap-1.5">
-            <NuxtLink v-for="c in cantrips" :key="c.slug" :to="`/spells/${c.slug}`" class="chip px-3 py-1 text-xs text-parchment transition hover:border-gold/50 hover:text-gold-light">
-              {{ c.name }}<span v-if="c.damage" class="text-faint">· {{ c.damage.split(' ')[0] }}</span>
-            </NuxtLink>
+          <div class="space-y-2">
+            <div v-for="g in cantrips" :key="g.id" class="flex flex-wrap items-center gap-1.5">
+              <span class="w-36 shrink-0 text-[11px] text-faint">{{ g.title }}</span>
+              <NuxtLink v-for="c in g.spells" :key="c.slug" :to="`/spells/${c.slug}`" class="chip px-3 py-1 text-xs text-parchment transition hover:border-gold/50 hover:text-gold-light">
+                {{ c.name }}<span v-if="c.damage" class="text-faint">· {{ c.damage.split(' ')[0] }}</span>
+              </NuxtLink>
+            </div>
           </div>
 
-          <p class="eyebrow mb-2 text-dim">Leveled spells · always cast at 5th level</p>
-          <div class="overflow-hidden rounded-xl border border-obsidian-600/70">
-            <NuxtLink
-              v-for="s in leveled"
-              :key="s.slug"
-              :to="`/spells/${s.slug}`"
-              class="grid grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-3 border-b border-obsidian-600/60 px-3 py-2.5 transition last:border-0 hover:bg-obsidian-800/60 sm:grid-cols-[2.25rem_11rem_minmax(0,1fr)_auto]"
-            >
-              <span class="grid h-8 w-8 place-items-center rounded-lg border text-sm" :class="[schoolTone[s.school].border, schoolTone[s.school].text, schoolTone[s.school].bg]">{{ s.level }}</span>
-              <span class="min-w-0">
-                <span class="block truncate text-sm font-semibold text-parchment">{{ s.name }}</span>
-                <span class="block text-[11px] text-faint sm:hidden">{{ s.atPact || s.role }}</span>
-              </span>
-              <span class="hidden truncate text-[13px] text-dim sm:block">{{ s.atPact || s.role }}</span>
-              <span class="hidden gap-1 sm:flex">
-                <span v-if="s.concentration" class="chip py-0 text-[10px]" title="Concentration">C</span>
-                <span v-if="s.save" class="chip py-0 text-[10px]">{{ s.save.split(' ')[0] }}</span>
-              </span>
-            </NuxtLink>
-          </div>
-          <p class="mt-2 text-[11px] text-faint">{{ levelLabel(1, true) }} through 5th-level spells all use the same pact slots, so lower-level spells are always cast upcast.</p>
+          <template v-for="g in leveled" :key="g.id">
+            <div class="mb-2 mt-5 flex flex-wrap items-baseline gap-x-3">
+              <p class="eyebrow" :class="g.id === 'patron' ? 'text-topaz' : 'text-dim'">{{ g.title }}</p>
+              <span class="text-[11px] text-faint">{{ g.sub }}</span>
+            </div>
+            <div class="overflow-hidden rounded-xl border" :class="g.id === 'patron' ? 'border-topaz/25' : 'border-obsidian-600/70'">
+              <NuxtLink
+                v-for="s in g.spells"
+                :key="s.slug"
+                :to="`/spells/${s.slug}`"
+                class="grid grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-3 border-b border-obsidian-600/60 px-3 py-2.5 transition last:border-0 hover:bg-obsidian-800/60 sm:grid-cols-[2.25rem_11rem_minmax(0,1fr)_auto]"
+              >
+                <span class="grid h-8 w-8 place-items-center rounded-lg border text-sm" :class="[schoolTone[s.school].border, schoolTone[s.school].text, schoolTone[s.school].bg]">{{ s.level }}</span>
+                <span class="min-w-0">
+                  <span class="block truncate text-sm font-semibold text-parchment">{{ s.name }}</span>
+                  <span class="block text-[11px] text-faint sm:hidden">{{ s.atPact || s.role }}</span>
+                </span>
+                <span class="hidden truncate text-[13px] text-dim sm:block">{{ s.atPact || s.role }}</span>
+                <span class="hidden gap-1 sm:flex">
+                  <span v-if="s.concentration" class="chip py-0 text-[10px]" title="Concentration">C</span>
+                  <span v-if="s.save" class="chip py-0 text-[10px]">{{ s.save.split(' ')[0] }}</span>
+                </span>
+              </NuxtLink>
+            </div>
+          </template>
+          <p class="mt-2 text-[11px] text-faint">{{ levelLabel(1, true) }} through 5th-level spells all use the same 5th-level slots — pact slots and the Spell Savant slot alike — so lower-level spells are always upcast.</p>
         </section>
 
         <section>
@@ -214,6 +234,7 @@ const sections = [
           <div class="mt-4 space-y-2 text-[13px]">
             <div v-for="r in character.resistances" :key="r" class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim">Resistance: <span class="text-parchment">{{ r }}</span></span></div>
             <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><span class="text-parchment">Fey Ancestry</span> — advantage against being charmed; magic can’t put him to sleep</span></div>
+            <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><NuxtLink to="/items/cloak-of-displacement" class="text-parchment hover:text-gold-light">Cloak of Displacement</NuxtLink> — attacks against him have disadvantage. Taking damage stops this until the start of his next turn, and it doesn’t work while he is incapacitated, restrained or can’t move</span></div>
             <div v-for="s in character.senses" :key="s" class="flex gap-2"><span class="text-jade">◆</span><span class="text-parchment">{{ s }}</span></div>
           </div>
         </div>

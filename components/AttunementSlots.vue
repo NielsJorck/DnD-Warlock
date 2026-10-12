@@ -2,7 +2,7 @@
 import { character } from '~/data/character'
 import { items } from '~/data/items'
 
-const attuned = items.filter(i => i.group === 'attuned')
+const attuned = items.filter(i => i.onSheet && i.attunement)
 const slots = Array.from({ length: character.attunement.max }, (_, i) => attuned[i] ?? null)
 </script>
 

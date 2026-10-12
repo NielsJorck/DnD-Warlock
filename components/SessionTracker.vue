@@ -136,6 +136,8 @@ function castAgathys() {
       </li>
     </ul>
 
+    <SpellStoringRing />
+
     <!-- Concentration -->
     <div class="mt-4">
       <label class="eyebrow mb-1.5 block text-dim" for="conc">Concentrating on</label>
@@ -155,7 +157,7 @@ function castAgathys() {
       <button type="button" class="btn btn-gold py-2" @click="longRest">✦ Long rest</button>
     </div>
     <p class="mt-2 text-[10.5px] leading-relaxed text-faint">
-      A short rest restores pact slots. A long rest restores everything, including half your Hit Dice.
+      A short rest restores pact slots. A long rest restores everything, including half your Hit Dice. Spells in the ring stay until cast.
     </p>
   </div>
 </template>

@@ -48,7 +48,7 @@ export const zahir = {
 }
 
 export const homebrew = [
-  { rule: 'Extra feat at level 1', detail: 'Every character gets an additional feat. Lucan takes Telekinetic.' },
+  { rule: 'Extra feat at level 1', detail: 'Every character gets an additional feat. Lucan takes Spell Savant from Zman’s 5e Tweaks: +1 CHA and an extra 5th-level slot once per long rest.' },
   { rule: 'Half-Elf darkvision is 30 ft', detail: 'Reduced from the usual 60 ft.' },
   { rule: 'Skill Versatility → Investigation', detail: 'The Half-Elf skill choice grants Investigation.' },
   {
@@ -67,16 +67,24 @@ export const homebrew = [
 export const rulings = [
   { ruling: 'Robe of Thayan Arcana is not approved', detail: 'Excluded from the build and from all numbers.' },
   {
-    ruling: 'Bag of Holding stays outside the Vessel',
-    detail: 'Until the DM rules that combining the two extradimensional spaces is safe. The Vessel already has a Bag of Holding function.'
-  },
-  {
     ruling: 'The Rod of the Pact Keeper is shaped as a dagger',
     detail: 'An ornate dagger with a Dimension Shard blade. The shape is flavor only: mechanically it is still a rod, not a weapon.'
   },
   {
+    ruling: 'Zahir can upgrade his gifts',
+    detail: 'The Barrier Tattoo and the Rod of the Pact Keeper were given by the patron. A bigger version comes from Zahir fusing more power into the same item, so it keeps its flavor.'
+  },
+  {
+    ruling: 'Spell attack and DC bonuses stack',
+    detail: 'Bonuses from different items add together with no cap, e.g. the Rod (+2) and the Jester’s Mask (+3) for spell DC 22 and attack +14.'
+  },
+  {
     ruling: 'The Barrier Tattoo is the pact',
     detail: 'Flavored as Lucan’s contract with Zahir, written in Primordial (Terran) across his arms and torso. It works exactly like a Rare Barrier Tattoo.'
+  },
+  {
+    ruling: 'Up to four magic rings',
+    detail: 'The table allows four worn rings instead of the usual limit. Other slots follow the books: one cloak, one pair of bracers, one belt, one robe and one piece of headwear.'
   }
 ]
 
@@ -95,8 +103,8 @@ export const dmQuestions: DmQuestion[] = [
     topic: 'Sources',
     question: 'Do the later books on 2014.5e.tools count as allowed sources?',
     context:
-      'Several wishlist items come from 2021–2023 books: Fizban’s Treasury of Dragons (FTD), Glory of the Giants (BGG), The Book of Many Things (BMT) and Phandelver and Below (PaBTSO). They are listed on the 2014 site, but they are newer than the core supplements.',
-    items: ['jesters-mask', 'amethyst-lodestone', 'orb-of-skoraeus', 'stirring-scaled-ornament', 'stirring-dragon-touched-focus', 'mind-crystal-quickened']
+      'Several requested items come from 2021–2023 books: Fizban’s Treasury of Dragons (FTD) and The Book of Many Things (BMT). They are listed on the 2014 site, but they are newer than the core supplements.',
+    items: ['jesters-mask', 'amethyst-lodestone', 'scaled-ornament']
   },
   {
     id: 'acquiring-items',
@@ -104,37 +112,6 @@ export const dmQuestions: DmQuestion[] = [
     question: 'How can Lucan get new items: only as loot, or can he buy or commission them?',
     context:
       'Lucan is a guild-trained jeweler and appraiser. If buying or crafting is possible, which rarities are available and roughly what do they cost?'
-  },
-  {
-    id: 'bonus-stacking',
-    topic: 'Items',
-    question: 'Do spell attack and DC bonuses from different items stack, or is there a cap?',
-    context:
-      'In the 2014 rules, bonuses from differently named items stack. The Rod (+2) with the Jester’s Mask (+3) would give spell DC 22 and attack +14. Adding the Robe of the Archmagi (+2) would push that even higher.',
-    items: ['rod-of-the-pact-keeper', 'jesters-mask', 'robe-of-the-archmagi', 'wand-of-the-war-mage']
-  },
-  {
-    id: 'upgrade-in-place',
-    topic: 'Items',
-    question: 'Can current items be upgraded in place and keep their flavor?',
-    context:
-      'For example, the Rare Barrier Tattoo becoming the Very Rare one as the pact deepens, or the Rod’s Dimension Shard blade being re-cut into a +3 Rod. The alternative is finding the new item and swapping.',
-    items: ['barrier-tattoo-large', 'rod-of-the-pact-keeper-3']
-  },
-  {
-    id: 'pearl-pact-slots',
-    topic: 'Items',
-    question: 'Does a Pearl of Power work with Pact Magic slots?',
-    context:
-      'The pearl restores a slot of 3rd level or lower, but all of Lucan’s pact slots are 5th level. Read strictly, it does nothing for him. Would it restore a 5th-level pact slot instead?',
-    items: ['pearl-of-power']
-  },
-  {
-    id: 'belt-darkvision',
-    topic: 'Items',
-    question: 'Would the Belt of Dwarvenkind’s darkvision override the campaign’s 30-ft Half-Elf darkvision?',
-    context: 'The belt grants darkvision 60 ft. The house rule reduces Half-Elf darkvision to 30 ft.',
-    items: ['belt-of-dwarvenkind']
   },
   {
     id: 'bracers-agonizing',
@@ -145,25 +122,11 @@ export const dmQuestions: DmQuestion[] = [
     items: ['illusionists-bracers']
   },
   {
-    id: 'rod-weapon',
-    topic: 'Items',
-    question: 'Could a future item count as both a rod and a weapon without changing its rules?',
-    context: 'The Rod of the Pact Keeper is shaped as a dagger, but mechanically it is only a rod.',
-    items: ['rod-of-the-pact-keeper']
-  },
-  {
-    id: 'vessel-extradimensional',
+    id: 'vessel-bag-of-holding',
     topic: 'Genie Vessel',
-    question: 'How does the Genie Vessel interact with other extradimensional spaces?',
+    question: 'Can the Genie Vessel work as a Bag of Holding?',
     context:
-      'For now a Bag of Holding stays outside the Vessel. The same question applies to a Portable Hole, Handy Haversack or similar item.'
-  },
-  {
-    id: 'vessel-items-outside',
-    topic: 'Genie Vessel',
-    question: 'How do Vessel items work when Lucan takes them outside?',
-    context:
-      'They stay part of the Vessel’s inventory. Can he carry the Helm of Comprehending Languages or the Eyes of Minute Seeing on an adventure, and do they keep working normally?',
+      'Lucan stores items in the Vessel and takes them out as he would from a Bag of Holding, and they work as normal outside. The site assumes you accept this, so he carries no separate Bag of Holding.',
     items: ['helm-of-comprehending-languages', 'eyes-of-minute-seeing']
   }
 ]
@@ -185,9 +148,8 @@ export const sourcePolicy = {
     'Robe of Thayan Arcana.'
   ],
   labels: [
-    { label: 'Current', text: 'Legal under the policy and part of the build.' },
-    { label: 'Option', text: 'Legal, but not selected.' },
-    { label: 'Needs DM approval', text: 'Outside the policy or dependent on a ruling.' }
+    { label: 'Requested', text: 'Every listed magic item. Assumed accepted until the DM rules on it on the DM page.' },
+    { label: 'On the sheet', text: 'Requested items whose numbers the character sheet already uses.' }
   ]
 }
 
@@ -198,17 +160,19 @@ export const openQuestions = {
     'Decide the level-12 improvement: a feat, an ability score increase or an invocation change.'
   ],
   items: [
-    'Compare suggestions with the five attuned items whenever a specific reward or purchase comes up.',
+    'Update the sheet once the DM has ruled on the requested items and their versions.',
     'Keep the Robe of Thayan Arcana out unless the DM explicitly approves it.'
   ],
   closed: [
     'Ruleset: 2014 5e + Tasha’s, not 2024-only material.',
     'Sources: official content on 2014.5e.tools, plus recorded campaign homebrew.',
     'Race: Half-Elf. Patron: Dao Genie (Zahir). Pact: Tome.',
-    'Feats: Telekinetic, Crusher, Resilient (CON).',
+    'Feats: Spell Savant (replaced Telekinetic), Crusher, Resilient (CON).',
     'Terran selected as the Half-Elf language.',
     'Dwarvish selected as the Guild Artisan language.',
     'Mind Sliver replaced Gravity Spike.',
+    'Mage Hand replaced Lightning Lure.',
+    'Illusionist’s Bracers chosen over Bracers of Defense: AC 17, two Eldritch Blasts a turn.',
     'Contact Other Plane removed from the plan.',
     'Far Step chosen over Dimension Door.',
     'Vessel contents are tracked separately from ordinary items.'

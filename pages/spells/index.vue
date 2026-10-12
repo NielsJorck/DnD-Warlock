@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { type School, type Spell, type SpellStatus, spells, levelLabel, schoolGlyph, statusLabels } from '~/data/spells'
+import { type School, type Spell, type SpellStatus, spells, knownSources, levelLabel, schoolGlyph, statusLabels } from '~/data/spells'
+import { character } from '~/data/character'
 
 useHead({ title: 'Spellbook — Lucan Beryll' })
 
 type Tab = 'known' | 'book' | 'wishlist' | 'later' | 'all'
 const tabs: { id: Tab; label: string; statuses: SpellStatus[]; blurb: string }[] = [
-  { id: 'known', label: 'Known', statuses: ['known'], blurb: 'Everything Lucan can cast right now: Warlock spells, Tome cantrips, Telekinetic’s Mage Hand and both patron lists.' },
+  { id: 'known', label: 'Known', statuses: ['known'], blurb: 'Everything Lucan can cast right now: the spells he chose as a Warlock, his Tome cantrips and the Genie and Dao spells his patron grants automatically.' },
   { id: 'book', label: 'Book of Shadows', statuses: ['book'], blurb: 'Rituals inscribed by Book of Ancient Secrets. Cast from the book as rituals only — no pact slot.' },
   { id: 'wishlist', label: 'Ritual wishlist', statuses: ['wishlist'], blurb: 'Rituals worth copying into the Book of Shadows when a scroll or spellbook turns up (50 gp and 2 hours per level).' },
   { id: 'later', label: 'Candidates & future', statuses: ['candidate', 'future'], blurb: 'Spells under consideration for future levels, plus the Mystic Arcanum endgame.' },
@@ -43,6 +44,7 @@ const castTimeOf = (s: Spell): CastTime => {
 const castTimes = ref<CastTime[]>([])
 const onlyRitual = ref(false)
 const expandAll = ref(false)
+const groupBy = ref<'source' | 'level'>('source')
 
 watch([tab, query], ([t, q]) => {
   router.replace({ query: { ...(t !== 'known' ? { tab: t } : {}), ...(q ? { q } : {}) } })
@@ -81,6 +83,8 @@ const groups = computed(() => {
     }
   } else if (tab.value === 'later' || tab.value === 'all') {
     for (const st of current.value.statuses) push(st, statusLabels[st], filtered.value.filter(s => s.status === st))
+  } else if (tab.value === 'known' && groupBy.value === 'source') {
+    for (const k of knownSources) push(k.id, k.title, filtered.value.filter(s => k.access.includes(s.access)), k.sub)
   } else {
     for (const lv of allLevels) {
       const list = filtered.value.filter(s => s.level === lv)
@@ -113,7 +117,8 @@ function clearFilters() {
       <div class="mt-5 flex flex-wrap gap-2">
         <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Save DC</span> <span class="stat-num ml-1 text-xl">{{ derived.spellDc }}</span></div>
         <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Attack</span> <span class="stat-num ml-1 text-xl">{{ signed(derived.spellAttack) }}</span></div>
-        <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Pact slots</span> <span class="stat-num ml-1 text-xl">2 × 5th</span></div>
+        <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Pact slots</span> <span class="stat-num ml-1 text-xl">{{ character.pactSlots.count }} × 5th</span></div>
+        <div class="panel-inset px-4 py-2" title="Spell Savant: once per long rest"><span class="text-[11px] text-faint">Savant slot</span> <span class="stat-num ml-1 text-xl">1 × 5th</span></div>
         <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Known</span> <span class="stat-num ml-1 text-xl">{{ countFor(tabs[0]) }}</span></div>
       </div>
     </header>
@@ -135,7 +140,21 @@ function clearFilters() {
         <span v-if="tab === t.id" class="absolute inset-x-3 -bottom-px h-0.5 rounded bg-gold" />
       </button>
     </div>
-    <p class="mt-3 text-[13px] text-dim">{{ current.blurb }}</p>
+    <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+      <p class="text-[13px] text-dim">{{ current.blurb }}</p>
+      <div v-if="tab === 'known'" class="grid grid-cols-2 overflow-hidden rounded-lg border border-obsidian-600 text-[11.5px]" role="radiogroup" aria-label="Group known spells">
+        <button
+          v-for="o in [{ id: 'source', label: 'By source' }, { id: 'level', label: 'By level' }] as const"
+          :key="o.id"
+          type="button"
+          role="radio"
+          :aria-checked="groupBy === o.id"
+          class="px-3 py-1.5 transition"
+          :class="groupBy === o.id ? 'bg-gold/15 text-gold-light' : 'text-dim hover:bg-obsidian-800 hover:text-parchment'"
+          @click="groupBy = o.id"
+        >{{ o.label }}</button>
+      </div>
+    </div>
 
     <div class="mt-5 grid gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">
       <!-- Filters -->

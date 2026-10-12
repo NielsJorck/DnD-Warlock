@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { type Spell, levelLabel, schoolGlyph, statusLabels } from '~/data/spells'
+import { type Spell, knownSourceOf, levelLabel, schoolGlyph, statusLabels } from '~/data/spells'
 
 const props = defineProps<{ spell: Spell; open?: boolean }>()
+const known = computed(() => knownSourceOf(props.spell))
 const tone = computed(() => schoolTone[props.spell.school])
 const rollNotation = computed(() => (props.spell.atPact ?? props.spell.damage ?? '').match(/\d+d\d+/)?.[0])
 </script>
@@ -29,6 +30,12 @@ const rollNotation = computed(() => (props.spell.atPact ?? props.spell.damage ??
           <span class="font-display text-[15px] font-semibold tracking-wide text-parchment">{{ spell.name }}</span>
           <span v-if="spell.concentration" class="chip border-rose/40 py-0 text-[10px] text-rose" title="Concentration">Conc.</span>
           <span v-if="spell.ritual" class="chip border-amethyst/40 py-0 text-[10px] text-amethyst" title="Ritual">Ritual</span>
+          <span
+            v-if="spell.status === 'known' && known"
+            class="chip py-0 text-[10px]"
+            :class="known.id === 'patron' ? 'border-topaz/40 bg-topaz/10 text-topaz' : 'border-gold/40 text-gold-light'"
+            :title="known.id === 'patron' ? `${spell.access} — granted automatically` : spell.access"
+          >{{ known.chip }}</span>
           <span v-if="spell.status !== 'known'" class="chip py-0 text-[10px]" :class="statusTone[spell.status]">
             {{ spell.priority ? `${spell.priority} priority` : statusLabels[spell.status] }}
           </span>

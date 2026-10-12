@@ -10,8 +10,8 @@ interface Step {
 const steps = ref<Step[]>([
   { id: 'repel', name: 'Repelling Blast', feet: 10, how: 'Eldritch Blast hit — push away', on: true },
   { id: 'grasp', name: 'Grasp of Hadar', feet: 10, how: 'Same hit — pull back toward Lucan', on: true },
+  { id: 'bracers', name: 'Illusionist’s Bracers', feet: 10, how: 'Second Eldritch Blast as a bonus action — push again', on: true },
   { id: 'crusher', name: 'Crusher', feet: 5, how: 'Bludgeoning hit (Genie’s Wrath)', on: true },
-  { id: 'tk', name: 'Telekinetic shove', feet: 5, how: `Bonus action · STR save DC ${derived.spellDcBase}`, on: true },
   { id: 'walk', name: 'Target walks out', feet: 20, how: 'Its own movement through the spikes', on: false }
 ])
 

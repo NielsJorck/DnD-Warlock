@@ -45,17 +45,17 @@ export const character = {
   },
 
   ac: {
-    total: 19,
+    total: 17,
     breakdown: [
       { label: 'Barrier Tattoo (Rare)', value: 15, note: 'Base 15 while unarmored' },
       { label: 'Dexterity', value: 1, note: 'Max +2 from the tattoo' },
-      { label: 'Bracers of Defense', value: 2, note: 'No armor, no shield' },
       { label: 'Ring of Protection', value: 1 }
     ]
   },
 
   pactSlots: { count: 2, level: 5 },
-  attunement: { used: 5, max: 10 },
+  savantSlot: { count: 1, level: 5 }, // Spell Savant, long rest
+  attunement: { used: 9, max: 10 },
 
   languages: [
     { name: 'Common', note: 'Half-Elf' },
@@ -76,13 +76,13 @@ export const character = {
 
   feats: [
     {
-      name: 'Telekinetic',
-      source: 'TCE',
+      name: 'Spell Savant',
+      source: 'Zman’s 5e Tweaks',
       level: 1,
-      summary: '+1 CHA (to 20). Mage Hand is invisible, castable without components, with +30 ft range.',
+      summary: '+1 CHA (to 20). One extra spell slot of your highest level, 5th for Lucan.',
       detail:
-        'As a bonus action, shove one creature within 30 ft 5 ft toward or away from you. STR save vs. spell DC 17 (8 + PB + CHA) — it uses the raw DC, not the Rod-boosted one. A willing creature can choose to fail.',
-      uses: 'Bonus action, at will',
+        'The extra slot rises with your highest slot level but can never be 6th level or higher. Once you cast with it, it comes back only after a long rest. Unlike pact slots, a short rest doesn’t restore it.',
+      uses: 'Once / long rest',
       homebrew: true
     },
     {
@@ -91,12 +91,12 @@ export const character = {
       level: 4,
       summary: '+1 CON. Once per turn, when you hit with an attack that deals bludgeoning damage, move the target 5 ft (no more than one size larger than you).',
       detail:
-        'Genie’s Wrath adds bludgeoning damage to every hit, so Eldritch Blast qualifies. On a critical hit with bludgeoning damage, attacks against that target have advantage until the start of your next turn.',
+        'Genie’s Wrath adds bludgeoning damage to one attack hit per turn, so the first Eldritch Blast beam that hits each turn qualifies. On a critical hit with bludgeoning damage, attacks against that target have advantage until the start of your next turn.',
       uses: 'Once per turn'
     },
     {
       name: 'Resilient (Constitution)',
-      source: 'XGE',
+      source: 'PHB',
       level: 8,
       summary: '+1 CON (to 18) and proficiency in Constitution saving throws.',
       detail: 'Holds concentration on Spike Growth, Hold Monster, Wall of Stone and Far Step.'
@@ -133,10 +133,10 @@ export const character = {
     },
     {
       name: 'Gift of the Protectors',
-      source: 'XGE',
-      summary: 'Up to five creatures (CHA mod) who sign a page of the Book of Shadows drop to 1 HP instead of 0.',
-      detail: 'Triggers once per creature per long rest. Lucan can erase a name as an action by touching it.',
-      uses: 'Once per creature / long rest'
+      source: 'TCE',
+      summary: 'Up to four creatures (PB) can write their names on a page of the Book of Shadows. When one of them drops to 0 HP but isn’t killed outright, it drops to 1 HP instead.',
+      detail: 'Once the magic saves someone, no creature can benefit again until Lucan finishes a long rest. He can erase a name as an action by touching it.',
+      uses: 'Once / long rest (total)'
     }
   ] as Feature[],
 
@@ -185,7 +185,7 @@ export const character = {
       source: 'Genie Patron',
       level: 1,
       summary: 'Once per turn, an attack-roll hit deals +4 (PB) bludgeoning damage.',
-      detail: 'This is what turns Eldritch Blast into a bludgeoning attack for Crusher.',
+      detail: 'Only one hit per turn gets the extra damage, but that is enough to make an Eldritch Blast beam a bludgeoning attack for Crusher.',
       uses: 'Once per turn'
     },
     {
@@ -251,6 +251,8 @@ export interface Resource {
 
 export const resources: Resource[] = [
   { id: 'pact', name: 'Pact slots (5th)', max: 2, recharge: 'short', note: 'Every leveled spell' },
+  { id: 'savant', name: 'Spell Savant slot (5th)', max: 1, recharge: 'long', note: 'Extra slot for any leveled spell' },
   { id: 'rod', name: 'Rod — recover a slot', max: 1, recharge: 'long', note: 'Action: regain one pact slot' },
-  { id: 'flight', name: 'Elemental Gift flight', max: 4, recharge: 'long', note: 'Bonus action: 30 ft fly, 10 min' }
+  { id: 'flight', name: 'Elemental Gift flight', max: 4, recharge: 'long', note: 'Bonus action: 30 ft fly, 10 min' },
+  { id: 'lodestone', name: 'Amethyst Lodestone charges', max: 6, recharge: 'long', note: 'Thrust or flight 1, Reverse Gravity 3. Regains 1d6 at dawn' }
 ]

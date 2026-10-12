@@ -98,7 +98,7 @@ function takeVesselRest() {
     <!-- Rooms -->
     <section class="mt-12">
       <SectionHeading id="rooms" eyebrow="Floor plan" title="Rooms of the Vessel" />
-      <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">{{ rooms.length }} rooms holding {{ vesselItems.length }} pieces of household magic. These don’t use attunement slots, and the DM rules on how they work outside the Vessel.</p>
+      <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">{{ rooms.length }} rooms holding {{ vesselItems.length }} pieces of household magic. These don’t use attunement slots. Lucan can take them out as he would from a Bag of Holding.</p>
       <div class="grid gap-4 md:grid-cols-2">
         <article
           v-for="(r, n) in rooms"

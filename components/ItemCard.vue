@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { Item } from '~/data/items'
+import { type Item, variantOf } from '~/data/items'
 
 const props = defineProps<{ item: Item; featured?: boolean }>()
 const rarity = computed(() => (props.item.rarity ? rarityTone[props.item.rarity] : null))
+const variant = computed(() => variantOf(props.item))
 </script>
 
 <template>
@@ -29,9 +30,10 @@ const rarity = computed(() => (props.item.rarity ? rarityTone[props.item.rarity]
           {{ item.type }}<template v-if="item.rarity"> · <span :class="rarity?.text">{{ item.rarity }}</span></template><template v-if="item.source"> · {{ item.source }}</template>
         </p>
         <div class="mt-1.5 flex flex-wrap gap-1">
-          <span v-if="item.attunement" class="chip py-0 text-[10px]" :class="item.group === 'attuned' ? 'border-gold/40 text-gold-light' : ''">Attunement</span>
+          <span v-if="item.onSheet" class="chip border-gold/40 py-0 text-[10px] text-gold-light" title="Its numbers are already on the character sheet">On the sheet</span>
+          <span v-if="item.attunement" class="chip py-0 text-[10px]">Attunement</span>
+          <span v-if="variant" class="chip border-sapphire/40 py-0 text-[10px] text-sapphire" :title="item.variants?.map(v => v.label).join(' · ')">{{ variant.label }} · {{ item.variants?.length }} versions</span>
           <span v-if="item.charges" class="chip py-0 text-[10px]">{{ item.charges }}</span>
-          <span v-if="item.status && item.status !== 'Current'" class="chip py-0 text-[10px]" :class="item.status === 'Needs DM approval' ? 'border-topaz/40 text-topaz' : 'border-sapphire/40 text-sapphire'">{{ item.status }}</span>
         </div>
       </div>
     </div>

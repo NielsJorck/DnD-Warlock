@@ -33,15 +33,13 @@ export const statusTone: Record<SpellStatus, string> = {
 export const accessTone: Record<SpellAccess, string> = {
   Warlock: 'text-gold-light',
   'Pact of the Tome': 'text-amethyst',
-  Telekinetic: 'text-sapphire',
   'Genie Patron': 'text-topaz',
   'Dao Patron': 'text-jade',
   'Book of Shadows': 'text-amethyst'
 }
 
 export const itemGroupTone: Record<ItemGroup, string> = {
-  attuned: 'border-gold/50 bg-gold/10 text-gold-light',
+  requested: 'border-gold/50 bg-gold/10 text-gold-light',
   gear: 'border-obsidian-500 bg-obsidian-800 text-dim',
-  vessel: 'border-jade/40 bg-jade/10 text-jade',
-  suggestion: 'border-sapphire/40 bg-sapphire/10 text-sapphire'
+  vessel: 'border-jade/40 bg-jade/10 text-jade'
 }

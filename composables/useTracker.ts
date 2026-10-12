@@ -7,6 +7,7 @@ interface TrackerState {
   used: Record<string, number>
   concentration: string
   inspiration: boolean
+  ring: { name: string; slug?: string; level: number; by: string }[] // Ring of Spell Storing
 }
 
 const STORAGE_KEY = 'codex-tracker-v1'
@@ -19,7 +20,8 @@ function fresh(): TrackerState {
     hitDiceUsed: 0,
     used: Object.fromEntries(resources.map(r => [r.id, 0])),
     concentration: '',
-    inspiration: false
+    inspiration: false,
+    ring: []
   }
 }
 

@@ -2,7 +2,7 @@
 // "atPact" describes the effect when cast from a 5th-level pact slot.
 
 export type SpellStatus = 'known' | 'book' | 'wishlist' | 'candidate' | 'future'
-export type SpellAccess = 'Warlock' | 'Pact of the Tome' | 'Telekinetic' | 'Genie Patron' | 'Dao Patron' | 'Book of Shadows'
+export type SpellAccess = 'Warlock' | 'Pact of the Tome' | 'Genie Patron' | 'Dao Patron' | 'Book of Shadows'
 export type School =
   | 'Abjuration'
   | 'Conjuration'
@@ -63,6 +63,15 @@ export function levelLabel(level: number, long = false) {
   return long ? `${level}${suffix}-level` : `${level}${suffix}`
 }
 
+// Known spells are either picked by the player or granted automatically by the patron.
+export type KnownSource = 'chosen' | 'tome' | 'patron'
+export const knownSources: { id: KnownSource; title: string; sub: string; chip: string; access: SpellAccess[] }[] = [
+  { id: 'chosen', title: 'Chosen Warlock spells', sub: 'Picked by the player: 4 cantrips and 10 spells known', chip: 'Chosen', access: ['Warlock'] },
+  { id: 'tome', title: 'Pact of the Tome cantrips', sub: 'Picked by the player from any class list', chip: 'Chosen · Tome', access: ['Pact of the Tome'] },
+  { id: 'patron', title: 'Patron spells — automatic', sub: 'Genie and Dao lists, always known on top of the 10 chosen', chip: 'Patron · automatic', access: ['Genie Patron', 'Dao Patron'] }
+]
+export const knownSourceOf = (s: Spell) => knownSources.find(k => k.access.includes(s.access))
+
 export const spells: Spell[] = [
   // ── Cantrips ──────────────────────────────────────────────
   {
@@ -85,7 +94,7 @@ export const spells: Spell[] = [
     summary:
       'Fire beams of crackling energy; each beam is a separate ranged spell attack dealing 1d10 force damage. At level 10 Lucan creates two beams, which can target the same or different creatures (three at level 11).',
     notes:
-      'Agonizing Blast adds +5 once per target. Repelling Blast pushes 10 ft once per target. Grasp of Hadar pulls 10 ft once per turn. Genie’s Wrath adds +4 bludgeoning once per turn, which also enables Crusher.'
+      'Agonizing Blast adds +5 once per target. Repelling Blast pushes 10 ft once per target. Grasp of Hadar pulls 10 ft once per turn. Genie’s Wrath adds +4 bludgeoning once per turn, which also enables Crusher. Illusionist’s Bracers let him cast it again as a bonus action.'
   },
   {
     slug: 'create-bonfire',
@@ -109,25 +118,23 @@ export const spells: Spell[] = [
     notes: 'Uses concentration, so it competes with Spike Growth. Most useful when Lucan isn’t concentrating on anything.'
   },
   {
-    slug: 'lightning-lure',
-    name: 'Lightning Lure',
+    slug: 'mage-hand',
+    name: 'Mage Hand',
     level: 0,
-    school: 'Evocation',
+    school: 'Conjuration',
     castingTime: '1 action',
-    range: 'Self (15-ft radius)',
-    components: 'V',
-    duration: 'Instantaneous',
+    range: '30 ft',
+    components: 'V, S',
+    duration: '1 minute',
     concentration: false,
     ritual: false,
-    source: 'TCE',
+    source: 'PHB',
     access: 'Warlock',
     status: 'known',
-    role: 'Pull + lightning damage',
-    save: 'STR',
-    damage: '2d8 lightning',
+    role: 'Remote manipulation',
     summary:
-      'A lash of lightning targets a creature within 15 ft, which makes a STR save or is pulled up to 10 ft toward Lucan. If it ends up within 5 ft of him, it takes 2d8 lightning damage.',
-    notes: 'A STR-save alternative to Grasp of Hadar for pulling a target across Spike Growth.'
+      'A spectral hand manipulates objects, opens unlocked doors and containers, or carries up to 10 lb. It can’t attack or activate magic items.',
+    notes: 'Took Lightning Lure’s place among the chosen cantrips. The hand vanishes if it goes more than 30 ft away or he casts the spell again.'
   },
   {
     slug: 'mind-sliver',
@@ -206,25 +213,6 @@ export const spells: Spell[] = [
     role: 'Quiet communication',
     summary:
       'Whisper a message to a creature in range; only it hears, and it can whisper a reply. Passes around corners but is blocked by stone 1 ft thick, thin lead or metal, or wood 3 ft thick.'
-  },
-  {
-    slug: 'mage-hand',
-    name: 'Mage Hand',
-    level: 0,
-    school: 'Conjuration',
-    castingTime: '1 action',
-    range: '60 ft (Telekinetic)',
-    components: 'None (Telekinetic)',
-    duration: '1 minute',
-    concentration: false,
-    ritual: false,
-    source: 'PHB',
-    access: 'Telekinetic',
-    status: 'known',
-    role: 'Remote manipulation',
-    summary:
-      'A spectral hand manipulates objects, opens unlocked doors and containers, or carries up to 10 lb. It can’t attack or activate magic items.',
-    notes: 'With Telekinetic the hand is invisible, needs no verbal or somatic components, and reaches 60 ft.'
   },
 
   // ── Warlock spells known ──────────────────────────────────
@@ -368,7 +356,7 @@ export const spells: Spell[] = [
     role: 'Repeated 60-ft teleport',
     summary:
       'Teleport up to 60 ft to an unoccupied space you can see. On each of Lucan’s turns until the spell ends, he can teleport again as a bonus action.',
-    notes: 'Taken instead of Dimension Door. Competes with the Telekinetic shove for Lucan’s bonus action.'
+    notes: 'Taken instead of Dimension Door. Competes with Elemental Gift flight for Lucan’s bonus action.'
   },
   {
     slug: 'hold-monster',
@@ -575,7 +563,7 @@ export const spells: Spell[] = [
     damage: '2d4 piercing per 5 ft',
     summary:
       'Ground in a 20-ft radius sprouts hard spikes. The area is difficult terrain, and a creature moving into or within it takes 2d4 piercing damage for every 5 ft it travels. The spikes are camouflaged — a creature that can’t see the area at casting must succeed on a Perception check against the spell DC to notice them.',
-    notes: 'Centerpiece of the build. Repelling Blast, Grasp of Hadar, Crusher, Telekinetic and Lightning Lure all drag enemies through it.'
+    notes: 'Centerpiece of the build. Repelling Blast, Grasp of Hadar and Crusher all drag enemies through it.'
   },
   {
     slug: 'meld-into-stone',
@@ -1146,6 +1134,27 @@ export const spells: Spell[] = [
   },
 
   // ── Candidates ────────────────────────────────────────────
+  {
+    slug: 'lightning-lure',
+    name: 'Lightning Lure',
+    level: 0,
+    school: 'Evocation',
+    castingTime: '1 action',
+    range: 'Self (15-ft radius)',
+    components: 'V',
+    duration: 'Instantaneous',
+    concentration: false,
+    ritual: false,
+    source: 'TCE',
+    access: 'Warlock',
+    status: 'candidate',
+    role: 'Pull + lightning damage',
+    save: 'STR',
+    damage: '2d8 lightning',
+    summary:
+      'A lash of lightning targets a creature within 15 ft, which makes a STR save or is pulled up to 10 ft toward Lucan. If it ends up within 5 ft of him, it takes 2d8 lightning damage.',
+    notes: 'Dropped for Mage Hand. A STR-save alternative to Grasp of Hadar for pulling a target across Spike Growth; Repelling Blast and Grasp of Hadar already cover the forced movement.'
+  },
   {
     slug: 'misty-step',
     name: 'Misty Step',

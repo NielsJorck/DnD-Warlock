@@ -37,12 +37,12 @@ Old Codex URLs still redirect on GitHub Pages: unknown paths get `404.html`, whi
 | `/` | Character sheet: vitals, abilities and saves (click to roll), Eldritch Blast calculator, Spike Growth combo, feats, invocations, features, skills, languages, attunement, and a session tracker for HP, slots, resources and rests |
 | `/spells` | Searchable, filterable spellbook (status, level, school, concentration, ritual) with expandable cards |
 | `/spells/:slug` | Full spell page with 5th-level pact-slot effects, notes and roll buttons |
-| `/items` | Attuned items, carried gear and the acquisition wishlist |
+| `/items` | Requested magic items (the ones on the sheet first, the rest grouped by slot, with variant versions where they exist) and carried gear |
 | `/items/:slug` | Full item page with rules, caveats and flavor |
 | `/vessel` | The Genie Vessel: patron features, residence features, rooms with their magic items, house rules |
 | `/lore` | Lucan’s story, traits, Zahir ibn Kharum and story hooks |
 | `/rules` | Homebrew, DM rulings, source policy, open and closed decisions |
-| `/dm` | For the DM: tables of equipped items, Vessel stores and the wishlist with allow / discuss / deny verdicts and notes, the open questions with answer fields, and a button that copies everything as text |
+| `/dm` | For the DM: one table of requested items (assumed accepted until ruled on) plus the Vessel stores, with allow / discuss / deny verdicts, a version picker for items that come in several versions, notes, the open questions with answer fields, and a button that copies everything as text |
 
 Old Codex URLs such as `/known-spells` or `/genie-vessel` redirect to the new pages (see `middleware/legacy-redirects.global.ts`).
 
@@ -52,7 +52,7 @@ All content lives in typed TypeScript files in `data/`:
 
 - `data/character.ts`: ability scores, AC, proficiencies, feats, invocations, features and tracked resources
 - `data/spells.ts`: every spell with its status (`known`, `book`, `wishlist`, `candidate`, `future`)
-- `data/items.ts`: attuned items, gear, Vessel contents (with their room) and suggestions
+- `data/items.ts`: requested items (`onSheet` marks the ones the sheet uses, `variants` lists official versions, `slot` says where it is worn and `slots` sets the limits), gear and Vessel contents (with their room)
 - `data/vessel.ts`: Vessel features and rooms
 - `data/lore.ts`: story, patron, homebrew, rulings, source policy, open questions and the questions for the DM (`dmQuestions`)
 
