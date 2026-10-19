@@ -43,7 +43,7 @@ export const vessel = {
     },
     {
       name: '10-minute short rest',
-      text: 'From Sanctuary Vessel: ten minutes inside counts as a short rest, and Hit Dice spent there restore +4 (PB) HP. With at-will entry, that can happen more than once a day.'
+      text: 'From Sanctuary Vessel: ten minutes inside counts as a short rest, and Hit Dice spent there restore +4 (PB) HP. Entering is at will, but this quick rest works once per long rest.'
     },
     {
       name: 'Room adaptation',

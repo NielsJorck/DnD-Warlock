@@ -1,9 +1,9 @@
-// Lucan's equipment: requested magic items, carried gear and Vessel stores.
-// Every requested item is assumed accepted until the DM rules on the DM page.
-// Rules text is paraphrased from the 2014 sources.
+// Lucan's equipment: what he owns (mirrors the Foundry sheet), a wishlist of
+// future requests for the DM, and the Vessel's household stores.
+// Rules text is paraphrased from the 2014 sources and the campaign's homebrew items.
 
-export type ItemGroup = 'requested' | 'gear' | 'vessel'
-export type Rarity = 'Common' | 'Uncommon' | 'Rare' | 'Very Rare' | 'Legendary' | 'Varies'
+export type ItemGroup = 'owned' | 'wishlist' | 'vessel'
+export type Rarity = 'Common' | 'Uncommon' | 'Rare' | 'Very Rare' | 'Legendary' | 'Artifact' | 'Varies'
 
 export interface Item {
   slug: string
@@ -19,9 +19,11 @@ export interface Item {
   forCharacter?: string
   caveat?: string
   charges?: string
+  quantity?: number
+  homebrew?: boolean
+  classFeature?: boolean // granted by a class feature, not a magic item
   room?: string // Vessel room slug
   slot?: ItemSlot // where it is worn or kept; Vessel stores have none
-  onSheet?: boolean // its numbers are already on the character sheet
   variants?: ItemVariant[]
   defaultVariant?: string // variant id requested unless the DM picks another
   glyph: string
@@ -45,8 +47,8 @@ export interface ItemArt {
 }
 
 export const groupLabels: Record<ItemGroup, string> = {
-  requested: 'Requested',
-  gear: 'Class feature',
+  owned: 'Owned',
+  wishlist: 'Wishlist',
   vessel: 'Vessel stores'
 }
 
@@ -59,95 +61,155 @@ export const slots: Record<ItemSlot, { label: string; max?: number; rule: string
   cloak: { label: 'Cloak', max: 1, rule: 'One cloak' },
   head: { label: 'Headwear', max: 1, rule: 'One mask, hat or helm' },
   body: { label: 'Robe', max: 1, rule: 'One robe' },
-  belt: { label: 'Belt', max: 1, rule: 'One belt' },
+  belt: { label: 'Belt or sash', max: 1, rule: 'One belt or sash' },
   tattoo: { label: 'Tattoos', rule: 'No limit beyond attunement' },
   ioun: { label: 'Ioun stones', rule: 'They orbit his head; no limit beyond attunement' },
   worn: { label: 'Other worn', rule: 'Jewelry and ornaments; no limit beyond attunement' },
-  held: { label: 'Held', rule: 'Rods, wands, staffs and foci, swapped in hand as needed' },
+  held: { label: 'Held', rule: 'Weapons, rods, wands and staffs, swapped in hand as needed' },
   carried: { label: 'Carried', rule: 'Kept in a pouch or pack' }
 }
 
 export const variantOf = (item: Item, id?: string) =>
   item.variants?.find(v => v.id === (id || item.defaultVariant)) ?? item.variants?.[0]
 
+// Mundane gear from the Foundry sheet
+export const mundaneGear = [
+  { name: 'Jeweler’s tools', where: 'Carried', note: 'Saw, hammer, files, pliers and tweezers. Identify a gem and its value at a glance' },
+  { name: 'Calligrapher’s supplies', where: 'Carried', note: 'Ink, a dozen sheets of parchment and three quills' },
+  { name: 'Component pouch', where: 'Carried', note: 'Material components without a listed cost' },
+  { name: 'Letter of introduction from his guild', where: 'Pouch', note: 'Guild Artisan' },
+  { name: 'Book, ink, ink pen, parchment, a little bag of sand and a small knife', where: 'In the Vessel', note: 'Scholar’s kit' }
+]
+
 export const items: Item[] = [
-  // ── Requested: on the sheet now ──────────────────────────
   {
-    slug: 'barrier-tattoo',
-    name: 'Barrier Tattoo',
-    group: 'requested',
-    onSheet: true,
-    source: 'TCE',
-    rarity: 'Rare',
-    type: 'Wondrous item (tattoo)',
+    slug: 'the-golden-pact',
+    name: 'The Golden Pact',
+    group: 'owned',
+    homebrew: true,
+    rarity: 'Artifact',
+    type: 'Wondrous item (tattoo), bound',
     slot: 'tattoo',
     attunement: 'Required',
-    role: 'Core defense',
-    effect: 'AC 15 + DEX (max +2) while unarmored',
-    variants: [
-      { id: 'small', label: 'Small', rarity: 'Uncommon', effect: 'AC 12 + DEX while unarmored: AC 14 for Lucan with the Ring' },
-      { id: 'medium', label: 'Medium', rarity: 'Rare', effect: 'AC 15 + DEX (max +2) while unarmored: AC 17 for Lucan' },
-      { id: 'large', label: 'Large', rarity: 'Very Rare', effect: 'AC 18 while unarmored, DEX doesn’t add: AC 19 for Lucan' }
-    ],
-    defaultVariant: 'medium',
+    role: 'Core defense, focus and secret writing',
+    effect: 'AC 15 + DEX (max +2) while unarmored. Write with a fingertip and hide a page from all but one reader',
+    charges: 'Hidden writing 1 / long rest',
     rules: [
-      'Applied by a magic needle in ink that looks like liquid metal. For Lucan, the protective imagery is the text of his pact with Zahir.',
-      'While not wearing armor, Lucan’s AC is set by the tattoo’s size: 12 + DEX (small), 15 + DEX to a maximum of +2 (medium) or a flat 18 (large).',
-      'He can use a shield and still gain the benefit. It counts as unarmored, so it stacks with Bracers of Defense.'
+      'While Lucan isn’t wearing armor, the tattoo gives him an Armor Class of 15 + his Dexterity modifier (maximum +2). He can use a shield and still gain this benefit.',
+      'It is an arcane implement: Lucan can use it as a spellcasting focus.',
+      'Bound item: it can’t be removed or dispelled, and Lucan can’t give it away to anybody else.',
+      'Magical Scribing: he can write with his fingertip as if it were an ink pen that never runs out of ink.',
+      'As an action, he touches up to one page of writing and speaks a creature’s name. For 24 hours the writing is invisible to everyone except him and that creature. Either of them can end this by touching the script (no action). Once per long rest.'
     ],
-    forCharacter: 'The tattoo is Lucan’s pact with Zahir, written in Primordial (the Terran dialect, in Dwarvish script) across his arms and torso in liquid-gold ink. A band beneath the collarbones carries the pact’s principle, the names of the two parties run down his arms, and a seal over the sternum frames a cut-gem diagram. The contract itself is what turns blows aside. The sheet uses the medium tattoo, which provides 16 of his 17 AC. With the large one, the pact deepens and the script spreads further across his body: AC 19.',
-    caveat: 'A gift from Zahir, so a larger tattoo comes from him fusing more power into this one. It stays the same item and the same attunement.',
+    forCharacter:
+      'Shimmering crystalline and organic geometric shapes, glyphs and Terran script cover most of his upper body and arms: the contract binding him to Zahir. As his powers grow, so does the pact, and over time new glyphs will appear, each one marking a new power. It replaced both the Barrier Tattoo and the Illuminator’s Tattoo with a single item and gives 17 of his 20 AC (with DEX).',
     glyph: '◈',
     art: {
       src: '/images/barrier-tattoo.svg',
       alt: 'A half-elf’s arms and torso covered in glowing gold runes: a band across the chest, columns down both arms and the sternum, and a circular seal around a gem diagram over the heart.',
-      caption: 'The pact, written in Terran. The runes really spell it out: “A deal made is a deal kept” across the chest, Zahir ibn Kharum and Lucan Beryll down the arms, “Sworn in stone” down the sternum and “Sealed in gold” around the seal.',
+      caption: 'The Golden Pact, written in Terran. The runes really spell it out: “A deal made is a deal kept” across the chest, Zahir ibn Kharum and Lucan Beryll down the arms, “Sworn in stone” down the sternum and “Sealed in gold” around the seal.',
       focus: '50% 45%',
-      prompt: 'Fantasy character art, D&D 5e. The bare arms and torso of a male half-elf warlock, cropped from the chin to the waist so his face isn’t shown. A magic Barrier Tattoo in metallic liquid-gold ink covers him: bands of angular Primordial Terran script (runes in the style of the Dwarvish alphabet) run down each arm from shoulder to wrist and in an arc across the chest beneath the collarbones; a column of runes runs down the sternum; over the heart a circular seal of runes surrounds a brilliant-cut gemstone diagram; faceted, crystalline geometric linework at the shoulders, ribs and wrists like a gemcutter’s diagrams. The ink glows faintly gold. It reads as a binding contract with a Noble Dao, a genie of elemental earth. Dark obsidian background, dramatic warm rim light, no text, no watermark.'
+      prompt: 'Fantasy character art, D&D 5e. The bare arms and torso of a male half-elf warlock, cropped from the chin to the waist so his face isn’t shown. A magic tattoo in metallic liquid-gold ink covers him: bands of angular Primordial Terran script (runes in the style of the Dwarvish alphabet) run down each arm from shoulder to wrist and in an arc across the chest beneath the collarbones; a column of runes runs down the sternum; over the heart a circular seal of runes surrounds a brilliant-cut gemstone diagram; shimmering crystalline and organic geometric shapes at the shoulders, ribs and wrists like a gemcutter’s diagrams. The ink glows faintly gold. It reads as a binding contract with a Noble Dao, a genie of elemental earth. Dark obsidian background, dramatic warm rim light, no text, no watermark.'
     }
   },
   {
-    slug: 'illusionists-bracers',
-    name: 'Illusionist’s Bracers',
-    group: 'requested',
-    onSheet: true,
-    source: 'GGR',
-    rarity: 'Very Rare',
-    type: 'Wondrous item',
+    slug: 'bracers-of-the-dao-pact',
+    name: 'Bracers of the Dao Pact',
+    group: 'owned',
+    homebrew: true,
+    rarity: 'Artifact',
+    type: 'Wondrous item (bracers), bound',
     slot: 'bracers',
-    attunement: 'Required (spellcaster)',
-    role: 'Double Eldritch Blast',
-    effect: 'After casting a cantrip, cast it again as a bonus action on the same turn',
+    attunement: 'Required (Lucan only)',
+    role: 'Defense and the Form of the Lesser Dao',
+    effect: '+2 AC with no armor and no shield. Take on the Form of the Lesser Dao twice per long rest',
+    charges: 'Lesser Dao 2 / long rest',
     rules: [
-      'While wearing the bracers, whenever Lucan casts a cantrip, he can use a bonus action on the same turn to cast that cantrip a second time.',
-      'The bonus-action spell rule is satisfied: the only other spell that turn is a cantrip with a casting time of 1 action.'
+      'While wearing these bracers, Lucan gains a +2 bonus to AC if he is wearing no armor and using no shield.',
+      'Only Lucan can wear them, and they can’t be removed or replaced by any means.',
+      'As a bonus action, he takes on the Form of the Lesser Dao for 10 turns. He can do this twice per long rest.',
+      'The form is a Large elemental with AC 20 and 83 hit points of its own (STR 20, CON 20, CHA 20). It walks, burrows and flies at 30 ft, can hover, and has darkvision 120 ft.',
+      'Multiattack: two attacks at +9 in any mix. Earthen Maul: 4d6 + 5 bludgeoning, and a Huge or smaller target makes a DC 17 Strength save or falls prone. Earth Burst: ranged 60/120 ft, 2d8 + 5 bludgeoning, and hit or miss the target makes a DC 17 Strength save or falls prone.',
+      'Resistant to bludgeoning and cold damage and immune to being petrified. Earth Glide lets it burrow through unworked earth and stone, and Sure-Footed gives advantage on saves against being knocked prone.',
+      'When the form is destroyed, any leftover damage is taken by Lucan’s own form.'
     ],
     forCharacter:
-      'Broad gold cuffs engraved with the last lines of the pact and both signatures, so the tattoo’s script ends on them at each wrist. In genie stories cuffs mark a servant; Lucan’s mark a signed agreement. Two castings of Eldritch Blast a turn: four beams instead of two. Because Agonizing and Repelling Blast apply once per target per casting here, the second casting adds another +5 damage and another 10-ft push to the same target. That is 20 ft of pushing through Spike Growth every turn. Genie’s Wrath and Crusher stay once per turn.',
-    caveat:
-      'Only one pair of bracers can be worn, so they take the place of Bracers of Defense: AC 17 instead of 19. The second casting also competes for the bonus action with Elemental Gift flight and Far Step.',
+      'A golden set of bracers etched with the names of the Greater Dao Zahir and Lucan Beryll, signing the pact between them. The Golden Pact’s script ends on them at each wrist. The Golden Pact counts as no armor, so with it he has AC 20.',
+    caveat: 'Using a shield would cost the +2. The form is effectively 83 extra hit points twice a day, but leftover damage still reaches Lucan.',
     glyph: '⟁'
   },
   {
-    slug: 'ring-of-protection',
-    name: 'Ring of Protection',
-    group: 'requested',
-    onSheet: true,
+    slug: 'pact-keepers-crystal-dagger',
+    name: 'Pact Keeper’s Crystal Dagger',
+    group: 'owned',
+    homebrew: true,
+    rarity: 'Legendary',
+    type: 'Weapon (dagger), +1',
+    slot: 'held',
+    attunement: 'Required (warlock)',
+    role: 'Spellcasting and melee',
+    effect: '+1 spell attack and warlock save DC; regain one pact slot per long rest. A +1 returning dagger with 2d4 force and 2d4 bludgeoning on a hit',
+    charges: 'Recover a slot 1 / long rest',
+    rules: [
+      'While holding the Crystal Dagger, Lucan gains a +1 bonus to spell attack rolls and to the saving throw DCs of his warlock spells.',
+      'As an action while holding it, he can regain one warlock spell slot. This can’t be used again until he finishes a long rest.',
+      'A +1 dagger (finesse, light, thrown) that also works as a spellcasting focus. Thrown, it reaches 30 ft and instantly returns to his hand as a free action.',
+      'It channels his magic: a hit deals 1d4 piercing plus 2d4 force and 2d4 bludgeoning as the arcane energy bursts on impact.'
+    ],
+    forCharacter:
+      'The blade is a Dimension Shard: faceted amethyst crystal carved with spirals, its colour deepening to rose and then a fiery orange at the tip. The black grip is bound in gold Celtic-knot filigree. It replaced the Rod of the Pact Keeper, so it is now a real weapon: +7 to hit (DEX + PB + 1), 5d4 + 3 damage. The bludgeoning damage means every hit can trigger Crusher, and Genie’s Wrath adds +4 once per turn. Spell DC 17 → 18 and spell attack +9 → +10.',
+    caveat: 'The spell bonus applies only while it is held, so it takes one hand. Eldritch Blast needs the other one free for its somatic component.',
+    glyph: '🗡',
+    art: {
+      src: '/images/rod-of-the-pact-keeper.png',
+      alt: 'An ornate dagger with a black grip bound in gold knotwork filigree. Its blade is faceted amethyst crystal carved with spirals, shading to pink and then fiery orange at the tip.',
+      caption: 'The Pact Keeper’s Crystal Dagger: a gold-filigreed hilt holding a Dimension Shard for a blade.',
+      focus: '45% 45%',
+      prompt: 'Fantasy item illustration, D&D 5e. An ornate magic dagger, shown diagonally, the whole item in view. The blade is a single long crystal shard, a "Dimension Shard": faceted amethyst-purple crystal engraved with spiral swirls, its colour shifting along the length to rose-pink and ending in a glowing fiery orange-red tip. The grip is black, bound in gold Celtic-knot filigree at the flared pommel cap, the collar and the seat of the blade, with no crossguard and no gems. Master jeweler’s craftsmanship in the style of a Noble Dao, a genie of elemental earth: gold, crystal, precision. Plain white background, no hands, no text, no watermark.'
+    }
+  },
+  {
+    slug: 'ioun-stone-of-protection',
+    name: 'Ioun Stone of Protection',
+    group: 'owned',
+    source: 'DMG',
+    rarity: 'Rare',
+    type: 'Wondrous item (ioun stone)',
+    slot: 'ioun',
+    attunement: 'Required',
+    role: 'Defense',
+    effect: '+1 AC',
+    rules: [
+      'Lucan gains a +1 bonus to AC while this dusty rose prism orbits his head.',
+      'Tossing it into the air takes an action; it then orbits 1d3 ft from his head. Taking it back takes an action.',
+      'Another creature must use an action and hit AC 24 (or succeed on a DC 24 Dexterity (Acrobatics) check) to grab or net it. The stone has 10 HP and resistance to all damage.'
+    ],
+    forCharacter: 'A rose-coloured crystal prism circling his head suits a jeweler.',
+    glyph: '⬙'
+  },
+  {
+    slug: 'ring-of-spell-storing',
+    name: 'Ring of Spell Storing',
+    group: 'owned',
     source: 'DMG',
     rarity: 'Rare',
     type: 'Ring',
     slot: 'ring',
     attunement: 'Required',
-    role: 'Core defense',
-    effect: '+1 AC and +1 to all saving throws',
-    rules: ['Grants a +1 bonus to AC and saving throws while worn.'],
-    glyph: '◯'
+    role: 'Spell flexibility',
+    effect: 'Stores up to 5 levels of spells for later casting',
+    rules: [
+      'Any creature can cast a spell of 1st through 5th level into the ring by touching it. The spell has no effect and is stored instead.',
+      'The wearer can cast a stored spell using the original caster’s slot level, DC, attack bonus and spellcasting ability.'
+    ],
+    forCharacter:
+      'One of Lucan’s 5th-level pact slots fills the whole ring. It works better if party casters store low-level utility spells, or if Lucan banks a slot before a short rest.',
+    glyph: '◍'
   },
   {
     slug: 'stone-of-good-luck',
     name: 'Stone of Good Luck',
-    group: 'requested',
-    onSheet: true,
+    group: 'owned',
     source: 'DMG',
     rarity: 'Uncommon',
     type: 'Wondrous item (luckstone)',
@@ -160,46 +222,90 @@ export const items: Item[] = [
     glyph: '◆'
   },
   {
-    slug: 'rod-of-the-pact-keeper',
-    name: 'Rod of the Pact Keeper',
-    group: 'requested',
-    onSheet: true,
+    slug: 'spell-gem-blue-topaz',
+    name: 'Spell Gem (Blue Topaz)',
+    group: 'owned',
+    homebrew: true,
+    source: 'OotA',
+    rarity: 'Very Rare',
+    type: 'Wondrous item (gem)',
+    slot: 'carried',
+    attunement: 'Optional (attuned)',
+    role: 'A spare spell, cast without components',
+    effect: 'Holds one spell of up to 6th level, cast from the gem as an action with DC 17 and attack +9',
+    charges: 'Imbue 1 / long rest',
+    rules: [
+      'The gem holds one spell. While holding it, Lucan can cast that spell as an action. It needs no components and no attunement, and the spell then leaves the gem.',
+      'A spell of a higher level than he can normally cast needs a spellcasting ability check, DC 10 + the spell’s level. On a failure the spell disappears with no effect.',
+      'Spells cast from the gem have a save DC of 17 and an attack bonus of +9.',
+      'If he is attuned and the gem is empty, he can imbue it by casting a spell of up to 6th level while holding it. The spell must take 1 action or 1 minute or longer to cast. An abjuration spell’s consumed components cost half as much.',
+      'Once imbued, the gem can’t be imbued again until the next long rest.'
+    ],
+    forCharacter:
+      'A gemcutter’s spell battery. A 5th-level pact slot cast into it during a short rest keeps a spell ready for later, much like the Ring of Spell Storing. With no components needed, Scrying’s 1,000-gp focus or Shadow of Moil’s gem aren’t needed when he casts it from the gem.',
+    caveat: 'The DC and attack bonus are fixed at 17 / +9, one lower than his own. Save it for utility spells or spells without a save, such as Far Step, Armor of Agathys or Wall of Stone.',
+    glyph: '◇'
+  },
+  {
+    slug: 'lesser-wand-of-lightning-bolts',
+    name: 'Lesser Wand of Lightning Bolts',
+    group: 'owned',
+    homebrew: true,
     source: 'DMG',
     rarity: 'Rare',
-    type: 'Rod (shaped as an ornate dagger)',
+    type: 'Wand',
     slot: 'held',
-    attunement: 'Required (warlock)',
-    role: 'Spellcasting',
-    effect: '+2 spell attack and save DC; regain one pact slot per long rest',
-    variants: [
-      { id: '+1', label: '+1', rarity: 'Uncommon', effect: '+1 spell attack and warlock save DC: DC 18, attack +10' },
-      { id: '+2', label: '+2', rarity: 'Rare', effect: '+2 spell attack and warlock save DC: DC 19, attack +11' },
-      { id: '+3', label: '+3', rarity: 'Very Rare', effect: '+3 spell attack and warlock save DC: DC 20, attack +12' }
-    ],
-    defaultVariant: '+2',
+    attunement: 'Required',
+    role: 'Area damage without a pact slot',
+    effect: 'Cast Lightning Bolt (DC 15): 1 charge for 3rd level, +1 level per extra charge',
+    charges: '7 charges, no recharge',
     rules: [
-      'While holding the rod, Lucan gains a bonus to spell attack rolls and to the saving throw DCs of his warlock spells: +1, +2 or +3, set by its rarity.',
-      'As an action while holding it, he can regain one warlock spell slot. This can’t be used again until he finishes a long rest.',
-      'It looks like a dagger, but it is a rod: the shape is flavor only and doesn’t make it a weapon.'
+      'While holding it, Lucan can use an action to expend 1 or more charges to cast Lightning Bolt (save DC 15). One charge casts the 3rd-level version, and each extra charge raises the slot level by one.',
+      'Lightning Bolt: a 100-ft line, 5 ft wide. Each creature in it makes a DEX save, taking 8d6 lightning damage on a failure or half as much on a success, +1d6 per slot level above 3rd.',
+      'If he expends the wand’s last charge, it crumbles to ashes.'
     ],
-    forCharacter: 'Lucan’s rod is an ornate dagger whose blade is a Dimension Shard: faceted amethyst crystal carved with spirals, its colour deepening to rose and then a fiery orange at the tip. The black grip is bound in gold Celtic-knot filigree at the pommel, collar and blade seat. It is a jeweler’s piece made for a Dao’s warlock. The sheet uses the +2 rod: spell DC 17 → 19 and spell attack +9 → +11. The recovered slot is a full 5th-level pact slot. It is a gift from Zahir, who can fuse more power into the same Dimension Shard to make it a +3 rod.',
-    caveat: 'The bonus applies only while it is held.',
-    glyph: '🗡',
-    art: {
-      src: '/images/rod-of-the-pact-keeper.png',
-      alt: 'An ornate dagger with a black grip bound in gold knotwork filigree. Its blade is faceted amethyst crystal carved with spirals, shading to pink and then fiery orange at the tip.',
-      caption: 'The Rod of the Pact Keeper as Lucan carries it: a gold-filigreed hilt holding a Dimension Shard in place of a blade.',
-      focus: '45% 45%',
-      prompt: 'Fantasy item illustration, D&D 5e. An ornate dagger that is actually a magic rod, shown diagonally, the whole item in view. The blade is a single long crystal shard, a "Dimension Shard": faceted amethyst-purple crystal engraved with spiral swirls, its colour shifting along the length to rose-pink and ending in a glowing fiery orange-red tip. The grip is black, bound in gold Celtic-knot filigree at the flared pommel cap, the collar and the seat of the blade, with no crossguard and no gems. Master jeweler’s craftsmanship in the style of a Noble Dao, a genie of elemental earth: gold, crystal, precision. Plain white background, no hands, no text, no watermark.'
-    }
+    forCharacter: 'Seven charges for the whole campaign, so it is an emergency button. Three charges at once is a 5th-level bolt: 10d6, about 35 damage per target.',
+    caveat: 'The DC is fixed at 15, well below his own 18. It also needs a hand, so with the Crystal Dagger held he has to put one of them away.',
+    glyph: '⚡'
   },
-
-  // ── Carried, non-Vessel gear ─────────────────────────────
+  {
+    slug: 'sash-of-summer',
+    name: 'Sash of Summer',
+    group: 'owned',
+    source: 'TftYP',
+    rarity: 'Rare',
+    type: 'Wondrous item (sash)',
+    slot: 'belt',
+    attunement: 'Required',
+    role: 'Cold resistance and comfort',
+    effect: 'Resistance to cold damage; comfortable in any weather',
+    rules: [
+      'An elegant garment of fine cloth in hues of red, orange and gold.',
+      'While wearing it, Lucan has resistance to cold damage.',
+      'He is comfortable as if the temperature were that of a balmy day, so he suffers no ill effects from extreme heat or cold.'
+    ],
+    forCharacter: 'The wide sash at his waist, the one that holds the Crystal Dagger.',
+    glyph: '❧'
+  },
+  {
+    slug: 'potion-of-superior-healing',
+    name: 'Potion of Superior Healing',
+    group: 'owned',
+    source: 'DMG',
+    rarity: 'Rare',
+    type: 'Potion',
+    slot: 'carried',
+    quantity: 2,
+    role: 'Emergency healing',
+    effect: 'Regain 8d4 + 8 hit points (average 28)',
+    rules: ['Drinking the potion takes an action and restores 8d4 + 8 hit points. The red liquid glimmers when agitated.'],
+    glyph: '⚗'
+  },
   {
     slug: 'genie-vessel-ring',
     name: 'The Genie Vessel (Ring)',
-    group: 'gear',
-    onSheet: true,
+    group: 'owned',
+    classFeature: true,
     source: 'TCE',
     type: 'Ring (Genie’s Vessel, Tiny object)',
     slot: 'ring',
@@ -208,7 +314,7 @@ export const items: Item[] = [
     rules: [
       'Granted by the Genie patron at 1st level, so it’s a class feature rather than a magic item and doesn’t take an attunement slot.',
       'A Tiny object that Lucan can use as a spellcasting focus for his warlock spells.',
-      'AC equals his spell save DC (19). HP equals his warlock level + proficiency bonus (14). Immune to poison and psychic damage.',
+      'AC equals his spell save DC (18). HP equals his warlock level + proficiency bonus (14). Immune to poison and psychic damage.',
       'Bottled Respite and Sanctuary Vessel take Lucan, and up to five willing companions, inside it.',
       'If it is destroyed or lost, Lucan can perform a 1-hour ceremony to receive a replacement from Zahir. The ceremony can be done during a short or long rest, and the old vessel is destroyed if it still exists.'
     ],
@@ -224,7 +330,7 @@ export const items: Item[] = [
     }
   },
 
-  // ── Vessel stores ────────────────────────────────────────
+  // Vessel stores
   {
     slug: 'decanter-of-endless-water',
     name: 'Decanter of Endless Water',
@@ -421,28 +527,11 @@ export const items: Item[] = [
     glyph: '➰'
   },
 
-  // ── Requested: further items ─────────────────────────────
-  // Roughly by value to Lucan.
-  {
-    slug: 'bracers-of-defense',
-    name: 'Bracers of Defense',
-    group: 'requested',
-    source: 'DMG',
-    rarity: 'Rare',
-    type: 'Wondrous item',
-    slot: 'bracers',
-    attunement: 'Required',
-    role: 'Defense',
-    effect: '+2 AC with no armor and no shield',
-    rules: ['While wearing these bracers, Lucan gains a +2 bonus to AC if he is wearing no armor and using no shield.'],
-    forCharacter: 'The defensive alternative to the Illusionist’s Bracers: AC 19 with the medium Barrier Tattoo, which counts as no armor.',
-    caveat: 'Only one pair of bracers can be worn. These would replace the Illusionist’s Bracers and give up the second Eldritch Blast each turn.',
-    glyph: '⛉'
-  },
+  // Wishlist, roughly by value to Lucan
   {
     slug: 'jesters-mask',
     name: 'Jester’s Mask',
-    group: 'requested',
+    group: 'wishlist',
     source: 'BMT',
     rarity: 'Legendary',
     type: 'Wondrous item (mask)',
@@ -456,13 +545,13 @@ export const items: Item[] = [
       'Topsy-Turvy: treat a natural 1 on a d20 as a 20. Once per dawn.'
     ],
     forCharacter:
-      'Worn, not held, so it doesn’t take a hand. It stacks with the Rod: spell DC 22 and spell attack +14. The escape doubles as a free dodge that also protects concentration.',
+      'Worn, not held, so it doesn’t take a hand. It stacks with the Crystal Dagger: spell DC 21 and spell attack +13. The escape doubles as a free dodge that also protects concentration.',
     glyph: '☽'
   },
   {
     slug: 'ioun-stone-of-mastery',
     name: 'Ioun Stone of Mastery',
-    group: 'requested',
+    group: 'wishlist',
     source: 'DMG',
     rarity: 'Legendary',
     type: 'Wondrous item (ioun stone)',
@@ -472,14 +561,13 @@ export const items: Item[] = [
     effect: '+1 proficiency bonus',
     rules: ['While this pale green prism orbits Lucan’s head, his proficiency bonus increases by 1.'],
     forCharacter:
-      'PB 5 raises spell DC and attack, proficient saves (CON for concentration, WIS, CHA), skills, Genie’s Wrath damage, Elemental Gift uses (5) and the Sanctuary Vessel healing. A crystal prism suits a jeweler.',
+      'PB 5 raises spell DC and attack, proficient saves (CON for concentration, WIS, CHA), skills (Persuasion by 2 thanks to expertise), Genie’s Wrath damage, Elemental Gift uses (5) and the Sanctuary Vessel healing. It would orbit alongside the Ioun Stone of Protection.',
     glyph: '⬙'
   },
   {
     slug: 'amethyst-lodestone',
     name: 'Amethyst Lodestone',
-    group: 'requested',
-    onSheet: true,
+    group: 'wishlist',
     source: 'FTD',
     rarity: 'Very Rare',
     type: 'Wondrous item',
@@ -496,14 +584,13 @@ export const items: Item[] = [
     ],
     forCharacter:
       'Made for the Spike Growth combo: a 20-ft push through spikes is 8d4 piercing, and the direction is free, so it can drag targets sideways or toward him. It also gives a 7th-level control spell and more flight than Elemental Gift’s four uses.',
-    caveat: 'The DC is fixed at 18, not his spell DC. Charges need it held, so he has to draw it (and stow it again to keep a hand free for Eldritch Blast).',
+    caveat: 'Charges need it held, and the Crystal Dagger already takes one hand.',
     glyph: '⬢'
   },
   {
     slug: 'cloak-of-displacement',
     name: 'Cloak of Displacement',
-    group: 'requested',
-    onSheet: true,
+    group: 'wishlist',
     source: 'DMG',
     rarity: 'Rare',
     type: 'Wondrous item (cloak)',
@@ -515,14 +602,44 @@ export const items: Item[] = [
       'Creatures have disadvantage on attack rolls against him.',
       'After he takes damage, the effect stops until the start of his next turn. It is suppressed while he is incapacitated, restrained or otherwise unable to move.'
     ],
-    forCharacter: 'Disadvantage makes up for the lower AC (17) that comes with the Illusionist’s Bracers: most attacks miss, which also means fewer concentration saves for Spike Growth.',
-    caveat: 'Only one cloak can be worn, so it is worn instead of the Cloak of Protection or the Mantle of Spell Resistance.',
+    forCharacter: 'On top of AC 20, disadvantage means most attacks miss, which also means fewer concentration saves for Spike Growth.',
     glyph: '≋'
+  },
+  {
+    slug: 'ring-of-protection',
+    name: 'Ring of Protection',
+    group: 'wishlist',
+    source: 'DMG',
+    rarity: 'Rare',
+    type: 'Ring',
+    slot: 'ring',
+    attunement: 'Required',
+    role: 'Defense',
+    effect: '+1 AC and +1 to all saving throws',
+    rules: ['Grants a +1 bonus to AC and saving throws while worn.'],
+    forCharacter: 'AC 21 and CON saves at +9 for concentration. Two ring fingers are still free.',
+    glyph: '◯'
+  },
+  {
+    slug: 'cloak-of-protection',
+    name: 'Cloak of Protection',
+    group: 'wishlist',
+    source: 'DMG',
+    rarity: 'Uncommon',
+    type: 'Wondrous item (cloak)',
+    slot: 'cloak',
+    attunement: 'Required',
+    role: 'Defense',
+    effect: '+1 AC and +1 to all saving throws',
+    rules: ['Grants a +1 bonus to AC and saving throws while worn.'],
+    forCharacter: 'A straightforward upgrade: AC 21 and CON saves at +9 for concentration. It stacks with a Ring of Protection.',
+    caveat: 'Only one cloak can be worn, so it competes with the Cloak of Displacement and the Mantle of Spell Resistance.',
+    glyph: '⛨'
   },
   {
     slug: 'staff-of-power',
     name: 'Staff of Power',
-    group: 'requested',
+    group: 'wishlist',
     source: 'DMG',
     rarity: 'Very Rare',
     type: 'Staff',
@@ -537,13 +654,13 @@ export const items: Item[] = [
       'Also a +2 quarterstaff, with Power Strike and Retributive Strike.'
     ],
     forCharacter: 'Wall of Force and a second Hold Monster without spending pact slots.',
-    caveat: 'Must be held. With the Rod in the other hand, Lucan has no free hand for Eldritch Blast’s somatic component.',
+    caveat: 'Must be held. With the Crystal Dagger in the other hand, Lucan has no free hand for Eldritch Blast’s somatic component.',
     glyph: '⚚'
   },
   {
     slug: 'scaled-ornament',
     name: 'Scaled Ornament',
-    group: 'requested',
+    group: 'wishlist',
     source: 'FTD',
     rarity: 'Rare',
     type: 'Wondrous item (jewelry)',
@@ -564,13 +681,13 @@ export const items: Item[] = [
       'Wakened: once per dawn, as a reaction to damage of the breath type of the dragon whose hoard woke it, he takes no damage and regains that many HP instead.',
       'Ascendant: a flying speed equal to his walking speed, and he can hover.'
     ],
-    forCharacter: 'A dragon-scale brooch or pendant suits a jeweler. Cheap AC, and it shuts off conditions that would waste his turns and helps the party too.',
+    forCharacter: 'A dragon-scale brooch or pendant suits a jeweler who now speaks Draconic. Cheap AC, and it shuts off conditions that would waste his turns and helps the party too.',
     glyph: '❖'
   },
   {
     slug: 'mantle-of-spell-resistance',
     name: 'Mantle of Spell Resistance',
-    group: 'requested',
+    group: 'wishlist',
     source: 'DMG',
     rarity: 'Rare',
     type: 'Wondrous item (cloak)',
@@ -579,13 +696,13 @@ export const items: Item[] = [
     role: 'Defense against spells',
     effect: 'Advantage on saving throws against spells',
     rules: ['While wearing this cloak, Lucan has advantage on saving throws against spells.'],
-    caveat: 'Only one cloak can be worn, and Lucan wears the Cloak of Displacement, so this one means a swap.',
+    caveat: 'Only one cloak can be worn.',
     glyph: '⛆'
   },
   {
     slug: 'wand-of-the-war-mage',
     name: 'Wand of the War Mage',
-    group: 'requested',
+    group: 'wishlist',
     source: 'DMG',
     rarity: 'Rare',
     type: 'Wand',
@@ -601,13 +718,13 @@ export const items: Item[] = [
     defaultVariant: '+2',
     rules: ['While held: a bonus to spell attack rolls set by its rarity, and his spell attacks ignore half cover.'],
     forCharacter: 'More Eldritch Blast hits.',
-    caveat: 'Doesn’t raise save DCs. Must be held, so with the Rod in the other hand there is no free hand for Eldritch Blast.',
+    caveat: 'Doesn’t raise save DCs. Must be held, so with the Crystal Dagger in the other hand there is no free hand for Eldritch Blast.',
     glyph: '⟋'
   },
   {
     slug: 'ring-of-free-action',
     name: 'Ring of Free Action',
-    group: 'requested',
+    group: 'wishlist',
     source: 'DMG',
     rarity: 'Rare',
     type: 'Ring',
@@ -623,45 +740,9 @@ export const items: Item[] = [
     glyph: '◌'
   },
   {
-    slug: 'cloak-of-protection',
-    name: 'Cloak of Protection',
-    group: 'requested',
-    source: 'DMG',
-    rarity: 'Uncommon',
-    type: 'Wondrous item',
-    slot: 'cloak',
-    attunement: 'Required',
-    role: 'Defense upgrade',
-    effect: '+1 AC and +1 to all saving throws',
-    rules: ['Grants a +1 bonus to AC and saving throws while worn.'],
-    forCharacter: 'A straightforward upgrade: AC 18 and CON saves at +11 for concentration. It stacks with the Ring of Protection.',
-    caveat: 'Only one cloak can be worn, and Lucan wears the Cloak of Displacement, so this one means a swap.',
-    glyph: '⛨'
-  },
-  {
-    slug: 'ring-of-spell-storing',
-    name: 'Ring of Spell Storing',
-    group: 'requested',
-    onSheet: true,
-    source: 'DMG',
-    rarity: 'Rare',
-    type: 'Ring',
-    slot: 'ring',
-    attunement: 'Required',
-    role: 'Spell flexibility',
-    effect: 'Stores up to 5 levels of spells for later casting',
-    rules: [
-      'Any creature can cast a spell of 1st through 5th level into the ring by touching it. The spell has no effect and is stored instead.',
-      'The wearer can cast a stored spell using the original caster’s slot level, DC, attack bonus and spellcasting ability.'
-    ],
-    forCharacter:
-      'One of Lucan’s 5th-level pact slots fills the whole ring. It works better if party casters store low-level utility spells, or if Lucan banks a slot before a short rest.',
-    glyph: '◍'
-  },
-  {
     slug: 'gem-of-seeing',
     name: 'Gem of Seeing',
-    group: 'requested',
+    group: 'wishlist',
     source: 'DMG',
     rarity: 'Rare',
     type: 'Wondrous item',
@@ -677,7 +758,7 @@ export const items: Item[] = [
   {
     slug: 'sending-stones',
     name: 'Sending Stones',
-    group: 'requested',
+    group: 'wishlist',
     source: 'DMG',
     rarity: 'Uncommon',
     type: 'Wondrous item (pair)',
@@ -690,38 +771,15 @@ export const items: Item[] = [
     ],
     forCharacter: 'No attunement. Natural for a guild network or for checking in with Zahir’s agents.',
     glyph: '⁂'
-  },
-  {
-    slug: 'illuminators-tattoo',
-    name: 'Illuminator’s Tattoo',
-    group: 'requested',
-    onSheet: true,
-    source: 'TCE',
-    rarity: 'Common',
-    type: 'Wondrous item (tattoo)',
-    slot: 'tattoo',
-    attunement: 'Required',
-    role: 'Secret writing',
-    effect: 'Write with a fingertip; once per dawn, make a page of writing visible only to one named creature',
-    rules: [
-      'Applied by a magic needle that becomes the ink of the tattoo: calligraphy, writing implements and the like.',
-      'While the tattoo is on his skin, Lucan can write with his fingertip as if it were an ink pen that never runs out.',
-      'As an action, he touches up to one page of writing and speaks a creature’s name. For 24 hours the writing is invisible to everyone except him and that creature. Either of them can end this by touching the script. Once per dawn.'
-    ],
-    forCharacter:
-      'A contract-maker’s tattoo. He can draft and sign terms anywhere, and hide a deal’s wording from everyone but the other party. The calligraphy could continue the liquid-gold Terran script of his pact.',
-    caveat: 'Takes an attunement slot for a utility effect. It is the ninth of his ten.',
-    glyph: '✒'
   }
 ]
 
-// Items Lucan wears or carries on the sheet now
-export const wornNow = items.filter(i => i.onSheet)
+export const owned = items.filter(i => i.group === 'owned')
 
 export function bySlot(list: Item[]) {
   return (Object.keys(slots) as ItemSlot[])
     .map(slot => {
-      const worn = wornNow.filter(i => i.slot === slot)
+      const worn = owned.filter(i => i.slot === slot)
       return { slot, ...slots[slot], worn, full: !!slots[slot].max && worn.length >= slots[slot].max!, items: list.filter(i => i.slot === slot) }
     })
     .filter(g => g.items.length)
@@ -742,5 +800,7 @@ export const sourceNames: Record<string, string> = {
   BMT: 'The Book of Many Things',
   FTD: 'Fizban’s Treasury of Dragons',
   BGG: 'Bigby Presents: Glory of the Giants',
-  PaBTSO: 'Phandelver and Below: The Shattered Obelisk'
+  PaBTSO: 'Phandelver and Below: The Shattered Obelisk',
+  OotA: 'Out of the Abyss (adapted)',
+  TftYP: 'Tales from the Yawning Portal'
 }

@@ -52,35 +52,48 @@ export const homebrew = [
   { rule: 'Half-Elf darkvision is 30 ft', detail: 'Reduced from the usual 60 ft.' },
   { rule: 'Skill Versatility → Investigation', detail: 'The Half-Elf skill choice grants Investigation.' },
   {
+    rule: 'Intelligence grants proficiencies',
+    detail: 'Each point of INT modifier gives an extra language and an extra skill or tool proficiency, at creation and whenever the modifier rises. INT can replace DEX for initiative.'
+  },
+  {
     rule: 'Patron spells are spells known',
     detail: 'The Genie expanded list counts as additional spells known, not just extra options to choose from.'
   },
-  { rule: 'Agonizing Blast: once per target', detail: '+CHA damage applies once per target per casting, not once per beam.' },
   { rule: 'Repelling Blast: once per target', detail: 'The 10-ft push applies once per target per casting, not once per beam.' },
   { rule: 'Attunement limit 10', detail: 'Instead of the usual 3.' },
   {
     rule: 'Bottled Respite at will',
-    detail: 'Bottled Respite normally can’t be used again until a long rest. In this campaign Lucan can enter the Vessel whenever he wants.'
+    detail: 'Bottled Respite normally can’t be used again until a long rest. In this campaign Lucan can enter and leave the Vessel whenever he wants. The Sanctuary Vessel short rest still works only once per long rest.'
+  },
+  {
+    rule: 'Patron-bound items',
+    detail: 'The Golden Pact, the Bracers of the Dao Pact and the Pact Keeper’s Crystal Dagger are campaign items tied to Zahir. The pact and the bracers are bound to Lucan and can’t be removed.'
   }
 ]
 
 export const rulings = [
+  {
+    ruling: 'Agonizing Blast works as written',
+    detail: 'The DM reverted the once-per-target house rule. Lucan adds his CHA modifier (+5) to every Eldritch Blast beam that hits. Repelling Blast keeps its once-per-target homebrew.'
+  },
   { ruling: 'Robe of Thayan Arcana is not approved', detail: 'Excluded from the build and from all numbers.' },
   {
-    ruling: 'The Rod of the Pact Keeper is shaped as a dagger',
-    detail: 'An ornate dagger with a Dimension Shard blade. The shape is flavor only: mechanically it is still a rod, not a weapon.'
+    ruling: 'The Golden Pact',
+    detail:
+      'The Barrier Tattoo and the Illuminator’s Tattoo were consolidated into one bound artifact: the pact written across his body. AC 15 + DEX (max +2), a spellcasting focus, fingertip writing, and a page hidden from all but one reader once per long rest. It grows new glyphs as Lucan’s power grows.'
   },
   {
-    ruling: 'Zahir can upgrade his gifts',
-    detail: 'The Barrier Tattoo and the Rod of the Pact Keeper were given by the patron. A bigger version comes from Zahir fusing more power into the same item, so it keeps its flavor.'
+    ruling: 'Bracers of the Dao Pact',
+    detail: 'They replace the requested Illusionist’s Bracers: +2 AC with no armor or shield, and the Form of the Lesser Dao twice per long rest. Bound to Lucan and can’t be removed or replaced.'
+  },
+  {
+    ruling: 'Pact Keeper’s Crystal Dagger',
+    detail:
+      'It replaces the Rod of the Pact Keeper. It keeps the slot recovery but gives +1 instead of +2, and is a real returning +1 dagger that deals extra force and bludgeoning damage.'
   },
   {
     ruling: 'Spell attack and DC bonuses stack',
-    detail: 'Bonuses from different items add together with no cap, e.g. the Rod (+2) and the Jester’s Mask (+3) for spell DC 22 and attack +14.'
-  },
-  {
-    ruling: 'The Barrier Tattoo is the pact',
-    detail: 'Flavored as Lucan’s contract with Zahir, written in Primordial (Terran) across his arms and torso. It works exactly like a Rare Barrier Tattoo.'
+    detail: 'Bonuses from different items add together with no cap, e.g. the Crystal Dagger (+1) and a Jester’s Mask (+3) would give spell DC 21 and attack +13.'
   },
   {
     ruling: 'Up to four magic rings',
@@ -103,7 +116,7 @@ export const dmQuestions: DmQuestion[] = [
     topic: 'Sources',
     question: 'Do the later books on 2014.5e.tools count as allowed sources?',
     context:
-      'Several requested items come from 2021–2023 books: Fizban’s Treasury of Dragons (FTD) and The Book of Many Things (BMT). They are listed on the 2014 site, but they are newer than the core supplements.',
+      'Several wishlist items come from 2021–2023 books: Fizban’s Treasury of Dragons (FTD) and The Book of Many Things (BMT). They are listed on the 2014 site, but they are newer than the core supplements.',
     items: ['jesters-mask', 'amethyst-lodestone', 'scaled-ornament']
   },
   {
@@ -114,12 +127,19 @@ export const dmQuestions: DmQuestion[] = [
       'Lucan is a guild-trained jeweler and appraiser. If buying or crafting is possible, which rarities are available and roughly what do they cost?'
   },
   {
-    id: 'bracers-agonizing',
+    id: 'golden-pact-growth',
     topic: 'Items',
-    question: 'With Illusionist’s Bracers, does the bonus-action Eldritch Blast count as a separate casting for Agonizing and Repelling Blast?',
+    question: 'How does the Golden Pact grow with Lucan?',
+    context: 'Its description says new glyphs appear as his powers grow, each one marking a new ability. Do they appear at set levels, from story beats, or when Zahir grants them?',
+    items: ['the-golden-pact']
+  },
+  {
+    id: 'lesser-dao-dc',
+    topic: 'Items',
+    question: 'What is the Strength save DC to avoid being knocked prone by the Lesser Dao’s Earthen Maul and Earth Burst?',
     context:
-      'The house rule applies them once per target per casting. The site assumes the second casting adds another +5 damage and another 10-ft push to the same target.',
-    items: ['illusionists-bracers']
+      'On the Foundry sheet, Earthen Maul’s save field says DC 18 and Earth Burst’s says DC 16, but both descriptions say DC 17. The site uses DC 17 for both until you confirm.',
+    items: ['bracers-of-the-dao-pact']
   },
   {
     id: 'vessel-bag-of-holding',
@@ -148,32 +168,35 @@ export const sourcePolicy = {
     'Robe of Thayan Arcana.'
   ],
   labels: [
-    { label: 'Requested', text: 'Every listed magic item. Assumed accepted until the DM rules on it on the DM page.' },
-    { label: 'On the sheet', text: 'Requested items whose numbers the character sheet already uses.' }
+    { label: 'Owned', text: 'On the Foundry sheet. The character sheet’s numbers use these.' },
+    { label: 'Wishlist', text: 'Items Lucan would like to find or commission later. For the DM to rule on.' }
   ]
 }
 
 export const openQuestions = {
   immediate: [
-    'Pick the next ritual for Book of Ancient Secrets. Find Familiar is the leading candidate.',
     'Check the candidate spells against the party’s actual encounters before changing the spell list.',
     'Decide the level-12 improvement: a feat, an ability score increase or an invocation change.'
   ],
   items: [
-    'Update the sheet once the DM has ruled on the requested items and their versions.',
+    'Ask the DM about wishlist items when a shopping or loot opportunity comes up.',
     'Keep the Robe of Thayan Arcana out unless the DM explicitly approves it.'
   ],
   closed: [
     'Ruleset: 2014 5e + Tasha’s, not 2024-only material.',
     'Sources: official content on 2014.5e.tools, plus recorded campaign homebrew.',
     'Race: Half-Elf. Patron: Dao Genie (Zahir). Pact: Tome.',
-    'Feats: Spell Savant (replaced Telekinetic), Crusher, Resilient (CON).',
-    'Terran selected as the Half-Elf language.',
-    'Dwarvish selected as the Guild Artisan language.',
+    'Campaign start: the Foundry sheet is the character’s source of truth.',
+    'Abilities: STR 8, DEX 14, CON 16, INT 12, WIS 12, CHA 20. Max HP 83.',
+    'Feats: Spell Savant (replaced Telekinetic), Crusher, Resilient (CON), Prodigy (expertise in Persuasion).',
+    'Terran selected as the Half-Elf language, Dwarvish as the Guild Artisan language, Draconic from Prodigy.',
+    'Items consolidated: the Golden Pact, Bracers of the Dao Pact and Pact Keeper’s Crystal Dagger replace the Barrier and Illuminator’s Tattoos, Illusionist’s Bracers and Rod of the Pact Keeper.',
+    'Ring of Protection, Cloak of Displacement and Amethyst Lodestone are not owned; they moved to the wishlist.',
+    'Hex and Mind Spike added; Banishment and Phantasmal Killer are not known.',
+    'All ritual-wishlist spells are now in the Book of Shadows, with eight more.',
+    'Agonizing Blast house rule reverted: +CHA on every beam that hits, as written.',
     'Mind Sliver replaced Gravity Spike.',
     'Mage Hand replaced Lightning Lure.',
-    'Illusionist’s Bracers chosen over Bracers of Defense: AC 17, two Eldritch Blasts a turn.',
-    'Contact Other Plane removed from the plan.',
     'Far Step chosen over Dimension Door.',
     'Vessel contents are tracked separately from ordinary items.'
   ]

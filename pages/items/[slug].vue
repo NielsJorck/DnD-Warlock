@@ -18,8 +18,9 @@ const facts = [
   { label: 'Slot', value: item.slot ? `${slots[item.slot].label} · ${slots[item.slot].rule}` : undefined },
   { label: 'Rarity', value: item.rarity, tone: rarity?.text },
   { label: 'Attunement', value: item.attunement ?? 'Not required' },
-  { label: 'Source', value: item.source ? sourceNames[item.source] ?? item.source : 'Not recorded' },
+  { label: 'Source', value: item.homebrew ? `Campaign homebrew${item.source ? ` (based on ${sourceNames[item.source] ?? item.source})` : ''}` : item.source ? sourceNames[item.source] ?? item.source : 'Not recorded' },
   { label: 'Charges', value: item.charges },
+  { label: 'Quantity', value: item.quantity ? String(item.quantity) : undefined },
   { label: 'Version', value: requestedVariant ? `${requestedVariant.label} requested` : undefined }
 ].filter(f => f.value)
 
@@ -56,7 +57,8 @@ async function copyPrompt() {
           <div class="min-w-0">
             <div class="flex flex-wrap gap-2">
               <span class="chip" :class="itemGroupTone[item.group]">{{ groupLabels[item.group] }}</span>
-              <span v-if="item.onSheet" class="chip border-gold/40 text-gold-light">On the sheet</span>
+              <span v-if="item.homebrew" class="chip border-topaz/40 text-topaz">Homebrew</span>
+              <span v-if="item.classFeature" class="chip">Class feature</span>
               <NuxtLink v-if="room" :to="`/vessel#${room.slug}`" class="chip border-jade/40 text-jade hover:text-parchment">{{ room.glyph }} {{ room.name }}</NuxtLink>
             </div>
             <h1 class="mt-3 font-display text-3xl font-bold tracking-wide text-parchment sm:text-4xl">{{ item.name }}</h1>
@@ -83,7 +85,7 @@ async function copyPrompt() {
               <span class="w-24 shrink-0 font-semibold text-parchment">{{ v.label }}</span>
               <span class="w-20 shrink-0 text-[12px]" :class="rarityTone[v.rarity].text">{{ v.rarity }}</span>
               <span class="min-w-0 flex-1 text-parchment/85">{{ v.effect }}</span>
-              <span v-if="v.id === requestedVariant?.id" class="chip border-gold/40 py-0 text-[10px] text-gold-light">{{ item.onSheet ? 'On the sheet' : 'Requested' }}</span>
+              <span v-if="v.id === requestedVariant?.id" class="chip border-gold/40 py-0 text-[10px] text-gold-light">Requested</span>
             </li>
           </ul>
         </div>

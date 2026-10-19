@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { character, resources } from '~/data/character'
+import { character, resources, lesserDao } from '~/data/character'
 import { spells } from '~/data/spells'
 
-const { state, hitDiceMax, damage, heal, setTemp, use, shortRest, longRest } = useTracker()
+const { state, hitDiceMax, damage, heal, setTemp, use, shortRest, longRest, assumeForm, endForm } = useTracker()
 const { roll } = useDice()
 
 const amount = ref<number | null>(null)
@@ -33,10 +33,16 @@ function spendHitDie() {
   heal(Math.max(0, r.total))
 }
 
-function rodRecover() {
-  if (state.value.used.rod >= 1 || state.value.used.pact <= 0) return
-  use('rod')
+function daggerRecover() {
+  if (state.value.used.dagger >= 1 || state.value.used.pact <= 0) return
+  use('dagger')
   use('pact', -1)
+}
+
+function drinkPotion() {
+  if (state.value.used.potion >= 2) return
+  use('potion')
+  heal(roll('8d4+8', 'Potion of Superior Healing').total)
 }
 
 function castAgathys() {
@@ -80,6 +86,20 @@ function castAgathys() {
         <button type="button" class="btn border-sapphire/40 text-sapphire hover:border-sapphire" @click="apply('temp')">Temp</button>
       </form>
       <p v-if="state.concentration" class="mt-2 text-[11px] text-faint">Taking damage rolls a concentration save automatically.</p>
+
+      <div class="mt-3 border-t border-obsidian-600 pt-3">
+        <div v-if="state.form" class="flex items-center justify-between gap-2">
+          <div>
+            <span class="eyebrow text-topaz">Lesser Dao form</span>
+            <div class="stat-num text-2xl leading-none text-topaz">{{ state.form }}<span class="text-sm text-faint"> / {{ lesserDao.hp }}</span></div>
+          </div>
+          <button type="button" class="btn" @click="endForm">End form</button>
+        </div>
+        <div v-else class="flex items-center justify-between gap-2">
+          <span class="text-[11.5px] text-faint">Damage hits the form first, then carries over to Lucan.</span>
+          <button type="button" class="btn shrink-0 border-topaz/40 text-topaz" :disabled="(state.used.lesserDao ?? 0) >= 2" @click="assumeForm">Lesser Dao</button>
+        </div>
+      </div>
     </div>
 
     <!-- Pact slots -->
@@ -103,8 +123,9 @@ function castAgathys() {
         </button>
       </div>
       <div class="mt-2 flex flex-wrap gap-1.5">
-        <button type="button" class="btn" :disabled="state.used.rod >= 1 || state.used.pact === 0" @click="rodRecover">Rod: regain slot</button>
+        <button type="button" class="btn" :disabled="state.used.dagger >= 1 || state.used.pact === 0" @click="daggerRecover">Dagger: regain slot</button>
         <button type="button" class="btn" :disabled="state.used.pact >= 2" @click="castAgathys">Cast Agathys (+25 temp)</button>
+        <button type="button" class="btn" :disabled="state.used.potion >= 2" @click="drinkPotion">Drink potion (8d4+8)</button>
       </div>
     </div>
 
@@ -112,7 +133,7 @@ function castAgathys() {
     <ul class="mt-4 space-y-2">
       <li v-for="r in resources.filter(r => r.id !== 'pact')" :key="r.id" class="flex items-center justify-between gap-3">
         <div class="min-w-0">
-          <div class="text-[13px] font-medium text-parchment">{{ r.name }}</div>
+          <div class="text-[13px] font-medium text-parchment">{{ r.name }}<span v-if="r.recharge === 'never'" class="ml-1.5 text-[10px] uppercase tracking-wider text-topaz/80">no recharge</span></div>
           <div class="truncate text-[11px] text-faint">{{ r.note }}</div>
         </div>
         <div class="flex shrink-0 gap-1">
@@ -157,7 +178,7 @@ function castAgathys() {
       <button type="button" class="btn btn-gold py-2" @click="longRest">✦ Long rest</button>
     </div>
     <p class="mt-2 text-[10.5px] leading-relaxed text-faint">
-      A short rest restores pact slots. A long rest restores everything, including half your Hit Dice. Spells in the ring stay until cast.
+      A short rest restores pact slots. A long rest restores everything except wand charges and potions, and half your Hit Dice. Spells in the ring stay until cast.
     </p>
   </div>
 </template>

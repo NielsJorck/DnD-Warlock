@@ -20,8 +20,9 @@ export function saveBonus(key: AbilityKey, withItems = true) {
   return abilityMod(key) + prof + (withItems ? character.itemBonuses.saves : 0)
 }
 
-export function skillBonus(ability: AbilityKey, proficient = true, withItems = true) {
-  return abilityMod(ability) + (proficient ? character.proficiencyBonus : 0) + (withItems ? character.itemBonuses.checks : 0)
+export function skillBonus(ability: AbilityKey, proficient = true, withItems = true, expertise = false) {
+  const prof = proficient ? character.proficiencyBonus * (expertise ? 2 : 1) : 0
+  return abilityMod(ability) + prof + (withItems ? character.itemBonuses.checks : 0)
 }
 
 export const derived = {

@@ -30,8 +30,10 @@ const variant = computed(() => variantOf(props.item))
           {{ item.type }}<template v-if="item.rarity"> · <span :class="rarity?.text">{{ item.rarity }}</span></template><template v-if="item.source"> · {{ item.source }}</template>
         </p>
         <div class="mt-1.5 flex flex-wrap gap-1">
-          <span v-if="item.onSheet" class="chip border-gold/40 py-0 text-[10px] text-gold-light" title="Its numbers are already on the character sheet">On the sheet</span>
+          <span v-if="item.homebrew" class="chip border-topaz/40 py-0 text-[10px] text-topaz">Homebrew</span>
+          <span v-if="item.classFeature" class="chip py-0 text-[10px]">Class feature</span>
           <span v-if="item.attunement" class="chip py-0 text-[10px]">Attunement</span>
+          <span v-if="item.quantity" class="chip py-0 text-[10px]">×{{ item.quantity }}</span>
           <span v-if="variant" class="chip border-sapphire/40 py-0 text-[10px] text-sapphire" :title="item.variants?.map(v => v.label).join(' · ')">{{ variant.label }} · {{ item.variants?.length }} versions</span>
           <span v-if="item.charges" class="chip py-0 text-[10px]">{{ item.charges }}</span>
         </div>

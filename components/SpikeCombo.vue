@@ -10,8 +10,7 @@ interface Step {
 const steps = ref<Step[]>([
   { id: 'repel', name: 'Repelling Blast', feet: 10, how: 'Eldritch Blast hit — push away', on: true },
   { id: 'grasp', name: 'Grasp of Hadar', feet: 10, how: 'Same hit — pull back toward Lucan', on: true },
-  { id: 'bracers', name: 'Illusionist’s Bracers', feet: 10, how: 'Second Eldritch Blast as a bonus action — push again', on: true },
-  { id: 'crusher', name: 'Crusher', feet: 5, how: 'Bludgeoning hit (Genie’s Wrath)', on: true },
+  { id: 'crusher', name: 'Crusher', feet: 5, how: 'Bludgeoning hit (Genie’s Wrath or the Crystal Dagger)', on: true },
   { id: 'walk', name: 'Target walks out', feet: 20, how: 'Its own movement through the spikes', on: false }
 ])
 
@@ -74,7 +73,7 @@ const dice = computed(() => (feet.value / 5) * 2)
           <RollButton v-if="dice" :notation="`${dice}d4`" label="Spike Growth damage">Roll {{ dice }}d4</RollButton>
         </div>
         <p class="mt-auto pt-3 text-[11px] leading-relaxed text-faint">
-          Added to the ≈20 from the blast itself. Whether forced movement triggers Spike Growth is up to the DM. The common reading of “moves into or within” says it does.
+          Added to the ≈25 from the blast itself. Whether forced movement triggers Spike Growth is up to the DM. The common reading of “moves into or within” says it does.
         </p>
       </div>
     </div>

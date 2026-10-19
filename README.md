@@ -34,15 +34,15 @@ Old Codex URLs still redirect on GitHub Pages: unknown paths get `404.html`, whi
 
 | Route | What’s there |
 | --- | --- |
-| `/` | Character sheet: vitals, abilities and saves (click to roll), Eldritch Blast calculator, Spike Growth combo, feats, invocations, features, skills, languages, attunement, and a session tracker for HP, slots, resources and rests |
+| `/` | Character sheet: vitals, abilities and saves (click to roll), Eldritch Blast calculator (with Hex), Crystal Dagger attacks, Spike Growth combo, feats, invocations, features, skills, languages, attunement, and a session tracker for HP, slots, resources and rests |
 | `/spells` | Searchable, filterable spellbook (status, level, school, concentration, ritual) with expandable cards |
 | `/spells/:slug` | Full spell page with 5th-level pact-slot effects, notes and roll buttons |
-| `/items` | Requested magic items (the ones on the sheet first, the rest grouped by slot, with variant versions where they exist) and carried gear |
+| `/items` | Owned items (mirroring the Foundry sheet), mundane gear, and a wishlist grouped by slot, with variant versions where they exist |
 | `/items/:slug` | Full item page with rules, caveats and flavor |
 | `/vessel` | The Genie Vessel: patron features, residence features, rooms with their magic items, house rules |
 | `/lore` | Lucan’s story, traits, Zahir ibn Kharum and story hooks |
 | `/rules` | Homebrew, DM rulings, source policy, open and closed decisions |
-| `/dm` | For the DM: one table of requested items (assumed accepted until ruled on) plus the Vessel stores, with allow / discuss / deny verdicts, a version picker for items that come in several versions, notes, the open questions with answer fields, and a button that copies everything as text |
+| `/dm` | For the DM: one table of wishlist items plus the Vessel stores, with allow / discuss / deny verdicts, a version picker for items that come in several versions, notes, the open questions with answer fields, and a button that copies everything as text |
 
 Old Codex URLs such as `/known-spells` or `/genie-vessel` redirect to the new pages (see `middleware/legacy-redirects.global.ts`).
 
@@ -50,9 +50,9 @@ Old Codex URLs such as `/known-spells` or `/genie-vessel` redirect to the new pa
 
 All content lives in typed TypeScript files in `data/`:
 
-- `data/character.ts`: ability scores, AC, proficiencies, feats, invocations, features and tracked resources
-- `data/spells.ts`: every spell with its status (`known`, `book`, `wishlist`, `candidate`, `future`)
-- `data/items.ts`: requested items (`onSheet` marks the ones the sheet uses, `variants` lists official versions, `slot` says where it is worn and `slots` sets the limits), gear and Vessel contents (with their room)
+- `data/character.ts`: ability scores, AC, proficiencies, feats, invocations, features and tracked resources. The Foundry VTT actor export is the source of truth for these numbers
+- `data/spells.ts`: every spell with its status (`known`, `book`, `candidate`, `future`)
+- `data/items.ts`: owned items (`group: 'owned'`, mirroring the Foundry sheet), the wishlist (`variants` lists official versions, `slot` says where it is worn and `slots` sets the limits), mundane gear and Vessel contents (with their room)
 - `data/vessel.ts`: Vessel features and rooms
 - `data/lore.ts`: story, patron, homebrew, rulings, source policy, open questions and the questions for the DM (`dmQuestions`)
 
@@ -64,8 +64,8 @@ The session tracker, the open-decision checklist and the DM page’s verdicts sa
 
 Items can have an `art` entry in `data/items.ts` with an image in `public/images/`. Each item also stores an art brief: a prompt for generating a painted version.
 
-- **Painted art** (Rod of the Pact Keeper): keep the original in `art/`, then run `node scripts/import-art.mjs art/<name>.original.png public/images/<name>.png [glow hex]`. The script removes the white background, fits the item onto a 600×800 canvas and places it on the site's dark backdrop. Point the item's `art.src` at the PNG.
-- **Drawn illustrations** (Barrier Tattoo): `node scripts/generate-art.mjs` writes the SVGs. It still writes the old `rod-of-the-pact-keeper.svg`, which the site no longer uses.
+- **Painted art** (Pact Keeper’s Crystal Dagger, which still uses `rod-of-the-pact-keeper.png`): keep the original in `art/`, then run `node scripts/import-art.mjs art/<name>.original.png public/images/<name>.png [glow hex]`. The script removes the white background, fits the item onto a 600×800 canvas and places it on the site's dark backdrop. Point the item's `art.src` at the PNG.
+- **Drawn illustrations** (the Golden Pact, which still uses `barrier-tattoo.svg`): `node scripts/generate-art.mjs` writes the SVGs. It still writes the old `rod-of-the-pact-keeper.svg`, which the site no longer uses.
 
 ## Archive
 

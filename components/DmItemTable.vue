@@ -6,8 +6,10 @@ import { verdictLabels, type Verdict } from '~/composables/useDmReview'
 const props = defineProps<{ items: Item[]; grouped?: boolean }>()
 
 // One table body per slot when grouped, otherwise a single unlabeled body
-const groups = computed(() => (props.grouped ? bySlot(props.items) : [{ slot: 'all', label: '', rule: '', max: undefined, items: props.items }]))
-const allowedIn = (list: Item[]) => list.filter(i => state.value.verdicts[i.slug] !== 'deny').length
+const groups = computed(() =>
+  props.grouped ? bySlot(props.items) : [{ slot: 'all', label: '', rule: '', max: undefined, worn: [] as Item[], items: props.items }]
+)
+const allowedIn = (g: { items: Item[]; worn: Item[] }) => g.worn.length + g.items.filter(i => state.value.verdicts[i.slug] !== 'deny').length
 
 const { state, setVerdict } = useDmReview()
 
@@ -44,8 +46,9 @@ const verdicts: { id: Verdict; icon: string; tone: string }[] = [
           <td colspan="6" class="px-4 py-2">
             <span class="font-display text-[13px] font-semibold tracking-wide text-parchment">{{ g.label }}</span>
             <span class="ml-2 text-[11.5px] text-faint">{{ g.rule }}</span>
-            <span v-if="g.max && allowedIn(g.items) > g.max" class="chip ml-2 border-topaz/40 py-0 text-[10px] text-topaz">
-              {{ allowedIn(g.items) }} not denied, {{ g.max }} can be worn
+            <span v-if="g.worn.length" class="ml-2 text-[11.5px] text-dim">Owned: <span class="text-gold-light">{{ g.worn.map(w => w.name).join(', ') }}</span></span>
+            <span v-if="g.max && allowedIn(g) > g.max" class="chip ml-2 border-topaz/40 py-0 text-[10px] text-topaz">
+              {{ allowedIn(g) }} owned or not denied, {{ g.max }} can be worn
             </span>
           </td>
         </tr>
@@ -53,7 +56,6 @@ const verdicts: { id: Verdict; icon: string; tone: string }[] = [
           <td class="px-4 py-3">
             <NuxtLink :to="`/items/${i.slug}`" class="font-semibold text-parchment transition hover:text-gold-light">{{ i.name }}</NuxtLink>
             <p class="text-[11.5px] text-faint">{{ i.room ? roomBySlug[i.room]?.name : i.type }}</p>
-            <span v-if="i.onSheet" class="chip mt-1 border-gold/40 py-0 text-[10px] text-gold-light" title="Its numbers are already on the character sheet">On the sheet</span>
             <span v-if="i.group === 'vessel'" class="chip mt-1 border-jade/40 py-0 text-[10px] text-jade" title="Part of the Genie Vessel, assumed accepted">Accepted</span>
             <select
               v-if="i.variants"
@@ -73,8 +75,7 @@ const verdicts: { id: Verdict; icon: string; tone: string }[] = [
             <p v-if="i.caveat" class="mt-1 border-l-2 border-topaz/50 pl-2 text-[11.5px] leading-relaxed text-topaz/90">{{ i.caveat }}</p>
           </td>
           <td class="px-4 py-3">
-            <p v-if="i.group === 'gear'" class="text-[12px] text-jade" title="A class feature, not a request">✓ Already accepted</p>
-            <div v-else class="flex gap-1" role="group" :aria-label="`Verdict for ${i.name}`">
+            <div class="flex gap-1" role="group" :aria-label="`Verdict for ${i.name}`">
               <button
                 v-for="v in verdicts"
                 :key="v.id"
@@ -87,7 +88,7 @@ const verdicts: { id: Verdict; icon: string; tone: string }[] = [
                 @click="setVerdict(i.slug, v.id)"
               >{{ v.icon }}</button>
             </div>
-            <input v-if="i.group !== 'gear'" v-model="state.notes[i.slug]" type="text" placeholder="Note…" class="field mt-1.5 px-2 py-1 text-[12px]" :aria-label="`DM note for ${i.name}`" />
+            <input v-model="state.notes[i.slug]" type="text" placeholder="Note…" class="field mt-1.5 px-2 py-1 text-[12px]" :aria-label="`DM note for ${i.name}`" />
           </td>
         </tr>
       </tbody>

@@ -27,7 +27,7 @@ const rows = computed(() =>
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
       <p class="text-xs text-faint">Click a check or save to roll it.</p>
       <label class="flex cursor-pointer select-none items-center gap-2 text-xs text-dim">
-        <span>Include Ring &amp; Stone bonuses</span>
+        <span>Include Stone of Good Luck</span>
         <button
           type="button"
           role="switch"
@@ -70,7 +70,7 @@ const rows = computed(() =>
     </div>
     <p class="mt-3 text-[11px] text-faint">
       <span class="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-gold align-middle" /> Proficient save.
-      Big numbers are ability checks<template v-if="withItems"> (including the Stone of Good Luck’s +1)</template>. Saves<template v-if="withItems"> include +1 from the Ring and +1 from the Stone</template>.
+      Big numbers are ability checks<template v-if="withItems"> (including the Stone of Good Luck’s +1)</template>. Saves<template v-if="withItems"> include the Stone’s +1</template>.
     </p>
   </div>
 </template>

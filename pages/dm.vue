@@ -8,14 +8,9 @@ useHead({ title: 'DM Review — Lucan Beryll' })
 
 const { state, reset } = useDmReview()
 
-// Items already on the sheet first, then the rest in data order
-const requested = [
-  ...items.filter(i => i.group !== 'vessel' && i.onSheet),
-  ...items.filter(i => i.group !== 'vessel' && !i.onSheet)
-]
+const requested = items.filter(i => i.group === 'wishlist')
 const vesselStores = items.filter(i => i.group === 'vessel')
-// The Genie Vessel ring is a class feature, shown for the ring count only
-const reviewable = [...requested, ...vesselStores].filter(i => i.group !== 'gear')
+const reviewable = [...requested, ...vesselStores]
 
 const topics = [...new Set(dmQuestions.map(q => q.topic))]
 const itemName = Object.fromEntries(items.map(i => [i.slug, i.name]))
@@ -31,7 +26,6 @@ const verdictMark = { allow: '✓', discuss: '?', deny: '✕' } as const
 
 function itemLines(list: Item[]) {
   return list.map(i => {
-    if (i.group === 'gear') return `✓ ${i.name}: already accepted (class feature)`
     const v = state.value.verdicts[i.slug]
     const note = state.value.notes[i.slug]?.trim()
     const picked = variantOf(i, state.value.variants[i.slug])
@@ -46,7 +40,7 @@ function summary() {
     'DM review for Lucan Beryll',
     '✓ allowed   ? let’s talk   ✕ not allowed   · no verdict',
     '',
-    'REQUESTED ITEMS',
+    'WISHLIST',
     ...bySlot(requested).flatMap(g => [`${g.label} (${g.rule.toLowerCase()})`, ...itemLines(g.items).map(l => `  ${l}`)]),
     '',
     'VESSEL STORES',
@@ -76,7 +70,7 @@ function confirmReset() {
       <p class="eyebrow">For the Dungeon Master · attunement {{ character.attunement.used }} / {{ character.attunement.max }}</p>
       <h1 class="mt-2 font-display text-4xl font-bold tracking-wide sm:text-5xl"><span class="text-gilded">DM Review</span></h1>
       <p class="mt-3 max-w-2xl font-serif text-lg text-dim">
-        Every item Lucan asks for, in one list. The site treats each one as accepted until you rule on it. Mark each item
+        Lucan’s wishlist for future loot or commissions, plus the Vessel’s household stores. His current items match the Foundry sheet and aren’t up for review. Mark each item
         <span class="text-jade">✓ allowed</span>, <span class="text-topaz">? let’s talk</span> or <span class="text-ruby">✕ not allowed</span>, pick a different version where an item comes in several, answer the open questions, then copy the result and send it back.
       </p>
       <div class="mt-5 flex flex-wrap items-center gap-2">
@@ -93,11 +87,11 @@ function confirmReset() {
     </header>
 
     <section class="mt-10">
-      <SectionHeading id="requested" eyebrow="Assumed accepted until you rule" title="Requested Items">
+      <SectionHeading id="requested" eyebrow="For future loot or commissions" title="Wishlist">
         <a href="#questions" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">Questions ↓</a>
       </SectionHeading>
       <p class="-mt-2 mb-4 max-w-3xl text-[13px] text-dim">
-        Items are grouped by where they are worn. Lucan can wear one cloak, one pair of bracers and so on, and up to four rings as allowed at this table. Items marked <span class="text-gold-light">On the sheet</span> are the ones the character sheet’s numbers already use. Where an item has several versions, the dropdown starts on the one Lucan requests. Notes in amber are the catches already spotted.
+        Items are grouped by where they are worn. Lucan can wear one cloak, one pair of bracers and so on, and up to four rings as allowed at this table. Each slot header shows what he already owns there. Where an item has several versions, the dropdown starts on the one Lucan would like. Notes in amber are the catches already spotted.
       </p>
       <DmItemTable :items="requested" grouped />
 

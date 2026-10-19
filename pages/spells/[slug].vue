@@ -28,7 +28,7 @@ const related = spells.filter(s => s.slug !== spell.slug && s.access === spell.a
       <div class="relative p-6 sm:p-9">
         <div class="flex flex-wrap items-center gap-2">
           <span class="chip" :class="[tone.border, tone.bg, tone.text]">{{ schoolGlyph[spell.school] }} {{ levelLabel(spell.level, true) }} {{ spell.school.toLowerCase() }}</span>
-          <span class="chip" :class="statusTone[spell.status]">{{ statusLabels[spell.status] }}<template v-if="spell.priority"> · {{ spell.priority }}</template></span>
+          <span class="chip" :class="statusTone[spell.status]">{{ statusLabels[spell.status] }}</span>
           <span v-if="spell.concentration" class="chip border-rose/40 text-rose">Concentration</span>
           <span v-if="spell.ritual" class="chip border-amethyst/40 text-amethyst">Ritual</span>
         </div>

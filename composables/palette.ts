@@ -19,13 +19,13 @@ export const rarityTone: Record<Rarity, { text: string; hex: string }> = {
   Rare: { text: 'text-sapphire', hex: '#6595dc' },
   'Very Rare': { text: 'text-amethyst', hex: '#a682dc' },
   Legendary: { text: 'text-topaz', hex: '#e3a640' },
+  Artifact: { text: 'text-gold-light', hex: '#d6a84f' },
   Varies: { text: 'text-dim', hex: '#b0a48f' }
 }
 
 export const statusTone: Record<SpellStatus, string> = {
   known: 'border-gold/50 bg-gold/10 text-gold-light',
   book: 'border-amethyst/50 bg-amethyst/10 text-amethyst',
-  wishlist: 'border-obsidian-500 bg-obsidian-800 text-dim',
   candidate: 'border-sapphire/40 bg-sapphire/10 text-sapphire',
   future: 'border-topaz/40 bg-topaz/10 text-topaz'
 }
@@ -39,7 +39,7 @@ export const accessTone: Record<SpellAccess, string> = {
 }
 
 export const itemGroupTone: Record<ItemGroup, string> = {
-  requested: 'border-gold/50 bg-gold/10 text-gold-light',
-  gear: 'border-obsidian-500 bg-obsidian-800 text-dim',
+  owned: 'border-gold/50 bg-gold/10 text-gold-light',
+  wishlist: 'border-obsidian-500 bg-obsidian-800 text-dim',
   vessel: 'border-jade/40 bg-jade/10 text-jade'
 }

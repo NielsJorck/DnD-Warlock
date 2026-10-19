@@ -28,28 +28,30 @@ export const character = {
   ruleset: '2014 5e + Tasha’s',
   motto: 'A deal made is a deal kept.',
 
-  abilities: { str: 8, dex: 12, con: 18, int: 10, wis: 12, cha: 20 } as Record<AbilityKey, number>,
+  abilities: { str: 8, dex: 14, con: 16, int: 12, wis: 12, cha: 20 } as Record<AbilityKey, number>,
   saveProficiencies: ['con', 'wis', 'cha'] as AbilityKey[],
 
   proficiencyBonus: 4,
-  maxHp: 93,
+  maxHp: 83,
   hitDice: '10d8',
   speed: 30,
   darkvision: 30,
 
   // Item bonuses currently applied
   itemBonuses: {
-    saves: 2, // Ring of Protection +1, Stone of Good Luck +1
+    saves: 1, // Stone of Good Luck
     checks: 1, // Stone of Good Luck
-    spell: 2 // Rod of the Pact Keeper +2
+    spell: 1, // Pact Keeper's Crystal Dagger
+    spellSource: 'Dagger'
   },
 
   ac: {
-    total: 17,
+    total: 20,
     breakdown: [
-      { label: 'Barrier Tattoo (Rare)', value: 15, note: 'Base 15 while unarmored' },
-      { label: 'Dexterity', value: 1, note: 'Max +2 from the tattoo' },
-      { label: 'Ring of Protection', value: 1 }
+      { label: 'The Golden Pact', value: 15, base: true, note: 'Base 15 while unarmored' },
+      { label: 'Dexterity', value: 2, note: 'Max +2 from the Golden Pact' },
+      { label: 'Bracers of the Dao Pact', value: 2, note: 'No armor, no shield' },
+      { label: 'Ioun Stone of Protection', value: 1 }
     ]
   },
 
@@ -61,18 +63,28 @@ export const character = {
     { name: 'Common', note: 'Half-Elf' },
     { name: 'Elvish', note: 'Half-Elf' },
     { name: 'Terran', note: 'Half-Elf extra language — the tongue of the Plane of Earth' },
-    { name: 'Dwarvish', note: 'Guild Artisan language' }
+    { name: 'Dwarvish', note: 'Guild Artisan language' },
+    { name: 'Draconic', note: 'Prodigy' },
+    { name: 'Undercommon', note: 'Campaign setup' }
   ],
 
   skills: [
+    // Exact source of these three wasn't recorded: Warlock class skills, Prodigy and the INT homebrew rule
+    { name: 'Arcana', ability: 'int' as AbilityKey, source: 'Campaign setup' },
+    { name: 'Deception', ability: 'cha' as AbilityKey, source: 'Campaign setup' },
+    { name: 'History', ability: 'int' as AbilityKey, source: 'Campaign setup' },
     { name: 'Insight', ability: 'wis' as AbilityKey, source: 'Guild Artisan' },
-    { name: 'Persuasion', ability: 'cha' as AbilityKey, source: 'Guild Artisan' },
-    { name: 'Investigation', ability: 'int' as AbilityKey, source: 'Skill Versatility (homebrew)' }
+    { name: 'Investigation', ability: 'int' as AbilityKey, source: 'Skill Versatility (homebrew)' },
+    { name: 'Persuasion', ability: 'cha' as AbilityKey, source: 'Guild Artisan · expertise from Prodigy', expertise: true }
+  ] as { name: string; ability: AbilityKey; source: string; expertise?: boolean }[],
+  toolProficiencies: [
+    { name: 'Jeweler’s tools', source: 'Guild Artisan' },
+    { name: 'Calligrapher’s supplies', source: 'Prodigy' }
   ],
-  toolProficiencies: [{ name: 'Jeweler’s tools', source: 'Guild Artisan' }],
+  armorWeapons: 'Light armor · simple weapons',
 
   senses: ['Darkvision 30 ft (campaign homebrew)'],
-  resistances: ['Bludgeoning (Elemental Gift — Dao)'],
+  resistances: ['Bludgeoning (Elemental Gift — Dao)', 'Cold (Sash of Summer)'],
 
   feats: [
     {
@@ -98,8 +110,14 @@ export const character = {
       name: 'Resilient (Constitution)',
       source: 'PHB',
       level: 8,
-      summary: '+1 CON (to 18) and proficiency in Constitution saving throws.',
-      detail: 'Holds concentration on Spike Growth, Hold Monster, Wall of Stone and Far Step.'
+      summary: '+1 CON (to 16) and proficiency in Constitution saving throws.',
+      detail: 'Holds concentration on Spike Growth, Hex, Hold Monster, Wall of Stone and Far Step.'
+    },
+    {
+      name: 'Prodigy',
+      source: 'XGE',
+      summary: 'One skill proficiency, Calligrapher’s supplies and Draconic. Expertise in Persuasion.',
+      detail: 'Expertise doubles his proficiency bonus on Persuasion checks: +14 with the Stone of Good Luck. Calligraphy suits a man who drafts his own contracts.'
     }
   ] as Feature[],
 
@@ -107,9 +125,8 @@ export const character = {
     {
       name: 'Agonizing Blast',
       source: 'PHB',
-      summary: 'Add CHA (+5) to Eldritch Blast damage.',
-      detail: 'Campaign wording: applies once per target per casting, not once per beam.',
-      homebrew: true
+      summary: 'Add CHA (+5) to the damage of every Eldritch Blast beam that hits.',
+      detail: 'Rules as written. The earlier once-per-target house rule was reverted by the DM.'
     },
     {
       name: 'Repelling Blast',
@@ -176,7 +193,7 @@ export const character = {
       source: 'Genie Patron',
       level: 1,
       summary: 'Use an action to vanish into the Vessel for up to 8 hours (2 × PB). Leave it with a bonus action.',
-      detail: 'Normally once per long rest. In this campaign Lucan can re-enter whenever he wants.',
+      detail: 'Normally once per long rest. In this campaign Lucan can enter and leave whenever he wants.',
       uses: 'At will',
       homebrew: true
     },
@@ -214,7 +231,17 @@ export const character = {
       level: 10,
       summary:
         'Up to five willing creatures within 30 ft enter the Vessel with you. Ten minutes inside counts as a short rest, and anyone spending Hit Dice adds +4 (PB) HP.',
-      detail: 'Lucan can eject any number of them with a bonus action. Everyone is ejected if he leaves, dies or the Vessel is destroyed.'
+      detail:
+        'Lucan can eject any number of them with a bonus action. Everyone is ejected if he leaves, dies or the Vessel is destroyed. Entering is at will in this campaign, but the 10-minute short rest works once per long rest.',
+      uses: 'Short rest once / long rest',
+      homebrew: true
+    },
+    {
+      name: 'Form of the Lesser Dao',
+      source: 'Bracers of the Dao Pact',
+      summary: 'As a bonus action, Lucan becomes a Large earth genie for 10 turns: AC 20, 83 HP, two attacks a turn at +9, flight and burrowing.',
+      detail: 'The form has its own hit points. When it drops to 0, any leftover damage carries over to Lucan. Full stat block in the Combat section.',
+      uses: '2 / long rest'
     }
   ] as Feature[],
 
@@ -240,19 +267,76 @@ export const abilityNames: Record<AbilityKey, string> = {
   cha: 'Charisma'
 }
 
+// From the Foundry NPC sheet "Form of the Lesser Dao" (Bracers of the Dao Pact).
+// The Stone of Good Luck's +1 to checks and saves carries over and is included below.
+export const lesserDao = {
+  name: 'Form of the Lesser Dao',
+  type: 'Large elemental (dao)',
+  cr: 10,
+  proficiencyBonus: 4,
+  ac: 20,
+  hp: 83,
+  hpFormula: '5d10 + 35',
+  speed: 'Walk 30 ft · burrow 30 ft · fly 30 ft (hover)',
+  abilities: { str: 20, dex: 14, con: 20, int: 12, wis: 12, cha: 20 } as Record<AbilityKey, number>,
+  saveProficiencies: ['con', 'wis', 'cha'] as AbilityKey[],
+  itemBonus: 1,
+  skills: [
+    { name: 'Arcana', ability: 'int' as AbilityKey },
+    { name: 'History', ability: 'int' as AbilityKey },
+    { name: 'Investigation', ability: 'int' as AbilityKey },
+    { name: 'Persuasion', ability: 'cha' as AbilityKey }
+  ],
+  resistances: ['Bludgeoning', 'Cold'],
+  conditionImmunities: ['Petrified'],
+  senses: 'Darkvision 120 ft',
+  languages: 'Common, Dwarvish, Elvish, Terran, Undercommon',
+  traits: [
+    { name: 'Earth Glide', text: 'Burrows through nonmagical, unworked earth and stone without disturbing the material it moves through.' },
+    { name: 'Sure-Footed', text: 'Advantage on Strength and Dexterity saving throws against effects that would knock it prone.' },
+    { name: 'Shared damage', text: 'When the form drops to 0 HP it ends, and any leftover damage carries over to Lucan.' }
+  ],
+  multiattack: 'Two attacks, in any mix of Earthen Maul and Earth Burst.',
+  attacks: [
+    {
+      name: 'Earthen Maul',
+      kind: 'Melee · reach 5 ft · two-handed',
+      toHit: 9,
+      damage: '4d6+5',
+      type: 'bludgeoning',
+      effect: 'A Huge or smaller target makes a DC 17 Strength save or is knocked prone.'
+    },
+    {
+      name: 'Earth Burst',
+      kind: 'Ranged · 60/120 ft',
+      toHit: 9,
+      damage: '2d8+5',
+      type: 'bludgeoning',
+      effect: 'Hit or miss, the earth explodes in the target’s space: DC 17 Strength save or knocked prone.'
+    },
+    { name: 'Fist', kind: 'Melee · reach 5 ft', toHit: 9, damage: '2d8+5', type: 'bludgeoning' }
+  ] as { name: string; kind: string; toHit: number; damage: string; type: string; effect?: string }[]
+}
+
 // Resources tracked by the session tracker.
 export interface Resource {
   id: string
   name: string
   max: number
-  recharge: 'short' | 'long'
+  recharge: 'short' | 'long' | 'never' // never: consumables that don't come back on a rest
   note: string
 }
 
 export const resources: Resource[] = [
   { id: 'pact', name: 'Pact slots (5th)', max: 2, recharge: 'short', note: 'Every leveled spell' },
   { id: 'savant', name: 'Spell Savant slot (5th)', max: 1, recharge: 'long', note: 'Extra slot for any leveled spell' },
-  { id: 'rod', name: 'Rod — recover a slot', max: 1, recharge: 'long', note: 'Action: regain one pact slot' },
+  { id: 'dagger', name: 'Crystal Dagger: recover a slot', max: 1, recharge: 'long', note: 'Action: regain one pact slot' },
   { id: 'flight', name: 'Elemental Gift flight', max: 4, recharge: 'long', note: 'Bonus action: 30 ft fly, 10 min' },
-  { id: 'lodestone', name: 'Amethyst Lodestone charges', max: 6, recharge: 'long', note: 'Thrust or flight 1, Reverse Gravity 3. Regains 1d6 at dawn' }
+  { id: 'lesserDao', name: 'Form of the Lesser Dao', max: 2, recharge: 'long', note: 'Bracers · bonus action, 10 turns, 83 form HP' },
+  { id: 'protectors', name: 'Gift of the Protectors', max: 1, recharge: 'long', note: 'A named creature drops to 1 HP instead of 0' },
+  { id: 'vesselRest', name: 'Sanctuary Vessel short rest', max: 1, recharge: 'long', note: '10 minutes inside counts as a short rest' },
+  { id: 'scribing', name: 'Golden Pact: hidden writing', max: 1, recharge: 'long', note: 'Action: a page only one named creature can read' },
+  { id: 'gem', name: 'Spell Gem: imbue', max: 1, recharge: 'long', note: 'Store one spell up to 6th level' },
+  { id: 'wand', name: 'Lesser Wand of Lightning Bolts', max: 7, recharge: 'never', note: 'DC 15 · 1 charge = 3rd level, +1 level per extra charge. Crumbles when empty' },
+  { id: 'potion', name: 'Potions of Superior Healing', max: 2, recharge: 'never', note: '8d4 + 8 HP each' }
 ]

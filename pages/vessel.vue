@@ -5,17 +5,17 @@ import { vessel, rooms } from '~/data/vessel'
 
 useHead({ title: 'The Genie Vessel — Lucan Beryll' })
 
-const { shortRest } = useTracker()
+const { state, shortRest, use } = useTracker()
 
 const vesselFeatures = character.features.filter(f => ['Genie’s Vessel', 'Bottled Respite', 'Sanctuary Vessel'].includes(f.name))
 const vesselItems = items.filter(i => i.group === 'vessel')
 const roomItems = (slug: string) => vesselItems.filter(i => i.room === slug)
 
-const rested = ref(false)
+const restUsed = computed(() => (state.value.used.vesselRest ?? 0) >= 1)
 function takeVesselRest() {
+  if (restUsed.value) return
   shortRest()
-  rested.value = true
-  setTimeout(() => (rested.value = false), 1500)
+  use('vesselRest')
 }
 </script>
 
@@ -43,15 +43,21 @@ function takeVesselRest() {
           <div class="panel-inset border-topaz/30 px-4 py-3">
             <div class="eyebrow text-dim">Bottled Respite</div>
             <div class="stat-num mt-1 text-xl">At will</div>
-            <div class="text-[11px] text-topaz/90">Homebrew: no long-rest limit</div>
+            <div class="text-[11px] text-topaz/90">Homebrew: enter and leave freely</div>
           </div>
           <div class="panel-inset px-4 py-3">
             <div class="eyebrow text-dim">10 min inside</div>
             <div class="mt-1 flex items-center justify-between gap-2">
               <span class="text-sm text-parchment">Short rest</span>
-              <button type="button" class="btn px-2 py-1 text-[11px]" title="Sanctuary Vessel: 10 minutes inside counts as a short rest. Recovers pact slots in the tracker." @click="takeVesselRest">{{ rested ? 'Rested' : 'Rest' }}</button>
+              <button
+                type="button"
+                class="btn px-2 py-1 text-[11px]"
+                :disabled="restUsed"
+                title="Sanctuary Vessel: 10 minutes inside counts as a short rest, once per long rest. Recovers pact slots in the tracker."
+                @click="takeVesselRest"
+              >{{ restUsed ? 'Used' : 'Rest' }}</button>
             </div>
-            <div class="text-[11px] text-faint">Hit Dice heal +4 (PB)</div>
+            <div class="text-[11px] text-faint">Once / long rest · Hit Dice heal +4 (PB)</div>
           </div>
         </div>
       </div>

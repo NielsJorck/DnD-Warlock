@@ -4,13 +4,12 @@ import { character } from '~/data/character'
 
 useHead({ title: 'Spellbook — Lucan Beryll' })
 
-type Tab = 'known' | 'book' | 'wishlist' | 'later' | 'all'
+type Tab = 'known' | 'book' | 'later' | 'all'
 const tabs: { id: Tab; label: string; statuses: SpellStatus[]; blurb: string }[] = [
   { id: 'known', label: 'Known', statuses: ['known'], blurb: 'Everything Lucan can cast right now: the spells he chose as a Warlock, his Tome cantrips and the Genie and Dao spells his patron grants automatically.' },
-  { id: 'book', label: 'Book of Shadows', statuses: ['book'], blurb: 'Rituals inscribed by Book of Ancient Secrets. Cast from the book as rituals only — no pact slot.' },
-  { id: 'wishlist', label: 'Ritual wishlist', statuses: ['wishlist'], blurb: 'Rituals worth copying into the Book of Shadows when a scroll or spellbook turns up (50 gp and 2 hours per level).' },
+  { id: 'book', label: 'Book of Shadows', statuses: ['book'], blurb: 'Rituals inscribed by Book of Ancient Secrets. Cast from the book as rituals only — no pact slot. More can be copied in when a scroll or spellbook turns up (50 gp and 2 hours per level).' },
   { id: 'later', label: 'Candidates & future', statuses: ['candidate', 'future'], blurb: 'Spells under consideration for future levels, plus the Mystic Arcanum endgame.' },
-  { id: 'all', label: 'All', statuses: ['known', 'book', 'wishlist', 'candidate', 'future'], blurb: 'Every spell in Lucan’s glossary.' }
+  { id: 'all', label: 'All', statuses: ['known', 'book', 'candidate', 'future'], blurb: 'Every spell in Lucan’s glossary.' }
 ]
 
 const route = useRoute()
@@ -77,11 +76,7 @@ const filtered = computed(() => {
 const groups = computed(() => {
   const out: { key: string; title: string; sub?: string; spells: Spell[] }[] = []
   const push = (key: string, title: string, list: Spell[], sub?: string) => list.length && out.push({ key, title, sub, spells: list })
-  if (tab.value === 'wishlist') {
-    for (const p of ['High', 'Useful', 'Additional'] as const) {
-      push(p, `${p} priority`, filtered.value.filter(s => s.priority === p))
-    }
-  } else if (tab.value === 'later' || tab.value === 'all') {
+  if (tab.value === 'later' || tab.value === 'all') {
     for (const st of current.value.statuses) push(st, statusLabels[st], filtered.value.filter(s => s.status === st))
   } else if (tab.value === 'known' && groupBy.value === 'source') {
     for (const k of knownSources) push(k.id, k.title, filtered.value.filter(s => k.access.includes(s.access)), k.sub)

@@ -1,7 +1,7 @@
 // Lucan's spell glossary. Rules text is paraphrased from the 2014 sources;
 // "atPact" describes the effect when cast from a 5th-level pact slot.
 
-export type SpellStatus = 'known' | 'book' | 'wishlist' | 'candidate' | 'future'
+export type SpellStatus = 'known' | 'book' | 'candidate' | 'future'
 export type SpellAccess = 'Warlock' | 'Pact of the Tome' | 'Genie Patron' | 'Dao Patron' | 'Book of Shadows'
 export type School =
   | 'Abjuration'
@@ -28,7 +28,6 @@ export interface Spell {
   source: string
   access: SpellAccess
   status: SpellStatus
-  priority?: 'High' | 'Useful' | 'Additional'
   role: string
   summary: string
   atPact?: string
@@ -41,7 +40,6 @@ export interface Spell {
 export const statusLabels: Record<SpellStatus, string> = {
   known: 'Known',
   book: 'Book of Shadows',
-  wishlist: 'Ritual wishlist',
   candidate: 'Candidate',
   future: 'Future'
 }
@@ -66,7 +64,7 @@ export function levelLabel(level: number, long = false) {
 // Known spells are either picked by the player or granted automatically by the patron.
 export type KnownSource = 'chosen' | 'tome' | 'patron'
 export const knownSources: { id: KnownSource; title: string; sub: string; chip: string; access: SpellAccess[] }[] = [
-  { id: 'chosen', title: 'Chosen Warlock spells', sub: 'Picked by the player: 4 cantrips and 10 spells known', chip: 'Chosen', access: ['Warlock'] },
+  { id: 'chosen', title: 'Chosen Warlock spells', sub: 'Picked by the player: 4 cantrips and 11 spells known', chip: 'Chosen', access: ['Warlock'] },
   { id: 'tome', title: 'Pact of the Tome cantrips', sub: 'Picked by the player from any class list', chip: 'Chosen · Tome', access: ['Pact of the Tome'] },
   { id: 'patron', title: 'Patron spells — automatic', sub: 'Genie and Dao lists, always known on top of the 10 chosen', chip: 'Patron · automatic', access: ['Genie Patron', 'Dao Patron'] }
 ]
@@ -94,7 +92,7 @@ export const spells: Spell[] = [
     summary:
       'Fire beams of crackling energy; each beam is a separate ranged spell attack dealing 1d10 force damage. At level 10 Lucan creates two beams, which can target the same or different creatures (three at level 11).',
     notes:
-      'Agonizing Blast adds +5 once per target. Repelling Blast pushes 10 ft once per target. Grasp of Hadar pulls 10 ft once per turn. Genie’s Wrath adds +4 bludgeoning once per turn, which also enables Crusher. Illusionist’s Bracers let him cast it again as a bonus action.'
+      'Agonizing Blast adds +5 to every beam that hits. Repelling Blast pushes 10 ft once per target. Grasp of Hadar pulls 10 ft once per turn. Genie’s Wrath adds +4 bludgeoning once per turn, which also enables Crusher. Hex adds 1d6 necrotic to every beam that hits the cursed target.'
   },
   {
     slug: 'create-bonfire',
@@ -155,7 +153,7 @@ export const spells: Spell[] = [
     damage: '2d6 psychic',
     summary:
       'Drive a spike of psychic energy into a creature. On a failed INT save it takes 2d6 psychic damage and subtracts 1d4 from its next saving throw before the end of Lucan’s next turn.',
-    notes: 'Cast it the turn before Hold Monster, Banishment or Synaptic Static. It replaced Gravity Spike.'
+    notes: 'Cast it the turn before Hold Monster, Hold Person or Synaptic Static. It replaced Gravity Spike.'
   },
   {
     slug: 'light',
@@ -239,6 +237,28 @@ export const spells: Spell[] = [
     notes: 'Not concentration — cast it before a fight and keep Spike Growth running.'
   },
   {
+    slug: 'hex',
+    name: 'Hex',
+    level: 1,
+    school: 'Enchantment',
+    castingTime: '1 bonus action',
+    range: '90 ft',
+    components: 'V, S, M',
+    material: 'the petrified eye of a newt',
+    duration: 'Concentration, up to 24 hours',
+    concentration: true,
+    ritual: false,
+    source: 'PHB',
+    access: 'Warlock',
+    status: 'known',
+    role: 'Extra damage on every beam',
+    damage: '1d6 necrotic per hit',
+    summary:
+      'Curse a creature you can see. Until the spell ends, Lucan deals an extra 1d6 necrotic damage whenever he hits it with an attack, and it has disadvantage on ability checks with one ability he chooses. If the target drops to 0 HP, he can move the curse to a new creature as a bonus action on a later turn.',
+    atPact: 'Lasts up to 24 hours.',
+    notes: 'Both Eldritch Blast beams add the 1d6, so about +7 damage a turn against one target. It competes with Spike Growth for concentration and with Far Step and Elemental Gift for the bonus action.'
+  },
+  {
     slug: 'hold-person',
     name: 'Hold Person',
     level: 2,
@@ -258,6 +278,28 @@ export const spells: Spell[] = [
     summary:
       'A humanoid makes a WIS save or is paralyzed, repeating the save at the end of each of its turns. Targets must be within 30 ft of each other.',
     atPact: 'Up to four humanoids.'
+  },
+  {
+    slug: 'mind-spike',
+    name: 'Mind Spike',
+    level: 2,
+    school: 'Divination',
+    castingTime: '1 action',
+    range: '60 ft',
+    components: 'S',
+    duration: 'Concentration, up to 1 hour',
+    concentration: true,
+    ritual: false,
+    source: 'XGE',
+    access: 'Warlock',
+    status: 'known',
+    role: 'Psychic damage and tracking',
+    save: 'WIS',
+    damage: '3d8 psychic',
+    summary:
+      'Reach into the mind of a creature you can see. It makes a WIS save, taking 3d8 psychic damage on a failure or half as much on a success. On a failure Lucan also always knows where it is on the same plane, and it can’t hide from him or benefit from being invisible against him.',
+    atPact: '6d8 psychic damage.',
+    notes: 'Somatic only, so it can be cast quietly. Good against invisible casters and anyone who might flee.'
   },
   {
     slug: 'counterspell',
@@ -332,12 +374,13 @@ export const spells: Spell[] = [
     ritual: false,
     source: 'PHB',
     access: 'Warlock',
-    status: 'known',
+    status: 'candidate',
     role: 'Remove enemies from the fight',
     save: 'CHA',
     summary:
       'A creature makes a CHA save or is sent to a harmless demiplane, incapacitated. A creature native to another plane that stays banished for the full minute doesn’t come back.',
-    atPact: 'Two targets.'
+    atPact: 'Two targets.',
+    notes: 'Was known before the campaign started. Dropped from the final sheet.'
   },
   {
     slug: 'far-step',
@@ -493,13 +536,14 @@ export const spells: Spell[] = [
     ritual: false,
     source: 'PHB',
     access: 'Genie Patron',
-    status: 'known',
+    status: 'candidate',
     role: 'Fear + psychic damage',
     save: 'WIS',
     damage: '4d10 psychic per turn',
     summary:
       'Conjure a creature’s deepest fear. On a failed WIS save it is frightened, and at the end of each of its turns it saves again or takes psychic damage. A success ends the spell.',
-    atPact: '5d10 psychic damage on each failed save.'
+    atPact: '5d10 psychic damage on each failed save.',
+    notes: 'A Genie expanded-list spell that isn’t on the final sheet, so it isn’t treated as known.'
   },
   {
     slug: 'creation',
@@ -582,7 +626,7 @@ export const spells: Spell[] = [
     role: 'Stone refuge and observation',
     summary:
       'Step into a stone object or surface large enough to hold Lucan and his gear. He can hear but not see outside, and can only cast spells on himself. Partial destruction of the stone deals 6d6 bludgeoning damage; full destruction deals 50 and expels him.',
-    notes: 'Has the ritual tag, but Warlocks can’t ritual-cast known spells. Copying it into the Book of Shadows (150 gp, 6 hours) would let Lucan cast it as a ritual without spending a pact slot.'
+    notes: 'Has the ritual tag, and Book of Ancient Secrets lets Lucan ritual-cast warlock spells he knows, so he can cast it in 10 extra minutes without spending a pact slot.'
   },
   {
     slug: 'stone-shape',
@@ -662,7 +706,6 @@ export const spells: Spell[] = [
     source: 'PHB',
     access: 'Book of Shadows',
     status: 'book',
-    priority: 'High',
     role: 'Sense and classify magic',
     summary:
       'Sense magic within 30 ft. As an action, see a faint aura around visible magical creatures or objects and learn the school of magic, if any. Blocked by the usual stone, metal and lead.'
@@ -682,14 +725,12 @@ export const spells: Spell[] = [
     source: 'PHB',
     access: 'Book of Shadows',
     status: 'book',
-    priority: 'High',
     role: 'Appraise magic items',
     summary:
       'Learn a magic item’s properties, how to use it, whether it needs attunement and how many charges it has. Touching a creature reveals the spells affecting it.',
     notes: 'The appraiser’s signature ritual. The pearl isn’t consumed.'
   },
 
-  // ── Ritual wishlist ───────────────────────────────────────
   {
     slug: 'find-familiar',
     name: 'Find Familiar',
@@ -704,13 +745,11 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'High',
+    status: 'book',
     role: 'Scout and Help-action companion',
     summary:
       'Summon a spirit familiar in an animal form such as an owl, cat, raven or spider. It shares senses telepathically within 100 ft and can deliver Lucan’s touch spells.',
-    notes:
-      'Leading next acquisition. Cost to copy: 50 gp and 2 hours. Pact of the Tome Warlocks don’t get the special Pact of the Chain forms.'
+    notes: 'Pact of the Tome Warlocks don’t get the special Pact of the Chain forms. A spirit familiar can take the Help action to give Lucan advantage.'
   },
   {
     slug: 'comprehend-languages',
@@ -726,8 +765,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'High',
+    status: 'book',
     role: 'Read and understand any language',
     summary:
       'Understand the literal meaning of any spoken language Lucan hears, and any written language he touches (about one minute per page). Doesn’t decode secret messages or glyphs.',
@@ -747,8 +785,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'High',
+    status: 'book',
     role: 'Invisible helper',
     summary:
       'An invisible, mindless force performs simple tasks: fetching, cleaning, mending, folding, lighting fires, serving food, pouring wine. It has AC 10, 1 HP, Strength 2 and can’t attack.'
@@ -767,12 +804,11 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'High',
+    status: 'book',
     role: 'Secure camp',
     summary:
       'An immobile dome of force shelters up to nine Medium creatures. Creatures and objects can’t pass through it, spells can’t extend through it, and the weather inside is comfortable. Ends if Lucan leaves.',
-    notes: 'Cost to copy: 150 gp, 6 hours. A backup for when the Vessel can’t be used.'
+    notes: 'A backup for when the Vessel can’t be used.'
   },
   {
     slug: 'phantom-steed',
@@ -787,8 +823,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'High',
+    status: 'book',
     role: 'Overland travel',
     summary:
       'A quasi-real, horselike creature with a speed of 100 ft, able to travel 10 miles an hour (13 at a fast pace). It comes with saddle, bit and bridle, and fades if it takes damage.'
@@ -807,12 +842,11 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'High',
+    status: 'book',
     role: 'Party telepathy',
     summary:
       'Link up to eight willing creatures telepathically for the duration, over any distance on the same plane, even if they share no language.',
-    notes: 'Cost to copy: 250 gp, 10 hours. Copying it requires finding a written source.'
+    notes: 'Cast as a ritual, it gives the whole party telepathy for an hour without spending a pact slot.'
   },
   {
     slug: 'alarm',
@@ -828,8 +862,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Useful',
+    status: 'book',
     role: 'Camp security',
     summary:
       'Ward a door, window or area no larger than a 20-ft cube. An intruder triggers a mental ping or an audible handbell. Lucan can name creatures that won’t set it off.'
@@ -847,8 +880,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Useful',
+    status: 'book',
     role: 'Talk to beasts',
     summary: 'Comprehend and verbally communicate with beasts. Their knowledge is limited by their intelligence.'
   },
@@ -866,8 +898,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Useful',
+    status: 'book',
     role: 'Hauling',
     summary:
       'A 3-ft-wide disk of force floats 3 ft off the ground, carries up to 500 lb and follows Lucan within 20 ft.'
@@ -885,8 +916,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Useful',
+    status: 'book',
     role: 'Anti-caster / stealth',
     summary:
       'No sound can be created within or pass through a 20-ft-radius sphere. Creatures inside are deafened and immune to thunder damage, and can’t cast spells with verbal components.',
@@ -906,8 +936,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Useful',
+    status: 'book',
     role: 'Underwater travel',
     summary: 'Up to ten willing creatures can breathe underwater for 24 hours and keep their normal mode of respiration.'
   },
@@ -925,8 +954,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Useful',
+    status: 'book',
     role: 'Ask a higher power',
     summary:
       'Ask a single question about a goal, event or activity happening within 7 days and get a truthful reply — a short phrase, cryptic rhyme or omen. Repeat castings before a long rest risk random readings.'
@@ -945,8 +973,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Useful',
+    status: 'book',
     role: 'Three yes/no questions',
     summary:
       'Contact a deity or divine proxy and ask up to three yes-or-no questions. Repeat castings before a long rest risk getting no answer.',
@@ -965,8 +992,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Useful',
+    status: 'book',
     role: 'Terrain knowledge',
     summary:
       'Learn up to three facts about the land within 3 miles (300 ft underground): terrain, water, plants, minerals, creatures, powerful celestials, fey, fiends, elementals or undead, and settlements.',
@@ -986,8 +1012,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Additional',
+    status: 'book',
     role: 'Message delivery',
     summary:
       'A Tiny beast carries a message of up to 25 words to a described recipient in a known location, traveling up to 50 miles a day (25 on foot).'
@@ -1006,8 +1031,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Additional',
+    status: 'book',
     role: 'Weal-or-woe omen',
     summary:
       'Receive an omen about a course of action planned within the next 30 minutes: weal, woe, weal and woe, or nothing.'
@@ -1025,8 +1049,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Additional',
+    status: 'book',
     role: 'Borrow a beast’s senses',
     summary: 'Touch a willing beast and use your action to see and hear through its senses, while blinded and deafened to your own surroundings.'
   },
@@ -1044,8 +1067,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Additional',
+    status: 'book',
     role: 'Preserve remains',
     summary:
       'Protect a corpse from decay and from becoming undead. Days under the spell don’t count against time limits like Raise Dead’s.'
@@ -1064,8 +1086,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Additional',
+    status: 'book',
     role: 'Find a specific beast or plant',
     summary: 'Name a specific kind of beast or plant and learn the direction and distance to the closest one within 5 miles.'
   },
@@ -1083,8 +1104,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Additional',
+    status: 'book',
     role: 'Triggered message',
     summary:
       'Implant a message of up to 25 words in an object, spoken by a magical mouth when a visual or audible trigger occurs within 30 ft.',
@@ -1104,8 +1124,7 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Additional',
+    status: 'book',
     role: 'Fake death',
     summary:
       'A willing creature appears dead to all outward inspection. It is blinded and incapacitated, has resistance to all damage except psychic, and is unaffected by disease and poison while the spell lasts.'
@@ -1123,14 +1142,169 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'wishlist',
-    priority: 'Additional',
-    role: 'Extraplanar questions — off the plan',
+    status: 'book',
+    role: 'Extraplanar questions',
     save: 'INT (DC 15)',
     damage: '6d6 psychic on a failed save',
     summary:
       'Contact an extraplanar entity and ask up to five questions. First make a DC 15 INT save: on a failure, take 6d6 psychic damage and be driven insane until a long rest.',
-    notes: 'Explicitly removed from the plan. With INT +0 the save is a real risk. Kept for reference only.'
+    notes: 'In the book, but with INT +1 the save is a real risk: about a 35% chance of 6d6 psychic damage and insanity. Use it only when nothing else will answer.'
+  },
+  {
+    slug: 'detect-poison-and-disease',
+    name: 'Detect Poison and Disease',
+    level: 1,
+    school: 'Divination',
+    castingTime: '1 action',
+    range: 'Self (30 ft)',
+    components: 'V, S, M',
+    material: 'a yew leaf',
+    duration: 'Concentration, up to 10 minutes',
+    concentration: true,
+    ritual: true,
+    source: 'PHB',
+    access: 'Book of Shadows',
+    status: 'book',
+    role: 'Find poison and disease',
+    summary:
+      'Sense the presence and location of poisons, poisonous creatures and diseases within 30 ft, and identify the kind of each. Blocked by 1 ft of stone, 1 inch of common metal, thin lead or 3 ft of wood or dirt.',
+    notes: 'Check the wine before a negotiation.'
+  },
+  {
+    slug: 'illusory-script',
+    name: 'Illusory Script',
+    level: 1,
+    school: 'Illusion',
+    castingTime: '1 minute',
+    range: 'Touch',
+    components: 'S, M',
+    material: 'a lead-based ink worth at least 10 gp, which the spell consumes',
+    duration: '10 days',
+    concentration: false,
+    ritual: true,
+    source: 'PHB',
+    access: 'Book of Shadows',
+    status: 'book',
+    role: 'Secret messages',
+    save: 'INT (to see through it)',
+    summary:
+      'Write on parchment or paper and imbue it with an illusion. Lucan and the creatures he names when casting see the real message; to everyone else it looks like an unknown script or a different message he chooses. Truesight reveals the hidden text.',
+    notes: 'Pairs with the Golden Pact’s hidden writing and his calligraphy for confidential contracts.'
+  },
+  {
+    slug: 'purify-food-and-drink',
+    name: 'Purify Food and Drink',
+    level: 1,
+    school: 'Transmutation',
+    castingTime: '1 action',
+    range: '10 ft',
+    components: 'V, S',
+    duration: 'Instantaneous',
+    concentration: false,
+    ritual: true,
+    source: 'PHB',
+    access: 'Book of Shadows',
+    status: 'book',
+    role: 'Make food and drink safe',
+    summary: 'All nonmagical food and drink within a 5-ft-radius sphere is purified and rendered free of poison and disease.'
+  },
+  {
+    slug: 'skywrite',
+    name: 'Skywrite',
+    level: 2,
+    school: 'Transmutation',
+    castingTime: '1 action',
+    range: 'Sight',
+    components: 'V, S',
+    duration: 'Concentration, up to 1 hour',
+    concentration: true,
+    ritual: true,
+    source: 'XGE',
+    access: 'Book of Shadows',
+    status: 'book',
+    role: 'Message in the sky',
+    summary:
+      'Write up to ten words in clouds in a part of the sky you can see. The words appear to be made of cloud and stay in place for the duration. A strong wind can disperse them early.'
+  },
+  {
+    slug: 'wristpocket',
+    name: 'Wristpocket',
+    level: 2,
+    school: 'Conjuration',
+    castingTime: '1 action',
+    range: 'Self',
+    components: 'S',
+    duration: 'Concentration, up to 1 hour',
+    concentration: true,
+    ritual: true,
+    source: 'EGW',
+    access: 'Book of Shadows',
+    status: 'book',
+    role: 'Hide or summon a small object',
+    summary:
+      'Flick your wrist to send an object of up to 5 lb that you are holding into an extradimensional space, where nothing can detect it. While the spell lasts, use an action to summon it back to your free hand, and another to send it away again. When the spell ends, the object reappears in your hand or at your feet.',
+    notes: 'A jeweler’s trick for keeping a gem out of sight. Somatic only, so it can be done in plain view.'
+  },
+  {
+    slug: 'water-walk',
+    name: 'Water Walk',
+    level: 3,
+    school: 'Transmutation',
+    castingTime: '1 action',
+    range: '30 ft',
+    components: 'V, S, M',
+    material: 'a piece of cork',
+    duration: '1 hour',
+    concentration: false,
+    ritual: true,
+    source: 'PHB',
+    access: 'Book of Shadows',
+    status: 'book',
+    role: 'Cross liquid surfaces',
+    summary:
+      'Up to ten willing creatures can move across any liquid surface (water, acid, mud, snow, quicksand or lava) as if it were harmless solid ground. Creatures crossing molten lava can still take damage from the heat. A submerged creature rises to the surface at 60 ft per round.'
+  },
+  {
+    slug: 'drawmijs-instant-summons',
+    name: 'Drawmij’s Instant Summons',
+    level: 6,
+    school: 'Conjuration',
+    castingTime: '1 minute',
+    range: 'Touch',
+    components: 'V, S, M',
+    material: 'a sapphire worth 1,000 gp',
+    duration: 'Until dispelled',
+    concentration: false,
+    ritual: true,
+    source: 'PHB',
+    access: 'Book of Shadows',
+    status: 'book',
+    role: 'Recall a precious object',
+    summary:
+      'Touch an object of up to 10 lb and inscribe its name on the sapphire. Later, crush the sapphire as an action to make the object appear in your hand, wherever it is on the same plane. If another creature holds or carries it, you learn who and roughly where, but it doesn’t come to you.',
+    notes:
+      'Book of Ancient Secrets normally limits copied rituals to 5th level at Warlock 10; this one is on the Foundry sheet, so the table allows it. A sapphire anchor is exactly a gemcutter’s kind of spell.'
+  },
+  {
+    slug: 'forbiddance',
+    name: 'Forbiddance',
+    level: 6,
+    school: 'Abjuration',
+    castingTime: '10 minutes',
+    range: 'Touch',
+    components: 'V, S, M',
+    material: 'a sprinkling of holy water, rare incense and powdered ruby worth at least 1,000 gp',
+    duration: '1 day',
+    concentration: false,
+    ritual: true,
+    source: 'PHB',
+    access: 'Book of Shadows',
+    status: 'book',
+    role: 'Ward a building against teleport and planar travel',
+    damage: '5d10 radiant or necrotic',
+    summary:
+      'Ward up to 40,000 sq ft of floor space to a height of 30 ft. Creatures can’t teleport into it or enter it by planar travel such as Etherealness or Plane Shift. Chosen creature types (celestials, elementals, fey, fiends or undead) take 5d10 radiant or necrotic damage when they first enter the area on a turn or start their turn there. Casting it daily on the same spot for 30 days makes it permanent.',
+    notes: 'Also above the usual 5th-level limit for copied rituals, but on the Foundry sheet. Expensive, but it could secure a guildhall or a client’s vault.'
   },
 
   // ── Candidates ────────────────────────────────────────────

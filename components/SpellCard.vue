@@ -37,7 +37,7 @@ const rollNotation = computed(() => (props.spell.atPact ?? props.spell.damage ??
             :title="known.id === 'patron' ? `${spell.access} — granted automatically` : spell.access"
           >{{ known.chip }}</span>
           <span v-if="spell.status !== 'known'" class="chip py-0 text-[10px]" :class="statusTone[spell.status]">
-            {{ spell.priority ? `${spell.priority} priority` : statusLabels[spell.status] }}
+            {{ statusLabels[spell.status] }}
           </span>
         </span>
         <span class="mt-0.5 block truncate text-[12.5px] text-dim">

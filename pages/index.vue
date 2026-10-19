@@ -6,10 +6,10 @@ import { appearance } from '~/data/lore'
 useHead({ title: 'Lucan Beryll — Character Sheet' })
 
 const vitals = [
-  { label: 'Armor Class', value: String(character.ac.total), sub: 'Barrier Tattoo', id: 'ac' },
+  { label: 'Armor Class', value: String(character.ac.total), sub: 'Golden Pact + Bracers', id: 'ac' },
   { label: 'Hit Points', value: String(character.maxHp), sub: character.hitDice },
-  { label: 'Spell Save DC', value: String(derived.spellDc), sub: `${derived.spellDcBase} + 2 Rod` },
-  { label: 'Spell Attack', value: signed(derived.spellAttack), sub: `${signed(derived.spellAttackBase)} + 2 Rod` },
+  { label: 'Spell Save DC', value: String(derived.spellDc), sub: `${derived.spellDcBase} + ${character.itemBonuses.spell} ${character.itemBonuses.spellSource}` },
+  { label: 'Spell Attack', value: signed(derived.spellAttack), sub: `${signed(derived.spellAttackBase)} + ${character.itemBonuses.spell} ${character.itemBonuses.spellSource}` },
   { label: 'Initiative', value: signed(derived.initiative), sub: 'DEX + Stone', roll: `1d20+${derived.initiative}` },
   { label: 'Speed', value: `${character.speed}`, sub: 'ft · fly 30 (Gift)' },
   { label: 'Proficiency', value: signed(character.proficiencyBonus), sub: 'Level 10' },
@@ -38,7 +38,7 @@ const allSkills: { name: string; ability: AbilityKey }[] = [
 ]
 const skills = allSkills.map(s => {
   const prof = character.skills.find(p => p.name === s.name)
-  return { ...s, proficient: !!prof, source: prof?.source, bonus: skillBonus(s.ability, !!prof) }
+  return { ...s, proficient: !!prof, expertise: !!prof?.expertise, source: prof?.source, bonus: skillBonus(s.ability, !!prof, true, prof?.expertise) }
 })
 
 const known = spells.filter(s => s.status === 'known')
@@ -115,7 +115,7 @@ const sections = [
                 class="pointer-events-none absolute left-0 top-full z-20 mt-2 hidden w-64 rounded-xl border border-gold/30 bg-obsidian-900 p-3 shadow-panel group-hover:block"
               >
                 <div v-for="b in character.ac.breakdown" :key="b.label" class="flex justify-between py-0.5 text-xs">
-                  <span class="text-dim">{{ b.label }}</span><span class="tabular-nums text-parchment">{{ b.label.startsWith('Barrier') ? b.value : `+${b.value}` }}</span>
+                  <span class="text-dim">{{ b.label }}</span><span class="tabular-nums text-parchment">{{ 'base' in b ? b.value : `+${b.value}` }}</span>
                 </div>
                 <div class="mt-1 flex justify-between border-t border-obsidian-600 pt-1 text-xs font-semibold"><span>Total</span><span>{{ character.ac.total }}</span></div>
               </div>
@@ -142,7 +142,9 @@ const sections = [
           <SectionHeading id="combat" eyebrow="How Lucan fights" title="Combat" />
           <div class="space-y-5">
             <BlastPanel />
+            <DaggerPanel />
             <SpikeCombo />
+            <LesserDaoPanel />
           </div>
         </section>
 
@@ -227,14 +229,15 @@ const sections = [
           <ul class="space-y-1 text-[13px]">
             <li v-for="b in character.ac.breakdown" :key="b.label" class="flex justify-between gap-3">
               <span class="text-dim">{{ b.label }}</span>
-              <span class="tabular-nums text-parchment">{{ b.label.startsWith('Barrier') ? b.value : `+${b.value}` }}</span>
+              <span class="tabular-nums text-parchment">{{ 'base' in b ? b.value : `+${b.value}` }}</span>
             </li>
             <li class="flex justify-between border-t border-obsidian-600 pt-1 font-semibold"><span>Armor Class</span><span class="tabular-nums text-gold-light">{{ character.ac.total }}</span></li>
           </ul>
           <div class="mt-4 space-y-2 text-[13px]">
             <div v-for="r in character.resistances" :key="r" class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim">Resistance: <span class="text-parchment">{{ r }}</span></span></div>
             <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><span class="text-parchment">Fey Ancestry</span> — advantage against being charmed; magic can’t put him to sleep</span></div>
-            <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><NuxtLink to="/items/cloak-of-displacement" class="text-parchment hover:text-gold-light">Cloak of Displacement</NuxtLink> — attacks against him have disadvantage. Taking damage stops this until the start of his next turn, and it doesn’t work while he is incapacitated, restrained or can’t move</span></div>
+            <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><NuxtLink to="/items/sash-of-summer" class="text-parchment hover:text-gold-light">Sash of Summer</NuxtLink> — no ill effects from extreme heat or cold</span></div>
+            <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><NuxtLink to="/items/bracers-of-the-dao-pact" class="text-parchment hover:text-gold-light">Form of the Lesser Dao</NuxtLink> — twice per long rest; leftover damage carries over to Lucan</span></div>
             <div v-for="s in character.senses" :key="s" class="flex gap-2"><span class="text-jade">◆</span><span class="text-parchment">{{ s }}</span></div>
           </div>
         </div>
@@ -242,7 +245,7 @@ const sections = [
         <div id="proficiencies" class="panel scroll-mt-24 p-5">
           <p class="eyebrow">Skills</p>
           <h2 class="heading mb-1 text-lg">Skills &amp; Senses</h2>
-          <p class="mb-3 text-[11px] text-faint">Includes the Stone of Good Luck’s +1. Click to roll.</p>
+          <p class="mb-3 text-[11px] text-faint">Includes the Stone of Good Luck’s +1. Persuasion has expertise (double proficiency). Click to roll.</p>
           <div class="mb-4 grid grid-cols-3 gap-2 text-center">
             <div class="panel-inset py-2"><div class="text-[10px] uppercase tracking-wider text-faint">Passive Perc.</div><div class="stat-num text-xl">{{ derived.passivePerception }}</div></div>
             <div class="panel-inset py-2"><div class="text-[10px] uppercase tracking-wider text-faint">Passive Ins.</div><div class="stat-num text-xl">{{ derived.passiveInsight }}</div></div>
@@ -253,11 +256,12 @@ const sections = [
               <button
                 type="button"
                 class="flex w-full items-center gap-2 rounded-md px-2 py-1 text-left text-[13px] transition hover:bg-obsidian-800"
-                :title="s.source ? `Proficient — ${s.source}` : undefined"
+                :title="s.source ? `${s.expertise ? 'Expertise' : 'Proficient'} — ${s.source}` : undefined"
                 @click="useDice().roll(`1d20${signed(s.bonus)}`, `${s.name} check`)"
               >
-                <span class="h-1.5 w-1.5 shrink-0 rounded-full" :class="s.proficient ? 'bg-gold' : 'border border-obsidian-500'" />
+                <span class="h-1.5 w-1.5 shrink-0 rounded-full" :class="s.expertise ? 'bg-gold ring-2 ring-gold/40' : s.proficient ? 'bg-gold' : 'border border-obsidian-500'" />
                 <span :class="s.proficient ? 'font-semibold text-parchment' : 'text-dim'">{{ s.name }}</span>
+                <span v-if="s.expertise" class="chip py-0 text-[9px] text-gold-light">Expertise</span>
                 <span class="text-[10px] uppercase text-faint">{{ s.ability }}</span>
                 <span class="ml-auto tabular-nums" :class="s.proficient ? 'text-gold-light' : 'text-dim'">{{ signed(s.bonus) }}</span>
               </button>
@@ -277,6 +281,9 @@ const sections = [
           <div class="mt-3 border-t border-obsidian-600 pt-3 text-[13px]">
             <div v-for="t in character.toolProficiencies" :key="t.name" class="flex justify-between gap-3">
               <span class="text-parchment">{{ t.name }}</span><span class="text-[11px] text-faint">{{ t.source }}</span>
+            </div>
+            <div class="mt-1.5 flex justify-between gap-3">
+              <span class="text-dim">Armor &amp; weapons</span><span class="text-right text-[11px] text-faint">{{ character.armorWeapons }}</span>
             </div>
           </div>
         </div>

@@ -12,7 +12,7 @@ const pages: Record<string, string> = {
   'current-items-and-suggestions': '/items',
   'item-reference': '/items',
   'item-compendium': '/items',
-  'rod-of-pact-keeper-flavored': '/items/rod-of-the-pact-keeper',
+  'rod-of-pact-keeper-flavored': '/items/pact-keepers-crystal-dagger',
   'genie-vessel': '/vessel',
   'zahir-ibn-kharum': '/lore',
   'homebrew-and-dm-rulings': '/rules',
@@ -21,17 +21,15 @@ const pages: Record<string, string> = {
 }
 
 const renamedItems: Record<string, string> = {
-  'barrier-tattoo-rare': '/items/barrier-tattoo',
-  'rod-of-the-pact-keeper-plus-2': '/items/rod-of-the-pact-keeper',
+  // Consolidated into the campaign's patron items
+  ...Object.fromEntries(['barrier-tattoo', 'barrier-tattoo-rare', 'barrier-tattoo-large', 'illuminators-tattoo'].map(s => [s, '/items/the-golden-pact'])),
+  ...Object.fromEntries(['rod-of-the-pact-keeper', 'rod-of-the-pact-keeper-plus-2', 'rod-of-the-pact-keeper-3', 'dagger-shaped-rod'].map(s => [s, '/items/pact-keepers-crystal-dagger'])),
+  'illusionists-bracers': '/items/bracers-of-the-dao-pact',
   'bag-of-holding-function': '/vessel',
-  'dagger-shaped-rod': '/items/rod-of-the-pact-keeper',
-  // Merged into one item with versions
-  'barrier-tattoo-large': '/items/barrier-tattoo',
-  'rod-of-the-pact-keeper-3': '/items/rod-of-the-pact-keeper',
   'stirring-scaled-ornament': '/items/scaled-ornament',
   // No longer requested
   ...Object.fromEntries(
-    ['pearl-of-power', 'mind-crystal', 'mind-crystal-quickened', 'wand-of-web', 'dragon-touched-focus', 'stirring-dragon-touched-focus', 'orb-of-skoraeus', 'robe-of-the-archmagi', 'tome-of-leadership-and-influence', 'belt-of-dwarvenkind'].map(s => [s, '/items'])
+    ['bracers-of-defense', 'pearl-of-power', 'mind-crystal', 'mind-crystal-quickened', 'wand-of-web', 'dragon-touched-focus', 'stirring-dragon-touched-focus', 'orb-of-skoraeus', 'robe-of-the-archmagi', 'tome-of-leadership-and-influence', 'belt-of-dwarvenkind'].map(s => [s, '/items'])
   )
 }
 

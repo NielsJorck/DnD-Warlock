@@ -4,8 +4,8 @@ import { homebrew, rulings, dmQuestions, sourcePolicy, openQuestions } from '~/d
 useHead({ title: 'Campaign Rules — Lucan Beryll' })
 
 const labelTone: Record<string, string> = {
-  Requested: itemGroupTone.requested,
-  'On the sheet': 'border-gold/40 text-gold-light'
+  Owned: itemGroupTone.owned,
+  Wishlist: itemGroupTone.wishlist
 }
 
 const done = ref<Record<string, boolean>>({})
