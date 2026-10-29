@@ -28,6 +28,7 @@ export interface Item {
   defaultVariant?: string // variant id requested unless the DM picks another
   glyph: string
   art?: ItemArt
+  see?: { to: string; label: string } // a page of the site that goes deeper
 }
 
 // Official versions of the same item, e.g. tattoo sizes or +1/+2/+3.
@@ -136,6 +137,7 @@ export const items: Item[] = [
     forCharacter:
       'A golden set of bracers etched with the names of the Greater Dao Zahir and Lucan Beryll, signing the pact between them. The Golden Pact’s script ends on them at each wrist. The Golden Pact counts as no armor, so with it he has AC 20.',
     caveat: 'Using a shield would cost the +2. The form is effectively 83 extra hit points twice a day, but leftover damage still reaches Lucan.',
+    see: { to: '/lesser-dao', label: 'Form of the Lesser Dao: stat block, rules and tactics' },
     glyph: '⟁'
   },
   {

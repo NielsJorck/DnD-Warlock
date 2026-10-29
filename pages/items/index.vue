@@ -55,8 +55,8 @@ const jump = [
       <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">
         Everything here is on the Foundry sheet, and the character sheet’s numbers use it. The Golden Pact, the Bracers of the Dao Pact and the Crystal Dagger are campaign items tied to Zahir. Attunement allows 10.
       </p>
-      <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
-        <div class="grid gap-4 sm:grid-cols-2">
+      <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px] 2xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div class="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
           <ItemCard v-for="i in owned" :key="i.slug" :item="i" featured />
         </div>
         <div class="panel h-fit p-5 lg:sticky lg:top-24">
@@ -75,8 +75,8 @@ const jump = [
 
     <section class="mt-12">
       <SectionHeading id="gear" eyebrow="Mundane" title="Tools &amp; Gear" />
-      <div class="divide-y divide-obsidian-600/60 overflow-hidden rounded-xl border border-obsidian-600/70 bg-obsidian-900/60">
-        <div v-for="g in mundaneGear" :key="g.name" class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 px-4 py-2.5 text-[13px]">
+      <div class="grid gap-px overflow-hidden rounded-xl border border-obsidian-600/70 bg-obsidian-600/60 2xl:grid-cols-2">
+        <div v-for="g in mundaneGear" :key="g.name" class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 bg-obsidian-900 px-4 py-2.5 text-[13px]">
           <span class="font-semibold text-parchment">{{ g.name }}</span>
           <span class="chip py-0 text-[10px]">{{ g.where }}</span>
           <span class="text-[12px] text-faint sm:ml-auto">{{ g.note }}</span>
@@ -102,7 +102,7 @@ const jump = [
           </span>
           <span v-if="g.full" class="chip border-topaz/40 py-0 text-[10px] text-topaz">Full: one of these means a swap</span>
         </div>
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5">
           <ItemCard v-for="i in g.items" :key="i.slug" :item="i" />
         </div>
       </div>

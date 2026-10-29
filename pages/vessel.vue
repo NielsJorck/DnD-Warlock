@@ -85,7 +85,7 @@ function takeVesselRest() {
     <!-- Residence features -->
     <section class="mt-12">
       <SectionHeading eyebrow="Campaign Vessel" title="The Residence" />
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 3xl:grid-cols-6">
         <div
           v-for="f in vessel.features"
           :key="f.name"
@@ -105,7 +105,7 @@ function takeVesselRest() {
     <section class="mt-12">
       <SectionHeading id="rooms" eyebrow="Floor plan" title="Rooms of the Vessel" />
       <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">{{ rooms.length }} rooms holding {{ vesselItems.length }} pieces of household magic. These don’t use attunement slots. Lucan can take them out as he would from a Bag of Holding.</p>
-      <div class="grid gap-4 md:grid-cols-2">
+      <div class="grid items-start gap-4 md:grid-cols-2 2xl:grid-cols-3">
         <article
           v-for="(r, n) in rooms"
           :id="r.slug"

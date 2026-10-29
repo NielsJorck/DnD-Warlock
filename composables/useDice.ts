@@ -1,3 +1,5 @@
+export type RollMode = 'normal' | 'adv' | 'dis'
+
 export interface Roll {
   id: number
   label: string
@@ -6,6 +8,9 @@ export interface Roll {
   modifier: number
   total: number
   crit?: 'hit' | 'miss'
+  mode?: 'adv' | 'dis'
+  dropped?: number // the other d20 when rolling with advantage or disadvantage
+  note?: string // a notification with no dice, e.g. "Pact slot spent"
 }
 
 let nextId = 1
@@ -24,37 +29,64 @@ function parse(notation: string) {
   return { dice, modifier }
 }
 
+// Doubles every dice term for a critical hit: 1d10+1d6+9 → 2d10+2d6+9
+export function critDice(notation: string) {
+  return notation.replace(/(\d*)d(\d+)/gi, (_, n, s) => `${Number(n || 1) * 2}d${s}`)
+}
+
+const die = (sides: number) => 1 + Math.floor(Math.random() * sides)
+
 export function useDice() {
   const log = useState<Roll[]>('dice-log', () => [])
+  // Applies to every single-d20 roll until it is switched back
+  const mode = useState<RollMode>('dice-mode', () => 'normal')
 
-  function roll(notation: string, label = notation) {
+  function push(entry: Roll) {
+    log.value = [entry, ...log.value].slice(0, 6)
+    return entry
+  }
+
+  // plain: ignore advantage/disadvantage (death saves)
+  function roll(notation: string, label = notation, opts: { plain?: boolean } = {}) {
     const { dice, modifier } = parse(notation)
+    const single20 = dice.length === 1 && dice[0].count === 1 && dice[0].sides === 20 && dice[0].sign === 1
+    const twice = single20 && !opts.plain && mode.value !== 'normal' ? mode.value : undefined
     const rolls: number[] = []
     let total = modifier
+    let dropped: number | undefined
     for (const d of dice) {
       for (let i = 0; i < d.count; i++) {
-        const r = 1 + Math.floor(Math.random() * d.sides)
+        let r = die(d.sides)
+        if (twice) {
+          const other = die(20)
+          const keep = twice === 'adv' ? Math.max(r, other) : Math.min(r, other)
+          dropped = keep === r ? other : r
+          r = keep
+        }
         rolls.push(r * d.sign)
         total += r * d.sign
       }
     }
-    const single20 = dice.length === 1 && dice[0].count === 1 && dice[0].sides === 20
-    const entry: Roll = {
+    return push({
       id: nextId++,
-      label,
+      label: twice ? `${label} · ${twice === 'adv' ? 'advantage' : 'disadvantage'}` : label,
       notation,
       rolls,
       modifier,
       total,
+      mode: twice,
+      dropped,
       crit: single20 ? (rolls[0] === 20 ? 'hit' : rolls[0] === 1 ? 'miss' : undefined) : undefined
-    }
-    log.value = [entry, ...log.value].slice(0, 6)
-    return entry
+    })
+  }
+
+  function note(label: string, detail = '') {
+    return push({ id: nextId++, label, notation: '', rolls: [], modifier: 0, total: 0, note: detail })
   }
 
   function dismiss(id: number) {
     log.value = log.value.filter(r => r.id !== id)
   }
 
-  return { log, roll, dismiss }
+  return { log, mode, roll, note, dismiss }
 }

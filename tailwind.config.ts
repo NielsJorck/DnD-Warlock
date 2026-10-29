@@ -6,6 +6,9 @@ export default <Partial<Config>>{
   plugins: [typography],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1920px'
+      },
       colors: {
         obsidian: {
           950: '#0b0a09',

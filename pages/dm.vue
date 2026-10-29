@@ -110,7 +110,7 @@ function confirmReset() {
       <div class="space-y-8">
         <div v-for="t in topics" :key="t">
           <p class="eyebrow mb-3 text-topaz">{{ t }}</p>
-          <div class="grid gap-3 md:grid-cols-2">
+          <div class="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
             <div v-for="q in dmQuestions.filter(q => q.topic === t)" :key="q.id" class="rounded-xl border border-topaz/25 bg-gradient-to-br from-topaz/[0.06] to-transparent p-4">
               <h3 class="text-sm font-semibold text-parchment">{{ q.question }}</h3>
               <p class="mt-1 text-[12.5px] leading-relaxed text-dim">{{ q.context }}</p>

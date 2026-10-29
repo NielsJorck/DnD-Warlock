@@ -14,6 +14,7 @@ defineProps<{ features: Feature[] }>()
             <span class="text-[11px] text-faint">{{ f.source }}<template v-if="f.level"> · Lv {{ f.level }}</template></span>
             <span v-if="f.homebrew" class="chip border-topaz/40 py-0 text-[10px] text-topaz">Homebrew</span>
             <span v-if="f.uses" class="chip py-0 text-[10px]">{{ f.uses }}</span>
+            <NuxtLink v-if="f.to" :to="f.to" class="text-[11.5px] text-gold/80 hover:text-gold-light">Open →</NuxtLink>
           </span>
           <span class="mt-0.5 block text-[13px] leading-relaxed text-dim">{{ f.summary }}</span>
         </span>

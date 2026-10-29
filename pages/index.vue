@@ -1,69 +1,70 @@
 <script setup lang="ts">
-import { character, type AbilityKey } from '~/data/character'
-import { spells, knownSources, levelLabel } from '~/data/spells'
+import { character, lesserDao } from '~/data/character'
+import { items } from '~/data/items'
 import { appearance } from '~/data/lore'
 
 useHead({ title: 'Lucan Beryll — Character Sheet' })
 
+// Every number appears once on the sheet: here, in the attacks table, or under Defenses and Skills
 const vitals = [
-  { label: 'Armor Class', value: String(character.ac.total), sub: 'Golden Pact + Bracers', id: 'ac' },
-  { label: 'Hit Points', value: String(character.maxHp), sub: character.hitDice },
-  { label: 'Spell Save DC', value: String(derived.spellDc), sub: `${derived.spellDcBase} + ${character.itemBonuses.spell} ${character.itemBonuses.spellSource}` },
-  { label: 'Spell Attack', value: signed(derived.spellAttack), sub: `${signed(derived.spellAttackBase)} + ${character.itemBonuses.spell} ${character.itemBonuses.spellSource}` },
-  { label: 'Initiative', value: signed(derived.initiative), sub: 'DEX + Stone', roll: `1d20+${derived.initiative}` },
-  { label: 'Speed', value: `${character.speed}`, sub: 'ft · fly 30 (Gift)' },
-  { label: 'Proficiency', value: signed(character.proficiencyBonus), sub: 'Level 10' },
-  { label: 'Pact Slots', value: `${character.pactSlots.count}×5th`, sub: `Short rest · +${character.savantSlot.count} Savant` }
+  { label: 'Armor Class', short: 'AC', value: String(character.ac.total), sub: 'Golden Pact + Bracers' },
+  { label: 'Hit Points', short: 'HP', value: String(character.maxHp), sub: character.hitDice },
+  { label: 'Spell Save DC', short: 'DC', value: String(derived.spellDc), sub: `${derived.spellDcBase} + ${character.itemBonuses.spell} ${character.itemBonuses.spellSource}` },
+  { label: 'Spell Attack', short: 'Atk', value: signed(derived.spellAttack), sub: `${signed(derived.spellAttackBase)} + ${character.itemBonuses.spell} ${character.itemBonuses.spellSource}` },
+  { label: 'Initiative', short: 'Init', value: signed(derived.initiative), sub: 'DEX + Stone' },
+  { label: 'Speed', short: 'Speed', value: `${character.speed}`, sub: 'ft · fly 30 (Gift)' },
+  { label: 'Proficiency', short: 'Prof', value: signed(character.proficiencyBonus), sub: `Level ${character.level}` },
+  { label: 'Pact Slots', short: 'Slots', value: `${character.pactSlots.count}×5th`, sub: `Short rest · +${character.savantSlot.count} Savant` }
 ]
 
-const allSkills: { name: string; ability: AbilityKey }[] = [
-  { name: 'Acrobatics', ability: 'dex' },
-  { name: 'Animal Handling', ability: 'wis' },
-  { name: 'Arcana', ability: 'int' },
-  { name: 'Athletics', ability: 'str' },
-  { name: 'Deception', ability: 'cha' },
-  { name: 'History', ability: 'int' },
-  { name: 'Insight', ability: 'wis' },
-  { name: 'Intimidation', ability: 'cha' },
-  { name: 'Investigation', ability: 'int' },
-  { name: 'Medicine', ability: 'wis' },
-  { name: 'Nature', ability: 'int' },
-  { name: 'Perception', ability: 'wis' },
-  { name: 'Performance', ability: 'cha' },
-  { name: 'Persuasion', ability: 'cha' },
-  { name: 'Religion', ability: 'int' },
-  { name: 'Sleight of Hand', ability: 'dex' },
-  { name: 'Stealth', ability: 'dex' },
-  { name: 'Survival', ability: 'wis' }
+// +1 magic dagger, finesse: DEX (higher than STR) + proficiency (simple weapons)
+const daggerHit = abilityMod('dex') + character.proficiencyBonus + 1
+const daggerMod = abilityMod('dex') + 1
+const attacks = [
+  {
+    name: 'Eldritch Blast',
+    to: '/spells/eldritch-blast',
+    meta: `120 ft · ${derived.eldritchBeams} beams`,
+    hit: derived.spellAttack,
+    damage: `1d10 + ${derived.agonizing} force each`
+  },
+  {
+    name: 'Crystal Dagger',
+    to: '/items/pact-keepers-crystal-dagger',
+    meta: 'Finesse · thrown 30 ft, returns',
+    hit: daggerHit,
+    damage: `1d4 + ${daggerMod} piercing, 2d4 force, 2d4 bludgeoning`
+  },
+  {
+    name: 'Lesser Dao form',
+    to: '/lesser-dao',
+    meta: `Two a turn · ${lesserDao.uses} / long rest`,
+    hit: lesserDao.attacks[0].toHit,
+    damage: lesserDao.attacks.slice(0, 2).map(a => `${a.name} ${a.damage.replace('+', ' + ')}`).join(' · ')
+  }
 ]
-const skills = allSkills.map(s => {
-  const prof = character.skills.find(p => p.name === s.name)
-  return { ...s, proficient: !!prof, expertise: !!prof?.expertise, source: prof?.source, bonus: skillBonus(s.ability, !!prof, true, prof?.expertise) }
+
+// "Cold (Sash of Summer)" → name and where it comes from
+const resistances = character.resistances.map(r => {
+  const [name, source] = r.replace(')', '').split(' (')
+  return { name, source }
 })
 
-const known = spells.filter(s => s.status === 'known')
-const cantrips = knownSources
-  .map(k => ({ ...k, spells: known.filter(s => s.level === 0 && k.access.includes(s.access)) }))
-  .filter(k => k.spells.length)
-const leveled = knownSources
-  .map(k => ({
-    ...k,
-    spells: known.filter(s => s.level > 0 && k.access.includes(s.access)).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
-  }))
-  .filter(k => k.spells.length)
+const attuned = items.filter(i => i.group === 'owned' && i.attunement)
+const freeSlots = Math.max(0, character.attunement.max - attuned.length)
 
 const sections = [
-  { id: 'abilities', label: 'Abilities' },
-  { id: 'combat', label: 'Combat' },
-  { id: 'spellcasting', label: 'Spellcasting' },
-  { id: 'features', label: 'Features' },
-  { id: 'proficiencies', label: 'Proficiencies' }
+  { id: 'combat', label: 'Attacks' },
+  { id: 'defenses', label: 'Defenses' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'attunement', label: 'Attunement' },
+  { id: 'features', label: 'Features' }
 ]
 </script>
 
 <template>
   <div>
-    <!-- Hero -->
+    <!-- Who he is, and every number that matters at a glance -->
     <section class="panel relative overflow-hidden">
       <svg class="pointer-events-none absolute -right-24 -top-24 h-[520px] w-[520px] text-gold opacity-[0.07]" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="0.6" aria-hidden="true">
         <path d="M100 10 180 70 100 190 20 70Z" />
@@ -72,233 +73,196 @@ const sections = [
         <circle cx="100" cy="100" r="96" stroke-dasharray="2 4" />
         <circle cx="100" cy="100" r="88" />
       </svg>
-      <div class="relative grid gap-8 p-6 sm:p-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-center">
-        <NuxtLink to="/lore" class="group mx-auto block w-full max-w-[280px] overflow-hidden rounded-2xl border border-gold/30 shadow-panel">
-          <img :src="publicPath(appearance.portrait.src)" :alt="appearance.portrait.alt" class="aspect-[3/4] w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
-        </NuxtLink>
-
-        <div class="min-w-0">
-          <div>
+      <div class="relative grid grid-cols-1 gap-6 p-5 sm:p-8 2xl:grid-cols-[minmax(0,1fr)_minmax(0,46rem)] 2xl:items-center">
+        <div class="flex items-center gap-5 sm:gap-8">
+          <NuxtLink to="/lore" class="group block w-24 shrink-0 overflow-hidden rounded-2xl border border-gold/30 shadow-panel sm:w-40 lg:w-48">
+            <img :src="publicPath(appearance.portrait.src)" :alt="appearance.portrait.alt" class="aspect-[3/4] w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+          </NuxtLink>
+          <div class="min-w-0">
             <p class="eyebrow">Level {{ character.level }} {{ character.race }} {{ character.className }} · {{ character.subclass }}</p>
-            <h1 class="mt-3 font-display text-5xl font-bold leading-[0.95] tracking-wide sm:text-7xl">
+            <h1 class="mt-2 font-display text-[2.1rem] font-bold leading-[0.95] tracking-wide sm:text-6xl">
               <span class="text-gilded">Lucan Beryll</span>
             </h1>
-            <p class="mt-3 font-serif text-2xl italic text-dim">{{ character.epithet }}</p>
-            <div class="mt-5 flex flex-wrap gap-2">
+            <p class="mt-2 font-serif text-lg italic text-dim sm:text-xl">{{ character.epithet }}</p>
+            <div class="mt-3 flex flex-wrap gap-1.5 [&>.chip]:whitespace-normal">
               <span class="chip border-gold/40 text-gold-light">{{ character.pact }}</span>
               <span class="chip">Patron · {{ character.patron }}</span>
               <span class="chip">{{ character.background }} · {{ character.backgroundDetail }}</span>
-              <span class="chip">{{ character.ruleset }}</span>
             </div>
-            <p class="lore mt-6 max-w-xl">{{ character.identity.summary }}</p>
-            <div class="mt-6 flex flex-wrap gap-2">
-              <NuxtLink to="/spells" class="btn btn-gold px-4 py-2 text-[13px]">Spellbook →</NuxtLink>
-              <NuxtLink to="/vessel" class="btn px-4 py-2 text-[13px]">Enter the Vessel</NuxtLink>
-              <NuxtLink to="/lore" class="btn px-4 py-2 text-[13px]">Story &amp; patron</NuxtLink>
-            </div>
+            <p class="lore mt-4 hidden max-w-2xl sm:block">{{ character.identity.summary }}</p>
           </div>
+        </div>
 
-          <div class="mt-8 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-            <div
-              v-for="v in vitals"
-              :key="v.label"
-              class="group relative rounded-xl border border-obsidian-600 bg-obsidian-950/70 px-4 py-3 transition hover:border-gold/40"
-            >
-              <div class="eyebrow text-dim">{{ v.label }}</div>
-              <div class="flex items-baseline justify-between gap-2">
-                <span class="stat-num text-3xl">{{ v.value }}</span>
-                <RollButton v-if="v.roll" :notation="v.roll" :label="v.label" compact>d20</RollButton>
-              </div>
-              <div class="text-[11px] text-faint">{{ v.sub }}</div>
-              <div
-                v-if="v.id === 'ac'"
-                class="pointer-events-none absolute left-0 top-full z-20 mt-2 hidden w-64 rounded-xl border border-gold/30 bg-obsidian-900 p-3 shadow-panel group-hover:block"
-              >
-                <div v-for="b in character.ac.breakdown" :key="b.label" class="flex justify-between py-0.5 text-xs">
-                  <span class="text-dim">{{ b.label }}</span><span class="tabular-nums text-parchment">{{ 'base' in b ? b.value : `+${b.value}` }}</span>
-                </div>
-                <div class="mt-1 flex justify-between border-t border-obsidian-600 pt-1 text-xs font-semibold"><span>Total</span><span>{{ character.ac.total }}</span></div>
-              </div>
+        <div class="space-y-2">
+          <dl class="grid grid-cols-4 gap-1.5 lg:grid-cols-8 2xl:grid-cols-4">
+            <div v-for="v in vitals" :key="v.label" class="min-w-0 rounded-lg border border-obsidian-600 bg-obsidian-950/70 px-2.5 py-2 sm:px-3" :title="`${v.label}: ${v.sub}`">
+              <dt class="truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-dim">
+                <span class="sm:hidden">{{ v.short }}</span><span class="hidden sm:inline">{{ v.label }}</span>
+              </dt>
+              <dd class="stat-num text-xl leading-tight sm:text-2xl">{{ v.value }}</dd>
+              <dd class="hidden truncate text-[10.5px] text-faint sm:block">{{ v.sub }}</dd>
             </div>
-          </div>
+          </dl>
+          <AbilityGrid />
+          <p class="text-[10.5px] text-faint">Big numbers are ability checks. Checks and saves include the Stone of Good Luck’s +1; gold saves are proficient.</p>
         </div>
       </div>
     </section>
 
-    <!-- In-page nav -->
-    <nav class="scrollbar-none mt-6 flex gap-2 overflow-x-auto" aria-label="Sheet sections">
-      <a v-for="s in sections" :key="s.id" :href="`#${s.id}`" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">{{ s.label }}</a>
+    <nav class="scrollbar-none -mx-[var(--gutter)] mt-6 flex gap-2 overflow-x-auto px-[var(--gutter)]" aria-label="Sheet sections">
+      <a v-for="s in sections" :key="s.id" :href="`#${s.id}`" class="chip shrink-0 px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">{{ s.label }}</a>
     </nav>
 
-    <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
-      <!-- Main column -->
-      <div class="min-w-0 space-y-10">
-        <section class="panel p-5 sm:p-6">
-          <SectionHeading id="abilities" eyebrow="Ability scores" title="Abilities &amp; Saving Throws" />
-          <AbilityGrid />
+    <!-- What gets looked up most sits above the features -->
+    <div class="mt-6 grid items-start gap-5 md:grid-cols-2 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)]">
+      <div class="space-y-5">
+        <section id="combat" class="panel scroll-mt-24 p-5">
+          <p class="eyebrow">How Lucan fights</p>
+          <h2 class="heading mb-2 text-lg">Attacks</h2>
+          <table class="w-full text-left text-[13px]">
+            <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.14em] text-faint">
+              <tr>
+                <th class="py-2 pr-3 font-semibold">Attack</th>
+                <th class="px-2 py-2 text-center font-semibold">Hit</th>
+                <th class="py-2 pl-2 font-semibold">Damage</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-obsidian-600/60">
+              <tr v-for="a in attacks" :key="a.name" class="align-top">
+                <td class="py-2 pr-3">
+                  <NuxtLink :to="a.to" class="font-semibold text-parchment hover:text-gold-light">{{ a.name }}</NuxtLink>
+                  <div class="text-[11px] text-faint">{{ a.meta }}</div>
+                </td>
+                <td class="stat-num px-2 py-2 text-center text-lg">{{ signed(a.hit) }}</td>
+                <td class="py-2 pl-2 text-gold-light">{{ a.damage }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="mt-2 text-[11.5px] leading-relaxed text-faint">
+            Eldritch Blast and the dagger: Genie’s Wrath adds +{{ derived.genieWrath }} bludgeoning to the first hit each turn, which also lets Crusher move the target.
+          </p>
         </section>
 
-        <section>
-          <SectionHeading id="combat" eyebrow="How Lucan fights" title="Combat" />
-          <div class="space-y-5">
-            <BlastPanel />
-            <DaggerPanel />
-            <SpikeCombo />
-            <LesserDaoPanel />
-          </div>
-        </section>
-
-        <section class="panel p-5 sm:p-6">
-          <SectionHeading id="spellcasting" eyebrow="Pact Magic · CHA" title="Spellcasting">
-            <NuxtLink to="/spells" class="btn">Full spellbook →</NuxtLink>
-          </SectionHeading>
-          <div class="mb-5 grid grid-cols-3 gap-2 text-center">
-            <div class="panel-inset py-3"><div class="eyebrow text-dim">Save DC</div><div class="stat-num text-3xl">{{ derived.spellDc }}</div></div>
-            <div class="panel-inset py-3"><div class="eyebrow text-dim">Attack</div><div class="stat-num text-3xl">{{ signed(derived.spellAttack) }}</div></div>
-            <div class="panel-inset py-3">
-              <div class="eyebrow text-dim">Slots</div>
-              <div class="stat-num text-3xl">{{ character.pactSlots.count }} × 5th</div>
-              <div class="text-[11px] text-faint">+{{ character.savantSlot.count }} Spell Savant · long rest</div>
+        <section id="defenses" class="panel scroll-mt-24 p-5">
+          <p class="eyebrow">Defenses</p>
+          <h2 class="heading mb-3 text-lg">Armor &amp; Resistances</h2>
+          <p class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-[12.5px]">
+            <template v-for="(b, n) in character.ac.breakdown" :key="b.label">
+              <span v-if="n" class="text-faint">+</span>
+              <span><span class="tabular-nums text-parchment">{{ b.value }}</span> <span class="text-dim">{{ b.label.replace(/^The /, '') }}</span></span>
+            </template>
+            <span class="text-faint">=</span>
+            <span class="font-semibold text-gold-light">AC {{ character.ac.total }}</span>
+          </p>
+          <dl class="mt-3 space-y-1.5 border-t border-obsidian-600 pt-3 text-[13px]">
+            <div class="flex gap-3">
+              <dt class="w-24 shrink-0 text-faint">Resistances</dt>
+              <dd class="text-parchment">
+                <template v-for="(r, n) in resistances" :key="r.name">{{ n ? ', ' : '' }}{{ r.name }} <span class="text-faint">({{ r.source }})</span></template>
+              </dd>
             </div>
-          </div>
-
-          <p class="eyebrow mb-2 text-dim">Cantrips · at will</p>
-          <div class="space-y-2">
-            <div v-for="g in cantrips" :key="g.id" class="flex flex-wrap items-center gap-1.5">
-              <span class="w-36 shrink-0 text-[11px] text-faint">{{ g.title }}</span>
-              <NuxtLink v-for="c in g.spells" :key="c.slug" :to="`/spells/${c.slug}`" class="chip px-3 py-1 text-xs text-parchment transition hover:border-gold/50 hover:text-gold-light">
-                {{ c.name }}<span v-if="c.damage" class="text-faint">· {{ c.damage.split(' ')[0] }}</span>
-              </NuxtLink>
+            <div class="flex gap-3">
+              <dt class="w-24 shrink-0 text-faint">Climate</dt>
+              <dd class="text-parchment">Unbothered by extreme heat or cold <span class="text-faint">(<NuxtLink to="/items/sash-of-summer" class="hover:text-gold-light">Sash of Summer</NuxtLink>)</span></dd>
             </div>
-          </div>
-
-          <template v-for="g in leveled" :key="g.id">
-            <div class="mb-2 mt-5 flex flex-wrap items-baseline gap-x-3">
-              <p class="eyebrow" :class="g.id === 'patron' ? 'text-topaz' : 'text-dim'">{{ g.title }}</p>
-              <span class="text-[11px] text-faint">{{ g.sub }}</span>
-            </div>
-            <div class="overflow-hidden rounded-xl border" :class="g.id === 'patron' ? 'border-topaz/25' : 'border-obsidian-600/70'">
-              <NuxtLink
-                v-for="s in g.spells"
-                :key="s.slug"
-                :to="`/spells/${s.slug}`"
-                class="grid grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-3 border-b border-obsidian-600/60 px-3 py-2.5 transition last:border-0 hover:bg-obsidian-800/60 sm:grid-cols-[2.25rem_11rem_minmax(0,1fr)_auto]"
-              >
-                <span class="grid h-8 w-8 place-items-center rounded-lg border text-sm" :class="[schoolTone[s.school].border, schoolTone[s.school].text, schoolTone[s.school].bg]">{{ s.level }}</span>
-                <span class="min-w-0">
-                  <span class="block truncate text-sm font-semibold text-parchment">{{ s.name }}</span>
-                  <span class="block text-[11px] text-faint sm:hidden">{{ s.atPact || s.role }}</span>
-                </span>
-                <span class="hidden truncate text-[13px] text-dim sm:block">{{ s.atPact || s.role }}</span>
-                <span class="hidden gap-1 sm:flex">
-                  <span v-if="s.concentration" class="chip py-0 text-[10px]" title="Concentration">C</span>
-                  <span v-if="s.save" class="chip py-0 text-[10px]">{{ s.save.split(' ')[0] }}</span>
-                </span>
-              </NuxtLink>
-            </div>
-          </template>
-          <p class="mt-2 text-[11px] text-faint">{{ levelLabel(1, true) }} through 5th-level spells all use the same 5th-level slots — pact slots and the Spell Savant slot alike — so lower-level spells are always upcast.</p>
-        </section>
-
-        <section>
-          <SectionHeading id="features" eyebrow="Build" title="Feats, Invocations &amp; Features" />
-          <div class="space-y-6">
-            <div>
-              <h3 class="eyebrow mb-2 text-dim">Feats</h3>
-              <FeatureList :features="character.feats" />
-            </div>
-            <div>
-              <h3 class="eyebrow mb-2 text-dim">Eldritch Invocations</h3>
-              <FeatureList :features="character.invocations" />
-            </div>
-            <div>
-              <h3 class="eyebrow mb-2 text-dim">Class, Patron &amp; Race Features</h3>
-              <FeatureList :features="character.features" />
-            </div>
-          </div>
+          </dl>
         </section>
       </div>
 
-      <!-- Sidebar -->
-      <aside class="space-y-5">
-        <SessionTracker />
+      <section id="skills" class="panel scroll-mt-24 p-5">
+        <p class="eyebrow">Skills</p>
+        <h2 class="heading text-lg">Skills &amp; Senses</h2>
+        <p class="mb-3 mt-1 flex flex-wrap items-center gap-x-3 text-[11px] text-faint">
+          <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-gold" /> proficient</span>
+          <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-gold ring-2 ring-gold/40" /> expertise</span>
+          <span>Stone of Good Luck included</span>
+        </p>
+        <ul class="grid grid-cols-2 gap-x-4 text-[13px] sm:grid-cols-3 md:grid-cols-2">
+          <li
+            v-for="s in skillList"
+            :key="s.name"
+            class="flex items-center gap-2 py-0.5"
+            :title="s.source ? `${s.expertise ? 'Expertise' : 'Proficient'} — ${s.source}` : `${s.name} (${s.ability.toUpperCase()})`"
+          >
+            <span class="h-1.5 w-1.5 shrink-0 rounded-full" :class="s.expertise ? 'bg-gold ring-2 ring-gold/40' : s.proficient ? 'bg-gold' : 'border border-obsidian-500'" />
+            <span class="truncate" :class="s.proficient ? 'font-semibold text-parchment' : 'text-dim'">{{ s.name }}</span>
+            <span class="ml-auto tabular-nums" :class="s.proficient ? 'text-gold-light' : 'text-dim'">{{ signed(s.bonus) }}</span>
+          </li>
+        </ul>
+        <dl class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 border-t border-obsidian-600 pt-3 text-[12.5px]">
+          <div class="flex justify-between gap-2"><dt class="text-faint">Darkvision</dt><dd class="tabular-nums text-parchment">{{ character.darkvision }} ft</dd></div>
+          <div class="flex justify-between gap-2"><dt class="text-faint">Passive Perception</dt><dd class="tabular-nums text-parchment">{{ derived.passivePerception }}</dd></div>
+          <div class="flex justify-between gap-2"><dt class="text-faint">Passive Insight</dt><dd class="tabular-nums text-parchment">{{ derived.passiveInsight }}</dd></div>
+          <div class="flex justify-between gap-2"><dt class="text-faint">Passive Investigation</dt><dd class="tabular-nums text-parchment">{{ derived.passiveInvestigation }}</dd></div>
+        </dl>
+      </section>
 
-        <div class="panel p-5">
-          <p class="eyebrow">Defenses</p>
-          <h2 class="heading mb-3 text-lg">Armor &amp; Resistances</h2>
-          <ul class="space-y-1 text-[13px]">
-            <li v-for="b in character.ac.breakdown" :key="b.label" class="flex justify-between gap-3">
-              <span class="text-dim">{{ b.label }}</span>
-              <span class="tabular-nums text-parchment">{{ 'base' in b ? b.value : `+${b.value}` }}</span>
-            </li>
-            <li class="flex justify-between border-t border-obsidian-600 pt-1 font-semibold"><span>Armor Class</span><span class="tabular-nums text-gold-light">{{ character.ac.total }}</span></li>
-          </ul>
-          <div class="mt-4 space-y-2 text-[13px]">
-            <div v-for="r in character.resistances" :key="r" class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim">Resistance: <span class="text-parchment">{{ r }}</span></span></div>
-            <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><span class="text-parchment">Fey Ancestry</span> — advantage against being charmed; magic can’t put him to sleep</span></div>
-            <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><NuxtLink to="/items/sash-of-summer" class="text-parchment hover:text-gold-light">Sash of Summer</NuxtLink> — no ill effects from extreme heat or cold</span></div>
-            <div class="flex gap-2"><span class="text-jade">◆</span><span class="text-dim"><NuxtLink to="/items/bracers-of-the-dao-pact" class="text-parchment hover:text-gold-light">Form of the Lesser Dao</NuxtLink> — twice per long rest; leftover damage carries over to Lucan</span></div>
-            <div v-for="s in character.senses" :key="s" class="flex gap-2"><span class="text-jade">◆</span><span class="text-parchment">{{ s }}</span></div>
-          </div>
-        </div>
-
-        <div id="proficiencies" class="panel scroll-mt-24 p-5">
-          <p class="eyebrow">Skills</p>
-          <h2 class="heading mb-1 text-lg">Skills &amp; Senses</h2>
-          <p class="mb-3 text-[11px] text-faint">Includes the Stone of Good Luck’s +1. Persuasion has expertise (double proficiency). Click to roll.</p>
-          <div class="mb-4 grid grid-cols-3 gap-2 text-center">
-            <div class="panel-inset py-2"><div class="text-[10px] uppercase tracking-wider text-faint">Passive Perc.</div><div class="stat-num text-xl">{{ derived.passivePerception }}</div></div>
-            <div class="panel-inset py-2"><div class="text-[10px] uppercase tracking-wider text-faint">Passive Ins.</div><div class="stat-num text-xl">{{ derived.passiveInsight }}</div></div>
-            <div class="panel-inset py-2"><div class="text-[10px] uppercase tracking-wider text-faint">Passive Inv.</div><div class="stat-num text-xl">{{ derived.passiveInvestigation }}</div></div>
-          </div>
-          <ul class="grid grid-cols-1 gap-0.5">
-            <li v-for="s in skills" :key="s.name">
-              <button
-                type="button"
-                class="flex w-full items-center gap-2 rounded-md px-2 py-1 text-left text-[13px] transition hover:bg-obsidian-800"
-                :title="s.source ? `${s.expertise ? 'Expertise' : 'Proficient'} — ${s.source}` : undefined"
-                @click="useDice().roll(`1d20${signed(s.bonus)}`, `${s.name} check`)"
-              >
-                <span class="h-1.5 w-1.5 shrink-0 rounded-full" :class="s.expertise ? 'bg-gold ring-2 ring-gold/40' : s.proficient ? 'bg-gold' : 'border border-obsidian-500'" />
-                <span :class="s.proficient ? 'font-semibold text-parchment' : 'text-dim'">{{ s.name }}</span>
-                <span v-if="s.expertise" class="chip py-0 text-[9px] text-gold-light">Expertise</span>
-                <span class="text-[10px] uppercase text-faint">{{ s.ability }}</span>
-                <span class="ml-auto tabular-nums" :class="s.proficient ? 'text-gold-light' : 'text-dim'">{{ signed(s.bonus) }}</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        <div class="panel p-5">
+      <div class="grid items-start gap-5 md:col-span-2 md:grid-cols-2 xl:col-span-1 xl:grid-cols-1">
+        <section class="panel p-5">
           <p class="eyebrow">Tongues &amp; tools</p>
           <h2 class="heading mb-3 text-lg">Languages &amp; Tools</h2>
-          <ul class="space-y-1.5 text-[13px]">
-            <li v-for="l in character.languages" :key="l.name" class="flex items-baseline justify-between gap-3">
-              <span class="text-parchment">{{ l.name }}</span>
-              <span class="text-right text-[11px] text-faint">{{ l.note }}</span>
-            </li>
-          </ul>
-          <div class="mt-3 border-t border-obsidian-600 pt-3 text-[13px]">
-            <div v-for="t in character.toolProficiencies" :key="t.name" class="flex justify-between gap-3">
-              <span class="text-parchment">{{ t.name }}</span><span class="text-[11px] text-faint">{{ t.source }}</span>
+          <dl class="space-y-1.5 text-[13px]">
+            <div class="flex gap-3">
+              <dt class="w-28 shrink-0 text-faint">Languages</dt>
+              <dd class="text-parchment">
+                <template v-for="(l, n) in character.languages" :key="l.name">{{ n ? ', ' : '' }}<span :title="l.note">{{ l.name }}</span></template>
+              </dd>
             </div>
-            <div class="mt-1.5 flex justify-between gap-3">
-              <span class="text-dim">Armor &amp; weapons</span><span class="text-right text-[11px] text-faint">{{ character.armorWeapons }}</span>
+            <div class="flex gap-3">
+              <dt class="w-28 shrink-0 text-faint">Tools</dt>
+              <dd class="text-parchment">
+                <template v-for="(t, n) in character.toolProficiencies" :key="t.name">{{ n ? ', ' : '' }}<span :title="t.source">{{ t.name }}</span></template>
+              </dd>
             </div>
-          </div>
-        </div>
+            <div class="flex gap-3">
+              <dt class="w-28 shrink-0 text-faint">Armor, weapons</dt>
+              <dd class="text-parchment">{{ character.armorWeapons }}</dd>
+            </div>
+          </dl>
+        </section>
 
-        <div class="panel p-5">
-          <div class="mb-3 flex items-baseline justify-between">
+        <section id="attunement" class="panel scroll-mt-24 p-5">
+          <div class="mb-2 flex items-baseline justify-between gap-3">
             <div>
-              <p class="eyebrow">Attunement</p>
+              <p class="eyebrow">Attunement · {{ attuned.length }} / {{ character.attunement.max }}</p>
               <h2 class="heading text-lg">Attuned Items</h2>
             </div>
             <NuxtLink to="/items" class="text-xs text-dim hover:text-gold-light">All items →</NuxtLink>
           </div>
-          <AttunementSlots />
-        </div>
-      </aside>
+          <ul class="grid gap-x-4 text-[13px] sm:grid-cols-2 md:grid-cols-1">
+            <li v-for="i in attuned" :key="i.slug">
+              <NuxtLink :to="`/items/${i.slug}`" class="flex items-center gap-2.5 py-0.5 text-parchment transition hover:text-gold-light">
+                <span class="h-1.5 w-1.5 shrink-0 rotate-45 bg-gold/70" />
+                <span class="truncate">{{ i.name }}</span>
+              </NuxtLink>
+            </li>
+            <li v-for="n in freeSlots" :key="`free-${n}`" class="flex items-center gap-2.5 py-0.5 text-faint">
+              <span class="h-1.5 w-1.5 shrink-0 rotate-45 border border-obsidian-500" />
+              Free slot
+            </li>
+          </ul>
+        </section>
+      </div>
     </div>
+
+    <section class="mt-10">
+      <SectionHeading id="features" eyebrow="Build" title="Feats, Invocations &amp; Features" />
+      <div class="grid items-start gap-6 lg:grid-cols-2">
+        <div class="space-y-6">
+          <div>
+            <h3 class="eyebrow mb-2 text-dim">Feats</h3>
+            <FeatureList :features="character.feats" />
+          </div>
+          <div>
+            <h3 class="eyebrow mb-2 text-dim">Eldritch Invocations</h3>
+            <FeatureList :features="character.invocations" />
+          </div>
+        </div>
+        <div>
+          <h3 class="eyebrow mb-2 text-dim">Class, Patron &amp; Race Features</h3>
+          <FeatureList :features="character.features" />
+        </div>
+      </div>
+    </section>
   </div>
 </template>

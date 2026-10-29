@@ -11,6 +11,7 @@ export interface Feature {
   detail?: string
   uses?: string
   homebrew?: boolean
+  to?: string // the page of the site that covers it in full
 }
 
 export const character = {
@@ -32,6 +33,7 @@ export const character = {
   saveProficiencies: ['con', 'wis', 'cha'] as AbilityKey[],
 
   proficiencyBonus: 4,
+  size: 'Medium',
   maxHp: 83,
   hitDice: '10d8',
   speed: 30,
@@ -144,6 +146,7 @@ export const character = {
     {
       name: 'Book of Ancient Secrets',
       source: 'PHB',
+      to: '/spells?tab=book',
       summary: 'Two 1st-level rituals in the Book of Shadows; copy other rituals you find.',
       detail:
         'Rituals of a level up to half your Warlock level (rounded up — 5th at level 10) can be copied from any class. Costs 50 gp and 2 hours per spell level. The rituals are cast from the book and can’t be cast with pact slots unless known otherwise.'
@@ -177,12 +180,14 @@ export const character = {
     {
       name: 'Pact Magic',
       source: 'Warlock',
+      to: '/spells',
       level: 1,
       summary: 'Two 5th-level pact slots. Every leveled spell is cast at 5th level. Slots return on a short or long rest.'
     },
     {
       name: 'Genie’s Vessel',
       source: 'Genie Patron',
+      to: '/vessel',
       level: 1,
       summary:
         'A Tiny object that serves as a spellcasting focus. AC equals the spell save DC, 14 HP (level + PB), immune to poison and psychic damage.',
@@ -191,6 +196,7 @@ export const character = {
     {
       name: 'Bottled Respite',
       source: 'Genie Patron',
+      to: '/vessel',
       level: 1,
       summary: 'Use an action to vanish into the Vessel for up to 8 hours (2 × PB). Leave it with a bonus action.',
       detail: 'Normally once per long rest. In this campaign Lucan can enter and leave whenever he wants.',
@@ -215,6 +221,7 @@ export const character = {
     {
       name: 'Pact Boon: Tome',
       source: 'Warlock',
+      to: '/spells?tab=book',
       level: 3,
       summary: 'The Book of Shadows: three cantrips from any class (Light, Guidance, Message).'
     },
@@ -228,6 +235,7 @@ export const character = {
     {
       name: 'Sanctuary Vessel',
       source: 'Genie Patron',
+      to: '/vessel',
       level: 10,
       summary:
         'Up to five willing creatures within 30 ft enter the Vessel with you. Ten minutes inside counts as a short rest, and anyone spending Hit Dice adds +4 (PB) HP.',
@@ -239,8 +247,9 @@ export const character = {
     {
       name: 'Form of the Lesser Dao',
       source: 'Bracers of the Dao Pact',
+      to: '/lesser-dao',
       summary: 'As a bonus action, Lucan becomes a Large earth genie for 10 turns: AC 20, 83 HP, two attacks a turn at +9, flight and burrowing.',
-      detail: 'The form has its own hit points. When it drops to 0, any leftover damage carries over to Lucan. Full stat block in the Combat section.',
+      detail: 'The form has its own hit points. When it drops to 0, any leftover damage carries over to Lucan. No spellcasting in the form, but concentration carries on. The Lesser Dao page has the full stat block.',
       uses: '2 / long rest'
     }
   ] as Feature[],
@@ -272,6 +281,11 @@ export const abilityNames: Record<AbilityKey, string> = {
 export const lesserDao = {
   name: 'Form of the Lesser Dao',
   type: 'Large elemental (dao)',
+  size: 'Large',
+  activation: 'Bonus action',
+  turns: 10,
+  uses: 2, // per long rest
+  saveDc: 17,
   cr: 10,
   proficiencyBonus: 4,
   ac: 20,
@@ -315,7 +329,22 @@ export const lesserDao = {
       effect: 'Hit or miss, the earth explodes in the target’s space: DC 17 Strength save or knocked prone.'
     },
     { name: 'Fist', kind: 'Melee · reach 5 ft', toHit: 9, damage: '2d8+5', type: 'bludgeoning' }
-  ] as { name: string; kind: string; toHit: number; damage: string; type: string; effect?: string }[]
+  ] as { name: string; kind: string; toHit: number; damage: string; type: string; effect?: string }[],
+
+  // How the form works at this table
+  rules: [
+    'Lucan takes on the form as a bonus action. It lasts 10 turns, and the Bracers allow it twice per long rest.',
+    'The form has 83 hit points of its own. Damage comes off them first; when they run out the form ends and any leftover damage carries over to Lucan.',
+    'Lucan can’t cast spells while in the form. A spell he is already concentrating on keeps going.',
+    'The form uses its own ability scores, saves and skills, so concentration saves use its Constitution. The Stone of Good Luck’s +1 to checks and saves still applies.',
+    'Armor Class stays 20, the same as Lucan’s own.'
+  ],
+  tactics: [
+    'Lead with Earthen Maul. A Huge or smaller target that fails the DC 17 Strength save falls prone, and the second Maul has advantage against it.',
+    'Earth Burst knocks the target prone hit or miss, which sets up allies standing next to it. Ranged attacks against a prone target have disadvantage, so don’t follow it with a second Burst.',
+    'Cast Spike Growth with the action and take the form with the bonus action on the same turn: the spikes keep going while the form fights. Hex also needs a bonus action, so cast it a turn earlier.',
+    'Earth Glide burrows through earth and stone, a way into a fortified room or out of a bad fight.'
+  ]
 }
 
 // Resources tracked by the session tracker.

@@ -13,7 +13,7 @@ watch(
 </script>
 
 <template>
-  <div class="pointer-events-none fixed bottom-4 right-4 z-50 flex w-[min(320px,calc(100vw-2rem))] flex-col-reverse gap-2" aria-live="polite">
+  <div class="pointer-events-none fixed bottom-4 right-4 z-50 flex w-[min(340px,calc(100vw-2rem))] flex-col-reverse gap-2" aria-live="polite">
     <TransitionGroup name="toast">
       <button
         v-for="r in log.slice(0, 4)"
@@ -23,14 +23,19 @@ watch(
         :class="r.crit === 'hit' ? 'border-gold' : r.crit === 'miss' ? 'border-ruby/60' : ''"
         @click="dismiss(r.id)"
       >
+        <span v-if="r.note !== undefined" class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-gold/30 bg-obsidian-950">
+          <GemIcon :size="22" />
+        </span>
         <span
+          v-else
           class="stat-num grid h-12 w-12 shrink-0 place-items-center rounded-xl border text-2xl"
           :class="r.crit === 'hit' ? 'border-gold bg-gold/20 text-gold-light' : r.crit === 'miss' ? 'border-ruby/60 bg-ruby/10 text-ruby' : 'border-gold/30 bg-obsidian-950'"
         >{{ r.total }}</span>
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold text-parchment">{{ r.label }}</span>
-          <span class="block text-[11px] tabular-nums text-faint">
-            {{ r.notation }} · [{{ r.rolls.join(', ') }}]<template v-if="r.modifier"> {{ signed(r.modifier) }}</template>
+          <span v-if="r.note !== undefined" class="block text-[11.5px] text-dim">{{ r.note }}</span>
+          <span v-else class="block text-[11px] tabular-nums text-faint">
+            {{ r.notation }} · [{{ r.rolls.join(', ') }}<template v-if="r.dropped !== undefined">, <s class="opacity-60">{{ r.dropped }}</s></template>]<template v-if="r.modifier"> {{ signed(r.modifier) }}</template>
           </span>
           <span v-if="r.crit === 'hit'" class="block text-[11px] font-semibold uppercase tracking-wider text-gold">Natural 20</span>
           <span v-else-if="r.crit === 'miss'" class="block text-[11px] font-semibold uppercase tracking-wider text-ruby">Natural 1</span>

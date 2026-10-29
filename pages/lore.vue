@@ -16,7 +16,7 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
 </script>
 
 <template>
-  <div class="mx-auto max-w-5xl">
+  <div class="mx-auto max-w-5xl 2xl:max-w-6xl">
     <!-- Lucan -->
     <header class="text-center">
       <p class="eyebrow">The jeweler and the Dao</p>
@@ -120,7 +120,7 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
     <!-- Hooks -->
     <section class="mt-12">
       <SectionHeading eyebrow="For the DM" title="Story Hooks" />
-      <div class="grid gap-4 sm:grid-cols-2">
+      <div class="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3">
         <div v-for="(h, n) in zahir.hooks" :key="h" class="panel flex gap-4 p-5">
           <span class="font-display text-3xl font-bold leading-none text-gold/40">{{ ['I', 'II', 'III', 'IV', 'V', 'VI'][n] }}</span>
           <p class="text-[14px] leading-relaxed text-parchment/85">{{ h }}</p>

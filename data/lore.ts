@@ -151,6 +151,14 @@ export const dmQuestions: DmQuestion[] = [
   }
 ]
 
+// The campaign's homebrew rulebook, served as-is from public/
+export const tweaksPdf = {
+  title: 'Zman’s 5e Tweaks',
+  version: 'v2.0',
+  src: '/docs/zmans-5e-tweaks.pdf',
+  note: 'The table’s homebrew rulebook, made in The Homebrewery. Spell Savant and several of the house rules above come from it.'
+}
+
 export const sourcePolicy = {
   baseline: '2014 D&D 5e plus Tasha’s Cauldron of Everything',
   index: { label: '2014.5e.tools', url: 'https://2014.5e.tools/' },

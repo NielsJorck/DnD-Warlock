@@ -89,6 +89,9 @@ const groups = computed(() => {
   return out
 })
 
+// On phones and tablets the filters fold away under the search box
+const showFilters = ref(false)
+
 const activeFilters = computed(
   () => levels.value.length + schools.value.length + castTimes.value.length + Number(conc.value !== 'any') + Number(onlyRitual.value) + Number(!!query.value)
 )
@@ -151,81 +154,88 @@ function clearFilters() {
       </div>
     </div>
 
-    <div class="mt-5 grid gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">
+    <div class="mt-5 grid gap-6 lg:grid-cols-[250px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)]">
       <!-- Filters -->
-      <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
-        <div class="relative">
-          <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" /></svg>
-          <input v-model="query" type="search" placeholder="Search spells…" class="field w-full pl-9" aria-label="Search spells" />
-        </div>
-
-        <div>
-          <p class="eyebrow mb-2 text-dim">Level</p>
-          <div class="flex flex-wrap gap-1.5">
-            <button
-              v-for="lv in allLevels"
-              :key="lv"
-              type="button"
-              class="chip px-2.5 py-1 text-xs transition"
-              :class="levels.includes(lv) ? 'border-gold/60 bg-gold/15 text-gold-light' : 'hover:border-obsidian-500 hover:text-parchment'"
-              @click="toggle(levels, lv)"
-            >{{ lv === 0 ? 'Cantrip' : levelLabel(lv) }}</button>
+      <aside class="space-y-5 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+        <div class="flex gap-2">
+          <div class="relative min-w-0 flex-1">
+            <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" /></svg>
+            <input v-model="query" type="search" placeholder="Search spells…" class="field w-full pl-9" aria-label="Search spells" />
           </div>
+          <button type="button" class="btn shrink-0 px-3 lg:hidden" :aria-expanded="showFilters" aria-controls="spell-filters" @click="showFilters = !showFilters">
+            Filters<span v-if="activeFilters" class="text-gold-light"> ({{ activeFilters }})</span>
+          </button>
         </div>
 
-        <div>
-          <p class="eyebrow mb-2 text-dim">School</p>
-          <div class="grid grid-cols-2 gap-1.5">
-            <button
-              v-for="sc in allSchools"
-              :key="sc"
-              type="button"
-              class="flex items-center gap-2 rounded-lg border px-2 py-1.5 text-left text-xs transition"
-              :class="schools.includes(sc) ? [schoolTone[sc].border, schoolTone[sc].bg, schoolTone[sc].text] : 'border-obsidian-600 text-dim hover:border-obsidian-500 hover:text-parchment'"
-              @click="toggle(schools, sc)"
-            >
-              <span :class="schoolTone[sc].text">{{ schoolGlyph[sc] }}</span>{{ sc }}
-            </button>
+        <div id="spell-filters" class="space-y-5 lg:block" :class="showFilters ? 'block' : 'hidden'">
+          <div>
+            <p class="eyebrow mb-2 text-dim">Level</p>
+            <div class="flex flex-wrap gap-1.5">
+              <button
+                v-for="lv in allLevels"
+                :key="lv"
+                type="button"
+                class="chip px-2.5 py-1 text-xs transition"
+                :class="levels.includes(lv) ? 'border-gold/60 bg-gold/15 text-gold-light' : 'hover:border-obsidian-500 hover:text-parchment'"
+                @click="toggle(levels, lv)"
+              >{{ lv === 0 ? 'Cantrip' : levelLabel(lv) }}</button>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <p class="eyebrow mb-2 text-dim">Casting time</p>
-          <div class="flex flex-wrap gap-1.5">
-            <button
-              v-for="c in castOptions"
-              :key="c.id"
-              type="button"
-              class="chip px-2.5 py-1 text-xs transition"
-              :class="castTimes.includes(c.id) ? 'border-gold/60 bg-gold/15 text-gold-light' : 'hover:border-obsidian-500 hover:text-parchment'"
-              :title="c.id === 'longer' ? '1 minute or more' : undefined"
-              @click="toggle(castTimes, c.id)"
-            >{{ c.label }}</button>
+          <div>
+            <p class="eyebrow mb-2 text-dim">School</p>
+            <div class="grid grid-cols-2 gap-1.5">
+              <button
+                v-for="sc in allSchools"
+                :key="sc"
+                type="button"
+                class="flex items-center gap-2 rounded-lg border px-2 py-1.5 text-left text-xs transition"
+                :class="schools.includes(sc) ? [schoolTone[sc].border, schoolTone[sc].bg, schoolTone[sc].text] : 'border-obsidian-600 text-dim hover:border-obsidian-500 hover:text-parchment'"
+                @click="toggle(schools, sc)"
+              >
+                <span :class="schoolTone[sc].text">{{ schoolGlyph[sc] }}</span>{{ sc }}
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <p class="eyebrow mb-2 text-dim">Concentration</p>
-          <div class="grid grid-cols-3 overflow-hidden rounded-lg border border-obsidian-600 text-[11.5px]" role="radiogroup" aria-label="Concentration">
-            <button
-              v-for="o in concOptions"
-              :key="o.id"
-              type="button"
-              role="radio"
-              :aria-checked="conc === o.id"
-              class="px-1.5 py-1.5 leading-tight transition"
-              :class="conc === o.id ? 'bg-rose/15 text-rose' : 'text-dim hover:bg-obsidian-800 hover:text-parchment'"
-              @click="conc = o.id"
-            >{{ o.label }}</button>
+          <div>
+            <p class="eyebrow mb-2 text-dim">Casting time</p>
+            <div class="flex flex-wrap gap-1.5">
+              <button
+                v-for="c in castOptions"
+                :key="c.id"
+                type="button"
+                class="chip px-2.5 py-1 text-xs transition"
+                :class="castTimes.includes(c.id) ? 'border-gold/60 bg-gold/15 text-gold-light' : 'hover:border-obsidian-500 hover:text-parchment'"
+                :title="c.id === 'longer' ? '1 minute or more' : undefined"
+                @click="toggle(castTimes, c.id)"
+              >{{ c.label }}</button>
+            </div>
           </div>
-        </div>
 
-        <div class="space-y-2 text-[13px]">
-          <label class="flex cursor-pointer items-center gap-2 text-dim"><input v-model="onlyRitual" type="checkbox" class="h-4 w-4 accent-[#a682dc]" /> Rituals only</label>
-          <label class="flex cursor-pointer items-center gap-2 text-dim"><input v-model="expandAll" type="checkbox" class="h-4 w-4 accent-[#d6a84f]" /> Expand all cards</label>
-        </div>
+          <div>
+            <p class="eyebrow mb-2 text-dim">Concentration</p>
+            <div class="grid grid-cols-3 overflow-hidden rounded-lg border border-obsidian-600 text-[11.5px]" role="radiogroup" aria-label="Concentration">
+              <button
+                v-for="o in concOptions"
+                :key="o.id"
+                type="button"
+                role="radio"
+                :aria-checked="conc === o.id"
+                class="px-1.5 py-1.5 leading-tight transition"
+                :class="conc === o.id ? 'bg-rose/15 text-rose' : 'text-dim hover:bg-obsidian-800 hover:text-parchment'"
+                @click="conc = o.id"
+              >{{ o.label }}</button>
+            </div>
+          </div>
 
-        <button v-if="activeFilters" type="button" class="btn w-full justify-center" @click="clearFilters">Clear filters ({{ activeFilters }})</button>
+          <div class="space-y-2 text-[13px]">
+            <label class="flex cursor-pointer items-center gap-2 text-dim"><input v-model="onlyRitual" type="checkbox" class="h-4 w-4 accent-[#a682dc]" /> Rituals only</label>
+            <label class="flex cursor-pointer items-center gap-2 text-dim"><input v-model="expandAll" type="checkbox" class="h-4 w-4 accent-[#d6a84f]" /> Expand all cards</label>
+          </div>
+
+          <button v-if="activeFilters" type="button" class="btn w-full justify-center" @click="clearFilters">Clear filters ({{ activeFilters }})</button>
+        </div>
       </aside>
 
       <!-- Results -->
@@ -243,7 +253,7 @@ function clearFilters() {
             <span class="divider flex-1" />
             <span class="text-[11px] text-faint">{{ g.spells.length }}</span>
           </div>
-          <div class="space-y-2">
+          <div class="grid items-start gap-2 2xl:grid-cols-2">
             <SpellCard v-for="s in g.spells" :key="`${s.slug}-${expandAll}`" :spell="s" :open="expandAll" />
           </div>
         </section>

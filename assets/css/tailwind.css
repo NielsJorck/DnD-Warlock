@@ -3,6 +3,24 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Page side padding and sticky header height, shared by the layout and
+       anything that has to line up with them (the session status bar) */
+    --gutter: 1rem;
+    --header-h: 3.5rem;
+  }
+  @media (min-width: 640px) {
+    :root { --gutter: 1.5rem; }
+  }
+  @media (min-width: 768px) {
+    :root { --header-h: 4rem; }
+  }
+  @media (min-width: 1024px) {
+    :root { --gutter: 2rem; }
+  }
+  @media (min-width: 1536px) {
+    :root { --gutter: 3rem; }
+  }
   html {
     color-scheme: dark;
     scroll-behavior: smooth;
@@ -30,6 +48,9 @@
 }
 
 @layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-[2560px] px-[var(--gutter)];
+  }
   .panel {
     @apply rounded-2xl border border-gold/15 bg-obsidian-900/80 shadow-panel backdrop-blur-sm;
   }
