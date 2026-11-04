@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { character, type AbilityKey } from '~/data/character'
-import { allowedArrays, levels, revisions, skillPicks, unassignedSkills, unplaced, type ChoiceKind, type LevelEntry } from '~/data/levels'
+import { allowedArrays, levels, revisions, skillPicks, unplaced, type ChoiceKind, type LevelEntry } from '~/data/levels'
 import { levelLabel } from '~/data/spells'
 
 useHead({ title: 'Level History — Lucan Beryll' })
@@ -35,14 +35,9 @@ const startArray = start ? Object.values(start.base).sort((a, b) => b - a) : []
 const arrayNo = allowedArrays.findIndex(a => a.join() === startArray.join()) + 1 // 0: not an allowed array
 const startTotal = (k: AbilityKey) => (start ? start.base[k] + start.increases.reduce((sum, i) => sum + (i.scores[k] ?? 0), 0) : 0)
 
-// Skill picks: the unassigned skills share one cell across the picks that could have taken them
-const isOpen = (p: (typeof skillPicks)[number]) => !p.skills && !p.unused
-const firstOpenPick = skillPicks.findIndex(isOpen)
-const openPicks = skillPicks.filter(isOpen)
-const usedPicks = skillPicks.reduce((sum, p) => sum + (p.unused ? 0 : p.picks), 0)
-const unusedPicks = skillPicks.reduce((sum, p) => sum + (p.unused ? p.picks : 0), 0)
-const totalSkills = skillPicks.reduce((sum, p) => sum + (p.skills?.length ?? 0), 0) + unassignedSkills.length
-const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
+// Skill picks: a pick without a skill went unused
+const totalPicks = skillPicks.reduce((sum, p) => sum + p.picks, 0)
+const unusedPicks = skillPicks.reduce((sum, p) => sum + Math.max(0, p.picks - p.skills.length), 0)
 </script>
 
 <template>
@@ -124,7 +119,6 @@ const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
                   <p class="mt-2 text-[12.5px] leading-relaxed text-dim">
                     <span v-if="arrayNo" class="text-parchment">Array {{ arrayNo }} of the {{ allowedArrays.length }} allowed: {{ startArray.join(', ') }}.</span>
                     <span v-else class="text-ruby">{{ startArray.join(', ') }} is not one of the allowed arrays.</span>
-                    {{ l.startingScores.note }}
                   </p>
                 </div>
 
@@ -230,9 +224,7 @@ const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
         </div>
 
         <div id="skill-picks" class="panel scroll-mt-24 p-5">
-          <p class="eyebrow" :class="usedPicks !== totalSkills ? 'text-topaz' : ''">
-            Level 1 · {{ totalSkills }} skills from {{ usedPicks }} picks<template v-if="unusedPicks"> · {{ unusedPicks }} unused</template>
-          </p>
+          <p class="eyebrow">Level 1 · {{ totalPicks }} picks<template v-if="unusedPicks">, {{ unusedPicks }} unused</template></p>
           <h2 class="heading mb-3 text-lg">Skill Picks</h2>
           <table class="w-full text-left text-[12.5px]">
             <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.12em] text-faint">
@@ -243,18 +235,13 @@ const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
               </tr>
             </thead>
             <tbody class="divide-y divide-obsidian-600/60">
-              <tr v-for="(p, n) in skillPicks" :key="p.source" class="align-top">
+              <tr v-for="p in skillPicks" :key="p.source" class="align-top">
                 <td class="py-1.5 pr-2">
                   <span class="font-semibold text-parchment">{{ p.source }}</span>
                   <span class="block text-[11px] leading-snug text-faint">{{ p.rule }}</span>
                 </td>
                 <td class="px-2 py-1.5 text-center tabular-nums text-parchment">{{ p.picks }}</td>
-                <td v-if="p.skills" class="py-1.5 pl-2 text-gold-light">{{ p.skills.join(', ') }}</td>
-                <td v-else-if="p.unused" class="py-1.5 pl-2 italic text-faint">Not used</td>
-                <td v-else-if="n === firstOpenPick" :rowspan="openPicks.length" class="border-l border-dashed border-obsidian-500 py-1.5 pl-2 align-middle">
-                  <span class="text-gold-light">{{ unassignedSkills.join(', ') }}</span>
-                  <span class="mt-0.5 block text-[11px] leading-snug text-faint">{{ openPickCount }} picks for {{ unassignedSkills.length }} skills, all on the Warlock list. Which pick took which isn’t recorded.</span>
-                </td>
+                <td class="py-1.5 pl-2" :class="p.skills.length ? 'text-gold-light' : 'italic text-faint'">{{ p.skills.length ? p.skills.join(', ') : 'Not used' }}</td>
               </tr>
             </tbody>
           </table>

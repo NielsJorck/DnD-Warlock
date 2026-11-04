@@ -48,7 +48,6 @@ export interface LevelEntry {
   startingScores?: {
     base: Record<AbilityKey, number>
     increases: { source: string; scores: Partial<Record<AbilityKey, number>> }[]
-    note: string
   }
   gains: { name: string; to?: string; note?: string }[] // automatic class and patron features
   choices: LevelChoice[]
@@ -73,8 +72,7 @@ export const levels: LevelEntry[] = [
       increases: [
         { source: 'Half-Elf', scores: { cha: 2, dex: 1, con: 1 } },
         { source: 'Spell Savant', scores: { cha: 1 } }
-      ],
-      note: 'Worked back from the sheet: with the Half-Elf increases and the feats on it, this is the only allowed array that gives Lucan’s scores, even if the increases were moved with Tasha’s custom origin.'
+      ]
     },
     gains: [
       { name: 'Pact Magic', to: '/spells' },
@@ -299,30 +297,27 @@ export const revisions: Revision[] = [
       'Drawmij’s Instant Summons and Forbiddance marked as placeholders for level 11, not in the Book of Shadows yet.',
       'The DM allowed the rituals in the Book of Shadows.',
       'Phantasmal Killer added to the known spells: the Tome rule makes every Genie and Dao spell known.',
-      'Starting array worked back from the sheet: 17, 13, 13, 12, 12, 8, with the Half-Elf +1s on DEX and CON.',
-      'Prodigy’s skill pick recorded as unused. Arcana, Deception and History come from the Warlock and INT picks.'
+      'Starting array recorded: 17, 13, 13, 12, 12, 8, with the Half-Elf +1s on DEX and CON.',
+      'Skill picks recorded: Arcana and Deception from the Warlock, History from INT. Prodigy’s skill pick is unused.'
     ]
   }
 ]
 
-// Every skill proficiency Lucan gets at level 1 and where it went. The unassigned
-// skills are all on the Warlock list, so any of the picks that share them could have taken them.
+// Every skill proficiency Lucan gets at level 1 and the skill it went to
 export interface SkillPick {
   source: string
   rule: string
   picks: number
-  skills?: string[] // left out when the record doesn't say which skill this pick took
-  unused?: boolean
+  skills: string[] // fewer than picks when some go unused
 }
 
 export const skillPicks: SkillPick[] = [
   { source: 'Guild Artisan', rule: 'Background: Insight and Persuasion', picks: 2, skills: ['Insight', 'Persuasion'] },
   { source: 'Skill Versatility', rule: 'Half-Elf, Zman’s version: any one skill', picks: 1, skills: ['Investigation'] },
-  { source: 'Warlock', rule: 'Two from the Warlock list', picks: 2 },
-  { source: 'INT 12', rule: 'One from the Warlock list, or a tool', picks: 1 },
-  { source: 'Prodigy', rule: 'Any one skill', picks: 1, unused: true }
+  { source: 'Warlock', rule: 'Two from the Warlock list', picks: 2, skills: ['Arcana', 'Deception'] },
+  { source: 'INT 12', rule: 'One from the Warlock list, or a tool', picks: 1, skills: ['History'] },
+  { source: 'Prodigy', rule: 'Any one skill', picks: 1, skills: [] }
 ]
-export const unassignedSkills = ['Arcana', 'Deception', 'History']
 
 // What the record doesn't settle, in case the DM asks
 export const unplaced: { title: string; text: string }[] = []

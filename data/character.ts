@@ -71,10 +71,9 @@ export const character = {
   ],
 
   skills: [
-    // Two Warlock picks and the INT pick; which took which skill wasn't recorded (see skillPicks in data/levels.ts)
-    { name: 'Arcana', ability: 'int' as AbilityKey, source: 'Warlock or INT bonus' },
-    { name: 'Deception', ability: 'cha' as AbilityKey, source: 'Warlock or INT bonus' },
-    { name: 'History', ability: 'int' as AbilityKey, source: 'Warlock or INT bonus' },
+    { name: 'Arcana', ability: 'int' as AbilityKey, source: 'Warlock' },
+    { name: 'Deception', ability: 'cha' as AbilityKey, source: 'Warlock' },
+    { name: 'History', ability: 'int' as AbilityKey, source: 'INT bonus (homebrew)' },
     { name: 'Insight', ability: 'wis' as AbilityKey, source: 'Guild Artisan' },
     { name: 'Investigation', ability: 'int' as AbilityKey, source: 'Skill Versatility (homebrew)' },
     { name: 'Persuasion', ability: 'cha' as AbilityKey, source: 'Guild Artisan · expertise from Prodigy', expertise: true }
