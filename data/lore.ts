@@ -50,7 +50,7 @@ export const zahir = {
 export const homebrew = [
   {
     rule: 'Starting arrays',
-    detail: 'Starting ability scores come from one of 121 allowed arrays, every result of the D&D 4e point buy, instead of the 5e standard array or point buy. Lucan uses 17, 13, 13, 12, 12, 8.'
+    detail: 'Starting ability scores come from one of 121 allowed arrays, every result of the D&D 4e point buy, instead of the 5e standard array or point buy. The level history shows which ones fit Lucan.'
   },
   { rule: 'Extra feat at level 1', detail: 'Every character gets an additional feat. Lucan takes Spell Savant from Zman’s 5e Tweaks: +1 CHA and an extra 5th-level slot once per long rest.' },
   { rule: 'Half-Elf darkvision is 30 ft', detail: 'Reduced from the usual 60 ft.' },
@@ -82,8 +82,9 @@ export const rulings = [
   },
   {
     ruling: 'Prodigy is a gift from the DM',
-    detail: 'Lucan has Prodigy from level 1, on top of the table’s extra feat and the ASI feats at 4 and 8: Persuasion expertise, Calligrapher’s supplies and Draconic.'
+    detail: 'Lucan has Prodigy from level 1, on top of the table’s extra feat and the ASI feats at 4 and 8. He uses the Zman’s 5e Tweaks version: +1 to an ability score, a skill, Calligrapher’s supplies and Draconic.'
   },
+  { ruling: 'Book of Shadows rituals approved', detail: 'The DM allowed the rituals in Lucan’s Book of Shadows as they are.' },
   { ruling: 'Robe of Thayan Arcana is not approved', detail: 'Excluded from the build and from all numbers.' },
   {
     ruling: 'The Golden Pact',
@@ -204,12 +205,13 @@ export const openQuestions = {
     'Race: Half-Elf. Patron: Dao Genie (Zahir). Pact: Tome.',
     'Campaign start: the Foundry sheet is the character’s source of truth.',
     'Abilities: STR 8, DEX 14, CON 16, INT 12, WIS 12, CHA 20. Max HP 83.',
-    'Feats: Spell Savant (replaced Telekinetic), Crusher, Resilient (CON), Prodigy (a gift from the DM at level 1, expertise in Persuasion).',
+    'Feats: Spell Savant (replaced Telekinetic), Crusher, Resilient (CON), Prodigy (a gift from the DM at level 1, Zman’s version).',
     'Terran selected as the Half-Elf language, Dwarvish as the Guild Artisan language, Draconic from Prodigy.',
     'Items consolidated: the Golden Pact, Bracers of the Dao Pact and Pact Keeper’s Crystal Dagger replace the Barrier and Illuminator’s Tattoos, Illusionist’s Bracers and Rod of the Pact Keeper.',
     'Ring of Protection, Cloak of Displacement and Amethyst Lodestone are not owned; they moved to the wishlist.',
     'Hex and Mind Spike added; Banishment and Phantasmal Killer are not known.',
     'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
+    'Drawmij’s Instant Summons and Forbiddance are placeholders for level 11, not in the Book of Shadows yet.',
     'All ritual-wishlist spells are now in the Book of Shadows, with eight more.',
     'Agonizing Blast house rule reverted: +CHA on every beam that hits, as written.',
     'Mind Sliver replaced Gravity Spike.',

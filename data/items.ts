@@ -563,7 +563,7 @@ export const items: Item[] = [
     effect: '+1 proficiency bonus',
     rules: ['While this pale green prism orbits Lucan’s head, his proficiency bonus increases by 1.'],
     forCharacter:
-      'PB 5 raises spell DC and attack, proficient saves (CON for concentration, WIS, CHA), skills (Persuasion by 2 thanks to expertise), Genie’s Wrath damage, Elemental Gift uses (5) and the Sanctuary Vessel healing. It would orbit alongside the Ioun Stone of Protection.',
+      'PB 5 raises spell DC and attack, proficient saves (CON for concentration, WIS, CHA), skills, Genie’s Wrath damage, Elemental Gift uses (5) and the Sanctuary Vessel healing. It would orbit alongside the Ioun Stone of Protection.',
     glyph: '⬙'
   },
   {

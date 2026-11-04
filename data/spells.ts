@@ -1278,12 +1278,12 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'book',
+    status: 'future',
     role: 'Recall a precious object',
     summary:
       'Touch an object of up to 10 lb and inscribe its name on the sapphire. Later, crush the sapphire as an action to make the object appear in your hand, wherever it is on the same plane. If another creature holds or carries it, you learn who and roughly where, but it doesn’t come to you.',
     notes:
-      'Book of Ancient Secrets normally limits copied rituals to 5th level at Warlock 10; this one is on the Foundry sheet, so the table allows it. A sapphire anchor is exactly a gemcutter’s kind of spell.'
+      'A placeholder, not in the book yet: Book of Ancient Secrets copies 6th-level rituals from Warlock 11. A sapphire anchor is exactly a gemcutter’s kind of spell.'
   },
   {
     slug: 'forbiddance',
@@ -1299,12 +1299,12 @@ export const spells: Spell[] = [
     ritual: true,
     source: 'PHB',
     access: 'Book of Shadows',
-    status: 'book',
+    status: 'future',
     role: 'Ward a building against teleport and planar travel',
     damage: '5d10 radiant or necrotic',
     summary:
       'Ward up to 40,000 sq ft of floor space to a height of 30 ft. Creatures can’t teleport into it or enter it by planar travel such as Etherealness or Plane Shift. Chosen creature types (celestials, elementals, fey, fiends or undead) take 5d10 radiant or necrotic damage when they first enter the area on a turn or start their turn there. Casting it daily on the same spot for 30 days makes it permanent.',
-    notes: 'Also above the usual 5th-level limit for copied rituals, but on the Foundry sheet. Expensive, but it could secure a guildhall or a client’s vault.'
+    notes: 'A placeholder, not in the book yet: Book of Ancient Secrets copies 6th-level rituals from Warlock 11. Expensive, but it could secure a guildhall or a client’s vault.'
   },
 
   // ── Candidates ────────────────────────────────────────────

@@ -174,7 +174,7 @@ const sections = [
         <h2 class="heading text-lg">Skills &amp; Senses</h2>
         <p class="mb-3 mt-1 flex flex-wrap items-center gap-x-3 text-[11px] text-faint">
           <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-gold" /> proficient</span>
-          <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-gold ring-2 ring-gold/40" /> expertise</span>
+          <span v-if="skillList.some(s => s.expertise)" class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-gold ring-2 ring-gold/40" /> expertise</span>
           <span>Stone of Good Luck included</span>
         </p>
         <ul class="grid grid-cols-2 gap-x-4 text-[13px] sm:grid-cols-3 md:grid-cols-2">

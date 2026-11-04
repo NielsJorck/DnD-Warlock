@@ -28,12 +28,9 @@ const statusTone: Record<LevelEntry['status'], string> = {
 }
 const slotLabel = (l: LevelEntry) => `${l.table.slots} × ${levelLabel(l.table.slotLevel)}`
 
-// Level 1: the array, each increase, and the result; the array is checked against the allowed list
+// Level 1: the scores, the increases, and the arrays that fit, each checked against the allowed list
 const abilityKeys: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
-const start = levels.find(l => l.startingScores)?.startingScores
-const startArray = start ? Object.values(start.base).sort((a, b) => b - a) : []
-const arrayNo = allowedArrays.findIndex(a => a.join() === startArray.join()) + 1 // 0: not an allowed array
-const startTotal = (k: AbilityKey) => (start ? start.base[k] + start.increases.reduce((sum, i) => sum + (i.scores[k] ?? 0), 0) : 0)
+const arrayNo = (arr: number[]) => allowedArrays.findIndex(a => a.join() === arr.join()) + 1 // 0: not an allowed array
 </script>
 
 <template>
@@ -89,32 +86,30 @@ const startTotal = (k: AbilityKey) => (start ? start.base[k] + start.increases.r
                 </dl>
 
                 <div v-if="l.startingScores" class="mt-3">
-                  <p class="eyebrow mb-1 text-dim">Starting scores</p>
-                  <div class="overflow-x-auto">
-                    <table class="w-full max-w-md text-[12.5px] tabular-nums">
-                      <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.06em] text-faint sm:tracking-[0.12em]">
-                        <tr>
-                          <th class="py-1 pr-1 sm:pr-2 text-left font-semibold">Ability</th>
-                          <th class="px-1 py-1 sm:px-2 text-center font-semibold">Array</th>
-                          <th v-for="i in l.startingScores.increases" :key="i.source" class="px-1 py-1 sm:px-2 text-center font-semibold">{{ i.source }}</th>
-                          <th class="py-1 pl-1 sm:pl-2 text-center font-semibold">Level 1</th>
-                        </tr>
-                      </thead>
-                      <tbody class="divide-y divide-obsidian-600/50">
-                        <tr v-for="k in abilityKeys" :key="k">
-                          <td class="py-1 pr-1 sm:pr-2 uppercase text-dim">{{ k }}</td>
-                          <td class="px-1 py-1 sm:px-2 text-center text-parchment">{{ l.startingScores.base[k] }}</td>
-                          <td v-for="i in l.startingScores.increases" :key="i.source" class="px-1 py-1 sm:px-2 text-center text-gold-light">{{ i.scores[k] ? `+${i.scores[k]}` : '' }}</td>
-                          <td class="py-1 pl-1 sm:pl-2 text-center font-semibold text-parchment">{{ startTotal(k) }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="mt-2 text-[12.5px] leading-relaxed text-dim">
-                    <span v-if="arrayNo" class="text-parchment">Array {{ arrayNo }} of the {{ allowedArrays.length }} allowed: {{ startArray.join(', ') }}.</span>
-                    <span v-else class="text-ruby">{{ startArray.join(', ') }} is not one of the allowed arrays.</span>
-                    {{ l.startingScores.note }}
-                  </p>
+                  <p class="eyebrow mb-1 text-dim">Scores at level 1</p>
+                  <dl class="grid max-w-md grid-cols-6 gap-1 text-center">
+                    <div v-for="k in abilityKeys" :key="k" class="rounded-md border border-obsidian-600 py-1">
+                      <dt class="text-[10px] uppercase tracking-[0.1em] text-faint">{{ k }}</dt>
+                      <dd class="stat-num text-base">{{ l.startingScores.level1[k] }}</dd>
+                    </div>
+                  </dl>
+                  <ul class="mt-2 space-y-0.5 text-[12.5px]">
+                    <li v-for="i in l.startingScores.increases" :key="i.source" class="flex gap-2">
+                      <span class="w-24 shrink-0 text-faint">{{ i.source }}</span><span class="text-parchment">{{ i.text }}</span>
+                    </li>
+                  </ul>
+                  <p class="eyebrow mb-1 mt-3 text-dim">{{ l.startingScores.arrays.length === 1 ? 'Array' : 'Arrays that fit' }} · of the {{ allowedArrays.length }} allowed</p>
+                  <ul class="flex flex-wrap gap-1.5">
+                    <li
+                      v-for="a in l.startingScores.arrays"
+                      :key="a.join()"
+                      class="rounded-md border px-2 py-0.5 text-[12px] tabular-nums"
+                      :class="arrayNo(a) ? 'border-gold/30 text-parchment' : 'border-ruby/50 bg-ruby/10 text-ruby'"
+                    >
+                      <span :class="arrayNo(a) ? 'text-faint' : ''">{{ arrayNo(a) ? `#${arrayNo(a)}` : 'Not allowed:' }}</span> {{ a.join(', ') }}
+                    </li>
+                  </ul>
+                  <p class="mt-2 text-[12.5px] leading-relaxed text-dim">{{ l.startingScores.note }}</p>
                 </div>
 
                 <p v-if="l.abilities" class="mt-2 text-[12.5px] text-dim">

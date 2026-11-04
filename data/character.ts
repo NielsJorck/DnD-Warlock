@@ -77,7 +77,7 @@ export const character = {
     { name: 'History', ability: 'int' as AbilityKey, source: 'Campaign setup' },
     { name: 'Insight', ability: 'wis' as AbilityKey, source: 'Guild Artisan' },
     { name: 'Investigation', ability: 'int' as AbilityKey, source: 'Skill Versatility (homebrew)' },
-    { name: 'Persuasion', ability: 'cha' as AbilityKey, source: 'Guild Artisan · expertise from Prodigy', expertise: true }
+    { name: 'Persuasion', ability: 'cha' as AbilityKey, source: 'Guild Artisan' }
   ] as { name: string; ability: AbilityKey; source: string; expertise?: boolean }[],
   toolProficiencies: [
     { name: 'Jeweler’s tools', source: 'Guild Artisan' },
@@ -117,11 +117,12 @@ export const character = {
     },
     {
       name: 'Prodigy',
-      source: 'XGE · gift from the DM',
+      source: 'Zman’s 5e Tweaks · gift from the DM',
       level: 1,
-      summary: 'One skill proficiency, Calligrapher’s supplies and Draconic. Expertise in Persuasion.',
+      summary: '+1 to one ability score, one skill proficiency, Calligrapher’s supplies and Draconic.',
       detail:
-        'The DM gave it at level 1, on top of the table’s extra feat. Expertise doubles his proficiency bonus on Persuasion checks: +14 with the Stone of Good Luck. Calligraphy suits a man who drafts his own contracts.'
+        'The DM gave it at level 1, on top of the table’s extra feat. Zman’s version gives an ability score increase where Xanathar’s gives expertise. Calligraphy suits a man who drafts his own contracts.',
+      homebrew: true
     }
   ] as Feature[],
 

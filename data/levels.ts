@@ -44,10 +44,11 @@ export interface LevelEntry {
   // The Warlock table (PHB) at this level
   table: { cantrips: number; spellsKnown: number; slots: number; slotLevel: number; invocations: number }
   abilities?: string // only when a score changes
-  // Level 1 only: the array as assigned, and what raised each score
+  // Level 1 only: the scores, what raised them, and the allowed arrays that fit
   startingScores?: {
-    base: Record<AbilityKey, number>
-    increases: { source: string; scores: Partial<Record<AbilityKey, number>> }[]
+    level1: Record<AbilityKey, number>
+    increases: { source: string; text: string }[]
+    arrays: number[][] // highest first; one once the increases are known
     note: string
   }
   gains: { name: string; to?: string; note?: string }[] // automatic class and patron features
@@ -67,13 +68,20 @@ export const levels: LevelEntry[] = [
     maxHp: 10,
     proficiencyBonus: 2,
     table: { cantrips: 2, spellsKnown: 2, slots: 1, slotLevel: 1, invocations: 0 },
+    // The sheet's scores minus Crusher and Resilient (+1 CON each at 4 and 8)
     startingScores: {
-      base: { str: 8, dex: 13, con: 13, int: 12, wis: 12, cha: 17 },
+      level1: { str: 8, dex: 14, con: 14, int: 12, wis: 12, cha: 20 },
       increases: [
-        { source: 'Half-Elf', scores: { cha: 2, dex: 1, con: 1 } },
-        { source: 'Spell Savant', scores: { cha: 1 } }
+        { source: 'Half-Elf', text: '+2 CHA, and +1 to two other scores' },
+        { source: 'Spell Savant', text: '+1 CHA' },
+        { source: 'Prodigy', text: '+1 to one score' }
       ],
-      note: 'Worked back from the sheet: with the Half-Elf increases and the feats on it, this is the only allowed array that gives Lucan’s scores, even if the increases were moved with Tasha’s custom origin.'
+      arrays: [
+        [17, 14, 13, 12, 10, 8],
+        [17, 14, 13, 11, 11, 8],
+        [17, 14, 12, 12, 11, 8]
+      ],
+      note: 'Every one starts with CHA 17 and STR 8. Which array it was depends on where the Half-Elf +1s and Prodigy’s +1 went, and that isn’t recorded.'
     },
     gains: [
       { name: 'Pact Magic', to: '/spells' },
@@ -83,7 +91,7 @@ export const levels: LevelEntry[] = [
       { name: 'Darkvision 30 ft', note: 'Half-Elf, campaign homebrew' }
     ],
     choices: [
-      { kind: 'Race', pick: 'Half-Elf', basis: 'fixed', note: '+2 CHA, +1 DEX, +1 CON' },
+      { kind: 'Race', pick: 'Half-Elf', basis: 'fixed', note: '+2 CHA and +1 to two other scores' },
       { kind: 'Background', pick: 'Guild Artisan', basis: 'fixed', note: 'Jeweler, gemcutter, appraiser' },
       { kind: 'Patron', pick: 'The Genie (Dao): Zahir ibn Kharum', basis: 'fixed', to: '/lore' },
       { kind: 'Feat', pick: 'Spell Savant', basis: 'fixed', note: 'The table’s extra level-1 feat. +1 CHA to 20' },
@@ -92,7 +100,7 @@ export const levels: LevelEntry[] = [
         pick: 'Prodigy',
         basis: 'fixed',
         gift: true,
-        note: 'Given by the DM on top of the table’s extra feat. Persuasion expertise, Calligrapher’s supplies, Draconic'
+        note: 'Given by the DM on top of the table’s extra feat. Zman’s version: +1 to one score, a skill, Calligrapher’s supplies, Draconic'
       },
       {
         kind: 'Proficiencies',
@@ -235,7 +243,12 @@ export const levels: LevelEntry[] = [
     table: { cantrips: 4, spellsKnown: 11, slots: 3, slotLevel: 5, invocations: 5 },
     gains: [
       { name: 'Third pact slot' },
-      { name: 'Eldritch Blast: three beams', to: spell('eldritch-blast') }
+      { name: 'Eldritch Blast: three beams', to: spell('eldritch-blast') },
+      {
+        name: '6th-level rituals',
+        to: '/spells?tab=later',
+        note: 'Book of Ancient Secrets can copy them. Drawmij’s Instant Summons and Forbiddance are waiting as placeholders'
+      }
     ],
     choices: [],
     pending: ['Mystic Arcanum: one 6th-level spell, once per long rest.', 'One new spell known, and the usual option to swap one.']
@@ -286,15 +299,20 @@ export const revisions: Revision[] = [
   {
     date: '2026-11-04',
     title: 'Spells and Prodigy',
-    changes: ['Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.', 'Prodigy recorded as a gift from the DM at level 1.']
+    changes: [
+      'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
+      'Prodigy recorded as a gift from the DM at level 1. It’s the Zman’s 5e Tweaks version: +1 to an ability score instead of Persuasion expertise.',
+      'Drawmij’s Instant Summons and Forbiddance marked as placeholders for level 11, not in the Book of Shadows yet.',
+      'The DM allowed the rituals in the Book of Shadows.'
+    ]
   }
 ]
 
 // What the record doesn't settle, in case the DM asks
 export const unplaced = [
   {
-    title: 'Prodigy’s version',
-    text: 'The sheet uses Xanathar’s Prodigy, with Persuasion expertise. The Prodigy in Zman’s 5e Tweaks gives +1 to an ability score instead of expertise, which would also change the starting array.'
+    title: 'Starting array',
+    text: 'Three of the allowed arrays fit Lucan’s level-1 scores. Which one depends on where the two Half-Elf +1s and Prodigy’s +1 went, and that isn’t recorded.'
   },
   {
     title: 'Prodigy’s skill',
@@ -303,13 +321,5 @@ export const unplaced = [
   {
     title: 'Phantasmal Killer',
     text: 'The Tome rule makes every spell on the Genie and Dao lists known, Phantasmal Killer included. The sheet leaves it off, and the closed decisions say it isn’t known.'
-  },
-  {
-    title: 'Two 6th-level rituals',
-    text: 'Book of Ancient Secrets copies rituals up to half the Warlock level, rounded up: 5th at level 10. Drawmij’s Instant Summons and Forbiddance are 6th level, though they’re on the Foundry sheet.'
-  },
-  {
-    title: 'Copying the rituals',
-    text: 'The invocation starts the book with two 1st-level rituals. The other 30 are each copied from a scroll or spellbook at 50 gp and 2 hours per spell level: 3,900 gp and 156 hours in all. Where they came from isn’t recorded.'
   }
 ]
