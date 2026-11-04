@@ -69,13 +69,12 @@ export const levels: LevelEntry[] = [
     table: { cantrips: 2, spellsKnown: 2, slots: 1, slotLevel: 1, invocations: 0 },
     // Gives the sheet's scores once Crusher and Resilient (+1 CON each at 4 and 8) are added
     startingScores: {
-      base: { str: 8, dex: 13, con: 14, int: 11, wis: 11, cha: 17 },
+      base: { str: 8, dex: 13, con: 13, int: 12, wis: 12, cha: 17 },
       increases: [
-        { source: 'Half-Elf', scores: { cha: 2, int: 1, wis: 1 } },
-        { source: 'Spell Savant', scores: { cha: 1 } },
-        { source: 'Prodigy', scores: { dex: 1 } }
+        { source: 'Half-Elf', scores: { cha: 2, dex: 1, con: 1 } },
+        { source: 'Spell Savant', scores: { cha: 1 } }
       ],
-      note: 'The original choice wasn’t recorded, so this was picked on 2026-11-04 as an allowed array that gives Lucan’s scores. Arrays 25 and 29 would also fit.'
+      note: 'Worked back from the sheet: with the Half-Elf increases and the feats on it, this is the only allowed array that gives Lucan’s scores, even if the increases were moved with Tasha’s custom origin.'
     },
     gains: [
       { name: 'Pact Magic', to: '/spells' },
@@ -85,7 +84,7 @@ export const levels: LevelEntry[] = [
       { name: 'Darkvision 30 ft', note: 'Half-Elf, campaign homebrew' }
     ],
     choices: [
-      { kind: 'Race', pick: 'Half-Elf', basis: 'fixed', note: '+2 CHA, +1 INT, +1 WIS' },
+      { kind: 'Race', pick: 'Half-Elf', basis: 'fixed', note: '+2 CHA, +1 DEX, +1 CON' },
       { kind: 'Background', pick: 'Guild Artisan', basis: 'fixed', note: 'Jeweler, gemcutter, appraiser' },
       { kind: 'Patron', pick: 'The Genie (Dao): Zahir ibn Kharum', basis: 'fixed', to: '/lore' },
       { kind: 'Feat', pick: 'Spell Savant', basis: 'fixed', note: 'The table’s extra level-1 feat. +1 CHA to 20' },
@@ -94,7 +93,7 @@ export const levels: LevelEntry[] = [
         pick: 'Prodigy',
         basis: 'fixed',
         gift: true,
-        note: 'Given by the DM on top of the table’s extra feat. Zman’s version: +1 DEX, a skill, Calligrapher’s supplies, Draconic'
+        note: 'Given by the DM on top of the table’s extra feat. Xanathar’s version: Persuasion expertise, a skill, Calligrapher’s supplies, Draconic'
       },
       {
         kind: 'Proficiencies',
@@ -296,11 +295,11 @@ export const revisions: Revision[] = [
     title: 'Spells and Prodigy',
     changes: [
       'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
-      'Prodigy recorded as a gift from the DM at level 1. It’s the Zman’s 5e Tweaks version: +1 to an ability score instead of Persuasion expertise.',
+      'Prodigy recorded as a gift from the DM at level 1, in Xanathar’s version with Persuasion expertise.',
       'Drawmij’s Instant Summons and Forbiddance marked as placeholders for level 11, not in the Book of Shadows yet.',
       'The DM allowed the rituals in the Book of Shadows.',
       'Phantasmal Killer added to the known spells: the Tome rule makes every Genie and Dao spell known.',
-      'Starting array set to 17, 14, 13, 11, 11, 8: Half-Elf +1 INT and WIS, Prodigy +1 DEX. The original wasn’t recorded.'
+      'Starting array worked back from the sheet: 17, 13, 13, 12, 12, 8, with the Half-Elf +1s on DEX and CON.'
     ]
   }
 ]
