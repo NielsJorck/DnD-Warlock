@@ -48,6 +48,10 @@ export const zahir = {
 }
 
 export const homebrew = [
+  {
+    rule: 'Starting arrays',
+    detail: 'Starting ability scores come from one of 121 allowed arrays, every result of the D&D 4e point buy, instead of the 5e standard array or point buy. Lucan uses 17, 13, 13, 12, 12, 8.'
+  },
   { rule: 'Extra feat at level 1', detail: 'Every character gets an additional feat. Lucan takes Spell Savant from Zman’s 5e Tweaks: +1 CHA and an extra 5th-level slot once per long rest.' },
   { rule: 'Half-Elf darkvision is 30 ft', detail: 'Reduced from the usual 60 ft.' },
   { rule: 'Skill Versatility → Investigation', detail: 'The Half-Elf skill choice grants Investigation.' },

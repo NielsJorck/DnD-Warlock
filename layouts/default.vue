@@ -7,6 +7,7 @@ const nav = [
   { to: '/items', label: 'Items' },
   { to: '/vessel', label: 'Vessel' },
   { to: '/lore', label: 'Lore' },
+  { to: '/levels', label: 'Levels' },
   { to: '/rules', label: 'Rules' },
   { to: '/dm', label: 'DM' }
 ]
@@ -39,11 +40,11 @@ const onSession = computed(() => route.path.startsWith('/session'))
             v-for="item in nav"
             :key="item.to"
             :to="item.to"
-            class="relative flex items-center whitespace-nowrap px-3 text-[13px] font-medium transition"
+            class="relative flex items-center whitespace-nowrap px-2 text-[13px] font-medium transition xl:px-3"
             :class="isActive(item) ? 'text-gold-light' : 'text-dim hover:text-parchment'"
           >
             <span class="rounded-lg px-1 py-1.5" :class="item.to === '/session' && !isActive(item) ? 'text-gold/90' : ''">{{ item.label }}</span>
-            <span v-if="isActive(item)" class="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-gradient-to-r from-gold/0 via-gold to-gold/0" />
+            <span v-if="isActive(item)" class="absolute inset-x-2 bottom-0 h-0.5 xl:inset-x-3 rounded-full bg-gradient-to-r from-gold/0 via-gold to-gold/0" />
           </NuxtLink>
         </nav>
 

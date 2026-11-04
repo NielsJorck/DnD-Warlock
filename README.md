@@ -43,6 +43,7 @@ Old Codex URLs still redirect on GitHub Pages: unknown paths get `404.html`, whi
 | `/items/:slug` | Full item page with rules, caveats and flavor |
 | `/vessel` | The Genie Vessel: patron features, residence features, rooms with their magic items, house rules |
 | `/lore` | Lucan’s story, traits, Zahir ibn Kharum and story hooks |
+| `/levels` | Level history: each level’s HP, slots, features and choices, with cantrips, spells and invocations counted against the Warlock table, plus the dated changes to the build and what the record doesn’t settle. The `Lv` tags on the sheet’s features link here |
 | `/rules` | Homebrew, DM rulings, source policy, open and closed decisions, and the Zman’s 5e Tweaks rulebook as a PDF in the browser’s viewer (`public/docs/zmans-5e-tweaks.pdf`; phones get open and download buttons) |
 | `/dm` | For the DM: one table of wishlist items plus the Vessel stores, with allow / discuss / deny verdicts, a version picker for items that come in several versions, notes, the open questions with answer fields, and a button that copies everything as text |
 
@@ -58,6 +59,8 @@ All content lives in typed TypeScript files in `data/`:
 - `data/vessel.ts`: Vessel features and rooms
 - `data/lore.ts`: story, patron, homebrew, rulings, source policy, open questions and the questions for the DM (`dmQuestions`)
 - `data/conditions.ts`: the conditions and exhaustion levels the session page can mark
+- `data/levels.ts`: the level history. Levels 1–10 were built at once for the campaign start, so each choice is `fixed` (the rules or notes set its level) or `fitted` (shown at the first level the rules allow). When Lucan gains a level, change its entry from `upcoming` to `played`, add the `date` and the choices (a swapped spell gets `replaces`), add the next upcoming level, and update `data/character.ts` to match
+- `sourcematerial/standard-arrays.txt`: the table’s allowed starting arrays. The level history reads it and checks Lucan’s level-1 array against it
 
 Derived numbers (modifiers, saves, spell DC, attack bonus, passives) are calculated in `composables/useCharacter.ts`, so changing an ability score or item bonus updates the whole site.
 

@@ -246,7 +246,9 @@ const sections = [
     </div>
 
     <section class="mt-10">
-      <SectionHeading id="features" eyebrow="Build" title="Feats, Invocations &amp; Features" />
+      <SectionHeading id="features" eyebrow="Build" title="Feats, Invocations &amp; Features">
+        <NuxtLink to="/levels" class="text-xs text-dim hover:text-gold-light">Level by level →</NuxtLink>
+      </SectionHeading>
       <div class="grid items-start gap-6 lg:grid-cols-2">
         <div class="space-y-6">
           <div>
