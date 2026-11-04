@@ -30,6 +30,7 @@ export interface LevelChoice {
   pick: string
   basis: ChoiceBasis
   replaces?: string // a swap: the old pick it replaces, so the counts stay the same
+  gift?: boolean // given by the DM on top of the normal picks
   to?: string
   note?: string
 }
@@ -87,12 +88,24 @@ export const levels: LevelEntry[] = [
       { kind: 'Patron', pick: 'The Genie (Dao): Zahir ibn Kharum', basis: 'fixed', to: '/lore' },
       { kind: 'Feat', pick: 'Spell Savant', basis: 'fixed', note: 'The table’s extra level-1 feat. +1 CHA to 20' },
       {
+        kind: 'Feat',
+        pick: 'Prodigy',
+        basis: 'fixed',
+        gift: true,
+        note: 'Given by the DM on top of the table’s extra feat. Persuasion expertise, Calligrapher’s supplies, Draconic'
+      },
+      {
         kind: 'Proficiencies',
         pick: 'Arcana, Deception, History, Insight, Persuasion, Investigation',
         basis: 'fixed',
         note: 'Warlock 2, INT bonus 1, Guild Artisan 2, Skill Versatility 1. Jeweler’s tools'
       },
-      { kind: 'Proficiencies', pick: 'Common, Elvish, Terran, Dwarvish, Undercommon', basis: 'fixed', note: 'Languages: Half-Elf 3, Guild Artisan 1, INT bonus 1' },
+      {
+        kind: 'Proficiencies',
+        pick: 'Common, Elvish, Terran, Dwarvish, Undercommon, Draconic',
+        basis: 'fixed',
+        note: 'Languages: Half-Elf 3, Guild Artisan 1, INT bonus 1, Prodigy 1'
+      },
       { kind: 'Cantrip', pick: 'Eldritch Blast', basis: 'fitted', to: spell('eldritch-blast'), note: 'Needed for the level-2 invocations' },
       { kind: 'Cantrip', pick: 'Mind Sliver', basis: 'fitted', to: spell('mind-sliver') },
       { kind: 'Spell', pick: 'Armor of Agathys', basis: 'fitted', to: spell('armor-of-agathys') },
@@ -202,8 +215,7 @@ export const levels: LevelEntry[] = [
       { kind: 'Invocation', pick: 'Gift of the Protectors', basis: 'fitted', note: 'Needs Warlock 9 and the Tome' },
       { kind: 'Spell', pick: 'Far Step', basis: 'fitted', to: spell('far-step') },
       { kind: 'Spell', pick: 'Hold Monster', basis: 'fitted', to: spell('hold-monster') },
-      { kind: 'Spell', pick: 'Synaptic Static', basis: 'fitted', to: spell('synaptic-static') },
-      { kind: 'Spell', pick: 'Scrying', basis: 'fitted', to: spell('scrying') }
+      { kind: 'Spell', pick: 'Synaptic Static', basis: 'fitted', to: spell('synaptic-static') }
     ]
   },
   {
@@ -270,29 +282,34 @@ export const revisions: Revision[] = [
       'The DM reverted the Agonizing Blast house rule: +CHA on every beam that hits.',
       'The Golden Pact, Bracers of the Dao Pact and Pact Keeper’s Crystal Dagger replaced the Barrier and Illuminator’s Tattoos, the requested Illusionist’s Bracers and the Rod of the Pact Keeper.'
     ]
+  },
+  {
+    date: '2026-11-04',
+    title: 'Spells and Prodigy',
+    changes: ['Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.', 'Prodigy recorded as a gift from the DM at level 1.']
   }
 ]
 
 // What the record doesn't settle, in case the DM asks
 export const unplaced = [
   {
-    title: 'Prodigy has no feat slot',
-    text: 'Levels 1–10 give three feats: the table’s level-1 feat and the ASIs at 4 and 8. Spell Savant, Crusher and Resilient fill them, so the record doesn’t say where Prodigy comes from.'
-  },
-  {
     title: 'Prodigy’s version',
-    text: 'The sheet uses Xanathar’s Prodigy, with expertise. The Prodigy in Zman’s 5e Tweaks gives +1 to an ability score instead of expertise. Its skill pick isn’t on the sheet either: the six skills are covered by the other sources.'
+    text: 'The sheet uses Xanathar’s Prodigy, with Persuasion expertise. The Prodigy in Zman’s 5e Tweaks gives +1 to an ability score instead of expertise, which would also change the starting array.'
   },
   {
-    title: 'Eleven spells known',
-    text: 'Warlock 10 knows ten chosen spells. The sheet has eleven since the Foundry sync, which added Hex and Mind Spike and dropped Banishment. The Tome rule doesn’t cover it: the eleven are all from the Warlock list, and the nine patron spells are already counted on top.'
+    title: 'Prodigy’s skill',
+    text: 'Prodigy gives a skill, but the six on the sheet are already covered: two Warlock skills, one from INT, Insight and Persuasion from Guild Artisan, and Investigation from Skill Versatility. Either a skill is missing from the sheet or the pick went unused.'
   },
   {
     title: 'Phantasmal Killer',
     text: 'The Tome rule makes every spell on the Genie and Dao lists known, Phantasmal Killer included. The sheet leaves it off, and the closed decisions say it isn’t known.'
   },
   {
-    title: 'Four 5th-level spells',
-    text: 'Levelling one level at a time, a Warlock can have at most three 5th-level spells at level 10: one new at 9, plus one swap at 9 and one at 10. Lucan has four, which is fine for a character built straight at level 10.'
+    title: 'Two 6th-level rituals',
+    text: 'Book of Ancient Secrets copies rituals up to half the Warlock level, rounded up: 5th at level 10. Drawmij’s Instant Summons and Forbiddance are 6th level, though they’re on the Foundry sheet.'
+  },
+  {
+    title: 'Copying the rituals',
+    text: 'The invocation starts the book with two 1st-level rituals. The other 30 are each copied from a scroll or spellbook at 50 gp and 2 hours per spell level: 3,900 gp and 156 hours in all. Where they came from isn’t recorded.'
   }
 ]

@@ -64,7 +64,7 @@ export function levelLabel(level: number, long = false) {
 // Known spells are either picked by the player or granted automatically by the patron.
 export type KnownSource = 'chosen' | 'tome' | 'patron'
 export const knownSources: { id: KnownSource; title: string; sub: string; chip: string; access: SpellAccess[] }[] = [
-  { id: 'chosen', title: 'Chosen Warlock spells', sub: 'Picked by the player: 4 cantrips and 11 spells known', chip: 'Chosen', access: ['Warlock'] },
+  { id: 'chosen', title: 'Chosen Warlock spells', sub: 'Picked by the player: 4 cantrips and 10 spells known', chip: 'Chosen', access: ['Warlock'] },
   { id: 'tome', title: 'Pact of the Tome cantrips', sub: 'Picked by the player from any class list', chip: 'Chosen · Tome', access: ['Pact of the Tome'] },
   { id: 'patron', title: 'Patron spells — automatic', sub: 'Genie and Dao lists, always known on top of the 10 chosen', chip: 'Patron · automatic', access: ['Genie Patron', 'Dao Patron'] }
 ]
@@ -456,12 +456,12 @@ export const spells: Spell[] = [
     ritual: false,
     source: 'PHB',
     access: 'Warlock',
-    status: 'known',
+    status: 'candidate',
     role: 'Recon / information',
     save: 'WIS',
     summary:
       'See and hear a creature on the same plane through an invisible sensor. The target’s WIS save is modified by how well Lucan knows it and what connection he has. Alternatively, scry a familiar location.',
-    notes: 'A cut-gem focus is a natural fit for a jeweler, and the Vessel offers a quiet place to scry.'
+    notes: 'Dropped at level 10 so the chosen spells fit the ten a Warlock 10 knows. A cut-gem focus would suit a jeweler, and the Vessel offers a quiet place to scry.'
   },
 
   // ── Genie patron (generic) ────────────────────────────────

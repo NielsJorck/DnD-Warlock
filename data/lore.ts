@@ -80,6 +80,10 @@ export const rulings = [
     ruling: 'Agonizing Blast works as written',
     detail: 'The DM reverted the once-per-target house rule. Lucan adds his CHA modifier (+5) to every Eldritch Blast beam that hits. Repelling Blast keeps its once-per-target homebrew.'
   },
+  {
+    ruling: 'Prodigy is a gift from the DM',
+    detail: 'Lucan has Prodigy from level 1, on top of the table’s extra feat and the ASI feats at 4 and 8: Persuasion expertise, Calligrapher’s supplies and Draconic.'
+  },
   { ruling: 'Robe of Thayan Arcana is not approved', detail: 'Excluded from the build and from all numbers.' },
   {
     ruling: 'The Golden Pact',
@@ -200,11 +204,12 @@ export const openQuestions = {
     'Race: Half-Elf. Patron: Dao Genie (Zahir). Pact: Tome.',
     'Campaign start: the Foundry sheet is the character’s source of truth.',
     'Abilities: STR 8, DEX 14, CON 16, INT 12, WIS 12, CHA 20. Max HP 83.',
-    'Feats: Spell Savant (replaced Telekinetic), Crusher, Resilient (CON), Prodigy (expertise in Persuasion).',
+    'Feats: Spell Savant (replaced Telekinetic), Crusher, Resilient (CON), Prodigy (a gift from the DM at level 1, expertise in Persuasion).',
     'Terran selected as the Half-Elf language, Dwarvish as the Guild Artisan language, Draconic from Prodigy.',
     'Items consolidated: the Golden Pact, Bracers of the Dao Pact and Pact Keeper’s Crystal Dagger replace the Barrier and Illuminator’s Tattoos, Illusionist’s Bracers and Rod of the Pact Keeper.',
     'Ring of Protection, Cloak of Displacement and Amethyst Lodestone are not owned; they moved to the wishlist.',
     'Hex and Mind Spike added; Banishment and Phantasmal Killer are not known.',
+    'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
     'All ritual-wishlist spells are now in the Book of Shadows, with eight more.',
     'Agonizing Blast house rule reverted: +CHA on every beam that hits, as written.',
     'Mind Sliver replaced Gravity Spike.',

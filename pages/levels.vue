@@ -146,7 +146,8 @@ const startTotal = (k: AbilityKey) => (start ? start.base[k] + start.increases.r
                         <span v-if="c.replaces" class="text-dim"> replaces {{ c.replaces }}</span>
                         <span v-if="c.note" class="block text-[12px] leading-relaxed text-dim">{{ c.note }}</span>
                       </span>
-                      <span class="col-start-2 sm:col-start-auto">
+                      <span class="col-start-2 flex flex-wrap gap-1 sm:col-start-auto">
+                        <span v-if="c.gift" class="chip border-topaz/50 bg-topaz/10 py-0 text-[10px] text-topaz">DM gift</span>
                         <span
                           class="chip py-0 text-[10px]"
                           :class="c.basis === 'fitted' ? 'border-dashed border-obsidian-500 text-faint' : 'border-gold/40 text-gold-light'"
@@ -194,6 +195,10 @@ const startTotal = (k: AbilityKey) => (start ? start.base[k] + start.increases.r
             <div class="flex gap-3">
               <dt><span class="chip border-dashed border-obsidian-500 py-0 text-[10px] text-faint">Fitted</span></dt>
               <dd class="text-dim">Chosen at creation and shown at the first level the rules allow it, so the counts work out.</dd>
+            </div>
+            <div class="flex gap-3">
+              <dt><span class="chip border-topaz/50 bg-topaz/10 py-0 text-[10px] text-topaz">DM gift</span></dt>
+              <dd class="text-dim">Given by the DM on top of the normal picks.</dd>
             </div>
             <div class="flex gap-3">
               <dt><span class="whitespace-nowrap rounded-md border border-ruby/50 bg-ruby/10 px-1.5 py-0.5 tabular-nums text-ruby">n / n</span></dt>

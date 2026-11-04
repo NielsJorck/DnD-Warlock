@@ -244,7 +244,7 @@ export const items: Item[] = [
       'Once imbued, the gem can’t be imbued again until the next long rest.'
     ],
     forCharacter:
-      'A gemcutter’s spell battery. A 5th-level pact slot cast into it during a short rest keeps a spell ready for later, much like the Ring of Spell Storing. With no components needed, Scrying’s 1,000-gp focus or Shadow of Moil’s gem aren’t needed when he casts it from the gem.',
+      'A gemcutter’s spell battery. A 5th-level pact slot cast into it during a short rest keeps a spell ready for later, much like the Ring of Spell Storing. With no components needed, Shadow of Moil’s gem isn’t needed when he casts it from the gem.',
     caveat: 'The DC and attack bonus are fixed at 17 / +9, one lower than his own. Save it for utility spells or spells without a save, such as Far Step, Armor of Agathys or Wall of Stone.',
     glyph: '◇'
   },

@@ -117,9 +117,11 @@ export const character = {
     },
     {
       name: 'Prodigy',
-      source: 'XGE',
+      source: 'XGE · gift from the DM',
+      level: 1,
       summary: 'One skill proficiency, Calligrapher’s supplies and Draconic. Expertise in Persuasion.',
-      detail: 'Expertise doubles his proficiency bonus on Persuasion checks: +14 with the Stone of Good Luck. Calligraphy suits a man who drafts his own contracts.'
+      detail:
+        'The DM gave it at level 1, on top of the table’s extra feat. Expertise doubles his proficiency bonus on Persuasion checks: +14 with the Stone of Good Luck. Calligraphy suits a man who drafts his own contracts.'
     }
   ] as Feature[],
 
