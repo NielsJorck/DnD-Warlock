@@ -44,11 +44,10 @@ export interface LevelEntry {
   // The Warlock table (PHB) at this level
   table: { cantrips: number; spellsKnown: number; slots: number; slotLevel: number; invocations: number }
   abilities?: string // only when a score changes
-  // Level 1 only: the scores, what raised them, and the allowed arrays that fit
+  // Level 1 only: the array as assigned, and what raised each score
   startingScores?: {
-    level1: Record<AbilityKey, number>
-    increases: { source: string; text: string }[]
-    arrays: number[][] // highest first; one once the increases are known
+    base: Record<AbilityKey, number>
+    increases: { source: string; scores: Partial<Record<AbilityKey, number>> }[]
     note: string
   }
   gains: { name: string; to?: string; note?: string }[] // automatic class and patron features
@@ -68,20 +67,15 @@ export const levels: LevelEntry[] = [
     maxHp: 10,
     proficiencyBonus: 2,
     table: { cantrips: 2, spellsKnown: 2, slots: 1, slotLevel: 1, invocations: 0 },
-    // The sheet's scores minus Crusher and Resilient (+1 CON each at 4 and 8)
+    // Gives the sheet's scores once Crusher and Resilient (+1 CON each at 4 and 8) are added
     startingScores: {
-      level1: { str: 8, dex: 14, con: 14, int: 12, wis: 12, cha: 20 },
+      base: { str: 8, dex: 13, con: 14, int: 11, wis: 11, cha: 17 },
       increases: [
-        { source: 'Half-Elf', text: '+2 CHA, and +1 to two other scores' },
-        { source: 'Spell Savant', text: '+1 CHA' },
-        { source: 'Prodigy', text: '+1 to one score' }
+        { source: 'Half-Elf', scores: { cha: 2, int: 1, wis: 1 } },
+        { source: 'Spell Savant', scores: { cha: 1 } },
+        { source: 'Prodigy', scores: { dex: 1 } }
       ],
-      arrays: [
-        [17, 14, 13, 12, 10, 8],
-        [17, 14, 13, 11, 11, 8],
-        [17, 14, 12, 12, 11, 8]
-      ],
-      note: 'Every one starts with CHA 17 and STR 8. Which array it was depends on where the Half-Elf +1s and Prodigy’s +1 went, and that isn’t recorded.'
+      note: 'The original choice wasn’t recorded, so this was picked on 2026-11-04 as an allowed array that gives Lucan’s scores. Arrays 25 and 29 would also fit.'
     },
     gains: [
       { name: 'Pact Magic', to: '/spells' },
@@ -91,7 +85,7 @@ export const levels: LevelEntry[] = [
       { name: 'Darkvision 30 ft', note: 'Half-Elf, campaign homebrew' }
     ],
     choices: [
-      { kind: 'Race', pick: 'Half-Elf', basis: 'fixed', note: '+2 CHA and +1 to two other scores' },
+      { kind: 'Race', pick: 'Half-Elf', basis: 'fixed', note: '+2 CHA, +1 INT, +1 WIS' },
       { kind: 'Background', pick: 'Guild Artisan', basis: 'fixed', note: 'Jeweler, gemcutter, appraiser' },
       { kind: 'Patron', pick: 'The Genie (Dao): Zahir ibn Kharum', basis: 'fixed', to: '/lore' },
       { kind: 'Feat', pick: 'Spell Savant', basis: 'fixed', note: 'The table’s extra level-1 feat. +1 CHA to 20' },
@@ -100,14 +94,15 @@ export const levels: LevelEntry[] = [
         pick: 'Prodigy',
         basis: 'fixed',
         gift: true,
-        note: 'Given by the DM on top of the table’s extra feat. Zman’s version: +1 to one score, a skill, Calligrapher’s supplies, Draconic'
+        note: 'Given by the DM on top of the table’s extra feat. Zman’s version: +1 DEX, a skill, Calligrapher’s supplies, Draconic'
       },
       {
         kind: 'Proficiencies',
-        pick: 'Arcana, Deception, History, Insight, Persuasion, Investigation',
+        pick: 'Arcana, Deception, History, Insight, Investigation, Persuasion',
         basis: 'fixed',
-        note: 'Warlock 2, INT bonus 1, Guild Artisan 2, Skill Versatility 1. Jeweler’s tools'
+        note: 'Skills. Where each comes from is under Skill Picks'
       },
+      { kind: 'Proficiencies', pick: 'Jeweler’s tools, Calligrapher’s supplies', basis: 'fixed', note: 'Tools: Guild Artisan 1, Prodigy 1' },
       {
         kind: 'Proficiencies',
         pick: 'Common, Elvish, Terran, Dwarvish, Undercommon, Draconic',
@@ -196,7 +191,7 @@ export const levels: LevelEntry[] = [
     maxHp: 52,
     proficiencyBonus: 3,
     table: { cantrips: 3, spellsKnown: 8, slots: 2, slotLevel: 4, invocations: 4 },
-    gains: [{ name: '4th-level patron spells', note: 'Stone Shape. Phantasmal Killer is left off the sheet' }],
+    gains: [{ name: '4th-level patron spells', note: 'Phantasmal Killer, Stone Shape' }],
     choices: [
       { kind: 'Invocation', pick: 'Book of Ancient Secrets', basis: 'fitted', to: '/spells?tab=book', note: 'Needs the Tome' },
       { kind: 'Spell', pick: 'Shadow of Moil', basis: 'fitted', to: spell('shadow-of-moil') }
@@ -303,23 +298,35 @@ export const revisions: Revision[] = [
       'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
       'Prodigy recorded as a gift from the DM at level 1. It’s the Zman’s 5e Tweaks version: +1 to an ability score instead of Persuasion expertise.',
       'Drawmij’s Instant Summons and Forbiddance marked as placeholders for level 11, not in the Book of Shadows yet.',
-      'The DM allowed the rituals in the Book of Shadows.'
+      'The DM allowed the rituals in the Book of Shadows.',
+      'Phantasmal Killer added to the known spells: the Tome rule makes every Genie and Dao spell known.',
+      'Starting array set to 17, 14, 13, 11, 11, 8: Half-Elf +1 INT and WIS, Prodigy +1 DEX. The original wasn’t recorded.'
     ]
   }
 ]
 
+// Every skill proficiency Lucan gets at level 1 and where it went. The three
+// unassigned skills are on the Warlock list, so any of those picks could have taken them.
+export interface SkillPick {
+  source: string
+  rule: string
+  picks: number
+  skills?: string[] // left out when the record doesn't say which skill this pick took
+}
+
+export const skillPicks: SkillPick[] = [
+  { source: 'Guild Artisan', rule: 'Background: Insight and Persuasion', picks: 2, skills: ['Insight', 'Persuasion'] },
+  { source: 'Skill Versatility', rule: 'Half-Elf, Zman’s version: any one skill', picks: 1, skills: ['Investigation'] },
+  { source: 'Warlock', rule: 'Two from the Warlock list', picks: 2 },
+  { source: 'INT 12', rule: 'One from the Warlock list, or a tool', picks: 1 },
+  { source: 'Prodigy', rule: 'Any one skill', picks: 1 }
+]
+export const unassignedSkills = ['Arcana', 'Deception', 'History']
+
 // What the record doesn't settle, in case the DM asks
 export const unplaced = [
   {
-    title: 'Starting array',
-    text: 'Three of the allowed arrays fit Lucan’s level-1 scores. Which one depends on where the two Half-Elf +1s and Prodigy’s +1 went, and that isn’t recorded.'
-  },
-  {
-    title: 'Prodigy’s skill',
-    text: 'Prodigy gives a skill, but the six on the sheet are already covered: two Warlock skills, one from INT, Insight and Persuasion from Guild Artisan, and Investigation from Skill Versatility. Either a skill is missing from the sheet or the pick went unused.'
-  },
-  {
-    title: 'Phantasmal Killer',
-    text: 'The Tome rule makes every spell on the Genie and Dao lists known, Phantasmal Killer included. The sheet leaves it off, and the closed decisions say it isn’t known.'
+    title: 'One skill pick unaccounted for',
+    text: 'Lucan has seven skill picks but six skills on the sheet (see Skill Picks). The INT pick could have been a tool instead, but the sheet’s two tools come from Guild Artisan and Prodigy. Either a skill is missing from the sheet or a pick went unused.'
   }
 ]

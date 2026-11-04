@@ -536,14 +536,14 @@ export const spells: Spell[] = [
     ritual: false,
     source: 'PHB',
     access: 'Genie Patron',
-    status: 'candidate',
+    status: 'known',
     role: 'Fear + psychic damage',
     save: 'WIS',
     damage: '4d10 psychic per turn',
     summary:
       'Conjure a creature’s deepest fear. On a failed WIS save it is frightened, and at the end of each of its turns it saves again or takes psychic damage. A success ends the spell.',
     atPact: '5d10 psychic damage on each failed save.',
-    notes: 'A Genie expanded-list spell that isn’t on the final sheet, so it isn’t treated as known.'
+    notes: 'Known through the Tome rule, like every Genie and Dao spell. Needs concentration, so it competes with Spike Growth and Hex.'
   },
   {
     slug: 'creation',

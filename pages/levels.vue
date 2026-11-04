@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { character, type AbilityKey } from '~/data/character'
-import { allowedArrays, levels, revisions, unplaced, type ChoiceKind, type LevelEntry } from '~/data/levels'
+import { allowedArrays, levels, revisions, skillPicks, unassignedSkills, unplaced, type ChoiceKind, type LevelEntry } from '~/data/levels'
 import { levelLabel } from '~/data/spells'
 
 useHead({ title: 'Level History — Lucan Beryll' })
@@ -28,9 +28,19 @@ const statusTone: Record<LevelEntry['status'], string> = {
 }
 const slotLabel = (l: LevelEntry) => `${l.table.slots} × ${levelLabel(l.table.slotLevel)}`
 
-// Level 1: the scores, the increases, and the arrays that fit, each checked against the allowed list
+// Level 1: the array, each increase, and the result; the array is checked against the allowed list
 const abilityKeys: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
-const arrayNo = (arr: number[]) => allowedArrays.findIndex(a => a.join() === arr.join()) + 1 // 0: not an allowed array
+const start = levels.find(l => l.startingScores)?.startingScores
+const startArray = start ? Object.values(start.base).sort((a, b) => b - a) : []
+const arrayNo = allowedArrays.findIndex(a => a.join() === startArray.join()) + 1 // 0: not an allowed array
+const startTotal = (k: AbilityKey) => (start ? start.base[k] + start.increases.reduce((sum, i) => sum + (i.scores[k] ?? 0), 0) : 0)
+
+// Skill picks: the unassigned skills share one cell across the picks that could have taken them
+const firstOpenPick = skillPicks.findIndex(p => !p.skills)
+const openPicks = skillPicks.filter(p => !p.skills)
+const totalPicks = skillPicks.reduce((sum, p) => sum + p.picks, 0)
+const totalSkills = skillPicks.reduce((sum, p) => sum + (p.skills?.length ?? 0), 0) + unassignedSkills.length
+const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
 </script>
 
 <template>
@@ -86,30 +96,34 @@ const arrayNo = (arr: number[]) => allowedArrays.findIndex(a => a.join() === arr
                 </dl>
 
                 <div v-if="l.startingScores" class="mt-3">
-                  <p class="eyebrow mb-1 text-dim">Scores at level 1</p>
-                  <dl class="grid max-w-md grid-cols-6 gap-1 text-center">
-                    <div v-for="k in abilityKeys" :key="k" class="rounded-md border border-obsidian-600 py-1">
-                      <dt class="text-[10px] uppercase tracking-[0.1em] text-faint">{{ k }}</dt>
-                      <dd class="stat-num text-base">{{ l.startingScores.level1[k] }}</dd>
-                    </div>
-                  </dl>
-                  <ul class="mt-2 space-y-0.5 text-[12.5px]">
-                    <li v-for="i in l.startingScores.increases" :key="i.source" class="flex gap-2">
-                      <span class="w-24 shrink-0 text-faint">{{ i.source }}</span><span class="text-parchment">{{ i.text }}</span>
-                    </li>
-                  </ul>
-                  <p class="eyebrow mb-1 mt-3 text-dim">{{ l.startingScores.arrays.length === 1 ? 'Array' : 'Arrays that fit' }} · of the {{ allowedArrays.length }} allowed</p>
-                  <ul class="flex flex-wrap gap-1.5">
-                    <li
-                      v-for="a in l.startingScores.arrays"
-                      :key="a.join()"
-                      class="rounded-md border px-2 py-0.5 text-[12px] tabular-nums"
-                      :class="arrayNo(a) ? 'border-gold/30 text-parchment' : 'border-ruby/50 bg-ruby/10 text-ruby'"
-                    >
-                      <span :class="arrayNo(a) ? 'text-faint' : ''">{{ arrayNo(a) ? `#${arrayNo(a)}` : 'Not allowed:' }}</span> {{ a.join(', ') }}
-                    </li>
-                  </ul>
-                  <p class="mt-2 text-[12.5px] leading-relaxed text-dim">{{ l.startingScores.note }}</p>
+                  <p class="eyebrow mb-1 text-dim">Starting scores</p>
+                  <table class="w-full max-w-md text-[12.5px] tabular-nums">
+                    <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.1em] text-faint">
+                      <tr>
+                        <th class="py-1 pr-2 text-left font-semibold"><span class="sr-only">Source</span></th>
+                        <th v-for="k in abilityKeys" :key="k" class="px-1 py-1 text-center font-semibold">{{ k }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="py-1 pr-2 text-faint">Array</td>
+                        <td v-for="k in abilityKeys" :key="k" class="px-1 py-1 text-center text-parchment">{{ l.startingScores.base[k] }}</td>
+                      </tr>
+                      <tr v-for="i in l.startingScores.increases" :key="i.source">
+                        <td class="py-1 pr-2 text-faint">{{ i.source }}</td>
+                        <td v-for="k in abilityKeys" :key="k" class="px-1 py-1 text-center text-gold-light">{{ i.scores[k] ? `+${i.scores[k]}` : '' }}</td>
+                      </tr>
+                      <tr class="border-t border-obsidian-600">
+                        <td class="py-1 pr-2 text-dim">Level 1</td>
+                        <td v-for="k in abilityKeys" :key="k" class="px-1 py-1 text-center font-semibold text-parchment">{{ startTotal(k) }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p class="mt-2 text-[12.5px] leading-relaxed text-dim">
+                    <span v-if="arrayNo" class="text-parchment">Array {{ arrayNo }} of the {{ allowedArrays.length }} allowed: {{ startArray.join(', ') }}.</span>
+                    <span v-else class="text-ruby">{{ startArray.join(', ') }} is not one of the allowed arrays.</span>
+                    {{ l.startingScores.note }}
+                  </p>
                 </div>
 
                 <p v-if="l.abilities" class="mt-2 text-[12.5px] text-dim">
@@ -211,6 +225,34 @@ const arrayNo = (arr: number[]) => allowedArrays.findIndex(a => a.join() === arr
               <p class="mt-0.5 text-[12.5px] leading-relaxed text-dim">{{ u.text }}</p>
             </li>
           </ul>
+        </div>
+
+        <div id="skill-picks" class="panel scroll-mt-24 p-5">
+          <p class="eyebrow" :class="totalPicks !== totalSkills ? 'text-topaz' : ''">Level 1 · {{ totalPicks }} picks, {{ totalSkills }} skills</p>
+          <h2 class="heading mb-3 text-lg">Skill Picks</h2>
+          <table class="w-full text-left text-[12.5px]">
+            <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.12em] text-faint">
+              <tr>
+                <th class="py-1.5 pr-2 font-semibold">Source</th>
+                <th class="px-2 py-1.5 text-center font-semibold">Picks</th>
+                <th class="py-1.5 pl-2 font-semibold">Skill</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-obsidian-600/60">
+              <tr v-for="(p, n) in skillPicks" :key="p.source" class="align-top">
+                <td class="py-1.5 pr-2">
+                  <span class="font-semibold text-parchment">{{ p.source }}</span>
+                  <span class="block text-[11px] leading-snug text-faint">{{ p.rule }}</span>
+                </td>
+                <td class="px-2 py-1.5 text-center tabular-nums text-parchment">{{ p.picks }}</td>
+                <td v-if="p.skills" class="py-1.5 pl-2 text-gold-light">{{ p.skills.join(', ') }}</td>
+                <td v-else-if="n === firstOpenPick" :rowspan="openPicks.length" class="border-l border-dashed border-topaz/40 py-1.5 pl-2 align-middle">
+                  <span class="text-gold-light">{{ unassignedSkills.join(', ') }}</span>
+                  <span class="mt-0.5 block text-[11px] leading-snug text-topaz">{{ openPickCount }} picks for {{ unassignedSkills.length }} skills. Which pick took which isn’t recorded.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </aside>
     </div>

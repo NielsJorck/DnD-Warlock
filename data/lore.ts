@@ -50,7 +50,7 @@ export const zahir = {
 export const homebrew = [
   {
     rule: 'Starting arrays',
-    detail: 'Starting ability scores come from one of 121 allowed arrays, every result of the D&D 4e point buy, instead of the 5e standard array or point buy. The level history shows which ones fit Lucan.'
+    detail: 'Starting ability scores come from one of 121 allowed arrays, every result of the D&D 4e point buy, instead of the 5e standard array or point buy. Lucan uses 17, 14, 13, 11, 11, 8.'
   },
   { rule: 'Extra feat at level 1', detail: 'Every character gets an additional feat. Lucan takes Spell Savant from Zman’s 5e Tweaks: +1 CHA and an extra 5th-level slot once per long rest.' },
   { rule: 'Half-Elf darkvision is 30 ft', detail: 'Reduced from the usual 60 ft.' },
@@ -209,7 +209,8 @@ export const openQuestions = {
     'Terran selected as the Half-Elf language, Dwarvish as the Guild Artisan language, Draconic from Prodigy.',
     'Items consolidated: the Golden Pact, Bracers of the Dao Pact and Pact Keeper’s Crystal Dagger replace the Barrier and Illuminator’s Tattoos, Illusionist’s Bracers and Rod of the Pact Keeper.',
     'Ring of Protection, Cloak of Displacement and Amethyst Lodestone are not owned; they moved to the wishlist.',
-    'Hex and Mind Spike added; Banishment and Phantasmal Killer are not known.',
+    'Hex and Mind Spike added; Banishment is not known.',
+    'Phantasmal Killer is known: the Tome rule makes every Genie and Dao spell known.',
     'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
     'Drawmij’s Instant Summons and Forbiddance are placeholders for level 11, not in the Book of Shadows yet.',
     'All ritual-wishlist spells are now in the Book of Shadows, with eight more.',

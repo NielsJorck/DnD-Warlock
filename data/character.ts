@@ -71,10 +71,10 @@ export const character = {
   ],
 
   skills: [
-    // Exact source of these three wasn't recorded: Warlock class skills, Prodigy and the INT homebrew rule
-    { name: 'Arcana', ability: 'int' as AbilityKey, source: 'Campaign setup' },
-    { name: 'Deception', ability: 'cha' as AbilityKey, source: 'Campaign setup' },
-    { name: 'History', ability: 'int' as AbilityKey, source: 'Campaign setup' },
+    // Which of these picks took which of the three skills wasn't recorded (see skillPicks in data/levels.ts)
+    { name: 'Arcana', ability: 'int' as AbilityKey, source: 'Warlock, INT bonus or Prodigy' },
+    { name: 'Deception', ability: 'cha' as AbilityKey, source: 'Warlock, INT bonus or Prodigy' },
+    { name: 'History', ability: 'int' as AbilityKey, source: 'Warlock, INT bonus or Prodigy' },
     { name: 'Insight', ability: 'wis' as AbilityKey, source: 'Guild Artisan' },
     { name: 'Investigation', ability: 'int' as AbilityKey, source: 'Skill Versatility (homebrew)' },
     { name: 'Persuasion', ability: 'cha' as AbilityKey, source: 'Guild Artisan' }
@@ -119,7 +119,7 @@ export const character = {
       name: 'Prodigy',
       source: 'Zman’s 5e Tweaks · gift from the DM',
       level: 1,
-      summary: '+1 to one ability score, one skill proficiency, Calligrapher’s supplies and Draconic.',
+      summary: '+1 DEX, one skill proficiency, Calligrapher’s supplies and Draconic.',
       detail:
         'The DM gave it at level 1, on top of the table’s extra feat. Zman’s version gives an ability score increase where Xanathar’s gives expertise. Calligraphy suits a man who drafts his own contracts.',
       homebrew: true
