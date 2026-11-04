@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { character, lesserDao as dao, abilityNames } from '~/data/character'
+import { character, lesserDao as dao, abilityNames } from '~/data/characters/lucan/character'
 
 useHead({ title: 'Form of the Lesser Dao — Lucan Beryll' })
 
@@ -59,8 +59,8 @@ const compare = [
             Twice per long rest the Bracers turn Lucan into a Large earth genie for ten turns: a second body with its own hit points, two heavy attacks a turn and a way through solid stone.
           </p>
           <div class="mt-6 flex flex-wrap gap-2">
-            <NuxtLink to="/session#items" class="btn btn-gold px-4 py-2 text-[13px]">Assume it in Session →</NuxtLink>
-            <NuxtLink to="/items/bracers-of-the-dao-pact" class="btn px-4 py-2 text-[13px]">Bracers of the Dao Pact</NuxtLink>
+            <NuxtLink to="/lucan/session#items" class="btn btn-gold px-4 py-2 text-[13px]">Assume it in Session →</NuxtLink>
+            <NuxtLink to="/lucan/items/bracers-of-the-dao-pact" class="btn px-4 py-2 text-[13px]">Bracers of the Dao Pact</NuxtLink>
           </div>
         </div>
         <dl class="grid grid-cols-2 gap-2.5 sm:grid-cols-3">

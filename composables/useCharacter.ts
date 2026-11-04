@@ -1,4 +1,4 @@
-import { character, lesserDao, type AbilityKey } from '~/data/character'
+import { character, lesserDao, type AbilityKey } from '~/data/characters/lucan/character'
 
 export const abilityOrder: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 

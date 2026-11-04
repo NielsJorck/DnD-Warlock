@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { items, itemBySlug, groupLabels, sourceNames, variantOf, slots } from '~/data/items'
-import { roomBySlug } from '~/data/vessel'
+import { items, itemBySlug, groupLabels, sourceNames, variantOf, slots } from '~/data/characters/lucan/items'
+import { roomBySlug } from '~/data/characters/lucan/vessel'
 
 const route = useRoute()
 const item = itemBySlug[route.params.slug as string]
@@ -35,8 +35,8 @@ async function copyPrompt() {
 
 <template>
   <div class="mx-auto max-w-4xl xl:max-w-6xl">
-    <NuxtLink v-if="room" :to="`/vessel#${room.slug}`" class="text-xs text-dim hover:text-jade">← The Vessel · {{ room.name }}</NuxtLink>
-    <NuxtLink v-else to="/items" class="text-xs text-dim hover:text-gold-light">← Treasury</NuxtLink>
+    <NuxtLink v-if="room" :to="`/lucan/vessel#${room.slug}`" class="text-xs text-dim hover:text-jade">← The Vessel · {{ room.name }}</NuxtLink>
+    <NuxtLink v-else to="/lucan/items" class="text-xs text-dim hover:text-gold-light">← Treasury</NuxtLink>
 
     <div class="mt-4 grid gap-10 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-8">
       <article class="panel relative overflow-hidden">
@@ -60,7 +60,7 @@ async function copyPrompt() {
                 <span class="chip" :class="itemGroupTone[item.group]">{{ groupLabels[item.group] }}</span>
                 <span v-if="item.homebrew" class="chip border-topaz/40 text-topaz">Homebrew</span>
                 <span v-if="item.classFeature" class="chip">Class feature</span>
-                <NuxtLink v-if="room" :to="`/vessel#${room.slug}`" class="chip border-jade/40 text-jade hover:text-parchment">{{ room.glyph }} {{ room.name }}</NuxtLink>
+                <NuxtLink v-if="room" :to="`/lucan/vessel#${room.slug}`" class="chip border-jade/40 text-jade hover:text-parchment">{{ room.glyph }} {{ room.name }}</NuxtLink>
               </div>
               <h1 class="mt-3 font-display text-3xl font-bold tracking-wide text-parchment sm:text-4xl">{{ item.name }}</h1>
               <p class="mt-1 font-serif text-xl italic text-dim">{{ item.role }}</p>
@@ -129,7 +129,7 @@ async function copyPrompt() {
           <NuxtLink
             v-for="s in siblings"
             :key="s.slug"
-            :to="`/items/${s.slug}`"
+            :to="`/lucan/items/${s.slug}`"
             class="flex items-center gap-3 rounded-xl border border-obsidian-600 bg-obsidian-900/70 px-3 py-2.5 transition hover:border-gold/40"
           >
             <img v-if="s.art" :src="publicPath(s.art.src)" alt="" class="h-9 w-9 shrink-0 rounded-lg border border-obsidian-500 object-cover" :style="{ objectPosition: s.art.focus }" />

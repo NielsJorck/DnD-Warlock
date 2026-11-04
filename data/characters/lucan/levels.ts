@@ -4,13 +4,6 @@
 // Record each new level here as it's gained in play, with the date and the choices.
 
 import type { AbilityKey } from './character'
-import arrayFile from '~/sourcematerial/standard-arrays.txt?raw'
-
-// The table's allowed starting arrays (every D&D 4e point-buy result), highest score first
-export const allowedArrays = arrayFile
-  .trim()
-  .split(/\r?\n/)
-  .map(line => line.split(',').map(Number))
 
 export type ChoiceBasis = 'fixed' | 'fitted'
 export type ChoiceKind =
@@ -55,7 +48,7 @@ export interface LevelEntry {
 }
 
 // Spells with a page of their own, so the picks below can link to them
-const spell = (slug: string) => `/spells/${slug}`
+const spell = (slug: string) => `/lucan/spells/${slug}`
 
 // Hit points: 8 at level 1, then the fixed 5 per level, plus CON modifier per level
 // (CON 14 until level 4, 15 until 8, then 16). 83 at level 10 matches the Foundry sheet.
@@ -75,8 +68,8 @@ export const levels: LevelEntry[] = [
       ]
     },
     gains: [
-      { name: 'Pact Magic', to: '/spells' },
-      { name: 'Genie’s Vessel', to: '/vessel', note: 'Bottled Respite and Genie’s Wrath (Dao)' },
+      { name: 'Pact Magic', to: '/lucan/spells' },
+      { name: 'Genie’s Vessel', to: '/lucan/vessel', note: 'Bottled Respite and Genie’s Wrath (Dao)' },
       { name: 'Expanded spell list', note: 'Genie and Dao spells join the Warlock list' },
       { name: 'Fey Ancestry', note: 'Half-Elf' },
       { name: 'Darkvision 30 ft', note: 'Half-Elf, campaign homebrew' }
@@ -84,7 +77,7 @@ export const levels: LevelEntry[] = [
     choices: [
       { kind: 'Race', pick: 'Half-Elf', basis: 'fixed', note: '+2 CHA, +1 DEX, +1 CON' },
       { kind: 'Background', pick: 'Guild Artisan', basis: 'fixed', note: 'Jeweler, gemcutter, appraiser' },
-      { kind: 'Patron', pick: 'The Genie (Dao): Zahir ibn Kharum', basis: 'fixed', to: '/lore' },
+      { kind: 'Patron', pick: 'The Genie (Dao): Zahir ibn Kharum', basis: 'fixed', to: '/lucan/lore' },
       { kind: 'Feat', pick: 'Spell Savant', basis: 'fixed', note: 'The table’s extra level-1 feat. +1 CHA to 20' },
       {
         kind: 'Feat',
@@ -131,7 +124,7 @@ export const levels: LevelEntry[] = [
     proficiencyBonus: 2,
     table: { cantrips: 2, spellsKnown: 4, slots: 2, slotLevel: 2, invocations: 2 },
     gains: [
-      { name: 'Book of Shadows', to: '/spells?tab=book', note: 'Pact of the Tome' },
+      { name: 'Book of Shadows', to: '/lucan/spells?tab=book', note: 'Pact of the Tome' },
       {
         name: 'Patron spells known',
         note: 'Zman’s Tweaks: with the Tome, the expanded list counts as spells known. Detect Evil and Good, Sanctuary, Phantasmal Force, Spike Growth'
@@ -190,7 +183,7 @@ export const levels: LevelEntry[] = [
     table: { cantrips: 3, spellsKnown: 8, slots: 2, slotLevel: 4, invocations: 4 },
     gains: [{ name: '4th-level patron spells', note: 'Phantasmal Killer, Stone Shape' }],
     choices: [
-      { kind: 'Invocation', pick: 'Book of Ancient Secrets', basis: 'fitted', to: '/spells?tab=book', note: 'Needs the Tome' },
+      { kind: 'Invocation', pick: 'Book of Ancient Secrets', basis: 'fitted', to: '/lucan/spells?tab=book', note: 'Needs the Tome' },
       { kind: 'Spell', pick: 'Shadow of Moil', basis: 'fitted', to: spell('shadow-of-moil') }
     ]
   },
@@ -224,7 +217,7 @@ export const levels: LevelEntry[] = [
     maxHp: 83,
     proficiencyBonus: 4,
     table: { cantrips: 4, spellsKnown: 10, slots: 2, slotLevel: 5, invocations: 5 },
-    gains: [{ name: 'Sanctuary Vessel', to: '/vessel' }],
+    gains: [{ name: 'Sanctuary Vessel', to: '/lucan/vessel' }],
     choices: [{ kind: 'Cantrip', pick: 'Mage Hand', basis: 'fitted', to: spell('mage-hand') }]
   },
   {
@@ -238,7 +231,7 @@ export const levels: LevelEntry[] = [
       { name: 'Eldritch Blast: three beams', to: spell('eldritch-blast') },
       {
         name: '6th-level rituals',
-        to: '/spells?tab=later',
+        to: '/lucan/spells?tab=later',
         note: 'Book of Ancient Secrets can copy them. Drawmij’s Instant Summons and Forbiddance are waiting as placeholders'
       }
     ],

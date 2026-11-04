@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { spells } from '~/data/spells'
+import { spells } from '~/data/characters/lucan/spells'
 
 const CAPACITY = 5
 const { state, use, inForm } = useTracker()
@@ -42,7 +42,7 @@ function cast(n: number) {
     <div class="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-x-2.5" title="Keeps its spells through rests. Cast with the original caster’s DC and attack">
       <div class="min-w-0 leading-snug">
         <div class="truncate text-[13px]">
-          <NuxtLink to="/items/ring-of-spell-storing" class="font-medium text-parchment hover:text-gold-light">Ring of Spell Storing</NuxtLink>
+          <NuxtLink to="/lucan/items/ring-of-spell-storing" class="font-medium text-parchment hover:text-gold-light">Ring of Spell Storing</NuxtLink>
         </div>
         <div class="truncate text-[11px] text-faint">{{ stored.length ? `${levelsUsed} of ${CAPACITY} levels stored` : 'Empty' }} · keeps through rests</div>
       </div>
@@ -61,7 +61,7 @@ function cast(n: number) {
     <ul v-if="stored.length" class="mt-1 space-y-0.5 pl-3">
       <li v-for="(s, n) in stored" :key="`${s.name}-${n}`" class="flex items-center justify-between gap-2 text-[12.5px]">
         <span class="min-w-0 truncate">
-          <NuxtLink v-if="s.slug" :to="`/spells/${s.slug}`" class="text-parchment hover:text-gold-light">{{ s.name }}</NuxtLink>
+          <NuxtLink v-if="s.slug" :to="`/lucan/spells/${s.slug}`" class="text-parchment hover:text-gold-light">{{ s.name }}</NuxtLink>
           <span v-else class="text-parchment">{{ s.name }}</span>
           <span class="text-faint"> · level {{ s.level }} · {{ s.by }}</span>
         </span>

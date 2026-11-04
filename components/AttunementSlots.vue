@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { character } from '~/data/character'
-import { items } from '~/data/items'
+import { character } from '~/data/characters/lucan/character'
+import { items } from '~/data/characters/lucan/items'
 
 const attuned = items.filter(i => i.group === 'owned' && i.attunement)
 const slots = Array.from({ length: character.attunement.max }, (_, i) => attuned[i] ?? null)
@@ -12,7 +12,7 @@ const slots = Array.from({ length: character.attunement.max }, (_, i) => attuned
       <template v-for="(item, i) in slots" :key="i">
         <NuxtLink
           v-if="item"
-          :to="`/items/${item.slug}`"
+          :to="`/lucan/items/${item.slug}`"
           class="group relative grid aspect-square place-items-center rounded-xl border border-gold/40 bg-gradient-to-b from-gold/15 to-obsidian-900 text-xl text-gold-light transition hover:shadow-glow"
           :aria-label="item.name"
         >

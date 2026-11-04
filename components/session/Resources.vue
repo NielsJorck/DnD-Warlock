@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { character } from '~/data/character'
-import { spells } from '~/data/spells'
+import { character } from '~/data/characters/lucan/character'
+import { spells } from '~/data/characters/lucan/spells'
 
 const { state, hitDiceMax, pactMax, savantMax, inForm, stats, heal, use, shortRest, longRest } = useTracker()
 const { roll, note } = useDice()

@@ -7,7 +7,7 @@ interface DmReviewState {
   answers: Record<string, string> // question id → DM answer
 }
 
-const STORAGE_KEY = 'codex-dm-review-v1'
+const STORAGE_KEY = 'lucan-dm-review-v1'
 
 const fresh = (): DmReviewState => ({ verdicts: {}, notes: {}, variants: {}, answers: {} })
 
@@ -25,7 +25,7 @@ export function useDmReview() {
     if (!loaded.value) {
       loaded.value = true
       try {
-        const saved = localStorage.getItem(STORAGE_KEY)
+        const saved = readSaved(STORAGE_KEY)
         if (saved) state.value = { ...fresh(), ...JSON.parse(saved) }
       } catch {
         // ignore corrupt storage

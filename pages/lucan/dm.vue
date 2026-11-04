@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { character } from '~/data/character'
-import { items, variantOf, bySlot, type Item } from '~/data/items'
-import { dmQuestions } from '~/data/lore'
+import { character } from '~/data/characters/lucan/character'
+import { items, variantOf, bySlot, type Item } from '~/data/characters/lucan/items'
+import { dmQuestions } from '~/data/characters/lucan/lore'
 import { verdictLabels } from '~/composables/useDmReview'
 
 useHead({ title: 'DM Review — Lucan Beryll' })
@@ -115,7 +115,7 @@ function confirmReset() {
               <h3 class="text-sm font-semibold text-parchment">{{ q.question }}</h3>
               <p class="mt-1 text-[12.5px] leading-relaxed text-dim">{{ q.context }}</p>
               <div v-if="q.items?.length" class="mt-2 flex flex-wrap gap-1">
-                <NuxtLink v-for="s in q.items" :key="s" :to="`/items/${s}`" class="chip py-0 text-[10px] transition hover:border-gold/50 hover:text-gold-light">{{ itemName[s] }}</NuxtLink>
+                <NuxtLink v-for="s in q.items" :key="s" :to="`/lucan/items/${s}`" class="chip py-0 text-[10px] transition hover:border-gold/50 hover:text-gold-light">{{ itemName[s] }}</NuxtLink>
               </div>
               <textarea v-model="state.answers[q.id]" rows="2" placeholder="DM’s answer…" class="field mt-3 resize-y text-[13px]" :aria-label="`Answer: ${q.question}`" />
             </div>

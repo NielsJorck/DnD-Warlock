@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { lesserDao as dao } from '~/data/character'
-import { spells } from '~/data/spells'
+import { lesserDao as dao } from '~/data/characters/lucan/character'
+import { spells } from '~/data/characters/lucan/spells'
 
 const { state, endForm, endTurn } = useTracker()
 const { note } = useDice()
@@ -26,7 +26,7 @@ function nextTurn() {
           Attacks, checks and saves below use the form’s stats.
         </p>
         <p class="mt-1 text-[12.5px] text-parchment/85">
-          No spellcasting.<template v-if="concentrating"> Concentration on <NuxtLink :to="`/spells/${concentrating.slug}`" class="text-rose hover:text-parchment">{{ concentrating.name }}</NuxtLink> carries on.</template>
+          No spellcasting.<template v-if="concentrating"> Concentration on <NuxtLink :to="`/lucan/spells/${concentrating.slug}`" class="text-rose hover:text-parchment">{{ concentrating.name }}</NuxtLink> carries on.</template>
         </p>
       </div>
 
@@ -42,7 +42,7 @@ function nextTurn() {
         <div class="flex flex-wrap gap-1.5">
           <button type="button" class="btn border-topaz/50 py-2 text-topaz hover:border-topaz" @click="nextTurn">End turn</button>
           <button type="button" class="btn py-2" @click="endForm">End form</button>
-          <NuxtLink to="/lesser-dao" class="btn py-2">Stat block →</NuxtLink>
+          <NuxtLink to="/lucan/lesser-dao" class="btn py-2">Stat block →</NuxtLink>
         </div>
       </div>
     </div>

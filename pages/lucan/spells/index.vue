@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { type School, type Spell, type SpellStatus, spells, knownSources, levelLabel, schoolGlyph, statusLabels } from '~/data/spells'
-import { character } from '~/data/character'
+import { type School, type Spell, type SpellStatus, spells, knownSources, levelLabel, schoolGlyph, statusLabels } from '~/data/characters/lucan/spells'
+import { character } from '~/data/characters/lucan/character'
 
 useHead({ title: 'Spellbook — Lucan Beryll' })
 
@@ -14,8 +14,18 @@ const tabs: { id: Tab; label: string; statuses: SpellStatus[]; blurb: string }[]
 
 const route = useRoute()
 const router = useRouter()
-const tab = ref<Tab>(tabs.some(t => t.id === route.query.tab) ? (route.query.tab as Tab) : 'known')
-const query = ref(typeof route.query.q === 'string' ? route.query.q : '')
+// The static site has one prerendered page for every ?tab= and ?q=, so the query
+// is applied once the page is live; reading it earlier clashes with that HTML.
+// The URL follows the tab and search from then on, but not for the link that opened the page.
+const tab = ref<Tab>('known')
+const query = ref('')
+onMounted(() => {
+  if (tabs.some(t => t.id === route.query.tab)) tab.value = route.query.tab as Tab
+  if (typeof route.query.q === 'string') query.value = route.query.q
+  watch([tab, query], ([t, q]) => {
+    router.replace({ query: { ...(t !== 'known' ? { tab: t } : {}), ...(q ? { q } : {}) } })
+  })
+})
 const levels = ref<number[]>([])
 const schools = ref<School[]>([])
 type ConcFilter = 'any' | 'yes' | 'no'
@@ -44,10 +54,6 @@ const castTimes = ref<CastTime[]>([])
 const onlyRitual = ref(false)
 const expandAll = ref(false)
 const groupBy = ref<'source' | 'level'>('source')
-
-watch([tab, query], ([t, q]) => {
-  router.replace({ query: { ...(t !== 'known' ? { tab: t } : {}), ...(q ? { q } : {}) } })
-})
 
 const current = computed(() => tabs.find(t => t.id === tab.value)!)
 const countFor = (t: (typeof tabs)[number]) => spells.filter(s => t.statuses.includes(s.status)).length

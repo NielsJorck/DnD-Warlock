@@ -1,4 +1,7 @@
-// Story, campaign rules and open decisions.
+// Lucan's story, his own house rules and rulings, and his open decisions.
+// Rules for the whole table are in data/campaign.ts.
+
+import type { HouseRule, Ruling } from '../../campaign'
 
 export const backstory = {
   paragraphs: [
@@ -47,24 +50,7 @@ export const zahir = {
   ]
 }
 
-export const homebrew = [
-  {
-    rule: 'Starting arrays',
-    detail: 'Starting ability scores come from one of 121 allowed arrays, every result of the D&D 4e point buy, instead of the 5e standard array or point buy. Lucan uses 17, 13, 13, 12, 12, 8.'
-  },
-  { rule: 'Extra feat at level 1', detail: 'Every character gets an additional feat. Lucan takes Spell Savant from Zman’s 5e Tweaks: +1 CHA and an extra 5th-level slot once per long rest.' },
-  { rule: 'Half-Elf darkvision is 30 ft', detail: 'Reduced from the usual 60 ft.' },
-  { rule: 'Skill Versatility → Investigation', detail: 'The Half-Elf skill choice grants Investigation.' },
-  {
-    rule: 'Intelligence grants proficiencies',
-    detail: 'Each point of INT modifier gives an extra language and an extra skill or tool proficiency, at creation and whenever the modifier rises. INT can replace DEX for initiative.'
-  },
-  {
-    rule: 'Patron spells are spells known',
-    detail: 'The Genie expanded list counts as additional spells known, not just extra options to choose from.'
-  },
-  { rule: 'Repelling Blast: once per target', detail: 'The 10-ft push applies once per target per casting, not once per beam.' },
-  { rule: 'Attunement limit 10', detail: 'Instead of the usual 3.' },
+export const houseRules: HouseRule[] = [
   {
     rule: 'Bottled Respite at will',
     detail: 'Bottled Respite normally can’t be used again until a long rest. In this campaign Lucan can enter and leave the Vessel whenever he wants. The Sanctuary Vessel short rest still works only once per long rest.'
@@ -75,11 +61,7 @@ export const homebrew = [
   }
 ]
 
-export const rulings = [
-  {
-    ruling: 'Agonizing Blast works as written',
-    detail: 'The DM reverted the once-per-target house rule. Lucan adds his CHA modifier (+5) to every Eldritch Blast beam that hits. Repelling Blast keeps its once-per-target homebrew.'
-  },
+export const rulings: Ruling[] = [
   {
     ruling: 'Prodigy is a gift from the DM',
     detail:
@@ -100,14 +82,6 @@ export const rulings = [
     ruling: 'Pact Keeper’s Crystal Dagger',
     detail:
       'It replaces the Rod of the Pact Keeper. It keeps the slot recovery but gives +1 instead of +2, and is a real returning +1 dagger that deals extra force and bludgeoning damage.'
-  },
-  {
-    ruling: 'Spell attack and DC bonuses stack',
-    detail: 'Bonuses from different items add together with no cap, e.g. the Crystal Dagger (+1) and a Jester’s Mask (+3) would give spell DC 21 and attack +13.'
-  },
-  {
-    ruling: 'Up to four magic rings',
-    detail: 'The table allows four worn rings instead of the usual limit. Other slots follow the books: one cloak, one pair of bracers, one belt, one robe and one piece of headwear.'
   }
 ]
 
@@ -119,7 +93,7 @@ export interface DmQuestion {
   items?: string[] // item slugs the answer affects
 }
 
-// Questions for the DM. Listed on /dm with answer fields and summarised on /rules.
+// Questions for the DM. Listed on /lucan/dm with answer fields and summarised on /rules.
 export const dmQuestions: DmQuestion[] = [
   {
     id: 'later-books',
@@ -160,36 +134,6 @@ export const dmQuestions: DmQuestion[] = [
     items: ['helm-of-comprehending-languages', 'eyes-of-minute-seeing']
   }
 ]
-
-// The campaign's homebrew rulebook, served as-is from public/
-export const tweaksPdf = {
-  title: 'Zman’s 5e Tweaks',
-  version: 'v2.0',
-  src: '/docs/zmans-5e-tweaks.pdf',
-  note: 'The table’s homebrew rulebook, made in The Homebrewery. Spell Savant and several of the house rules above come from it.'
-}
-
-export const sourcePolicy = {
-  baseline: '2014 D&D 5e plus Tasha’s Cauldron of Everything',
-  index: { label: '2014.5e.tools', url: 'https://2014.5e.tools/' },
-  allowed: [
-    'Official 2014 core books: Player’s Handbook, Dungeon Master’s Guide, Monster Manual.',
-    'Official 2014-era supplements: Xanathar’s, Tasha’s, Volo’s, Mordenkainen’s Tome of Foes and similar.',
-    'Official adventure and setting books, such as Rime of the Frostmaiden and Dungeon of the Mad Mage, where the specific option appears on the 2014 site.',
-    'Ritual spells from any class list, legally copied into the Book of Shadows.'
-  ],
-  excluded: [
-    '2024-only rules and the revised 2024 books.',
-    'Content that only appears on the non-2014 5e.tools site.',
-    'Unearthed Arcana, third-party material and unapproved homebrew.',
-    'The 2024 “Sphinx of Wonder” familiar.',
-    'Robe of Thayan Arcana.'
-  ],
-  labels: [
-    { label: 'Owned', text: 'On the Foundry sheet. The character sheet’s numbers use these.' },
-    { label: 'Wishlist', text: 'Items Lucan would like to find or commission later. For the DM to rule on.' }
-  ]
-}
 
 export const openQuestions = {
   immediate: [

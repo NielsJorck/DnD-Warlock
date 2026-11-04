@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { spells, spellBySlug, levelLabel, schoolGlyph, statusLabels } from '~/data/spells'
+import { spells, spellBySlug, levelLabel, schoolGlyph, statusLabels } from '~/data/characters/lucan/spells'
 
 const route = useRoute()
 const spell = spellBySlug[route.params.slug as string]
@@ -19,7 +19,7 @@ const related = spells.filter(s => s.slug !== spell.slug && s.access === spell.a
 
 <template>
   <div class="mx-auto max-w-4xl xl:max-w-6xl">
-    <NuxtLink to="/spells" class="text-xs text-dim hover:text-gold-light">← Spellbook</NuxtLink>
+    <NuxtLink to="/lucan/spells" class="text-xs text-dim hover:text-gold-light">← Spellbook</NuxtLink>
 
     <div class="mt-4 grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-8">
       <article class="panel relative overflow-hidden">
@@ -61,12 +61,12 @@ const related = spells.filter(s => s.slug !== spell.slug && s.access === spell.a
 
       <aside class="space-y-8 xl:sticky xl:top-24 xl:self-start">
         <nav class="grid grid-cols-2 gap-3" aria-label="Adjacent spells">
-          <NuxtLink v-if="prev" :to="`/spells/${prev.slug}`" class="panel px-4 py-3 transition hover:border-gold/40">
+          <NuxtLink v-if="prev" :to="`/lucan/spells/${prev.slug}`" class="panel px-4 py-3 transition hover:border-gold/40">
             <span class="text-[11px] text-faint">← Previous</span>
             <span class="block truncate font-display text-parchment">{{ prev.name }}</span>
           </NuxtLink>
           <span v-else />
-          <NuxtLink v-if="next" :to="`/spells/${next.slug}`" class="panel px-4 py-3 text-right transition hover:border-gold/40">
+          <NuxtLink v-if="next" :to="`/lucan/spells/${next.slug}`" class="panel px-4 py-3 text-right transition hover:border-gold/40">
             <span class="text-[11px] text-faint">Next →</span>
             <span class="block truncate font-display text-parchment">{{ next.name }}</span>
           </NuxtLink>
@@ -78,7 +78,7 @@ const related = spells.filter(s => s.slug !== spell.slug && s.access === spell.a
             <NuxtLink
               v-for="r in related"
               :key="r.slug"
-              :to="`/spells/${r.slug}`"
+              :to="`/lucan/spells/${r.slug}`"
               class="flex items-center gap-3 rounded-xl border border-obsidian-600 bg-obsidian-900/70 px-3 py-2.5 transition hover:border-gold/40"
             >
               <span class="grid h-8 w-8 place-items-center rounded-lg border text-sm" :class="[schoolTone[r.school].border, schoolTone[r.school].bg, schoolTone[r.school].text]">{{ schoolGlyph[r.school] }}</span>

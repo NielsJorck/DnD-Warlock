@@ -24,7 +24,7 @@ const dice = computed(() => (feet.value / 5) * 2)
       <p class="eyebrow">Battlefield control</p>
       <div class="flex flex-wrap items-baseline justify-between gap-2">
         <h3 class="heading text-xl">The Spike Growth Grinder</h3>
-        <NuxtLink to="/spells/spike-growth" class="text-xs text-dim hover:text-gold-light">Spike Growth →</NuxtLink>
+        <NuxtLink to="/lucan/spells/spike-growth" class="text-xs text-dim hover:text-gold-light">Spike Growth →</NuxtLink>
       </div>
       <p class="mt-1 text-sm text-dim">20-ft radius · 2d4 piercing for every 5 ft a creature moves inside it · concentration, 10 minutes</p>
     </div>

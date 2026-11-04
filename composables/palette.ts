@@ -1,5 +1,5 @@
-import type { School, SpellAccess, SpellStatus } from '~/data/spells'
-import type { ItemGroup, Rarity } from '~/data/items'
+import type { School, SpellAccess, SpellStatus } from '~/data/characters/lucan/spells'
+import type { ItemGroup, Rarity } from '~/data/characters/lucan/items'
 
 // Full class strings so Tailwind can see them.
 export const schoolTone: Record<School, { text: string; border: string; bg: string; hex: string }> = {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { spells, type Spell } from '~/data/spells'
+import { spells, type Spell } from '~/data/characters/lucan/spells'
 
 const { state, nextSlot, inForm } = useTracker()
 const { cast } = useCasting()
@@ -56,7 +56,7 @@ const saveOf = (s: Spell) => s.save?.split(' ')[0]
       <ul class="grid gap-x-4 gap-y-2 sm:grid-cols-2">
         <li v-for="s in cantrips" :key="s.slug" class="flex min-w-0 items-center gap-2">
           <span class="min-w-0 flex-1">
-            <NuxtLink :to="`/spells/${s.slug}`" class="text-[13px] font-medium text-parchment hover:text-gold-light">{{ s.name }}</NuxtLink>
+            <NuxtLink :to="`/lucan/spells/${s.slug}`" class="text-[13px] font-medium text-parchment hover:text-gold-light">{{ s.name }}</NuxtLink>
             <span v-if="s.concentration" class="ml-1.5 text-[10px] font-semibold text-rose" title="Concentration">C</span>
             <span v-if="saveOf(s)" class="ml-1.5 text-[10.5px] text-faint">{{ saveOf(s) }}</span>
           </span>
@@ -78,7 +78,7 @@ const saveOf = (s: Spell) => s.save?.split(' ')[0]
           >{{ s.level }}</span>
           <div class="min-w-0 flex-1">
             <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-              <NuxtLink :to="`/spells/${s.slug}`" class="text-[13.5px] font-semibold text-parchment hover:text-gold-light">{{ s.name }}</NuxtLink>
+              <NuxtLink :to="`/lucan/spells/${s.slug}`" class="text-[13.5px] font-semibold text-parchment hover:text-gold-light">{{ s.name }}</NuxtLink>
               <span v-if="state.concentration === s.slug" class="chip border-rose/60 bg-rose/15 py-0 text-[10px] text-rose">Concentrating</span>
               <span v-else-if="s.concentration" class="chip border-rose/40 py-0 text-[10px] text-rose" title="Concentration">C</span>
               <span v-if="saveOf(s)" class="chip py-0 text-[10px]">{{ saveOf(s) }} save</span>
@@ -103,7 +103,7 @@ const saveOf = (s: Spell) => s.save?.split(' ')[0]
 
     <div class="flex flex-wrap items-center justify-between gap-2 border-t border-obsidian-600/70 px-5 py-3 text-[11.5px] text-faint">
       <span>Rituals from the Book of Shadows take 10 extra minutes and no slot.</span>
-      <NuxtLink to="/spells" class="text-dim hover:text-gold-light">Full spellbook →</NuxtLink>
+      <NuxtLink to="/lucan/spells" class="text-dim hover:text-gold-light">Full spellbook →</NuxtLink>
     </div>
   </section>
 </template>

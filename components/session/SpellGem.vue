@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { spells } from '~/data/spells'
+import { spells } from '~/data/characters/lucan/spells'
 
 const { state, inForm, left, nextSlot, spendSlot, use } = useTracker()
 const { cast } = useCasting()
@@ -39,11 +39,11 @@ function release() {
     <div class="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-x-2.5" title="Cast from the gem as an action: DC 17, attack +9, no components">
       <div class="min-w-0 leading-snug">
         <div class="truncate text-[13px]">
-          <NuxtLink to="/items/spell-gem-blue-topaz" class="font-medium text-parchment hover:text-gold-light">Spell Gem</NuxtLink>
+          <NuxtLink to="/lucan/items/spell-gem-blue-topaz" class="font-medium text-parchment hover:text-gold-light">Spell Gem</NuxtLink>
           <span class="ml-1.5 text-[10px] uppercase tracking-wider text-faint">Action</span>
         </div>
         <div class="truncate text-[11px] text-faint">
-          <template v-if="stored">Holds <NuxtLink v-if="stored.slug" :to="`/spells/${stored.slug}`" class="text-parchment hover:text-gold-light">{{ stored.name }}</NuxtLink><span v-else class="text-parchment">{{ stored.name }}</span> · DC 17 · +9</template>
+          <template v-if="stored">Holds <NuxtLink v-if="stored.slug" :to="`/lucan/spells/${stored.slug}`" class="text-parchment hover:text-gold-light">{{ stored.name }}</NuxtLink><span v-else class="text-parchment">{{ stored.name }}</span> · DC 17 · +9</template>
           <template v-else>Empty · DC 17 · +9 · imbue once a day</template>
         </div>
       </div>

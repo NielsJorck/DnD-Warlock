@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Item, variantOf } from '~/data/items'
+import { type Item, variantOf } from '~/data/characters/lucan/items'
 
 const props = defineProps<{ item: Item; featured?: boolean }>()
 const rarity = computed(() => (props.item.rarity ? rarityTone[props.item.rarity] : null))
@@ -11,7 +11,7 @@ const variant = computed(() => variantOf(props.item))
     class="group flex flex-col overflow-hidden rounded-2xl border bg-obsidian-900/80 transition hover:shadow-panel"
     :class="featured ? 'border-gold/25 hover:border-gold/50' : 'border-obsidian-600 hover:border-obsidian-500'"
   >
-    <NuxtLink v-if="item.art" :to="`/items/${item.slug}`" class="relative block h-44 overflow-hidden border-b border-obsidian-600" tabindex="-1" aria-hidden="true">
+    <NuxtLink v-if="item.art" :to="`/lucan/items/${item.slug}`" class="relative block h-44 overflow-hidden border-b border-obsidian-600" tabindex="-1" aria-hidden="true">
       <img :src="publicPath(item.art.src)" alt="" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" :style="{ objectPosition: item.art.focus }" loading="lazy" />
       <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900/90 via-transparent to-transparent" />
     </NuxtLink>
@@ -23,7 +23,7 @@ const variant = computed(() => variantOf(props.item))
         aria-hidden="true"
       >{{ item.glyph }}</span>
       <div class="min-w-0 flex-1">
-        <NuxtLink :to="`/items/${item.slug}`" class="font-display text-[15px] font-semibold tracking-wide text-parchment transition hover:text-gold-light">
+        <NuxtLink :to="`/lucan/items/${item.slug}`" class="font-display text-[15px] font-semibold tracking-wide text-parchment transition hover:text-gold-light">
           {{ item.name }}
         </NuxtLink>
         <p class="text-[11.5px] text-faint">

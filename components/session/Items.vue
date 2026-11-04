@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { resources, lesserDao } from '~/data/character'
+import { resources, lesserDao } from '~/data/characters/lucan/character'
 
 const { state, inForm, left, use, heal, shortRest, assumeForm, endForm } = useTracker()
 const { roll, note } = useDice()
@@ -20,7 +20,7 @@ const triggers = computed<Trigger[]>(() => [
   {
     id: 'lesserDao',
     name: 'Lesser Dao form',
-    to: '/lesser-dao',
+    to: '/lucan/lesser-dao',
     when: 'Bonus',
     note: inForm.value
       ? `${state.value.formTurns} of ${lesserDao.turns} turns left · ${state.value.form} form HP`
@@ -52,7 +52,7 @@ const triggers = computed<Trigger[]>(() => [
   {
     id: 'dagger',
     name: 'Dagger: regain slot',
-    to: '/items/pact-keepers-crystal-dagger',
+    to: '/lucan/items/pact-keepers-crystal-dagger',
     when: 'Action',
     note: 'One spent pact slot comes back',
     label: 'Regain',
@@ -66,7 +66,7 @@ const triggers = computed<Trigger[]>(() => [
   {
     id: 'potion',
     name: 'Superior Healing',
-    to: '/items/potion-of-superior-healing',
+    to: '/lucan/items/potion-of-superior-healing',
     when: 'Action',
     note: 'Potion · 8d4 + 8 HP, average 28',
     label: 'Drink',
@@ -89,7 +89,7 @@ const triggers = computed<Trigger[]>(() => [
   {
     id: 'scribing',
     name: 'Hidden writing',
-    to: '/items/the-golden-pact',
+    to: '/lucan/items/the-golden-pact',
     when: 'Action',
     note: 'Golden Pact · one reader for 24 hours',
     label: 'Use',
@@ -99,7 +99,7 @@ const triggers = computed<Trigger[]>(() => [
   {
     id: 'vesselRest',
     name: 'Sanctuary Vessel',
-    to: '/vessel',
+    to: '/lucan/vessel',
     when: '10 min',
     note: 'Counts as a short rest for six',
     label: 'Rest',
@@ -170,7 +170,7 @@ function zap() {
         <div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2.5">
           <div class="min-w-0 leading-snug">
             <div class="truncate text-[13px]">
-              <NuxtLink to="/items/lesser-wand-of-lightning-bolts" class="font-medium text-parchment hover:text-gold-light">Wand of Lightning Bolts</NuxtLink>
+              <NuxtLink to="/lucan/items/lesser-wand-of-lightning-bolts" class="font-medium text-parchment hover:text-gold-light">Wand of Lightning Bolts</NuxtLink>
               <span class="ml-1.5 text-[10px] uppercase tracking-wider text-faint">Action</span>
             </div>
             <div class="truncate text-[11px] text-faint">{{ wandLeft ? `100-ft line · DC 15 DEX · ${wandLeft} of ${max('wand')} charges, no recharge` : 'Spent. The wand crumbled to ashes' }}</div>

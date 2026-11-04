@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { character, lesserDao as dao } from '~/data/character'
+import { character, lesserDao as dao } from '~/data/characters/lucan/character'
 
 const { state, inForm } = useTracker()
 const { roll } = useDice()
@@ -77,7 +77,7 @@ const hexTag = computed(() => (hex.value ? ' +Hex' : ''))
       <!-- Eldritch Blast -->
       <div class="border-b border-obsidian-600/70 p-5">
         <div class="flex flex-wrap items-baseline justify-between gap-x-3">
-          <NuxtLink to="/spells/eldritch-blast" class="font-display text-[15px] font-semibold tracking-wide text-parchment hover:text-gold-light">Eldritch Blast</NuxtLink>
+          <NuxtLink to="/lucan/spells/eldritch-blast" class="font-display text-[15px] font-semibold tracking-wide text-parchment hover:text-gold-light">Eldritch Blast</NuxtLink>
           <span class="text-[11.5px] text-faint">Action · 120 ft · {{ beams }} beams, separate attacks</span>
         </div>
         <div class="mt-3 grid gap-3 sm:grid-cols-2">
@@ -111,7 +111,7 @@ const hexTag = computed(() => (hex.value ? ' +Hex' : ''))
       <!-- Crystal Dagger -->
       <div class="p-5">
         <div class="flex flex-wrap items-baseline justify-between gap-x-3">
-          <NuxtLink to="/items/pact-keepers-crystal-dagger" class="font-display text-[15px] font-semibold tracking-wide text-parchment hover:text-gold-light">Pact Keeper’s Crystal Dagger</NuxtLink>
+          <NuxtLink to="/lucan/items/pact-keepers-crystal-dagger" class="font-display text-[15px] font-semibold tracking-wide text-parchment hover:text-gold-light">Pact Keeper’s Crystal Dagger</NuxtLink>
           <span class="text-[11.5px] text-faint">Action · finesse · thrown 30 ft, returns</span>
         </div>
         <div class="mt-3 flex flex-wrap gap-1.5">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Spell } from '~/data/spells'
+import type { Spell } from '~/data/characters/lucan/spells'
 
 const props = defineProps<{ spell: Spell }>()
 const cells = computed(() => [

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { character, lesserDao } from '~/data/character'
-import { spells } from '~/data/spells'
+import { character, lesserDao } from '~/data/characters/lucan/character'
+import { spells } from '~/data/characters/lucan/spells'
 
 const { state, pactMax, savantMax, inForm, stats, damage, heal, setTemp, use, endForm, endTurn } = useTracker()
 const { roll, note, mode } = useDice()
@@ -174,7 +174,7 @@ const toggleMode = (m: 'adv' | 'dis') => (mode.value = mode.value === m ? 'norma
       </span>
       <span v-if="inForm" class="chip shrink-0 text-faint">No spellcasting</span>
       <span v-if="concentrating" class="chip shrink-0 border-rose/40 text-rose">
-        Concentrating: <NuxtLink :to="`/spells/${concentrating.slug}`" class="font-semibold hover:text-parchment">{{ concentrating.name }}</NuxtLink>
+        Concentrating: <NuxtLink :to="`/lucan/spells/${concentrating.slug}`" class="font-semibold hover:text-parchment">{{ concentrating.name }}</NuxtLink>
         <button type="button" class="ml-0.5 text-faint hover:text-parchment" aria-label="Drop concentration" @click="state.concentration = ''">✕</button>
       </span>
       <span v-else class="chip shrink-0 text-faint">Not concentrating</span>

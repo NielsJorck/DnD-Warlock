@@ -147,7 +147,7 @@ export const character = {
     {
       name: 'Book of Ancient Secrets',
       source: 'PHB',
-      to: '/spells?tab=book',
+      to: '/lucan/spells?tab=book',
       summary: 'Two 1st-level rituals in the Book of Shadows; copy other rituals you find.',
       detail:
         'Rituals of a level up to half your Warlock level (rounded up — 5th at level 10) can be copied from any class. Costs 50 gp and 2 hours per spell level. The rituals are cast from the book and can’t be cast with pact slots unless known otherwise.'
@@ -181,14 +181,14 @@ export const character = {
     {
       name: 'Pact Magic',
       source: 'Warlock',
-      to: '/spells',
+      to: '/lucan/spells',
       level: 1,
       summary: 'Two 5th-level pact slots. Every leveled spell is cast at 5th level. Slots return on a short or long rest.'
     },
     {
       name: 'Genie’s Vessel',
       source: 'Genie Patron',
-      to: '/vessel',
+      to: '/lucan/vessel',
       level: 1,
       summary:
         'A Tiny object that serves as a spellcasting focus. AC equals the spell save DC, 14 HP (level + PB), immune to poison and psychic damage.',
@@ -197,7 +197,7 @@ export const character = {
     {
       name: 'Bottled Respite',
       source: 'Genie Patron',
-      to: '/vessel',
+      to: '/lucan/vessel',
       level: 1,
       summary: 'Use an action to vanish into the Vessel for up to 8 hours (2 × PB). Leave it with a bonus action.',
       detail: 'Normally once per long rest. In this campaign Lucan can enter and leave whenever he wants.',
@@ -222,7 +222,7 @@ export const character = {
     {
       name: 'Pact Boon: Tome',
       source: 'Warlock',
-      to: '/spells?tab=book',
+      to: '/lucan/spells?tab=book',
       level: 3,
       summary: 'The Book of Shadows: three cantrips from any class (Light, Guidance, Message).'
     },
@@ -236,7 +236,7 @@ export const character = {
     {
       name: 'Sanctuary Vessel',
       source: 'Genie Patron',
-      to: '/vessel',
+      to: '/lucan/vessel',
       level: 10,
       summary:
         'Up to five willing creatures within 30 ft enter the Vessel with you. Ten minutes inside counts as a short rest, and anyone spending Hit Dice adds +4 (PB) HP.',
@@ -248,7 +248,7 @@ export const character = {
     {
       name: 'Form of the Lesser Dao',
       source: 'Bracers of the Dao Pact',
-      to: '/lesser-dao',
+      to: '/lucan/lesser-dao',
       summary: 'As a bonus action, Lucan becomes a Large earth genie for 10 turns: AC 20, 83 HP, two attacks a turn at +9, flight and burrowing.',
       detail: 'The form has its own hit points. When it drops to 0, any leftover damage carries over to Lucan. No spellcasting in the form, but concentration carries on. The Lesser Dao page has the full stat block.',
       uses: '2 / long rest'

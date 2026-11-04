@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { character } from '~/data/character'
-import { appearance, backstory, zahir } from '~/data/lore'
-import { items } from '~/data/items'
+import { character } from '~/data/characters/lucan/character'
+import { appearance, backstory, zahir } from '~/data/characters/lucan/lore'
+import { items } from '~/data/characters/lucan/items'
 
 const signature = items.filter(i => i.art)
 
@@ -85,11 +85,11 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
       <SectionHeading eyebrow="What he carries" title="Signature Pieces" />
       <div class="grid gap-6 md:grid-cols-2">
         <figure v-for="i in signature" :key="i.slug" class="panel group overflow-hidden">
-          <NuxtLink :to="`/items/${i.slug}`" class="block overflow-hidden border-b border-obsidian-600">
+          <NuxtLink :to="`/lucan/items/${i.slug}`" class="block overflow-hidden border-b border-obsidian-600">
             <img :src="publicPath(i.art!.src)" :alt="i.art!.alt" class="aspect-[3/4] w-full object-cover transition duration-500 group-hover:scale-[1.03]" loading="lazy" />
           </NuxtLink>
           <figcaption class="p-5">
-            <NuxtLink :to="`/items/${i.slug}`" class="font-display text-lg font-semibold tracking-wide text-parchment transition hover:text-gold-light">{{ i.name }}</NuxtLink>
+            <NuxtLink :to="`/lucan/items/${i.slug}`" class="font-display text-lg font-semibold tracking-wide text-parchment transition hover:text-gold-light">{{ i.name }}</NuxtLink>
             <p class="mt-1 text-[13px] leading-relaxed text-dim">{{ i.art!.caption }}</p>
           </figcaption>
         </figure>

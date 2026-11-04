@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { conditions, exhaustionLevels } from '~/data/conditions'
-import { lesserDao } from '~/data/character'
+import { lesserDao } from '~/data/characters/lucan/character'
 
 const { state, inForm, left, use, heal } = useTracker()
 const { roll, note } = useDice()

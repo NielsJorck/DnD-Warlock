@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { type Item, variantOf, bySlot } from '~/data/items'
-import { roomBySlug } from '~/data/vessel'
+import { type Item, variantOf, bySlot } from '~/data/characters/lucan/items'
+import { roomBySlug } from '~/data/characters/lucan/vessel'
 import { verdictLabels, type Verdict } from '~/composables/useDmReview'
 
 const props = defineProps<{ items: Item[]; grouped?: boolean }>()
@@ -54,7 +54,7 @@ const verdicts: { id: Verdict; icon: string; tone: string }[] = [
         </tr>
         <tr v-for="i in g.items" :key="i.slug" class="align-top transition hover:bg-obsidian-800/40">
           <td class="px-4 py-3">
-            <NuxtLink :to="`/items/${i.slug}`" class="font-semibold text-parchment transition hover:text-gold-light">{{ i.name }}</NuxtLink>
+            <NuxtLink :to="`/lucan/items/${i.slug}`" class="font-semibold text-parchment transition hover:text-gold-light">{{ i.name }}</NuxtLink>
             <p class="text-[11.5px] text-faint">{{ i.room ? roomBySlug[i.room]?.name : i.type }}</p>
             <span v-if="i.group === 'vessel'" class="chip mt-1 border-jade/40 py-0 text-[10px] text-jade" title="Part of the Genie Vessel, assumed accepted">Accepted</span>
             <select

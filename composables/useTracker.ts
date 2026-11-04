@@ -1,4 +1,4 @@
-import { character, resources, lesserDao } from '~/data/character'
+import { character, resources, lesserDao } from '~/data/characters/lucan/character'
 
 export interface StoredSpell {
   name: string
@@ -25,7 +25,7 @@ interface TrackerState {
   agathys: number // Armor of Agathys cold damage; lasts while its temp HP do, 0 when off
 }
 
-const STORAGE_KEY = 'codex-tracker-v1'
+const STORAGE_KEY = 'lucan-tracker-v1'
 const hitDiceMax = character.level
 const pactMax = character.pactSlots.count
 const savantMax = character.savantSlot.count
@@ -58,7 +58,7 @@ export function useTracker() {
     if (!loaded.value) {
       loaded.value = true
       try {
-        const saved = localStorage.getItem(STORAGE_KEY)
+        const saved = readSaved(STORAGE_KEY)
         if (saved) {
           const parsed = JSON.parse(saved)
           const base = fresh()

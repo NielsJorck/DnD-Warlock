@@ -31,7 +31,7 @@ const pct = (n: number) => `${Math.round(n * 100)}%`
       <p class="eyebrow">Signature attack</p>
       <div class="flex flex-wrap items-baseline justify-between gap-2">
         <h3 class="heading text-xl">Eldritch Blast</h3>
-        <NuxtLink to="/spells/eldritch-blast" class="text-xs text-dim hover:text-gold-light">Spell details →</NuxtLink>
+        <NuxtLink to="/lucan/spells/eldritch-blast" class="text-xs text-dim hover:text-gold-light">Spell details →</NuxtLink>
       </div>
       <p class="mt-1 text-sm text-dim">120 ft · {{ beams }} beams · each beam is a separate attack</p>
     </div>
@@ -58,7 +58,7 @@ const pct = (n: number) => `${Math.round(n * 100)}%`
           <li class="flex justify-between gap-3"><span><span class="text-parchment">Repelling Blast</span> · once per target</span><span class="text-gold-light">push 10 ft</span></li>
           <li class="flex justify-between gap-3"><span><span class="text-parchment">Grasp of Hadar</span> · once per turn</span><span class="text-gold-light">pull 10 ft</span></li>
           <li class="flex justify-between gap-3"><span><span class="text-parchment">Crusher</span> · once per turn</span><span class="text-gold-light">move 5 ft</span></li>
-          <li class="flex justify-between gap-3"><span><NuxtLink to="/spells/hex" class="text-parchment hover:text-gold-light">Hex</NuxtLink> · every hit on the cursed target</span><span class="tabular-nums text-gold-light">+1d6 necrotic</span></li>
+          <li class="flex justify-between gap-3"><span><NuxtLink to="/lucan/spells/hex" class="text-parchment hover:text-gold-light">Hex</NuxtLink> · every hit on the cursed target</span><span class="tabular-nums text-gold-light">+1d6 necrotic</span></li>
         </ul>
         <div class="flex flex-wrap gap-1.5 pt-1">
           <RollButton :notation="`1d20+${atk}`" label="Eldritch Blast — beam 1">Beam 1</RollButton>

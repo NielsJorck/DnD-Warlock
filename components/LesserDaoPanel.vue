@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { abilityNames, lesserDao as dao } from '~/data/character'
+import { abilityNames, lesserDao as dao } from '~/data/characters/lucan/character'
 
 const abilities = abilityOrder.map(key => ({ key, ...formStats.abilities[key] }))
 const skills = formStats.skills.filter(s => s.proficient)

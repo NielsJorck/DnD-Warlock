@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Spell, knownSourceOf, levelLabel, schoolGlyph, statusLabels } from '~/data/spells'
+import { type Spell, knownSourceOf, levelLabel, schoolGlyph, statusLabels } from '~/data/characters/lucan/spells'
 
 const props = defineProps<{ spell: Spell; open?: boolean }>()
 const known = computed(() => knownSourceOf(props.spell))
@@ -69,7 +69,7 @@ const rollNotation = computed(() => (props.spell.atPact ?? props.spell.damage ??
         <RollButton v-if="spell.attack" :notation="`1d20+${derived.spellAttack}`" :label="`${spell.name} — spell attack`">Attack {{ signed(derived.spellAttack) }}</RollButton>
         <RollButton v-if="rollNotation" :notation="rollNotation" :label="`${spell.name} damage`">{{ rollNotation }}</RollButton>
         <span v-if="spell.save" class="chip text-[11px]">{{ spell.save }} save · DC {{ derived.spellDc }}</span>
-        <NuxtLink :to="`/spells/${spell.slug}`" class="ml-auto text-xs text-dim hover:text-gold-light">Open page →</NuxtLink>
+        <NuxtLink :to="`/lucan/spells/${spell.slug}`" class="ml-auto text-xs text-dim hover:text-gold-light">Open page →</NuxtLink>
       </div>
     </div>
   </details>

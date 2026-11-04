@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { character } from '~/data/character'
-import { items, bySlot, mundaneGear } from '~/data/items'
+import { character } from '~/data/characters/lucan/character'
+import { items, bySlot, mundaneGear } from '~/data/characters/lucan/items'
 
 useHead({ title: 'Treasury — Lucan Beryll' })
 
@@ -38,7 +38,7 @@ const jump = [
           <a v-for="j in jump" :key="j.id" :href="`#${j.id}`" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">
             {{ j.label }} <span class="text-faint">{{ j.count }}</span>
           </a>
-          <NuxtLink to="/vessel#rooms" class="chip border-jade/40 px-3 py-1 text-xs text-jade transition hover:border-jade/70 hover:text-parchment">
+          <NuxtLink to="/lucan/vessel#rooms" class="chip border-jade/40 px-3 py-1 text-xs text-jade transition hover:border-jade/70 hover:text-parchment">
             Vessel stores <span class="text-faint">{{ vesselCount }}</span> →
           </NuxtLink>
         </nav>
@@ -86,7 +86,7 @@ const jump = [
 
     <section v-if="wishlist.length" class="mt-12">
       <SectionHeading id="wishlist" eyebrow="For later" title="Wishlist">
-        <NuxtLink to="/dm" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">DM review →</NuxtLink>
+        <NuxtLink to="/lucan/dm" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">DM review →</NuxtLink>
       </SectionHeading>
       <p class="-mt-2 mb-1 max-w-3xl text-[13px] text-dim">
         Items Lucan would like to find, buy or commission later, grouped by where they would be worn. None of their numbers are on the sheet. The DM can rule on each one on the DM page.
@@ -97,7 +97,7 @@ const jump = [
           <span class="text-[12px] text-faint">{{ g.rule }}</span>
           <span v-if="g.worn.length" class="text-[12px] text-dim">
             Owned:
-            <template v-for="(w, n) in g.worn" :key="w.slug"><NuxtLink :to="`/items/${w.slug}`" class="text-gold-light hover:text-parchment">{{ w.name }}</NuxtLink>{{ n < g.worn.length - 1 ? ', ' : '' }}</template>
+            <template v-for="(w, n) in g.worn" :key="w.slug"><NuxtLink :to="`/lucan/items/${w.slug}`" class="text-gold-light hover:text-parchment">{{ w.name }}</NuxtLink>{{ n < g.worn.length - 1 ? ', ' : '' }}</template>
             <template v-if="g.max"> ({{ g.worn.length }} / {{ g.max }})</template>
           </span>
           <span v-if="g.full" class="chip border-topaz/40 py-0 text-[10px] text-topaz">Full: one of these means a swap</span>

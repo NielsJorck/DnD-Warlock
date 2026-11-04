@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { character } from '~/data/character'
-import { items } from '~/data/items'
-import { vessel, rooms } from '~/data/vessel'
+import { character } from '~/data/characters/lucan/character'
+import { items } from '~/data/characters/lucan/items'
+import { vessel, rooms } from '~/data/characters/lucan/vessel'
 
 useHead({ title: 'The Genie Vessel — Lucan Beryll' })
 
@@ -125,7 +125,7 @@ function takeVesselRest() {
             <p class="eyebrow mb-2.5 text-dim">Fixtures &amp; magic items</p>
             <ul class="space-y-2">
               <li v-for="i in roomItems(r.slug)" :key="i.slug">
-                <NuxtLink :to="`/items/${i.slug}`" class="group flex gap-3 rounded-lg border border-obsidian-600 bg-obsidian-900/70 px-3 py-2.5 transition hover:border-jade/50">
+                <NuxtLink :to="`/lucan/items/${i.slug}`" class="group flex gap-3 rounded-lg border border-obsidian-600 bg-obsidian-900/70 px-3 py-2.5 transition hover:border-jade/50">
                   <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-jade/30 bg-jade/10 text-jade">{{ i.glyph }}</span>
                   <span class="min-w-0">
                     <span class="flex flex-wrap items-baseline gap-x-2">

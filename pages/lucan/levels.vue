@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { character, type AbilityKey } from '~/data/character'
-import { allowedArrays, levels, revisions, skillPicks, unplaced, type ChoiceKind, type LevelEntry } from '~/data/levels'
-import { levelLabel } from '~/data/spells'
+import { character, type AbilityKey } from '~/data/characters/lucan/character'
+import { allowedArrays } from '~/data/campaign'
+import { levels, revisions, skillPicks, unplaced, type ChoiceKind, type LevelEntry } from '~/data/characters/lucan/levels'
+import { levelLabel } from '~/data/characters/lucan/spells'
 
 useHead({ title: 'Level History — Lucan Beryll' })
 

@@ -1,4 +1,4 @@
-import { spells, type Spell } from '~/data/spells'
+import { spells, type Spell } from '~/data/characters/lucan/spells'
 
 // Casting from the session page: spends the slot and updates what the tracker
 // follows (concentration, Armor of Agathys), then says what happened in a toast.

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { abilityNames } from '~/data/character'
+import { abilityNames } from '~/data/characters/lucan/character'
 
 const abilities = abilityOrder.map(key => ({ key, name: abilityNames[key], ...lucanStats.abilities[key] }))
 </script>

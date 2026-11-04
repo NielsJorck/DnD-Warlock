@@ -1,5 +1,5 @@
-import { spells } from './data/spells'
-import { items } from './data/items'
+import { spells } from './data/characters/lucan/spells'
+import { items } from './data/characters/lucan/items'
 
 // GitHub Pages serves a project site from /<repo>/; the deploy workflow sets
 // NUXT_APP_BASE_URL. Locally it stays '/'.
@@ -14,11 +14,11 @@ export default defineNuxtConfig({
   app: {
     baseURL,
     head: {
-      title: 'Lucan Beryll — Dao Genie Warlock',
+      title: 'Character Codex',
       htmlAttrs: { lang: 'en' },
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Character codex for Lucan Beryll, a level 10 Half-Elf Dao Genie warlock (D&D 5e 2014).' },
+        { name: 'description', content: 'Character codex for a D&D 5e (2014) campaign.' },
         { name: 'theme-color', content: '#0b0a09' },
         // Private campaign notes: keep search engines out
         { name: 'robots', content: 'noindex, nofollow' }
@@ -39,11 +39,14 @@ export default defineNuxtConfig({
       // The crawler only finds pages that something links to, so list every
       // spell and item explicitly.
       crawlLinks: true,
+      // A query (/lucan/spells?tab=book) is the same static file, so rendering it
+      // again would only overwrite that file with another tab's HTML.
+      ignore: [(route: string) => route.includes('?')],
       routes: [
         '/',
-        '/dm',
-        ...spells.map(s => `/spells/${s.slug}`),
-        ...items.map(i => `/items/${i.slug}`)
+        '/lucan/dm',
+        ...spells.map(s => `/lucan/spells/${s.slug}`),
+        ...items.map(i => `/lucan/items/${i.slug}`)
       ]
     }
   }
