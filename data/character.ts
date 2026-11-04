@@ -71,10 +71,10 @@ export const character = {
   ],
 
   skills: [
-    // Which of these picks took which of the three skills wasn't recorded (see skillPicks in data/levels.ts)
-    { name: 'Arcana', ability: 'int' as AbilityKey, source: 'Warlock, INT bonus or Prodigy' },
-    { name: 'Deception', ability: 'cha' as AbilityKey, source: 'Warlock, INT bonus or Prodigy' },
-    { name: 'History', ability: 'int' as AbilityKey, source: 'Warlock, INT bonus or Prodigy' },
+    // Two Warlock picks and the INT pick; which took which skill wasn't recorded (see skillPicks in data/levels.ts)
+    { name: 'Arcana', ability: 'int' as AbilityKey, source: 'Warlock or INT bonus' },
+    { name: 'Deception', ability: 'cha' as AbilityKey, source: 'Warlock or INT bonus' },
+    { name: 'History', ability: 'int' as AbilityKey, source: 'Warlock or INT bonus' },
     { name: 'Insight', ability: 'wis' as AbilityKey, source: 'Guild Artisan' },
     { name: 'Investigation', ability: 'int' as AbilityKey, source: 'Skill Versatility (homebrew)' },
     { name: 'Persuasion', ability: 'cha' as AbilityKey, source: 'Guild Artisan · expertise from Prodigy', expertise: true }
@@ -119,7 +119,7 @@ export const character = {
       name: 'Prodigy',
       source: 'XGE · gift from the DM',
       level: 1,
-      summary: 'One skill proficiency, Calligrapher’s supplies and Draconic. Expertise in Persuasion.',
+      summary: 'Calligrapher’s supplies and Draconic. Expertise in Persuasion. Its skill proficiency is unused.',
       detail:
         'The DM gave it at level 1, on top of the table’s extra feat. Expertise doubles his proficiency bonus on Persuasion checks: +14 with the Stone of Good Luck. Calligraphy suits a man who drafts his own contracts.'
     }

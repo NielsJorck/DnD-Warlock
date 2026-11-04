@@ -36,9 +36,11 @@ const arrayNo = allowedArrays.findIndex(a => a.join() === startArray.join()) + 1
 const startTotal = (k: AbilityKey) => (start ? start.base[k] + start.increases.reduce((sum, i) => sum + (i.scores[k] ?? 0), 0) : 0)
 
 // Skill picks: the unassigned skills share one cell across the picks that could have taken them
-const firstOpenPick = skillPicks.findIndex(p => !p.skills)
-const openPicks = skillPicks.filter(p => !p.skills)
-const totalPicks = skillPicks.reduce((sum, p) => sum + p.picks, 0)
+const isOpen = (p: (typeof skillPicks)[number]) => !p.skills && !p.unused
+const firstOpenPick = skillPicks.findIndex(isOpen)
+const openPicks = skillPicks.filter(isOpen)
+const usedPicks = skillPicks.reduce((sum, p) => sum + (p.unused ? 0 : p.picks), 0)
+const unusedPicks = skillPicks.reduce((sum, p) => sum + (p.unused ? p.picks : 0), 0)
 const totalSkills = skillPicks.reduce((sum, p) => sum + (p.skills?.length ?? 0), 0) + unassignedSkills.length
 const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
 </script>
@@ -216,7 +218,7 @@ const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
           </dl>
         </div>
 
-        <div class="rounded-xl border border-dashed border-topaz/40 p-5">
+        <div v-if="unplaced.length" class="rounded-xl border border-dashed border-topaz/40 p-5">
           <p class="eyebrow text-topaz">In case the DM asks</p>
           <h2 class="heading mb-3 text-lg">Not Settled by the Record</h2>
           <ul class="space-y-3">
@@ -228,7 +230,9 @@ const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
         </div>
 
         <div id="skill-picks" class="panel scroll-mt-24 p-5">
-          <p class="eyebrow" :class="totalPicks !== totalSkills ? 'text-topaz' : ''">Level 1 · {{ totalPicks }} picks, {{ totalSkills }} skills</p>
+          <p class="eyebrow" :class="usedPicks !== totalSkills ? 'text-topaz' : ''">
+            Level 1 · {{ totalSkills }} skills from {{ usedPicks }} picks<template v-if="unusedPicks"> · {{ unusedPicks }} unused</template>
+          </p>
           <h2 class="heading mb-3 text-lg">Skill Picks</h2>
           <table class="w-full text-left text-[12.5px]">
             <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.12em] text-faint">
@@ -246,9 +250,10 @@ const openPickCount = openPicks.reduce((sum, p) => sum + p.picks, 0)
                 </td>
                 <td class="px-2 py-1.5 text-center tabular-nums text-parchment">{{ p.picks }}</td>
                 <td v-if="p.skills" class="py-1.5 pl-2 text-gold-light">{{ p.skills.join(', ') }}</td>
-                <td v-else-if="n === firstOpenPick" :rowspan="openPicks.length" class="border-l border-dashed border-topaz/40 py-1.5 pl-2 align-middle">
+                <td v-else-if="p.unused" class="py-1.5 pl-2 italic text-faint">Not used</td>
+                <td v-else-if="n === firstOpenPick" :rowspan="openPicks.length" class="border-l border-dashed border-obsidian-500 py-1.5 pl-2 align-middle">
                   <span class="text-gold-light">{{ unassignedSkills.join(', ') }}</span>
-                  <span class="mt-0.5 block text-[11px] leading-snug text-topaz">{{ openPickCount }} picks for {{ unassignedSkills.length }} skills. Which pick took which isn’t recorded.</span>
+                  <span class="mt-0.5 block text-[11px] leading-snug text-faint">{{ openPickCount }} picks for {{ unassignedSkills.length }} skills, all on the Warlock list. Which pick took which isn’t recorded.</span>
                 </td>
               </tr>
             </tbody>

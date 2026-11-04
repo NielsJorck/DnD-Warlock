@@ -93,7 +93,7 @@ export const levels: LevelEntry[] = [
         pick: 'Prodigy',
         basis: 'fixed',
         gift: true,
-        note: 'Given by the DM on top of the table’s extra feat. Xanathar’s version: Persuasion expertise, a skill, Calligrapher’s supplies, Draconic'
+        note: 'Given by the DM on top of the table’s extra feat. Xanathar’s version: Persuasion expertise, Calligrapher’s supplies, Draconic. Its skill pick is unused'
       },
       {
         kind: 'Proficiencies',
@@ -299,18 +299,20 @@ export const revisions: Revision[] = [
       'Drawmij’s Instant Summons and Forbiddance marked as placeholders for level 11, not in the Book of Shadows yet.',
       'The DM allowed the rituals in the Book of Shadows.',
       'Phantasmal Killer added to the known spells: the Tome rule makes every Genie and Dao spell known.',
-      'Starting array worked back from the sheet: 17, 13, 13, 12, 12, 8, with the Half-Elf +1s on DEX and CON.'
+      'Starting array worked back from the sheet: 17, 13, 13, 12, 12, 8, with the Half-Elf +1s on DEX and CON.',
+      'Prodigy’s skill pick recorded as unused. Arcana, Deception and History come from the Warlock and INT picks.'
     ]
   }
 ]
 
-// Every skill proficiency Lucan gets at level 1 and where it went. The three
-// unassigned skills are on the Warlock list, so any of those picks could have taken them.
+// Every skill proficiency Lucan gets at level 1 and where it went. The unassigned
+// skills are all on the Warlock list, so any of the picks that share them could have taken them.
 export interface SkillPick {
   source: string
   rule: string
   picks: number
   skills?: string[] // left out when the record doesn't say which skill this pick took
+  unused?: boolean
 }
 
 export const skillPicks: SkillPick[] = [
@@ -318,14 +320,9 @@ export const skillPicks: SkillPick[] = [
   { source: 'Skill Versatility', rule: 'Half-Elf, Zman’s version: any one skill', picks: 1, skills: ['Investigation'] },
   { source: 'Warlock', rule: 'Two from the Warlock list', picks: 2 },
   { source: 'INT 12', rule: 'One from the Warlock list, or a tool', picks: 1 },
-  { source: 'Prodigy', rule: 'Any one skill', picks: 1 }
+  { source: 'Prodigy', rule: 'Any one skill', picks: 1, unused: true }
 ]
 export const unassignedSkills = ['Arcana', 'Deception', 'History']
 
 // What the record doesn't settle, in case the DM asks
-export const unplaced = [
-  {
-    title: 'One skill pick unaccounted for',
-    text: 'Lucan has seven skill picks but six skills on the sheet (see Skill Picks). The INT pick could have been a tool instead, but the sheet’s two tools come from Guild Artisan and Prodigy. Either a skill is missing from the sheet or a pick went unused.'
-  }
-]
+export const unplaced: { title: string; text: string }[] = []

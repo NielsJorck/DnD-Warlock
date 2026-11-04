@@ -83,7 +83,7 @@ export const rulings = [
   {
     ruling: 'Prodigy is a gift from the DM',
     detail:
-      'Lucan has Prodigy from level 1, on top of the table’s extra feat and the ASI feats at 4 and 8. He uses the Xanathar’s version: Persuasion expertise, a skill, Calligrapher’s supplies and Draconic. Zman’s 5e Tweaks prints its own Prodigy, with +1 to an ability score instead of expertise, but doesn’t list Prodigy among its changed or added feats.'
+      'Lucan has Prodigy from level 1, on top of the table’s extra feat and the ASI feats at 4 and 8. He uses the Xanathar’s version: Persuasion expertise, Calligrapher’s supplies and Draconic. Its skill pick is unused. Zman’s 5e Tweaks prints its own Prodigy, with +1 to an ability score instead of expertise, but doesn’t list Prodigy among its changed or added feats.'
   },
   { ruling: 'Book of Shadows rituals approved', detail: 'The DM allowed the rituals in Lucan’s Book of Shadows as they are.' },
   { ruling: 'Robe of Thayan Arcana is not approved', detail: 'Excluded from the build and from all numbers.' },
