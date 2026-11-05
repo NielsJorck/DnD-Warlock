@@ -2,7 +2,7 @@
 // more than one character. Those URLs redirect to /lucan/…, keeping the query
 // and hash (a spellbook tab, a Vessel room).
 
-const movedToLucan = ['session', 'lesser-dao', 'spells', 'items', 'vessel', 'lore', 'levels', 'dm']
+const movedToLucan = ['session', 'lesser-dao', 'spells', 'items', 'vessel', 'lore', 'levels']
 
 // Items that were renamed or dropped while the pages were still at the root
 const renamedItems: Record<string, string> = {

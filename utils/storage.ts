@@ -1,8 +1,7 @@
 // Saved state from before the site had more than one character, moved to the
 // per-character key the first time it's read
 const legacyKeys: Record<string, string> = {
-  'lucan-tracker-v1': 'codex-tracker-v1',
-  'lucan-dm-review-v1': 'codex-dm-review-v1'
+  'lucan-tracker-v1': 'codex-tracker-v1'
 }
 
 // localStorage.getItem that picks up a value saved under the old key

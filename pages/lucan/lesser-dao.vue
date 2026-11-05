@@ -36,12 +36,12 @@ const compare = [
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_85%_10%,rgba(227,166,64,0.14),transparent_60%)]" aria-hidden="true" />
       <div class="pointer-events-none absolute -right-6 -top-16 font-display text-[240px] leading-none text-topaz/[0.07]" aria-hidden="true">⟁</div>
       <div class="relative p-6 sm:p-10">
-        <p class="eyebrow text-topaz">Bracers of the Dao Pact · {{ dao.uses }} / long rest</p>
-        <h1 class="mt-3 font-display text-4xl font-bold leading-[1.05] tracking-wide sm:text-6xl"><span class="text-gilded">Form of the Lesser Dao</span></h1>
+        <h1 class="font-display text-4xl font-bold leading-[1.05] tracking-wide sm:text-6xl"><span class="text-gilded">Form of the Lesser Dao</span></h1>
         <p class="mt-3 font-serif text-xl italic text-dim">{{ dao.type }}</p>
         <div class="mt-5 flex flex-wrap gap-2">
           <span class="chip border-topaz/40 text-topaz">Homebrew</span>
           <span class="chip">{{ dao.activation }} to assume</span>
+          <span class="chip">{{ dao.uses }} / long rest</span>
           <span class="chip">Lasts {{ dao.turns }} turns</span>
           <span class="chip">No spellcasting</span>
         </div>
@@ -61,7 +61,6 @@ const compare = [
 
       <div class="space-y-6">
         <section class="panel p-5 sm:p-6">
-          <p class="eyebrow">At this table</p>
           <h2 class="heading mb-4 text-xl">How the Form Works</h2>
           <ul class="space-y-2.5">
             <li v-for="r in dao.rules" :key="r" class="flex gap-3 text-[14px] leading-relaxed text-parchment/85">
@@ -71,7 +70,6 @@ const compare = [
         </section>
 
         <section class="panel p-5 sm:p-6">
-          <p class="eyebrow">In a fight</p>
           <h2 class="heading mb-4 text-xl">Tactics</h2>
           <ol class="space-y-3">
             <li v-for="(t, n) in dao.tactics" :key="t" class="flex gap-3 text-[14px] leading-relaxed text-parchment/85">
@@ -83,7 +81,6 @@ const compare = [
 
       <aside class="panel overflow-hidden xl:col-start-2 xl:row-span-2 xl:row-start-1 3xl:col-start-3 3xl:row-span-1">
         <div class="p-5 pb-3">
-          <p class="eyebrow">Side by side</p>
           <h2 class="heading text-xl">Lucan and the Form</h2>
           <p class="mt-1 text-[11.5px] text-faint">Gold marks where the form comes out ahead.</p>
         </div>

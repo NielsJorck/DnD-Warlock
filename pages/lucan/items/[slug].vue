@@ -6,7 +6,7 @@ const route = useRoute()
 const item = itemBySlug[route.params.slug as string]
 if (!item) throw createError({ statusCode: 404, statusMessage: 'Item not found', fatal: true })
 
-useHead({ title: `${item.name} — ${item.group === 'vessel' ? 'The Genie Vessel' : 'Lucan’s Treasury'}` })
+useHead({ title: `${item.name} — ${item.group === 'vessel' ? 'The Genie Vessel' : 'Lucan’s Items'}` })
 
 const rarity = item.rarity ? rarityTone[item.rarity] : null
 const requestedVariant = variantOf(item)
@@ -28,7 +28,7 @@ const facts = [
 <template>
   <div class="mx-auto max-w-4xl xl:max-w-6xl">
     <NuxtLink v-if="room" :to="`/lucan/vessel#${room.slug}`" class="text-xs text-dim hover:text-jade">← The Vessel · {{ room.name }}</NuxtLink>
-    <NuxtLink v-else to="/lucan/items" class="text-xs text-dim hover:text-gold-light">← Treasury</NuxtLink>
+    <NuxtLink v-else to="/lucan/items" class="text-xs text-dim hover:text-gold-light">← Items</NuxtLink>
 
     <div class="mt-4 grid gap-10 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-8">
       <article class="panel relative overflow-hidden">

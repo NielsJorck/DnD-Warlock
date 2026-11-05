@@ -17,8 +17,6 @@ export interface Ruling {
 export interface CharacterRules {
   houseRules: HouseRule[]
   rulings: Ruling[]
-  dmQuestions: { id: string; question: string }[]
-  dmPage: string // where the DM answers the questions
 }
 
 export const campaign = {
@@ -80,13 +78,12 @@ export const sourcePolicy = {
   index: { label: '2014.5e.tools', url: 'https://2014.5e.tools/' },
   allowed: [
     'Official 2014 core books: Player’s Handbook, Dungeon Master’s Guide, Monster Manual.',
-    'Official 2014-era supplements: Xanathar’s, Tasha’s, Volo’s, Mordenkainen’s Tome of Foes and similar.',
+    'Every official 2014 supplement: Xanathar’s, Tasha’s, Volo’s, Mordenkainen’s Tome of Foes, and later ones such as Fizban’s Treasury of Dragons and The Book of Many Things.',
     'Official adventure and setting books, such as Rime of the Frostmaiden and Dungeon of the Mad Mage, where the specific option appears on the 2014 site.',
     'Ritual spells from any class list, legally copied into the Book of Shadows.'
   ],
   excluded: [
-    '2024-only rules and the revised 2024 books.',
-    'Content that only appears on the non-2014 5e.tools site.',
+    '2024-only rules, the revised 2024 books and anything only on the non-2014 5e.tools site, unless the DM approves it.',
     'Unearthed Arcana, third-party material and unapproved homebrew.',
     'The 2024 “Sphinx of Wonder” familiar.'
   ]

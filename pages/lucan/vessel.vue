@@ -31,8 +31,7 @@ function takeVesselRest() {
       </svg>
       <div class="relative grid gap-8 p-6 sm:p-10 lg:grid-cols-[1.4fr_1fr] lg:items-center">
         <div>
-          <p class="eyebrow text-jade">Genie Patron · Extradimensional home</p>
-          <h1 class="mt-3 font-display text-4xl font-bold tracking-wide sm:text-6xl"><span class="text-gilded">{{ vessel.name }}</span></h1>
+          <h1 class="font-display text-4xl font-bold tracking-wide sm:text-6xl"><span class="text-gilded">{{ vessel.name }}</span></h1>
           <p class="mt-3 font-serif text-xl italic text-dim">{{ vessel.form }}</p>
           <p class="lore mt-5 max-w-2xl">{{ vessel.intro }}</p>
         </div>
@@ -60,7 +59,7 @@ function takeVesselRest() {
 
     <!-- Patron features -->
     <section class="mt-10">
-      <SectionHeading eyebrow="Patron features" title="What the Vessel Does in Play" />
+      <SectionHeading title="What the Vessel Does in Play" />
       <div class="grid gap-4 md:grid-cols-3">
         <div v-for="f in vesselFeatures" :key="f.name" class="panel p-5">
           <div class="flex items-baseline justify-between gap-2">
@@ -79,7 +78,7 @@ function takeVesselRest() {
 
     <!-- Residence features -->
     <section class="mt-12">
-      <SectionHeading eyebrow="Campaign Vessel" title="The Residence" />
+      <SectionHeading title="The Residence" />
       <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-6">
         <div
           v-for="f in vessel.features"
@@ -98,11 +97,11 @@ function takeVesselRest() {
 
     <!-- Rooms -->
     <section class="mt-12">
-      <SectionHeading id="rooms" eyebrow="Floor plan" title="Rooms of the Vessel" />
+      <SectionHeading id="rooms" title="Rooms of the Vessel" />
       <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">{{ rooms.length }} rooms holding {{ vesselItems.length }} pieces of household magic. These don’t use attunement slots.</p>
       <div class="grid items-start gap-4 md:grid-cols-2 2xl:grid-cols-3">
         <article
-          v-for="(r, n) in rooms"
+          v-for="r in rooms"
           :id="r.slug"
           :key="r.slug"
           class="panel scroll-mt-24 overflow-hidden transition target:border-jade/60 target:shadow-glow"
@@ -110,7 +109,6 @@ function takeVesselRest() {
           <div class="flex items-start gap-4 p-5">
             <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-jade/40 bg-gradient-to-b from-jade/15 to-obsidian-900 text-xl text-jade">{{ r.glyph }}</span>
             <div class="min-w-0">
-              <p class="text-[10px] uppercase tracking-[0.2em] text-faint">Room {{ String(n + 1).padStart(2, '0') }}</p>
               <h3 class="heading text-lg">{{ r.name }}</h3>
               <p class="mt-1.5 text-[13.5px] leading-relaxed text-dim">{{ r.summary }}</p>
               <p v-for="d in r.details" :key="d" class="mt-1.5 text-[12.5px] italic leading-relaxed text-faint">{{ d }}</p>
@@ -137,13 +135,11 @@ function takeVesselRest() {
           </div>
         </article>
       </div>
-      <p class="mt-3 text-[11px] text-faint">Which room each item sits in is a suggested arrangement. Move them around as the story needs.</p>
     </section>
 
     <!-- Rules -->
     <section class="mt-12">
       <div class="panel p-6">
-        <p class="eyebrow">House rules for the Vessel</p>
         <h2 class="heading mb-4 text-xl">Limits &amp; Rulings</h2>
         <ul class="space-y-2.5">
           <li v-for="r in vessel.rules" :key="r" class="flex gap-3 text-[14px] leading-relaxed text-parchment/85">

@@ -21,7 +21,6 @@ const dice = computed(() => (feet.value / 5) * 2)
 <template>
   <div class="panel overflow-hidden">
     <div class="border-b border-gold/10 bg-gradient-to-r from-jade/10 via-transparent to-transparent p-5">
-      <p class="eyebrow">Planner</p>
       <h2 class="heading text-xl">The Spike Growth Grinder</h2>
     </div>
 

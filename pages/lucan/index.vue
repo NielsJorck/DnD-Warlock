@@ -117,7 +117,6 @@ const sections = [
     <div class="mt-6 grid items-start gap-5 md:grid-cols-2 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)]">
       <div class="space-y-5">
         <section id="combat" class="panel scroll-mt-24 p-5">
-          <p class="eyebrow">How Lucan fights</p>
           <h2 class="heading mb-2 text-lg">Attacks</h2>
           <table class="w-full text-left text-[13px]">
             <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.14em] text-faint">
@@ -144,7 +143,6 @@ const sections = [
         </section>
 
         <section id="defenses" class="panel scroll-mt-24 p-5">
-          <p class="eyebrow">Defenses</p>
           <h2 class="heading mb-3 text-lg">Armor &amp; Resistances</h2>
           <p class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-[12.5px]">
             <template v-for="(b, n) in character.ac.breakdown" :key="b.label">
@@ -170,12 +168,10 @@ const sections = [
       </div>
 
       <section id="skills" class="panel scroll-mt-24 p-5">
-        <p class="eyebrow">Skills</p>
         <h2 class="heading text-lg">Skills &amp; Senses</h2>
         <p class="mb-3 mt-1 flex flex-wrap items-center gap-x-3 text-[11px] text-faint">
           <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-gold" /> proficient</span>
           <span v-if="skillList.some(s => s.expertise)" class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-gold ring-2 ring-gold/40" /> expertise</span>
-          <span>Stone of Good Luck included</span>
         </p>
         <ul class="grid grid-cols-2 gap-x-4 text-[13px] sm:grid-cols-3 md:grid-cols-2">
           <li
@@ -199,7 +195,6 @@ const sections = [
 
       <div class="grid items-start gap-5 md:col-span-2 md:grid-cols-2 xl:col-span-1 xl:grid-cols-1">
         <section class="panel p-5">
-          <p class="eyebrow">Tongues &amp; tools</p>
           <h2 class="heading mb-3 text-lg">Languages &amp; Tools</h2>
           <dl class="space-y-1.5 text-[13px]">
             <div class="flex gap-3">
@@ -224,7 +219,6 @@ const sections = [
         <section id="attunement" class="panel scroll-mt-24 p-5">
           <div class="mb-2 flex items-baseline justify-between gap-3">
             <div>
-              <p class="eyebrow">Attunement · {{ attuned.length }} / {{ character.attunement.max }}</p>
               <h2 class="heading text-lg">Attuned Items</h2>
             </div>
             <NuxtLink to="/lucan/items" class="text-xs text-dim hover:text-gold-light">All items →</NuxtLink>
@@ -246,8 +240,8 @@ const sections = [
     </div>
 
     <section class="mt-10">
-      <SectionHeading id="features" eyebrow="Build" title="Feats, Invocations &amp; Features">
-        <NuxtLink to="/lucan/levels" class="text-xs text-dim hover:text-gold-light">Level by level →</NuxtLink>
+      <SectionHeading id="features" title="Feats, Invocations &amp; Features">
+        <NuxtLink to="/lucan/levels" class="text-xs text-dim hover:text-gold-light">Level history →</NuxtLink>
       </SectionHeading>
       <div class="grid items-start gap-6 lg:grid-cols-2">
         <div class="space-y-6">

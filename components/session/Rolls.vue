@@ -15,7 +15,7 @@ const r20 = (bonus: number, label: string) => roll(`1d20${signed(bonus).replace(
   <section class="panel scroll-mt-48 p-5" :class="inForm ? 'border-topaz/40' : ''">
     <div class="mb-3 flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
       <div>
-        <p class="eyebrow" :class="inForm ? 'text-topaz' : ''">{{ inForm ? 'Lesser Dao form · its own scores' : 'Checks & saves' }} · Stone included</p>
+        <p class="eyebrow" :class="inForm ? 'text-topaz' : ''">{{ inForm ? 'Lesser Dao form · its own scores · Stone included' : 'Stone of Good Luck included' }}</p>
         <h2 class="heading text-lg">Rolls</h2>
       </div>
       <span class="text-[11px] text-faint">Adv / Dis in the top bar</span>

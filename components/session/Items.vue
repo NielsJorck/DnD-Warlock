@@ -131,7 +131,6 @@ function zap() {
 <template>
   <section class="panel scroll-mt-48 p-5">
     <div class="mb-2">
-      <p class="eyebrow">Things Lucan can trigger</p>
       <h2 class="heading text-lg">Items &amp; Features</h2>
     </div>
 

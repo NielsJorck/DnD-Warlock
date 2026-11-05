@@ -44,7 +44,6 @@ export default defineNuxtConfig({
       ignore: [(route: string) => route.includes('?')],
       routes: [
         '/',
-        '/lucan/dm',
         ...spells.map(s => `/lucan/spells/${s.slug}`),
         ...items.map(i => `/lucan/items/${i.slug}`)
       ]

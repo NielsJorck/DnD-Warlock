@@ -30,7 +30,6 @@ function rest(kind: 'short' | 'long') {
   <section class="panel scroll-mt-48 p-5">
     <div class="mb-4 flex items-center justify-between gap-3">
       <div>
-        <p class="eyebrow">Spell slots &amp; rests</p>
         <h2 class="heading text-lg">Resources</h2>
       </div>
       <span class="text-[10.5px] text-faint">Saved in this browser</span>

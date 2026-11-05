@@ -143,8 +143,7 @@ const onSession = computed(() => !!primary.value && route.path.startsWith(primar
     <footer class="border-t border-gold/10">
       <div class="wrap flex flex-wrap items-center justify-between gap-3 py-6 text-[11.5px] text-faint">
         <span>
-          {{ campaign.ruleset }} · campaign homebrew is marked <span class="chip ml-1 border-topaz/40 text-topaz">Homebrew</span>
-          · <NuxtLink to="/" class="hover:text-gold-light">All characters</NuxtLink>
+          {{ campaign.ruleset }} · <NuxtLink to="/" class="hover:text-gold-light">All characters</NuxtLink>
         </span>
         <span v-if="active.motto" class="font-serif text-sm italic text-dim">“{{ active.motto }}”</span>
       </div>

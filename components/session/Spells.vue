@@ -31,7 +31,6 @@ const saveOf = (s: Spell) => s.save?.split(' ')[0]
   <section class="panel scroll-mt-48 overflow-hidden">
     <div class="flex flex-wrap items-end justify-between gap-3 border-b border-gold/10 p-5 pb-4">
       <div>
-        <p class="eyebrow">Pact Magic · every slot is 5th level</p>
         <h2 class="heading text-lg">Spells</h2>
       </div>
       <div class="flex flex-wrap gap-1.5 text-[11.5px]">

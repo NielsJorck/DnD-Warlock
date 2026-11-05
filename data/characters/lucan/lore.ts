@@ -1,4 +1,4 @@
-// Lucan's story, his own house rules and rulings, and his questions for the DM.
+// Lucan's story and his own house rules and rulings.
 // Rules for the whole table are in data/campaign.ts.
 
 import type { HouseRule, Ruling } from '../../campaign'
@@ -64,65 +64,20 @@ export const rulings: Ruling[] = [
   {
     ruling: 'The Golden Pact',
     detail:
-      'The Barrier Tattoo and the Illuminator’s Tattoo were consolidated into one bound artifact: the pact written across his body. AC 15 + DEX (max +2), a spellcasting focus, fingertip writing, and a page hidden from all but one reader once per long rest. It grows new glyphs as Lucan’s power grows.'
+      'The Barrier Tattoo and the Illuminator’s Tattoo were consolidated into one bound artifact: the pact written across his body. AC 15 + DEX (max +2), a spellcasting focus, fingertip writing, and a page hidden from all but one reader once per long rest. It grows new glyphs as Lucan’s power grows: with a level, a story beat or when Zahir grants one, depending on the context.'
   },
   {
     ruling: 'Bracers of the Dao Pact',
-    detail: 'They replace the requested Illusionist’s Bracers: +2 AC with no armor or shield, and the Form of the Lesser Dao twice per long rest. Bound to Lucan and can’t be removed or replaced.'
+    detail: 'They replace the requested Illusionist’s Bracers: +2 AC with no armor or shield, and the Form of the Lesser Dao twice per long rest. Bound to Lucan and can’t be removed or replaced. The form’s prone saves (Earthen Maul and Earth Burst) are DC 17, whatever the Foundry sheet’s save fields say.'
   },
   {
     ruling: 'Pact Keeper’s Crystal Dagger',
     detail:
       'It replaces the Rod of the Pact Keeper. It keeps the slot recovery but gives +1 instead of +2, and is a real returning +1 dagger that deals extra force and bludgeoning damage.'
-  }
-]
-
-export interface DmQuestion {
-  id: string
-  topic: 'Sources' | 'Items' | 'Genie Vessel'
-  question: string
-  context: string
-  items?: string[] // item slugs the answer affects
-}
-
-// Questions for the DM. Listed on /lucan/dm with answer fields and summarised on /rules.
-export const dmQuestions: DmQuestion[] = [
-  {
-    id: 'later-books',
-    topic: 'Sources',
-    question: 'Do the later books on 2014.5e.tools count as allowed sources?',
-    context:
-      'Several wishlist items come from 2021–2023 books: Fizban’s Treasury of Dragons (FTD) and The Book of Many Things (BMT). They are listed on the 2014 site, but they are newer than the core supplements.',
-    items: ['jesters-mask', 'amethyst-lodestone', 'scaled-ornament']
   },
+  { ruling: 'New items can be looted, bought or commissioned', detail: 'All three ways are open to Lucan.' },
   {
-    id: 'acquiring-items',
-    topic: 'Items',
-    question: 'How can Lucan get new items: only as loot, or can he buy or commission them?',
-    context:
-      'Lucan is a guild-trained jeweler and appraiser. If buying or crafting is possible, which rarities are available and roughly what do they cost?'
-  },
-  {
-    id: 'golden-pact-growth',
-    topic: 'Items',
-    question: 'How does the Golden Pact grow with Lucan?',
-    context: 'Its description says new glyphs appear as his powers grow, each one marking a new ability. Do they appear at set levels, from story beats, or when Zahir grants them?',
-    items: ['the-golden-pact']
-  },
-  {
-    id: 'lesser-dao-dc',
-    topic: 'Items',
-    question: 'What is the Strength save DC to avoid being knocked prone by the Lesser Dao’s Earthen Maul and Earth Burst?',
-    context:
-      'On the Foundry sheet, Earthen Maul’s save field says DC 18 and Earth Burst’s says DC 16, but both descriptions say DC 17. The site uses DC 17 for both until you confirm.',
-    items: ['bracers-of-the-dao-pact']
-  },
-  {
-    id: 'vessel-bag-of-holding',
-    topic: 'Genie Vessel',
-    question: 'Can the Genie Vessel work as a Bag of Holding?',
-    context:
-      'Lucan stores items in the Vessel and takes them out as he would from a Bag of Holding, and they work as normal outside. The site assumes you accept this, so he carries no separate Bag of Holding.',
-    items: ['helm-of-comprehending-languages', 'eyes-of-minute-seeing']
+    ruling: 'The Genie Vessel works as a Bag of Holding',
+    detail: 'Items stored in the Vessel come out as they would from a Bag of Holding and work as normal outside, so Lucan needs no separate bag.'
   }
 ]

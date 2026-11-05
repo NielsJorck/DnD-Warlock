@@ -12,8 +12,7 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
   <div class="mx-auto max-w-5xl 2xl:max-w-6xl">
     <!-- Lucan -->
     <header class="text-center">
-      <p class="eyebrow">The jeweler and the Dao</p>
-      <h1 class="mt-3 font-display text-4xl font-bold tracking-wide sm:text-6xl"><span class="text-gilded">Story &amp; Patron</span></h1>
+      <h1 class="font-display text-4xl font-bold tracking-wide sm:text-6xl"><span class="text-gilded">Story &amp; Patron</span></h1>
       <div class="divider mx-auto mt-6 max-w-sm text-sm">◆</div>
     </header>
 
@@ -33,7 +32,6 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
       </article>
 
       <aside class="panel h-fit p-6">
-        <p class="eyebrow">Personality</p>
         <h3 class="heading mb-4 text-lg">Traits</h3>
         <ul class="space-y-3">
           <li v-for="t in character.identity.traits" :key="t" class="flex gap-3 text-[13.5px] leading-relaxed text-parchment/85">
@@ -45,7 +43,7 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
 
     <!-- Appearance -->
     <section class="mt-16">
-      <SectionHeading eyebrow="The Dao's warlock" title="Appearance" />
+      <SectionHeading title="Appearance" />
       <div class="panel grid gap-8 p-6 sm:p-8 lg:grid-cols-[340px_minmax(0,1fr)]">
         <figure class="overflow-hidden rounded-2xl border border-gold/30">
           <img :src="publicPath(appearance.portrait.src)" :alt="appearance.portrait.alt" class="aspect-[3/4] w-full object-cover" loading="lazy" />
@@ -58,7 +56,7 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
 
     <!-- Signature pieces -->
     <section v-if="signature.length" class="mt-16">
-      <SectionHeading eyebrow="What he carries" title="Signature Pieces" />
+      <SectionHeading title="Signature Pieces" />
       <div class="grid gap-6 md:grid-cols-2">
         <figure v-for="i in signature" :key="i.slug" class="panel group overflow-hidden">
           <NuxtLink :to="`/lucan/items/${i.slug}`" class="block overflow-hidden border-b border-obsidian-600">
@@ -76,8 +74,7 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
     <section class="panel relative mt-16 overflow-hidden">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_10%_0%,rgba(227,166,64,0.12),transparent_55%)]" aria-hidden="true" />
       <div class="relative p-6 sm:p-10">
-        <p class="eyebrow text-topaz">The patron</p>
-        <h2 class="heading mt-1 text-3xl sm:text-4xl">{{ zahir.name }}</h2>
+        <h2 class="heading text-3xl sm:text-4xl">{{ zahir.name }}</h2>
         <p class="mt-1 font-serif text-lg italic text-dim">{{ zahir.title }}</p>
 
         <div class="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
@@ -95,7 +92,7 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
 
     <!-- Hooks -->
     <section class="mt-12">
-      <SectionHeading eyebrow="For the DM" title="Story Hooks" />
+      <SectionHeading title="Story Hooks" />
       <div class="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3">
         <div v-for="(h, n) in zahir.hooks" :key="h" class="panel flex gap-4 p-5">
           <span class="font-display text-3xl font-bold leading-none text-gold/40">{{ ['I', 'II', 'III', 'IV', 'V', 'VI'][n] }}</span>

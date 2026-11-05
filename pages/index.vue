@@ -8,13 +8,11 @@ useHead({ title: campaign.name })
 <template>
   <div class="mx-auto max-w-6xl">
     <header class="text-center">
-      <p class="eyebrow">{{ campaign.ruleset }}</p>
-      <h1 class="mt-3 font-display text-4xl font-bold tracking-wide sm:text-6xl"><span class="text-gilded">{{ campaign.name }}</span></h1>
+      <h1 class="font-display text-4xl font-bold tracking-wide sm:text-6xl"><span class="text-gilded">{{ campaign.name }}</span></h1>
       <div class="divider mx-auto mt-6 max-w-sm text-sm">◆</div>
     </header>
 
     <section class="mt-10">
-      <SectionHeading eyebrow="The party" title="Characters" />
       <div class="grid gap-5 lg:grid-cols-2">
         <article v-for="c in characters" :key="c.slug" class="panel flex gap-4 overflow-hidden p-4 sm:gap-6 sm:p-5">
           <NuxtLink v-if="c.portrait" :to="c.nav[0].to" class="group block w-24 shrink-0 self-start overflow-hidden rounded-xl border border-gold/30 sm:w-32">
@@ -44,7 +42,6 @@ useHead({ title: campaign.name })
     <section class="mt-10">
       <NuxtLink to="/rules" class="panel group flex flex-wrap items-center justify-between gap-3 p-5 transition hover:border-gold/40">
         <span>
-          <span class="eyebrow block">For the whole table</span>
           <span class="heading text-lg group-hover:text-gold-light">Campaign Rules</span>
           <span class="mt-1 block text-[13px] text-dim">
             {{ homebrew.length }} house rules, {{ rulings.length }} DM rulings, the source policy and {{ tweaksPdf.title }}, plus each character’s own rulings.

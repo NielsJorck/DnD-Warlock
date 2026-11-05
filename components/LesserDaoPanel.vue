@@ -8,7 +8,6 @@ const skills = formStats.skills.filter(s => s.proficient)
 <template>
   <div class="panel overflow-hidden">
     <div class="border-b border-gold/10 bg-gradient-to-r from-topaz/10 via-transparent to-transparent p-5">
-      <p class="eyebrow">Stat block</p>
       <div class="flex flex-wrap items-baseline justify-between gap-2">
         <h3 class="heading text-xl">{{ dao.name }}</h3>
         <span class="text-xs text-faint">CR {{ dao.cr }} · proficiency +{{ dao.proficiencyBonus }}</span>

@@ -20,8 +20,7 @@ function resetAll() {
   <div>
     <header class="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
       <div>
-        <p class="eyebrow">At the table</p>
-        <h1 class="mt-1 font-display text-3xl font-bold tracking-wide sm:text-4xl"><span class="text-gilded">Session</span></h1>
+        <h1 class="font-display text-3xl font-bold tracking-wide sm:text-4xl"><span class="text-gilded">Session</span></h1>
       </div>
       <nav class="scrollbar-none -mx-[var(--gutter)] flex gap-1.5 overflow-x-auto px-[var(--gutter)] sm:mx-0 sm:flex-wrap sm:px-0" aria-label="Session sections">
         <a v-for="s in sections" :key="s.id" :href="`#${s.id}`" class="chip shrink-0 px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">{{ s.label }}</a>

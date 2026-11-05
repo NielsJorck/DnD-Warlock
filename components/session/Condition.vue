@@ -38,7 +38,6 @@ function protectors() {
 
 <template>
   <section class="panel p-5">
-    <p class="eyebrow">Status</p>
     <h2 class="heading mb-3 text-lg">Conditions</h2>
 
     <div v-if="dying" class="mb-4 rounded-xl border border-ruby/40 bg-ruby/5 p-3.5">

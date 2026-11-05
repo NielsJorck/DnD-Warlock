@@ -33,7 +33,7 @@ export const vessel = {
     },
     {
       name: 'Bag of Holding function',
-      text: 'Lucan takes items out of the Vessel as he would from a Bag of Holding. They work as normal outside and stay part of its inventory, so he needs no separate bag. Assumed accepted until the DM confirms it.',
+      text: 'Lucan takes items out of the Vessel as he would from a Bag of Holding. They work as normal outside and stay part of its inventory, so he needs no separate bag.',
       homebrew: true
     },
     {

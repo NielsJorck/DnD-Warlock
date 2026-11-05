@@ -5,11 +5,11 @@ import { character } from '~/data/characters/lucan/character'
 useHead({ title: 'Spellbook — Lucan Beryll' })
 
 type Tab = 'known' | 'book' | 'later' | 'all'
-const tabs: { id: Tab; label: string; statuses: SpellStatus[]; blurb: string }[] = [
+const tabs: { id: Tab; label: string; statuses: SpellStatus[]; blurb?: string }[] = [
   { id: 'known', label: 'Known', statuses: ['known'], blurb: 'Everything Lucan can cast right now: the spells he chose as a Warlock, his Tome cantrips and the Genie and Dao spells his patron grants automatically.' },
   { id: 'book', label: 'Book of Shadows', statuses: ['book'], blurb: 'Rituals inscribed by Book of Ancient Secrets. Cast from the book as rituals only — no pact slot. More can be copied in when a scroll or spellbook turns up (50 gp and 2 hours per level).' },
   { id: 'later', label: 'Candidates & future', statuses: ['candidate', 'future'], blurb: 'Spells under consideration for future levels, plus the Mystic Arcanum endgame.' },
-  { id: 'all', label: 'All', statuses: ['known', 'book', 'candidate', 'future'], blurb: 'Every spell in Lucan’s glossary.' }
+  { id: 'all', label: 'All', statuses: ['known', 'book', 'candidate', 'future'] }
 ]
 
 const route = useRoute()
@@ -115,9 +115,7 @@ function clearFilters() {
   <div>
     <header class="panel relative overflow-hidden p-6 sm:p-8">
       <div class="pointer-events-none absolute -right-10 -top-16 font-display text-[220px] leading-none text-amethyst/[0.06]" aria-hidden="true">✶</div>
-      <p class="eyebrow">Pact Magic · Charisma</p>
-      <h1 class="mt-2 font-display text-4xl font-bold tracking-wide sm:text-5xl"><span class="text-gilded">Spellbook</span></h1>
-      <p class="mt-3 max-w-2xl font-serif text-lg text-dim">Every spell Lucan knows, keeps in the Book of Shadows, or has his eye on. Each leveled spell is cast at 5th level from a pact slot.</p>
+      <h1 class="font-display text-4xl font-bold tracking-wide sm:text-5xl"><span class="text-gilded">Spellbook</span></h1>
       <div class="mt-5 flex flex-wrap gap-2">
         <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Save DC</span> <span class="stat-num ml-1 text-xl">{{ derived.spellDc }}</span></div>
         <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Attack</span> <span class="stat-num ml-1 text-xl">{{ signed(derived.spellAttack) }}</span></div>
@@ -144,7 +142,7 @@ function clearFilters() {
       </button>
     </div>
     <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
-      <p class="text-[13px] text-dim">{{ current.blurb }}</p>
+      <p v-if="current.blurb" class="text-[13px] text-dim">{{ current.blurb }}</p>
       <div v-if="tab === 'known'" class="grid grid-cols-2 overflow-hidden rounded-lg border border-obsidian-600 text-[11.5px]" role="radiogroup" aria-label="Group known spells">
         <button
           v-for="o in [{ id: 'source', label: 'By source' }, { id: 'level', label: 'By level' }] as const"

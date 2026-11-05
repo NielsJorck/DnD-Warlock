@@ -36,7 +36,7 @@ const hexTag = computed(() => (hex.value ? ' +Hex' : ''))
   <section class="panel scroll-mt-48 overflow-hidden" :class="inForm ? 'border-topaz/40' : ''">
     <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gold/10 p-5 pb-4">
       <div>
-        <p class="eyebrow" :class="inForm ? 'text-topaz' : ''">{{ inForm ? 'Form of the Lesser Dao' : 'Attack rolls · damage' }}</p>
+        <p v-if="inForm" class="eyebrow text-topaz">Form of the Lesser Dao</p>
         <h2 class="heading text-lg">Attacks</h2>
       </div>
       <div class="flex flex-wrap gap-2">

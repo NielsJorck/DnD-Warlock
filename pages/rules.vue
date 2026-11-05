@@ -13,11 +13,8 @@ const withRules = characters.filter(c => c.rules)
   <div>
     <header class="panel relative overflow-hidden p-6 sm:p-8">
       <div class="pointer-events-none absolute -right-6 -top-12 font-display text-[200px] leading-none text-topaz/[0.07]" aria-hidden="true">⚖</div>
-      <p class="eyebrow">Table agreements</p>
-      <h1 class="mt-2 font-display text-4xl font-bold tracking-wide sm:text-5xl"><span class="text-gilded">Campaign Rules</span></h1>
-      <p class="mt-3 max-w-2xl font-serif text-lg text-dim">
-        House rules, DM rulings and the source policy for the whole table, then each character’s own rulings and the questions still waiting on the DM. Every number on this site follows these rules.
-      </p>
+      <h1 class="font-display text-4xl font-bold tracking-wide sm:text-5xl"><span class="text-gilded">Campaign Rules</span></h1>
+      <p class="mt-3 max-w-2xl font-serif text-lg text-dim">Every number on this site follows these rules.</p>
       <div class="mt-5 flex flex-wrap gap-2">
         <span class="chip px-3 py-1 text-xs">{{ sourcePolicy.baseline }}</span>
         <a :href="sourcePolicy.index.url" target="_blank" rel="noopener" class="chip px-3 py-1 text-xs text-gold-light hover:border-gold/50">Reference: {{ sourcePolicy.index.label }} ↗</a>
@@ -28,17 +25,17 @@ const withRules = characters.filter(c => c.rules)
 
     <div class="mt-10 space-y-12">
       <section>
-        <SectionHeading eyebrow="Differs from the books" title="Homebrew in Effect" />
+        <SectionHeading title="Homebrew in Effect" />
         <HouseRules :rules="homebrew" />
       </section>
 
       <section>
-        <SectionHeading eyebrow="Decided by the DM" title="Rulings" />
+        <SectionHeading title="Rulings" />
         <RulingList :rulings="rulings" />
       </section>
 
       <section>
-        <SectionHeading eyebrow="What content is legal" title="Source Policy" />
+        <SectionHeading title="Source Policy" />
         <div class="grid gap-4 md:grid-cols-2">
           <div class="panel p-5">
             <p class="eyebrow mb-3 text-jade">Allowed</p>
@@ -60,7 +57,7 @@ const withRules = characters.filter(c => c.rules)
 
     <!-- The browser's own PDF viewer; phones mostly can't show a PDF inside a page, so they get the buttons -->
     <section id="tweaks" class="mt-12 scroll-mt-24">
-      <SectionHeading eyebrow="Homebrew rulebook · PDF" :title="`${tweaksPdf.title} ${tweaksPdf.version}`">
+      <SectionHeading :title="`${tweaksPdf.title} ${tweaksPdf.version}`">
         <a :href="pdf" target="_blank" rel="noopener" class="btn btn-gold">Open in a new tab ↗</a>
         <a :href="pdf" download class="btn">Download</a>
       </SectionHeading>

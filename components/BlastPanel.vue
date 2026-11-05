@@ -28,7 +28,6 @@ const pct = (n: number) => `${Math.round(n * 100)}%`
 <template>
   <div class="panel overflow-hidden">
     <div class="relative border-b border-gold/10 bg-gradient-to-r from-amethyst/10 via-transparent to-transparent p-5">
-      <p class="eyebrow">Planner</p>
       <h2 class="heading text-xl">Damage per Turn</h2>
     </div>
 
