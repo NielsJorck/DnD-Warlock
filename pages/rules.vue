@@ -6,11 +6,6 @@ useHead({ title: 'Campaign Rules' })
 
 const pdf = publicPath(tweaksPdf.src)
 
-const labelTone: Record<string, string> = {
-  Owned: itemGroupTone.owned,
-  Wishlist: itemGroupTone.wishlist
-}
-
 const withRules = characters.filter(c => c.rules)
 </script>
 
@@ -21,7 +16,7 @@ const withRules = characters.filter(c => c.rules)
       <p class="eyebrow">Table agreements</p>
       <h1 class="mt-2 font-display text-4xl font-bold tracking-wide sm:text-5xl"><span class="text-gilded">Campaign Rules</span></h1>
       <p class="mt-3 max-w-2xl font-serif text-lg text-dim">
-        House rules, DM rulings and the source policy for the whole table, then each character’s own rulings and the decisions still open. Every number on this site follows these rules.
+        House rules, DM rulings and the source policy for the whole table, then each character’s own rulings and the questions still waiting on the DM. Every number on this site follows these rules.
       </p>
       <div class="mt-5 flex flex-wrap gap-2">
         <span class="chip px-3 py-1 text-xs">{{ sourcePolicy.baseline }}</span>
@@ -56,11 +51,6 @@ const withRules = characters.filter(c => c.rules)
             <ul class="space-y-2">
               <li v-for="e in sourcePolicy.excluded" :key="e" class="flex gap-2 text-[13px] leading-relaxed text-parchment/85"><span class="text-ruby">✕</span>{{ e }}</li>
             </ul>
-          </div>
-        </div>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <div v-for="l in sourcePolicy.labels" :key="l.label" class="flex items-center gap-2 text-[12.5px] text-dim">
-            <span class="chip" :class="labelTone[l.label]">{{ l.label }}</span>{{ l.text }}
           </div>
         </div>
       </section>

@@ -90,7 +90,7 @@ export const levels: LevelEntry[] = [
         kind: 'Proficiencies',
         pick: 'Arcana, Deception, History, Insight, Investigation, Persuasion',
         basis: 'fixed',
-        note: 'Skills. Where each comes from is under Skill Picks'
+        note: 'Skills. Where each comes from is under Skill picks above'
       },
       { kind: 'Proficiencies', pick: 'Jeweler’s tools, Calligrapher’s supplies', basis: 'fixed', note: 'Tools: Guild Artisan 1, Prodigy 1' },
       {
@@ -283,15 +283,12 @@ export const revisions: Revision[] = [
   },
   {
     date: '2026-11-04',
-    title: 'Spells and Prodigy',
+    title: 'Spells and rituals',
     changes: [
       'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
-      'Prodigy recorded as a gift from the DM at level 1, in Xanathar’s version with Persuasion expertise.',
       'Drawmij’s Instant Summons and Forbiddance marked as placeholders for level 11, not in the Book of Shadows yet.',
       'The DM allowed the rituals in the Book of Shadows.',
-      'Phantasmal Killer added to the known spells: the Tome rule makes every Genie and Dao spell known.',
-      'Starting array recorded: 17, 13, 13, 12, 12, 8, with the Half-Elf +1s on DEX and CON.',
-      'Skill picks recorded: Arcana and Deception from the Warlock, History from INT. Prodigy’s skill pick is unused.'
+      'Phantasmal Killer added to the known spells: the Tome rule makes every Genie and Dao spell known.'
     ]
   }
 ]

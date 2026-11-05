@@ -5,13 +5,6 @@ import { items } from '~/data/characters/lucan/items'
 
 const signature = items.filter(i => i.art)
 
-const copied = ref(false)
-async function copyPrompt() {
-  await navigator.clipboard.writeText(appearance.portraitPrompt)
-  copied.value = true
-  setTimeout(() => (copied.value = false), 1500)
-}
-
 useHead({ title: 'Story & Patron — Lucan Beryll' })
 </script>
 
@@ -42,7 +35,6 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
       <aside class="panel h-fit p-6">
         <p class="eyebrow">Personality</p>
         <h3 class="heading mb-4 text-lg">Traits</h3>
-        <p class="mb-4 text-[13.5px] leading-relaxed text-dim">{{ character.identity.summary }}</p>
         <ul class="space-y-3">
           <li v-for="t in character.identity.traits" :key="t" class="flex gap-3 text-[13.5px] leading-relaxed text-parchment/85">
             <GemIcon color="#d6a84f" :size="12" class="mt-1 shrink-0" />{{ t }}
@@ -55,28 +47,12 @@ useHead({ title: 'Story & Patron — Lucan Beryll' })
     <section class="mt-16">
       <SectionHeading eyebrow="The Dao's warlock" title="Appearance" />
       <div class="panel grid gap-8 p-6 sm:p-8 lg:grid-cols-[340px_minmax(0,1fr)]">
-        <figure class="overflow-hidden rounded-2xl border border-gold/30 lg:row-span-2">
+        <figure class="overflow-hidden rounded-2xl border border-gold/30">
           <img :src="publicPath(appearance.portrait.src)" :alt="appearance.portrait.alt" class="aspect-[3/4] w-full object-cover" loading="lazy" />
         </figure>
         <div class="space-y-5">
           <p v-for="(p, n) in appearance.paragraphs" :key="n" class="lore">{{ p }}</p>
         </div>
-        <dl class="grid gap-3 sm:grid-cols-2">
-          <div v-for="f in appearance.features" :key="f.label" class="flex gap-3 text-[13.5px] leading-relaxed">
-            <GemIcon color="#d6a84f" :size="12" class="mt-1 shrink-0" />
-            <div>
-              <dt class="eyebrow">{{ f.label }}</dt>
-              <dd class="text-parchment/85">{{ f.text }}</dd>
-            </div>
-          </div>
-        </dl>
-        <details class="group rounded-xl border border-obsidian-600 bg-obsidian-950/60 p-4 lg:col-span-2">
-          <summary class="flex items-center justify-between text-[12.5px] text-dim transition hover:text-gold-light">
-            <span><span class="inline-block transition group-open:rotate-90">▸</span> Art brief for a portrait</span>
-            <button type="button" class="btn px-2.5 py-1 text-[11px]" @click.prevent="copyPrompt">{{ copied ? 'Copied' : 'Copy prompt' }}</button>
-          </summary>
-          <p class="mt-3 text-[13px] leading-relaxed text-parchment/80">{{ appearance.portraitPrompt }}</p>
-        </details>
       </div>
     </section>
 

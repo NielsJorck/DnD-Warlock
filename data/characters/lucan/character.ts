@@ -170,7 +170,7 @@ export const character = {
     {
       name: 'Skill Versatility',
       source: 'Half-Elf',
-      summary: 'Proficiency in two skills. In this campaign it grants Investigation.',
+      summary: 'Proficiency in one skill of your choice (two in the books). Lucan took Investigation.',
       homebrew: true
     },
     {
@@ -334,11 +334,8 @@ export const lesserDao = {
 
   // How the form works at this table
   rules: [
-    'Lucan takes on the form as a bonus action. It lasts 10 turns, and the Bracers allow it twice per long rest.',
-    'The form has 83 hit points of its own. Damage comes off them first; when they run out the form ends and any leftover damage carries over to Lucan.',
     'Lucan can’t cast spells while in the form. A spell he is already concentrating on keeps going.',
-    'The form uses its own ability scores, saves and skills, so concentration saves use its Constitution. The Stone of Good Luck’s +1 to checks and saves still applies.',
-    'Armor Class stays 20, the same as Lucan’s own.'
+    'The form uses its own ability scores, saves and skills, so concentration saves use its Constitution.'
   ],
   tactics: [
     'Lead with Earthen Maul. A Huge or smaller target that fails the DC 17 Strength save falls prone, and the second Maul has advantage against it.',

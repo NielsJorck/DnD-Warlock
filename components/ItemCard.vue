@@ -42,7 +42,7 @@ const variant = computed(() => variantOf(props.item))
 
     <div class="flex flex-1 flex-col px-4 pb-4">
       <p class="text-[13.5px] font-medium text-parchment">{{ item.effect }}</p>
-      <p class="mt-1 text-[12.5px] text-dim">{{ item.role }}</p>
+      <p v-if="item.role" class="mt-1 text-[12.5px] text-dim">{{ item.role }}</p>
       <p v-if="item.caveat" class="mt-2 border-l-2 border-topaz/50 pl-2.5 text-[12px] leading-relaxed text-topaz/90">{{ item.caveat }}</p>
 
       <details v-if="item.rules.length || item.forCharacter" class="group/d mt-3">

@@ -39,7 +39,7 @@ Shared by every character:
 | Route | What’s there |
 | --- | --- |
 | `/` | The characters, each with a portrait, a summary and links to their pages, plus a link to the campaign rules |
-| `/rules` | Campaign homebrew, DM rulings and the source policy for the whole table; then a section per character with their own house rules, rulings, questions waiting on the DM, open and closed decisions; and the Zman’s 5e Tweaks rulebook as a PDF in the browser’s viewer (`public/docs/zmans-5e-tweaks.pdf`; phones get open and download buttons) |
+| `/rules` | Campaign homebrew, DM rulings and the source policy for the whole table; then a section per character with their own house rules, rulings and questions waiting on the DM; and the Zman’s 5e Tweaks rulebook as a PDF in the browser’s viewer (`public/docs/zmans-5e-tweaks.pdf`; phones get open and download buttons) |
 
 Lucan’s pages:
 
@@ -47,17 +47,17 @@ Lucan’s pages:
 | --- | --- |
 | `/lucan` | Character sheet, for reading: vitals and abilities in one header, attacks, feats, invocations and features (linking to their own pages), defenses, skills and senses, languages and tools, attunement. Each number appears once; spells live in the spellbook. Nothing on it rolls or tracks; that is the session page’s job |
 | `/lucan/lesser-dao` | Form of the Lesser Dao: stat block, how the form works at this table, tactics, and Lucan and the form side by side |
-| `/lucan/session` | Session tracker for play: a sticky status bar (HP with damage/heal/temp, AC, slots, concentration, conditions, advantage/disadvantage), resources and rests, death saves and conditions, attack and damage rolls (Hex follows concentration, crit doubles the dice), every known spell with a Cast button that spends the slot, item and feature triggers (Lesser Dao, flight, wand, potion, Ring of Spell Storing, Spell Gem…), checks, saves and skills, plus the Eldritch Blast and Spike Growth planners. In the Lesser Dao form the page switches over: the form’s HP lead, its 10 turns count down, attacks and rolls use its stats, and spellcasting is locked while concentration carries on |
+| `/lucan/session` | Session tracker for play: a sticky status bar (HP with damage/heal/temp, AC, slots, concentration, conditions, advantage/disadvantage), resources and rests, death saves and conditions, attack and damage rolls (Hex follows concentration, crit doubles the dice), every known spell with a Cast button that spends the slot, item and feature triggers (Lesser Dao, flight, wand, potion, Ring of Spell Storing, Spell Gem…), checks, saves and skills. In the Lesser Dao form the page switches over: the form’s HP lead, its 10 turns count down, attacks and rolls use its stats, and spellcasting is locked while concentration carries on |
 | `/lucan/spells` | Searchable, filterable spellbook (status, level, school, concentration, ritual) with expandable cards. `?tab=` and `?q=` open a tab or a search |
-| `/lucan/spells/:slug` | Full spell page with 5th-level pact-slot effects, notes and roll buttons |
+| `/lucan/spells/:slug` | Full spell page with 5th-level pact-slot effects, notes and roll buttons. Eldritch Blast has a damage-per-turn planner and Spike Growth a forced-movement planner |
 | `/lucan/items` | Owned items (mirroring the Foundry sheet), mundane gear, and a wishlist grouped by slot, with variant versions where they exist |
 | `/lucan/items/:slug` | Full item page with rules, caveats and flavor |
 | `/lucan/vessel` | The Genie Vessel: patron features, residence features, rooms with their magic items, house rules |
-| `/lucan/lore` | Lucan’s story, traits, Zahir ibn Kharum and story hooks |
+| `/lucan/lore` | Lucan’s story, traits, appearance, Zahir ibn Kharum and story hooks |
 | `/lucan/levels` | Level history: each level’s HP, slots, features and choices, with cantrips, spells and invocations counted against the Warlock table, the starting array, every skill pick, and the dated changes to the build. The `Lv` tags on the sheet’s features link here |
 | `/lucan/dm` | For the DM: one table of wishlist items plus the Vessel stores, with allow / discuss / deny verdicts, a version picker for items that come in several versions, notes, the open questions with answer fields, and a button that copies everything as text |
 
-Lucan’s pages used to sit at the root (`/session`, `/spells/hex`…), and the Codex before that had URLs such as `/known-spells` or `/genie-vessel`. Both redirect to the pages above, keeping any `?tab=` or `#room` (see `middleware/legacy-redirects.global.ts`).
+Lucan’s pages used to sit at the root (`/session`, `/spells/hex`…). Those URLs redirect to the pages above, keeping any `?tab=` or `#room`, and items renamed in that time go to their new pages (see `middleware/legacy-redirects.global.ts`).
 
 ## Editing the content
 
@@ -76,12 +76,12 @@ For Lucan, in `data/characters/lucan/`:
 - `spells.ts`: every spell with its status (`known`, `book`, `candidate`, `future`)
 - `items.ts`: owned items (`group: 'owned'`, mirroring the Foundry sheet), the wishlist (`variants` lists official versions, `slot` says where it is worn and `slots` sets the limits), mundane gear and Vessel contents (with their room)
 - `vessel.ts`: Vessel features and rooms
-- `lore.ts`: story, patron, his own house rules and rulings, open questions and the questions for the DM (`dmQuestions`)
+- `lore.ts`: story, appearance, patron, his own house rules and rulings, and the questions for the DM (`dmQuestions`)
 - `levels.ts`: the level history. Levels 1–10 were built at once for the campaign start, so each choice is `fixed` (the rules or notes set its level) or `fitted` (shown at the first level the rules allow). When Lucan gains a level, change its entry from `upcoming` to `played`, add the `date` and the choices (a swapped spell gets `replaces`), add the next upcoming level, and update `character.ts` to match
 
 Lucan’s derived numbers (modifiers, saves, spell DC, attack bonus, passives) are calculated in `composables/useCharacter.ts`, so changing an ability score or item bonus updates all his pages.
 
-The session tracker, the open-decision checklists and the DM page’s verdicts save to the browser’s `localStorage`, under keys that start with the character’s slug (`lucan-tracker-v1`). Saves from before there were several characters move over to the new keys the first time they’re read (`utils/storage.ts`).
+The session tracker and the DM page’s verdicts save to the browser’s `localStorage`, under keys that start with the character’s slug (`lucan-tracker-v1`). Saves from before there were several characters move over to the new keys the first time they’re read (`utils/storage.ts`).
 
 ## Adding a character
 
@@ -95,13 +95,10 @@ The site uses the full window up to 2560 px. Besides Tailwind’s breakpoints th
 
 The header shows the character whose pages you’re on. On the shared pages it keeps the last character you visited. Clicking the name opens a menu with every character and **All characters** (`/`). The phone menu and the footer link to `/` too.
 
-## Item art
+## Art
 
-Items can have an `art` entry in `data/characters/lucan/items.ts` with an image in `public/images/`. Each item also stores an art brief: a prompt for generating a painted version.
+Images live in `public/images/`, and the originals of the paintings are kept in `art/` as `<name>.original.png`. Items point at their image with an `art` entry in `data/characters/lucan/items.ts`, the portrait with `appearance.portrait` in `lore.ts`. Each one also keeps an art brief (`art.prompt`, `appearance.portraitPrompt`): a prompt for generating a new version. The site doesn’t show them.
 
-- **Painted art** (Pact Keeper’s Crystal Dagger, which still uses `rod-of-the-pact-keeper.png`): keep the original in `art/`, then run `node scripts/import-art.mjs art/<name>.original.png public/images/<name>.png [glow hex]`. The script removes the white background, fits the item onto a 600×800 canvas and places it on the site's dark backdrop. Point the item's `art.src` at the PNG.
-- **Drawn illustrations** (the Golden Pact, which still uses `barrier-tattoo.svg`): `node scripts/generate-art.mjs` writes the SVGs. It still writes the old `rod-of-the-pact-keeper.svg`, which the site no longer uses.
-
-## Archive
-
-`archive/codex-export/` holds the original Markdown export from Codex Space and the old Nuxt Content config. The site doesn’t use them anymore.
+- **Item paintings on a white background** (the Pact Keeper’s Crystal Dagger): run `node scripts/import-art.mjs art/<name>.original.png public/images/<name>.png [glow hex]`. The script removes the white background, fits the item onto a 600×800 canvas and places it on the site's dark backdrop.
+- **Full paintings** (the portrait and the Genie Vessel ring): save a JPEG copy at quality 85 in `public/images/`. The originals are over 1 MB each, too heavy for a page.
+- **Drawn illustrations** (the Golden Pact): `node scripts/generate-art.mjs` writes `the-golden-pact.svg`.

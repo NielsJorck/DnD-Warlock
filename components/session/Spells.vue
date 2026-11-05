@@ -84,7 +84,7 @@ const saveOf = (s: Spell) => s.save?.split(' ')[0]
               <span v-if="saveOf(s)" class="chip py-0 text-[10px]">{{ saveOf(s) }} save</span>
               <span class="text-[10.5px] text-faint">{{ s.range }}</span>
             </div>
-            <p class="line-clamp-2 text-[11.5px] leading-snug text-faint">{{ s.atPact || s.role }}</p>
+            <p class="line-clamp-2 text-[11.5px] leading-snug text-faint">{{ s.atPact || s.summary }}</p>
           </div>
           <div class="flex shrink-0 flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-1.5">
             <RollButton v-if="dice(s)" :notation="dice(s)!" :label="`${s.name} damage`" compact>{{ dice(s) }}</RollButton>

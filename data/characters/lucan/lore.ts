@@ -1,4 +1,4 @@
-// Lucan's story, his own house rules and rulings, and his open decisions.
+// Lucan's story, his own house rules and rulings, and his questions for the DM.
 // Rules for the whole table are in data/campaign.ts.
 
 import type { HouseRule, Ruling } from '../../campaign'
@@ -17,19 +17,11 @@ export const appearance = {
     'He wears a sleeveless, high-collared coat of deep umber stitched with copper geometry, open enough to show the liquid-gold contract written across his chest and down his arms. Broad gold bracers carry the last lines of the contract and both signatures, closing the script at each wrist. A wide sash holds the amethyst-bladed dagger, Zahir’s Vessel ring sits among the other rings on his fingers, and loose dark trousers gather at the ankle.',
     'When he takes to the air, sand and glittering gem-dust spiral up around his legs and trail beneath him like a genie’s tail.'
   ],
-  features: [
-    { label: 'Hair', text: 'Shaved head, long black ponytail threaded through engraved gold rings.' },
-    { label: 'Eyes', text: 'Faintly glowing, like the Dimension Shard: amethyst at the rim, rose, then a fiery orange around the pupil.' },
-    { label: 'Face', text: 'Clean-shaven, sharp features, gold cuffs on the ear points.' },
-    { label: 'Pact', text: 'Liquid-gold Terran script across his chest and arms, ending in the engraved gold bracers.' },
-    { label: 'Dress', text: 'Sleeveless high-collared umber coat with copper stitching, wide sash, loose dark trousers.' },
-    { label: 'Flight', text: 'His legs stay visible inside a spiral of sand and gem-dust.' }
-  ],
   portrait: {
-    src: '/images/lucan-beryll.png', // original kept in art/lucan-beryll.original.png
+    src: '/images/lucan-beryll.jpg', // original kept in art/lucan-beryll.original.png
     alt: 'Lucan Beryll, arms crossed, in a sleeveless umber coat with copper patterns: a shaved head with a black ponytail in gold rings, faintly glowing violet eyes, gold runes across his chest and arms, gold bracers and an amethyst-bladed dagger in his sash, among towers of dark stone and crystal.'
   },
-  // Brief for generating a portrait; the result lives at portrait.src
+  // Brief for generating a portrait (not shown on the site); the result lives at portrait.src
   portraitPrompt:
     'Fantasy character portrait, D&D 5e. A male half-elf warlock of a Dao, a genie of elemental earth, shown from the knees up, standing with calm confidence. His head is shaved except for a long black ponytail threaded through a series of engraved gold rings; gold cuffs climb his pointed ears; clean-shaven, sharp features, warm olive-bronze skin. His eyes glow faintly like faceted crystal: amethyst-violet irises at the outer rim, shading to rose-pink and then a fiery orange ring around the pupil, a soft violet-orange light, subtle rather than blazing. He wears a sleeveless, high-collared coat of deep umber stitched with angular copper geometric patterns, open at the chest to show a tattoo of glowing liquid-gold angular runes (Primordial Terran script in the style of the Dwarvish alphabet) across his chest beneath the collarbones and running down both bare arms, with a circular seal over his heart. Broad engraved gold bracers on both wrists continue the runes. A wide sash at his waist holds a dagger whose blade is a faceted amethyst crystal shading to a fiery orange tip. On one hand, a gold ring set with a long faceted amethyst-and-sapphire crystal. Loose dark trousers gathered at the ankle. Sand and glittering gem-dust drift around his feet. Dark obsidian background, dramatic warm gold rim light, no text, no watermark.'
 }
@@ -134,35 +126,3 @@ export const dmQuestions: DmQuestion[] = [
     items: ['helm-of-comprehending-languages', 'eyes-of-minute-seeing']
   }
 ]
-
-export const openQuestions = {
-  immediate: [
-    'Check the candidate spells against the party’s actual encounters before changing the spell list.',
-    'Decide the level-12 improvement: a feat, an ability score increase or an invocation change.'
-  ],
-  items: [
-    'Ask the DM about wishlist items when a shopping or loot opportunity comes up.',
-    'Keep the Robe of Thayan Arcana out unless the DM explicitly approves it.'
-  ],
-  closed: [
-    'Ruleset: 2014 5e + Tasha’s, not 2024-only material.',
-    'Sources: official content on 2014.5e.tools, plus recorded campaign homebrew.',
-    'Race: Half-Elf. Patron: Dao Genie (Zahir). Pact: Tome.',
-    'Campaign start: the Foundry sheet is the character’s source of truth.',
-    'Abilities: STR 8, DEX 14, CON 16, INT 12, WIS 12, CHA 20. Max HP 83.',
-    'Feats: Spell Savant (replaced Telekinetic), Crusher, Resilient (CON), Prodigy (a gift from the DM at level 1, Xanathar’s version with expertise in Persuasion).',
-    'Terran selected as the Half-Elf language, Dwarvish as the Guild Artisan language, Draconic from Prodigy.',
-    'Items consolidated: the Golden Pact, Bracers of the Dao Pact and Pact Keeper’s Crystal Dagger replace the Barrier and Illuminator’s Tattoos, Illusionist’s Bracers and Rod of the Pact Keeper.',
-    'Ring of Protection, Cloak of Displacement and Amethyst Lodestone are not owned; they moved to the wishlist.',
-    'Hex and Mind Spike added; Banishment is not known.',
-    'Phantasmal Killer is known: the Tome rule makes every Genie and Dao spell known.',
-    'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
-    'Drawmij’s Instant Summons and Forbiddance are placeholders for level 11, not in the Book of Shadows yet.',
-    'All ritual-wishlist spells are now in the Book of Shadows, with eight more.',
-    'Agonizing Blast house rule reverted: +CHA on every beam that hits, as written.',
-    'Mind Sliver replaced Gravity Spike.',
-    'Mage Hand replaced Lightning Lure.',
-    'Far Step chosen over Dimension Door.',
-    'Vessel contents are tracked separately from ordinary items.'
-  ]
-}

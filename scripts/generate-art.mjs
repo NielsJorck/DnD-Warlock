@@ -1,7 +1,7 @@
-// Generates the item illustrations in public/images/.
+// Generates the Golden Pact illustration in public/images/.
 //   node scripts/generate-art.mjs
 //
-// The Barrier Tattoo runes are a cipher: every letter maps to one rune, so the
+// The Golden Pact's runes are a cipher: every letter maps to one rune, so the
 // inscriptions really spell the phrases listed in TATTOO_TEXT.
 
 import { mkdirSync, writeFileSync } from 'node:fs'
@@ -96,169 +96,7 @@ function bezier(p0, p1, p2, p3) {
   return { length, pointAt }
 }
 
-// ── Rod of the Pact Keeper: ornate dagger with a Dimension Shard blade ──
-
-function rod() {
-  const rand = rng(7)
-
-  const L = [[300, 70], [283, 150], [268, 262], [262, 378], [266, 455]]
-  const R = [[300, 70], [317, 140], [333, 268], [338, 385], [334, 455]]
-  const M = [[300, 70], [302, 120], [297, 230], [303, 340], [299, 455]]
-  const blade = [...L, ...R.slice(1).reverse()]
-
-  let facets = ''
-  for (let i = 0; i < 4; i++) {
-    const left = [[L[i], L[i + 1], M[i + 1]], [L[i], M[i + 1], M[i]]]
-    const right = [[R[i], R[i + 1], M[i + 1]], [R[i], M[i + 1], M[i]]]
-    for (const tri of left) {
-      facets += `<polygon points="${pts(tri)}" fill="#9a86ff" fill-opacity="${f(0.05 + rand() * 0.18)}" stroke="#e1d9ff" stroke-opacity="0.32" stroke-width="0.7"/>`
-    }
-    for (const tri of right) {
-      facets += `<polygon points="${pts(tri)}" fill="#ece6ff" fill-opacity="${f(0.1 + rand() * 0.24)}" stroke="#f2eeff" stroke-opacity="0.38" stroke-width="0.7"/>`
-    }
-  }
-
-  let stars = ''
-  for (let i = 0; i < 150; i++) {
-    const x = 258 + rand() * 84
-    const y = 75 + rand() * 380
-    const big = rand() > 0.93
-    stars += `<circle cx="${f(x)}" cy="${f(y)}" r="${f(big ? 1.4 + rand() : 0.3 + rand() * 0.8)}" fill="${rand() > 0.6 ? '#bff4ff' : '#ffffff'}" opacity="${f(0.35 + rand() * 0.65)}"${big ? ' filter="url(#starGlow)"' : ''}/>`
-  }
-
-  const shard = (cx, cy, size, rot) => {
-    const n = 4 + Math.floor(rand() * 2)
-    const p = []
-    for (let i = 0; i < n; i++) {
-      const a = (i / n) * Math.PI * 2 + rand() * 0.6
-      const r = size * (i % 2 ? 0.45 : 1) * (0.7 + rand() * 0.4)
-      p.push([cx + Math.cos(a) * r * 0.55, cy + Math.sin(a) * r])
-    }
-    return `<g transform="rotate(${rot} ${cx} ${cy})"><polygon points="${pts(p)}" fill="url(#shardFill)" stroke="#e7e0ff" stroke-opacity="0.7" stroke-width="0.8" filter="url(#softGlow)"/><line x1="${f(p[0][0])}" y1="${f(p[0][1])}" x2="${f(p[Math.floor(n / 2)][0])}" y2="${f(p[Math.floor(n / 2)][1])}" stroke="#ffffff" stroke-opacity="0.5" stroke-width="0.6"/></g>`
-  }
-  const fragments = [
-    shard(296, 40, 11, 12),
-    shard(326, 22, 6, -30),
-    shard(262, 58, 7, 40),
-    shard(352, 92, 8, -18),
-    shard(240, 128, 5, 25)
-  ].join('')
-
-  let wrap = ''
-  for (let y = 498; y < 630; y += 8) {
-    wrap += `<line x1="284" y1="${y}" x2="316" y2="${y - 7}" stroke="#0c0604" stroke-width="2.4"/>`
-    wrap += `<line x1="284" y1="${y + 2}" x2="316" y2="${y - 5}" stroke="${(y / 8) % 2 ? '#e2b45a' : '#7a5236'}" stroke-opacity="${(y / 8) % 2 ? 0.75 : 0.5}" stroke-width="0.8"/>`
-  }
-
-  const quillon = `M336,462 C360,462 392,458 414,440 C424,432 432,424 440,420 C452,414 463,423 457,434 C453,441 444,440 443,434 C438,447 420,466 400,476 C380,486 356,488 336,486 Z`
-  const prong = `M331,454 C337,441 341,428 338,412 C334,424 330,436 323,449 Z`
-  const scroll = `M274,476 c3,-10 14,-11 17,-3 c2,5 -3,9 -7,6`
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
-<title>Rod of the Pact Keeper: an ornate dagger with a Dimension Shard blade</title>
-<defs>
-  ${background('bg', '#1f1830')}
-  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#fff3c4"/><stop offset="0.25" stop-color="#f0c768"/><stop offset="0.55" stop-color="#b57d2c"/><stop offset="0.8" stop-color="#e2b45a"/><stop offset="1" stop-color="#7a4e17"/>
-  </linearGradient>
-  <linearGradient id="goldH" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#7a4e17"/><stop offset="0.35" stop-color="#f6d58a"/><stop offset="0.6" stop-color="#c38b36"/><stop offset="1" stop-color="#6b4412"/>
-  </linearGradient>
-  <linearGradient id="leather" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#140c07"/><stop offset="0.35" stop-color="#4f3322"/><stop offset="0.7" stop-color="#26170e"/><stop offset="1" stop-color="#0e0805"/>
-  </linearGradient>
-  <linearGradient id="void" x1="0" y1="0" x2="0.4" y2="1">
-    <stop offset="0" stop-color="#2b1d6e"/><stop offset="0.45" stop-color="#140c35"/><stop offset="0.8" stop-color="#0b1c3c"/><stop offset="1" stop-color="#1c0f45"/>
-  </linearGradient>
-  <linearGradient id="shardFill" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#d9ccff"/><stop offset="0.5" stop-color="#7656e8"/><stop offset="1" stop-color="#1d1252"/>
-  </linearGradient>
-  <radialGradient id="amber" cx="40%" cy="35%" r="70%">
-    <stop offset="0" stop-color="#ffe7a8"/><stop offset="0.45" stop-color="#f09a24"/><stop offset="1" stop-color="#6a3005"/>
-  </radialGradient>
-  <radialGradient id="violet" cx="40%" cy="35%" r="70%">
-    <stop offset="0" stop-color="#f1e9ff"/><stop offset="0.45" stop-color="#8c5cff"/><stop offset="1" stop-color="#22104f"/>
-  </radialGradient>
-  <clipPath id="bladeClip"><polygon points="${pts(blade)}"/></clipPath>
-  <clipPath id="gripClip"><rect x="285" y="500" width="30" height="120" rx="6"/></clipPath>
-  <filter id="bigBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>
-  <filter id="hugeBlur" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="40"/></filter>
-  <filter id="nebula" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
-  <filter id="starGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="drop" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.6"/></filter>
-</defs>
-<rect width="${W}" height="${H}" fill="url(#bg)"/>
-${motes(rand, 70, ['#d6a84f', '#f0c768', '#9a86ff'])}
-<g transform="rotate(16 300 395)">
-  <ellipse cx="300" cy="250" rx="120" ry="230" fill="#6a4cff" opacity="0.22" filter="url(#hugeBlur)"/>
-  <ellipse cx="300" cy="580" rx="120" ry="110" fill="#e3a640" opacity="0.1" filter="url(#hugeBlur)"/>
-
-  <!-- Dimension Shard blade -->
-  <polygon points="${pts(blade)}" fill="#7d5cff" opacity="0.55" filter="url(#bigBlur)"/>
-  <polygon points="${pts(blade)}" fill="url(#void)"/>
-  <g clip-path="url(#bladeClip)">
-    <ellipse cx="290" cy="190" rx="26" ry="60" fill="#b04cff" opacity="0.4" filter="url(#nebula)"/>
-    <ellipse cx="312" cy="330" rx="22" ry="70" fill="#2ad3ff" opacity="0.28" filter="url(#nebula)"/>
-    <ellipse cx="292" cy="420" rx="30" ry="40" fill="#6a5cff" opacity="0.4" filter="url(#nebula)"/>
-    ${stars}
-    <polyline points="${pts(M)}" fill="none" stroke="#7fe8ff" stroke-width="3" opacity="0.5" filter="url(#nebula)"/>
-    ${facets}
-  </g>
-  <polyline points="${pts(M)}" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="1.1"/>
-  <polyline points="${pts(R)}" fill="none" stroke="#ffffff" stroke-opacity="0.85" stroke-width="1.3"/>
-  <polygon points="${pts(blade)}" fill="none" stroke="#d9d0ff" stroke-opacity="0.8" stroke-width="1.4"/>
-  <polygon points="303,128 309,150 305,240 301,232" fill="#ffffff" opacity="0.35"/>
-  ${fragments}
-
-  <!-- Gold prongs holding the shard like a gem setting -->
-  <g filter="url(#drop)">
-    <path d="${prong}" fill="url(#gold)" stroke="#5a3a10" stroke-width="0.7"/>
-    <path d="${prong}" transform="translate(${W} 0) scale(-1 1)" fill="url(#gold)" stroke="#5a3a10" stroke-width="0.7"/>
-  </g>
-
-  <!-- Crossguard -->
-  <g filter="url(#drop)">
-    <path d="${quillon}" fill="url(#gold)" stroke="#5a3a10" stroke-width="0.8"/>
-    <path d="${quillon}" transform="translate(${W} 0) scale(-1 1)" fill="url(#gold)" stroke="#5a3a10" stroke-width="0.8"/>
-    <path d="M340,474 C370,472 398,462 420,446" fill="none" stroke="#6b4512" stroke-opacity="0.75" stroke-width="0.9"/>
-    <path d="M340,474 C370,472 398,462 420,446" transform="translate(${W} 0) scale(-1 1)" fill="none" stroke="#6b4512" stroke-opacity="0.75" stroke-width="0.9"/>
-    <path d="M262,458 C262,450 270,446 280,446 L320,446 C330,446 338,450 338,458 L338,482 C338,494 324,500 300,503 C276,500 262,494 262,482 Z" fill="url(#gold)" stroke="#5a3a10" stroke-width="0.8"/>
-    <path d="${scroll}" fill="none" stroke="#fff1c1" stroke-opacity="0.8" stroke-width="0.9"/>
-    <path d="${scroll}" transform="translate(${W} 0) scale(-1 1)" fill="none" stroke="#fff1c1" stroke-opacity="0.8" stroke-width="0.9"/>
-    <circle cx="300" cy="472" r="14.5" fill="none" stroke="url(#goldH)" stroke-width="3.2"/>
-    <circle cx="300" cy="472" r="12" fill="url(#amber)"/>
-    <polygon points="${pts(Array.from({ length: 8 }, (_, i) => [300 + Math.cos((i * Math.PI) / 4) * 6.5, 472 + Math.sin((i * Math.PI) / 4) * 6.5]))}" fill="none" stroke="#fff0c8" stroke-opacity="0.55" stroke-width="0.6"/>
-    ${Array.from({ length: 8 }, (_, i) => {
-      const a = (i * Math.PI) / 4
-      return `<line x1="${f(300 + Math.cos(a) * 6.5)}" y1="${f(472 + Math.sin(a) * 6.5)}" x2="${f(300 + Math.cos(a + 0.4) * 12)}" y2="${f(472 + Math.sin(a + 0.4) * 12)}" stroke="#fff0c8" stroke-opacity="0.35" stroke-width="0.5"/>`
-    }).join('')}
-    <ellipse cx="296" cy="467" rx="3.2" ry="2" fill="#ffffff" opacity="0.8"/>
-  </g>
-
-  <!-- Grip -->
-  <rect x="285" y="500" width="30" height="120" rx="6" fill="url(#leather)"/>
-  <g clip-path="url(#gripClip)">${wrap}</g>
-  <rect x="282" y="498" width="36" height="9" rx="3" fill="url(#goldH)" stroke="#5a3a10" stroke-width="0.6"/>
-  <rect x="282" y="613" width="36" height="9" rx="3" fill="url(#goldH)" stroke="#5a3a10" stroke-width="0.6"/>
-
-  <!-- Pommel -->
-  <g filter="url(#drop)">
-    <path d="M284,621 L316,621 C330,629 334,645 330,661 C326,685 312,699 300,717 C288,699 274,685 270,661 C266,645 270,629 284,621 Z" fill="url(#gold)" stroke="#5a3a10" stroke-width="0.8"/>
-    <ellipse cx="300" cy="659" rx="16.5" ry="21.5" fill="none" stroke="#6b4512" stroke-width="1.6"/>
-    <ellipse cx="300" cy="659" rx="15" ry="20" fill="url(#violet)"/>
-    <polygon points="300,647 309,653 309,665 300,671 291,665 291,653" fill="none" stroke="#f4eeff" stroke-opacity="0.55" stroke-width="0.6"/>
-    <path d="M300,639 L300,647 M313,648 L309,653 M313,670 L309,665 M300,679 L300,671 M287,670 L291,665 M287,648 L291,653" stroke="#f4eeff" stroke-opacity="0.4" stroke-width="0.6"/>
-    <ellipse cx="295" cy="651" rx="3.5" ry="2.4" fill="#ffffff" opacity="0.75"/>
-    <polygon points="300,716 306,724 300,734 294,724" fill="url(#gold)" stroke="#5a3a10" stroke-width="0.6"/>
-  </g>
-</g>
-${frame()}
-</svg>
-`
-}
-
-// ── Barrier Tattoo: the pact written in Primordial (Terran) ──
+// ── The Golden Pact: the pact written in Primordial (Terran) ──
 
 // 26 runes, one per letter: a centre stem plus a unique pair of strokes.
 const STROKES = [
@@ -456,6 +294,5 @@ ${frame()}
 }
 
 mkdirSync(OUT, { recursive: true })
-writeFileSync(join(OUT, 'rod-of-the-pact-keeper.svg'), rod())
-writeFileSync(join(OUT, 'barrier-tattoo.svg'), tattoo())
-console.log(`Wrote illustrations to ${OUT}`)
+writeFileSync(join(OUT, 'the-golden-pact.svg'), tattoo())
+console.log(`Wrote the illustration to ${OUT}`)

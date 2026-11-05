@@ -22,42 +22,49 @@ const related = spells.filter(s => s.slug !== spell.slug && s.access === spell.a
     <NuxtLink to="/lucan/spells" class="text-xs text-dim hover:text-gold-light">← Spellbook</NuxtLink>
 
     <div class="mt-4 grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-8">
-      <article class="panel relative overflow-hidden">
-        <div class="pointer-events-none absolute -right-6 -top-10 font-display text-[200px] leading-none opacity-[0.08]" :class="tone.text" aria-hidden="true">{{ schoolGlyph[spell.school] }}</div>
-        <div class="h-1 w-full" :style="{ background: `linear-gradient(90deg, ${tone.hex}, transparent)` }" />
+      <div class="min-w-0 space-y-6">
+        <article class="panel relative overflow-hidden">
+          <div class="pointer-events-none absolute -right-6 -top-10 font-display text-[200px] leading-none opacity-[0.08]" :class="tone.text" aria-hidden="true">{{ schoolGlyph[spell.school] }}</div>
+          <div class="h-1 w-full" :style="{ background: `linear-gradient(90deg, ${tone.hex}, transparent)` }" />
 
-        <div class="relative p-6 sm:p-9">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="chip" :class="[tone.border, tone.bg, tone.text]">{{ schoolGlyph[spell.school] }} {{ levelLabel(spell.level, true) }} {{ spell.school.toLowerCase() }}</span>
-            <span class="chip" :class="statusTone[spell.status]">{{ statusLabels[spell.status] }}</span>
-            <span v-if="spell.concentration" class="chip border-rose/40 text-rose">Concentration</span>
-            <span v-if="spell.ritual" class="chip border-amethyst/40 text-amethyst">Ritual</span>
+          <div class="relative p-6 sm:p-9">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="chip" :class="[tone.border, tone.bg, tone.text]">{{ schoolGlyph[spell.school] }} {{ levelLabel(spell.level, true) }} {{ spell.school.toLowerCase() }}</span>
+              <span class="chip" :class="statusTone[spell.status]">{{ statusLabels[spell.status] }}</span>
+              <span v-if="spell.concentration" class="chip border-rose/40 text-rose">Concentration</span>
+              <span v-if="spell.ritual" class="chip border-amethyst/40 text-amethyst">Ritual</span>
+            </div>
+            <h1 class="mt-4 font-display text-4xl font-bold tracking-wide text-parchment sm:text-5xl">{{ spell.name }}</h1>
+            <p class="mt-2 font-serif text-xl italic text-dim">{{ spell.role }}</p>
+
+            <div class="mt-6"><SpellStats :spell="spell" /></div>
+
+            <p class="lore mt-6">{{ spell.summary }}</p>
+
+            <div v-if="spell.atPact" class="mt-6 rounded-xl border border-gold/30 bg-gold/5 p-4">
+              <p class="eyebrow mb-1">Cast from a 5th-level pact slot</p>
+              <p class="text-parchment">{{ spell.atPact }}</p>
+            </div>
+
+            <!-- On Eldritch Blast the planner below lists the same modifiers with their numbers -->
+            <div v-if="spell.notes && spell.slug !== 'eldritch-blast'" class="mt-4 rounded-xl border border-topaz/25 bg-topaz/5 p-4">
+              <p class="eyebrow mb-1 text-topaz">Lucan’s notes</p>
+              <p class="text-[14.5px] leading-relaxed text-parchment/85">{{ spell.notes }}</p>
+            </div>
+
+            <div v-if="spell.attack || spell.save || rollNotation" class="mt-6 flex flex-wrap items-center gap-2 border-t border-obsidian-600 pt-5">
+              <RollButton v-if="spell.attack" :notation="`1d20+${derived.spellAttack}`" :label="`${spell.name} — spell attack`">Spell attack {{ signed(derived.spellAttack) }}</RollButton>
+              <RollButton v-if="rollNotation" :notation="rollNotation" :label="`${spell.name} damage`">Damage {{ rollNotation }}</RollButton>
+              <span v-if="spell.save" class="chip px-3 py-1 text-xs">{{ spell.save }} save vs DC {{ derived.spellDc }}</span>
+              <span v-if="spell.damage" class="text-xs text-faint">{{ spell.damage }}</span>
+            </div>
           </div>
-          <h1 class="mt-4 font-display text-4xl font-bold tracking-wide text-parchment sm:text-5xl">{{ spell.name }}</h1>
-          <p class="mt-2 font-serif text-xl italic text-dim">{{ spell.role }}</p>
+        </article>
 
-          <div class="mt-6"><SpellStats :spell="spell" /></div>
-
-          <p class="lore mt-6">{{ spell.summary }}</p>
-
-          <div v-if="spell.atPact" class="mt-6 rounded-xl border border-gold/30 bg-gold/5 p-4">
-            <p class="eyebrow mb-1">Cast from a 5th-level pact slot</p>
-            <p class="text-parchment">{{ spell.atPact }}</p>
-          </div>
-
-          <div v-if="spell.notes" class="mt-4 rounded-xl border border-topaz/25 bg-topaz/5 p-4">
-            <p class="eyebrow mb-1 text-topaz">Lucan’s notes</p>
-            <p class="text-[14.5px] leading-relaxed text-parchment/85">{{ spell.notes }}</p>
-          </div>
-
-          <div v-if="spell.attack || spell.save || rollNotation" class="mt-6 flex flex-wrap items-center gap-2 border-t border-obsidian-600 pt-5">
-            <RollButton v-if="spell.attack" :notation="`1d20+${derived.spellAttack}`" :label="`${spell.name} — spell attack`">Spell attack {{ signed(derived.spellAttack) }}</RollButton>
-            <RollButton v-if="rollNotation" :notation="rollNotation" :label="`${spell.name} damage`">Damage {{ rollNotation }}</RollButton>
-            <span v-if="spell.save" class="chip px-3 py-1 text-xs">{{ spell.save }} save vs DC {{ derived.spellDc }}</span>
-            <span v-if="spell.damage" class="text-xs text-faint">{{ spell.damage }}</span>
-          </div>
-        </div>
-      </article>
+        <!-- What-if math for the two spells the build turns on -->
+        <BlastPanel v-if="spell.slug === 'eldritch-blast'" />
+        <SpikeCombo v-if="spell.slug === 'spike-growth'" />
+      </div>
 
       <aside class="space-y-8 xl:sticky xl:top-24 xl:self-start">
         <nav class="grid grid-cols-2 gap-3" aria-label="Adjacent spells">

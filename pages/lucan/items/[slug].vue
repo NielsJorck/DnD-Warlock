@@ -23,14 +23,6 @@ const facts = [
   { label: 'Quantity', value: item.quantity ? String(item.quantity) : undefined },
   { label: 'Version', value: requestedVariant ? `${requestedVariant.label} requested` : undefined }
 ].filter(f => f.value)
-
-const copied = ref(false)
-async function copyPrompt() {
-  if (!item.art) return
-  await navigator.clipboard.writeText(item.art.prompt)
-  copied.value = true
-  setTimeout(() => (copied.value = false), 1500)
-}
 </script>
 
 <template>
@@ -63,7 +55,7 @@ async function copyPrompt() {
                 <NuxtLink v-if="room" :to="`/lucan/vessel#${room.slug}`" class="chip border-jade/40 text-jade hover:text-parchment">{{ room.glyph }} {{ room.name }}</NuxtLink>
               </div>
               <h1 class="mt-3 font-display text-3xl font-bold tracking-wide text-parchment sm:text-4xl">{{ item.name }}</h1>
-              <p class="mt-1 font-serif text-xl italic text-dim">{{ item.role }}</p>
+              <p v-if="item.role" class="mt-1 font-serif text-xl italic text-dim">{{ item.role }}</p>
             </div>
           </div>
 
@@ -112,14 +104,6 @@ async function copyPrompt() {
             <p class="lore">{{ item.forCharacter }}</p>
           </div>
 
-          <details v-if="item.art" class="group mt-6 rounded-xl border border-obsidian-600 bg-obsidian-950/60 p-4">
-            <summary class="flex items-center justify-between text-[12.5px] text-dim transition hover:text-gold-light">
-              <span><span class="inline-block transition group-open:rotate-90">▸</span> Art brief for a painted version</span>
-              <button type="button" class="btn px-2.5 py-1 text-[11px]" @click.prevent="copyPrompt">{{ copied ? 'Copied' : 'Copy prompt' }}</button>
-            </summary>
-            <p class="mt-3 text-[13px] leading-relaxed text-parchment/80">{{ item.art.prompt }}</p>
-            <p class="mt-2 text-[11px] text-faint">Save the result as <code class="text-gold-light">public{{ item.art.src }}</code> (or change the path in <code>data/items.ts</code>) and it replaces the illustration everywhere.</p>
-          </details>
         </div>
       </article>
 
@@ -136,7 +120,7 @@ async function copyPrompt() {
             <span v-else class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-obsidian-500 bg-obsidian-800 text-lg" :style="s.rarity ? { color: rarityTone[s.rarity].hex } : undefined">{{ s.glyph }}</span>
             <span class="min-w-0">
               <span class="block truncate text-sm font-semibold text-parchment">{{ s.name }}</span>
-              <span class="block truncate text-[11px] text-faint">{{ s.role }}</span>
+              <span v-if="s.role" class="block truncate text-[11px] text-faint">{{ s.role }}</span>
             </span>
           </NuxtLink>
         </div>

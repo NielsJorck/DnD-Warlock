@@ -1,9 +1,7 @@
 import type { Config } from 'tailwindcss'
-import typography from '@tailwindcss/typography'
 
 export default <Partial<Config>>{
   content: ['./components/**/*.vue', './layouts/**/*.vue', './pages/**/*.vue', './app.vue', './data/**/*.ts', './composables/**/*.ts'],
-  plugins: [typography],
   theme: {
     extend: {
       screens: {

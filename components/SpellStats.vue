@@ -6,7 +6,7 @@ const cells = computed(() => [
   { label: 'Casting time', value: props.spell.castingTime + (props.spell.ritual ? ' (ritual)' : '') },
   { label: 'Range', value: props.spell.range },
   { label: 'Components', value: props.spell.components },
-  { label: 'Duration', value: (props.spell.concentration ? 'Concentration, ' : '') + props.spell.duration },
+  { label: 'Duration', value: props.spell.duration },
   { label: 'Access', value: props.spell.access, tone: accessTone[props.spell.access] },
   { label: 'Source', value: props.spell.source }
 ])

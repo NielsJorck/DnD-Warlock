@@ -28,12 +28,8 @@ const pct = (n: number) => `${Math.round(n * 100)}%`
 <template>
   <div class="panel overflow-hidden">
     <div class="relative border-b border-gold/10 bg-gradient-to-r from-amethyst/10 via-transparent to-transparent p-5">
-      <p class="eyebrow">Signature attack</p>
-      <div class="flex flex-wrap items-baseline justify-between gap-2">
-        <h3 class="heading text-xl">Eldritch Blast</h3>
-        <NuxtLink to="/lucan/spells/eldritch-blast" class="text-xs text-dim hover:text-gold-light">Spell details →</NuxtLink>
-      </div>
-      <p class="mt-1 text-sm text-dim">120 ft · {{ beams }} beams · each beam is a separate attack</p>
+      <p class="eyebrow">Planner</p>
+      <h2 class="heading text-xl">Damage per Turn</h2>
     </div>
 
     <div class="grid gap-5 p-5 md:grid-cols-[1fr_1.1fr]">

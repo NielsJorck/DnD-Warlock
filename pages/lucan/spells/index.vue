@@ -123,7 +123,6 @@ function clearFilters() {
         <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Attack</span> <span class="stat-num ml-1 text-xl">{{ signed(derived.spellAttack) }}</span></div>
         <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Pact slots</span> <span class="stat-num ml-1 text-xl">{{ character.pactSlots.count }} × 5th</span></div>
         <div class="panel-inset px-4 py-2" title="Spell Savant: once per long rest"><span class="text-[11px] text-faint">Savant slot</span> <span class="stat-num ml-1 text-xl">1 × 5th</span></div>
-        <div class="panel-inset px-4 py-2"><span class="text-[11px] text-faint">Known</span> <span class="stat-num ml-1 text-xl">{{ countFor(tabs[0]) }}</span></div>
       </div>
     </header>
 

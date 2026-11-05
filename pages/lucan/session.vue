@@ -8,8 +8,7 @@ const sections = [
   { id: 'rolls', label: 'Rolls' },
   { id: 'items', label: 'Items & features' },
   { id: 'attacks', label: 'Attacks' },
-  { id: 'spells', label: 'Spells' },
-  { id: 'planners', label: 'Planners' }
+  { id: 'spells', label: 'Spells' }
 ]
 
 function resetAll() {
@@ -52,13 +51,5 @@ function resetAll() {
 
       <SessionSpells id="spells" class="lg:col-start-2 2xl:col-start-auto" />
     </div>
-
-    <section id="planners" class="mt-12 scroll-mt-48">
-      <SectionHeading eyebrow="Work out the numbers" title="Planners" />
-      <div class="grid items-start gap-5 2xl:grid-cols-2">
-        <BlastPanel />
-        <SpikeCombo />
-      </div>
-    </section>
   </div>
 </template>

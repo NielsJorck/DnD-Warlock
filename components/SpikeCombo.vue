@@ -21,12 +21,8 @@ const dice = computed(() => (feet.value / 5) * 2)
 <template>
   <div class="panel overflow-hidden">
     <div class="border-b border-gold/10 bg-gradient-to-r from-jade/10 via-transparent to-transparent p-5">
-      <p class="eyebrow">Battlefield control</p>
-      <div class="flex flex-wrap items-baseline justify-between gap-2">
-        <h3 class="heading text-xl">The Spike Growth Grinder</h3>
-        <NuxtLink to="/lucan/spells/spike-growth" class="text-xs text-dim hover:text-gold-light">Spike Growth →</NuxtLink>
-      </div>
-      <p class="mt-1 text-sm text-dim">20-ft radius · 2d4 piercing for every 5 ft a creature moves inside it · concentration, 10 minutes</p>
+      <p class="eyebrow">Planner</p>
+      <h2 class="heading text-xl">The Spike Growth Grinder</h2>
     </div>
 
     <div class="grid gap-5 p-5 md:grid-cols-[1.2fr_1fr]">

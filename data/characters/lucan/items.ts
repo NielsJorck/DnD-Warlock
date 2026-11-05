@@ -13,7 +13,7 @@ export interface Item {
   rarity?: Rarity
   type: string
   attunement?: string
-  role: string
+  role?: string // a short line on what it does for Lucan, when the effect doesn’t already say it
   effect: string
   rules: string[]
   forCharacter?: string
@@ -44,7 +44,7 @@ export interface ItemArt {
   alt: string
   caption: string
   focus?: string // CSS object-position for cropped thumbnails
-  prompt: string // brief for generating a painted version at the same path
+  prompt: string // brief for generating a painted version at the same path (not shown on the site)
 }
 
 export const groupLabels: Record<ItemGroup, string> = {
@@ -103,10 +103,10 @@ export const items: Item[] = [
       'As an action, he touches up to one page of writing and speaks a creature’s name. For 24 hours the writing is invisible to everyone except him and that creature. Either of them can end this by touching the script (no action). Once per long rest.'
     ],
     forCharacter:
-      'Shimmering crystalline and organic geometric shapes, glyphs and Terran script cover most of his upper body and arms: the contract binding him to Zahir. As his powers grow, so does the pact, and over time new glyphs will appear, each one marking a new power. It replaced both the Barrier Tattoo and the Illuminator’s Tattoo with a single item and gives 17 of his 20 AC (with DEX).',
+      'Shimmering crystalline and organic geometric shapes, glyphs and Terran script cover most of his upper body and arms: the contract binding him to Zahir. As his powers grow, so does the pact, and over time new glyphs will appear, each one marking a new power. It gives 17 of his 20 AC (with DEX).',
     glyph: '◈',
     art: {
-      src: '/images/barrier-tattoo.svg',
+      src: '/images/the-golden-pact.svg',
       alt: 'A half-elf’s arms and torso covered in glowing gold runes: a band across the chest, columns down both arms and the sternum, and a circular seal around a gem diagram over the heart.',
       caption: 'The Golden Pact, written in Terran. The runes really spell it out: “A deal made is a deal kept” across the chest, Zahir ibn Kharum and Lucan Beryll down the arms, “Sworn in stone” down the sternum and “Sealed in gold” around the seal.',
       focus: '50% 45%',
@@ -159,11 +159,11 @@ export const items: Item[] = [
       'It channels his magic: a hit deals 1d4 piercing plus 2d4 force and 2d4 bludgeoning as the arcane energy bursts on impact.'
     ],
     forCharacter:
-      'The blade is a Dimension Shard: faceted amethyst crystal carved with spirals, its colour deepening to rose and then a fiery orange at the tip. The black grip is bound in gold Celtic-knot filigree. It replaced the Rod of the Pact Keeper, so it is now a real weapon: +7 to hit (DEX + PB + 1), 5d4 + 3 damage. The bludgeoning damage means every hit can trigger Crusher, and Genie’s Wrath adds +4 once per turn. Spell DC 17 → 18 and spell attack +9 → +10.',
+      'The blade is a Dimension Shard: faceted amethyst crystal carved with spirals, its colour deepening to rose and then a fiery orange at the tip. The black grip is bound in gold Celtic-knot filigree. As a weapon it hits at +7 (DEX + PB + 1) for 5d4 + 3. The bludgeoning damage means every hit can trigger Crusher, and Genie’s Wrath adds +4 once per turn.',
     caveat: 'The spell bonus applies only while it is held, so it takes one hand. Eldritch Blast needs the other one free for its somatic component.',
     glyph: '🗡',
     art: {
-      src: '/images/rod-of-the-pact-keeper.png',
+      src: '/images/pact-keepers-crystal-dagger.png',
       alt: 'An ornate dagger with a black grip bound in gold knotwork filigree. Its blade is faceted amethyst crystal carved with spirals, shading to pink and then fiery orange at the tip.',
       caption: 'The Pact Keeper’s Crystal Dagger: a gold-filigreed hilt holding a Dimension Shard for a blade.',
       focus: '45% 45%',
@@ -179,7 +179,6 @@ export const items: Item[] = [
     type: 'Wondrous item (ioun stone)',
     slot: 'ioun',
     attunement: 'Required',
-    role: 'Defense',
     effect: '+1 AC',
     rules: [
       'Lucan gains a +1 bonus to AC while this dusty rose prism orbits his head.',
@@ -217,7 +216,6 @@ export const items: Item[] = [
     type: 'Wondrous item (luckstone)',
     slot: 'carried',
     attunement: 'Required',
-    role: 'General defense',
     effect: '+1 to ability checks and saving throws',
     rules: ['While this polished agate is on Lucan’s person, he gains a +1 bonus to ability checks and saving throws.'],
     forCharacter: 'Also adds +1 to initiative, since initiative is a DEX check. A polished agate is a fitting keepsake for a jeweler.',
@@ -324,7 +322,7 @@ export const items: Item[] = [
     caveat: 'Anything that targets objects can hit the ring. If it is destroyed while Lucan is inside, he and any guests are ejected.',
     glyph: '💍',
     art: {
-      src: '/images/genie-vessel-ring.png',
+      src: '/images/genie-vessel-ring.jpg',
       alt: 'A gold ring with openwork shoulders set with small amethysts, sapphires and diamonds, holding a long faceted crystal of violet, blue and copper in clawed gold prongs.',
       caption: 'The Genie Vessel: a Dao’s jewel worn on Lucan’s hand, with a whole residence inside the stone.',
       focus: '50% 35%',
@@ -358,7 +356,6 @@ export const items: Item[] = [
     source: 'ERLW',
     rarity: 'Common',
     type: 'Wondrous item',
-    role: 'Instant cleaning',
     effect: 'Cast the cleaning effect of Prestidigitation at will',
     rules: [
       'A 1-ft stone sphere etched with mystic sigils.',
@@ -374,7 +371,6 @@ export const items: Item[] = [
     source: 'WDMM',
     rarity: 'Common',
     type: 'Wondrous item',
-    role: 'Preservation',
     effect: 'Food and other perishables inside don’t age or decay',
     rules: [
       'Food and other perishable items don’t age or decay while inside the chest.',
@@ -409,7 +405,6 @@ export const items: Item[] = [
     source: 'SCC',
     rarity: 'Common',
     type: 'Wondrous item',
-    role: 'Hospitality',
     effect: 'A bottle that keeps coffee at the temperature it was poured and refills itself',
     rules: ['Produces coffee and keeps it at the right temperature. A small luxury for long nights of study.'],
     room: 'kitchen-and-pantry',
@@ -442,7 +437,6 @@ export const items: Item[] = [
     source: 'XGE',
     rarity: 'Common',
     type: 'Wondrous item',
-    role: 'Seasoning',
     charges: '10 charges, regains 1d6 + 4 at dawn',
     effect: 'Pull out a pinch of any nonmagical seasoning',
     rules: [
@@ -458,7 +452,6 @@ export const items: Item[] = [
     source: 'DMG',
     rarity: 'Uncommon',
     type: 'Wondrous item',
-    role: 'Liquid supply',
     effect: 'Produce one chosen liquid a day, up to a set quantity',
     rules: [
       'Speak a command word to choose a liquid. Daily limits include fresh water (8 gal), salt water (12 gal), beer (4 gal), honey (1 gal), wine (1 gal), vinegar (2 gal), mayonnaise (2 gal) and oil (1 qt).',
@@ -475,7 +468,6 @@ export const items: Item[] = [
     source: 'XGE',
     rarity: 'Common',
     type: 'Wondrous item',
-    role: 'Timekeeping',
     effect: 'Tells whether it is morning, afternoon, evening or night outside',
     rules: ['Holding the orb, Lucan can use an action to learn the time of day outside — useful in a windowless extradimensional home.'],
     room: 'foyer-and-entry-hall',
@@ -488,7 +480,6 @@ export const items: Item[] = [
     source: 'DMG',
     rarity: 'Uncommon',
     type: 'Wondrous item',
-    role: 'Translation',
     effect: 'Cast Comprehend Languages at will',
     rules: ['While wearing the helm, Lucan can use an action to cast Comprehend Languages from it at will.'],
     forCharacter: 'Covers most of what the Comprehend Languages ritual would do, so that ritual is a lower priority while the helm is in the Library.',
@@ -502,7 +493,6 @@ export const items: Item[] = [
     source: 'DMG',
     rarity: 'Uncommon',
     type: 'Wondrous item (lenses)',
-    role: 'Close inspection',
     effect: 'Advantage on sight-based Investigation within 1 ft',
     rules: [
       'These crystal lenses fit over the eyes and greatly improve vision within 1 ft.',
@@ -598,7 +588,6 @@ export const items: Item[] = [
     type: 'Wondrous item (cloak)',
     slot: 'cloak',
     attunement: 'Required',
-    role: 'Defense',
     effect: 'Attacks against Lucan have disadvantage',
     rules: [
       'Creatures have disadvantage on attack rolls against him.',
@@ -616,7 +605,6 @@ export const items: Item[] = [
     type: 'Ring',
     slot: 'ring',
     attunement: 'Required',
-    role: 'Defense',
     effect: '+1 AC and +1 to all saving throws',
     rules: ['Grants a +1 bonus to AC and saving throws while worn.'],
     forCharacter: 'AC 21 and CON saves at +9 for concentration. Two ring fingers are still free.',
@@ -631,7 +619,6 @@ export const items: Item[] = [
     type: 'Wondrous item (cloak)',
     slot: 'cloak',
     attunement: 'Required',
-    role: 'Defense',
     effect: '+1 AC and +1 to all saving throws',
     rules: ['Grants a +1 bonus to AC and saving throws while worn.'],
     forCharacter: 'A straightforward upgrade: AC 21 and CON saves at +9 for concentration. It stacks with a Ring of Protection.',
@@ -750,7 +737,6 @@ export const items: Item[] = [
     type: 'Wondrous item',
     slot: 'carried',
     attunement: 'Required',
-    role: 'Truesight',
     charges: '3 charges, regains 1d3 at dawn',
     effect: 'Truesight 120 ft for 10 minutes while peering through the gem',
     rules: ['Use an action and expend 1 charge. For 10 minutes, Lucan has truesight out to 120 ft when looking through the gem.'],

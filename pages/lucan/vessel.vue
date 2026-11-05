@@ -40,12 +40,7 @@ function takeVesselRest() {
           <div class="panel-inset px-4 py-3"><div class="eyebrow text-dim">Vessel AC</div><div class="stat-num text-3xl">{{ derived.vesselAc }}</div><div class="text-[11px] text-faint">Equals spell save DC</div></div>
           <div class="panel-inset px-4 py-3"><div class="eyebrow text-dim">Vessel HP</div><div class="stat-num text-3xl">{{ derived.vesselHp }}</div><div class="text-[11px] text-faint">Level + PB</div></div>
           <div class="panel-inset col-span-2 px-4 py-3"><div class="eyebrow text-dim">Immune</div><div class="text-sm text-parchment">Poison and psychic damage</div></div>
-          <div class="panel-inset border-topaz/30 px-4 py-3">
-            <div class="eyebrow text-dim">Bottled Respite</div>
-            <div class="stat-num mt-1 text-xl">At will</div>
-            <div class="text-[11px] text-topaz/90">Homebrew: enter and leave freely</div>
-          </div>
-          <div class="panel-inset px-4 py-3">
+          <div class="panel-inset col-span-2 px-4 py-3">
             <div class="eyebrow text-dim">10 min inside</div>
             <div class="mt-1 flex items-center justify-between gap-2">
               <span class="text-sm text-parchment">Short rest</span>
@@ -85,7 +80,7 @@ function takeVesselRest() {
     <!-- Residence features -->
     <section class="mt-12">
       <SectionHeading eyebrow="Campaign Vessel" title="The Residence" />
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 3xl:grid-cols-6">
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-6">
         <div
           v-for="f in vessel.features"
           :key="f.name"
@@ -104,7 +99,7 @@ function takeVesselRest() {
     <!-- Rooms -->
     <section class="mt-12">
       <SectionHeading id="rooms" eyebrow="Floor plan" title="Rooms of the Vessel" />
-      <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">{{ rooms.length }} rooms holding {{ vesselItems.length }} pieces of household magic. These don’t use attunement slots. Lucan can take them out as he would from a Bag of Holding.</p>
+      <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">{{ rooms.length }} rooms holding {{ vesselItems.length }} pieces of household magic. These don’t use attunement slots.</p>
       <div class="grid items-start gap-4 md:grid-cols-2 2xl:grid-cols-3">
         <article
           v-for="(r, n) in rooms"

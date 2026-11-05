@@ -19,7 +19,6 @@ export interface CharacterRules {
   rulings: Ruling[]
   dmQuestions: { id: string; question: string }[]
   dmPage: string // where the DM answers the questions
-  decisions: { immediate: string[]; items: string[]; closed: string[] }
 }
 
 export const campaign = {
@@ -90,9 +89,5 @@ export const sourcePolicy = {
     'Content that only appears on the non-2014 5e.tools site.',
     'Unearthed Arcana, third-party material and unapproved homebrew.',
     'The 2024 “Sphinx of Wonder” familiar.'
-  ],
-  labels: [
-    { label: 'Owned', text: 'On the Foundry sheet. The character sheet’s numbers use these.' },
-    { label: 'Wishlist', text: 'Items a character would like to find or commission later. For the DM to rule on.' }
   ]
 }

@@ -603,7 +603,7 @@ export const spells: Spell[] = [
     source: 'PHB',
     access: 'Dao Patron',
     status: 'known',
-    role: 'Area denial — the combo engine',
+    role: 'Area denial that forced movement turns into damage',
     damage: '2d4 piercing per 5 ft',
     summary:
       'Ground in a 20-ft radius sprouts hard spikes. The area is difficult terrain, and a creature moving into or within it takes 2d4 piercing damage for every 5 ft it travels. The spikes are camouflaged — a creature that can’t see the area at casting must succeed on a Perception check against the spell DC to notice them.',
@@ -685,7 +685,7 @@ export const spells: Spell[] = [
     source: 'PHB',
     access: 'Genie Patron',
     status: 'future',
-    role: 'Future patron spell',
+    role: 'Any spell of 8th level or lower, or more',
     summary:
       'The mightiest spell a mortal can cast. Safely duplicate any spell of 8th level or lower, or attempt a greater effect at the DM’s discretion — at the risk of stress and of never casting Wish again.',
     notes: 'Unavailable until a 9th-level Mystic Arcanum at Warlock 17. For a genie pact the wording matters even more than usual.'

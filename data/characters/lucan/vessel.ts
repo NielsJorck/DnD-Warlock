@@ -33,17 +33,8 @@ export const vessel = {
     },
     {
       name: 'Bag of Holding function',
-      text: 'The Vessel can store and retrieve objects like a Bag of Holding: Lucan can take an item out as he would from the bag and use it as normal. Assumed accepted until the DM confirms it.',
+      text: 'Lucan takes items out of the Vessel as he would from a Bag of Holding. They work as normal outside and stay part of its inventory, so he needs no separate bag. Assumed accepted until the DM confirms it.',
       homebrew: true
-    },
-    {
-      name: 'Enter at will',
-      text: 'Bottled Respite has no long-rest limit. Lucan can step in and out of the Vessel as often as he likes.',
-      homebrew: true
-    },
-    {
-      name: '10-minute short rest',
-      text: 'From Sanctuary Vessel: ten minutes inside counts as a short rest, and Hit Dice spent there restore +4 (PB) HP. Entering is at will, but this quick rest works once per long rest.'
     },
     {
       name: 'Room adaptation',
@@ -52,8 +43,7 @@ export const vessel = {
   ],
   rules: [
     'Furnishings and created provisions are meant to be used inside the Vessel.',
-    'Items can be taken out of the Vessel as from a Bag of Holding and work as normal outside. They stay part of its inventory.',
-    'A separate Bag of Holding isn’t needed. Any other extradimensional item needs a DM ruling on how it interacts with the Vessel.'
+    'Any other extradimensional item needs a DM ruling on how it interacts with the Vessel.'
   ]
 }
 
@@ -123,7 +113,7 @@ export const rooms: VesselRoom[] = [
     glyph: '▤',
     summary:
       'A secure, organized area for supplies, preserved food, tools, clothing, documents and other things that belong inside the Vessel.',
-    details: ['Labeled shelves, locked cabinets and deep mineral alcoves. Things stored with the Bag of Holding function end up here.']
+    details: ['Labeled shelves, locked cabinets and deep mineral alcoves.']
   },
   {
     slug: 'conservatory-and-quiet-garden',

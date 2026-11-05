@@ -123,6 +123,29 @@ const unusedPicks = skillPicks.reduce((sum, p) => sum + Math.max(0, p.picks - p.
                   </p>
                 </div>
 
+                <div v-if="l.level === 1" id="skill-picks" class="mt-3 scroll-mt-24">
+                  <p class="eyebrow mb-1 text-dim">Skill picks · {{ totalPicks }}<template v-if="unusedPicks">, {{ unusedPicks }} unused</template></p>
+                  <table class="w-full max-w-xl text-left text-[12.5px]">
+                    <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.1em] text-faint">
+                      <tr>
+                        <th class="py-1 pr-2 font-semibold">Source</th>
+                        <th class="px-2 py-1 text-center font-semibold">Picks</th>
+                        <th class="py-1 pl-2 font-semibold">Skill</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-obsidian-600/60">
+                      <tr v-for="p in skillPicks" :key="p.source" class="align-top">
+                        <td class="py-1 pr-2">
+                          <span class="text-parchment">{{ p.source }}</span>
+                          <span class="block text-[11px] leading-snug text-faint">{{ p.rule }}</span>
+                        </td>
+                        <td class="px-2 py-1 text-center tabular-nums text-parchment">{{ p.picks }}</td>
+                        <td class="py-1 pl-2" :class="p.skills.length ? 'text-gold-light' : 'italic text-faint'">{{ p.skills.length ? p.skills.join(', ') : 'Not used' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
                 <p v-if="l.abilities" class="mt-2 text-[12.5px] text-dim">
                   <span class="text-faint">Abilities</span> <span class="tabular-nums text-parchment">{{ l.abilities }}</span>
                 </p>
@@ -222,30 +245,6 @@ const unusedPicks = skillPicks.reduce((sum, p) => sum + Math.max(0, p.picks - p.
               <p class="mt-0.5 text-[12.5px] leading-relaxed text-dim">{{ u.text }}</p>
             </li>
           </ul>
-        </div>
-
-        <div id="skill-picks" class="panel scroll-mt-24 p-5">
-          <p class="eyebrow">Level 1 · {{ totalPicks }} picks<template v-if="unusedPicks">, {{ unusedPicks }} unused</template></p>
-          <h2 class="heading mb-3 text-lg">Skill Picks</h2>
-          <table class="w-full text-left text-[12.5px]">
-            <thead class="border-b border-obsidian-600 text-[10px] uppercase tracking-[0.12em] text-faint">
-              <tr>
-                <th class="py-1.5 pr-2 font-semibold">Source</th>
-                <th class="px-2 py-1.5 text-center font-semibold">Picks</th>
-                <th class="py-1.5 pl-2 font-semibold">Skill</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-obsidian-600/60">
-              <tr v-for="p in skillPicks" :key="p.source" class="align-top">
-                <td class="py-1.5 pr-2">
-                  <span class="font-semibold text-parchment">{{ p.source }}</span>
-                  <span class="block text-[11px] leading-snug text-faint">{{ p.rule }}</span>
-                </td>
-                <td class="px-2 py-1.5 text-center tabular-nums text-parchment">{{ p.picks }}</td>
-                <td class="py-1.5 pl-2" :class="p.skills.length ? 'text-gold-light' : 'italic text-faint'">{{ p.skills.length ? p.skills.join(', ') : 'Not used' }}</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </aside>
     </div>

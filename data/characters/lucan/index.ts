@@ -2,7 +2,7 @@
 
 import type { CharacterEntry } from '..'
 import { character } from './character'
-import { appearance, dmQuestions, houseRules, openQuestions, rulings } from './lore'
+import { appearance, dmQuestions, houseRules, rulings } from './lore'
 
 export const lucan: CharacterEntry = {
   slug: 'lucan',
@@ -23,5 +23,5 @@ export const lucan: CharacterEntry = {
     { to: '/lucan/levels', label: 'Levels' },
     { to: '/lucan/dm', label: 'DM' }
   ],
-  rules: { houseRules, rulings, dmQuestions, dmPage: '/lucan/dm', decisions: openQuestions }
+  rules: { houseRules, rulings, dmQuestions, dmPage: '/lucan/dm' }
 }

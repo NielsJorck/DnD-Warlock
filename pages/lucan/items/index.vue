@@ -53,7 +53,7 @@ const jump = [
     <section v-if="owned.length" class="mt-10">
       <SectionHeading id="owned" eyebrow="On the character sheet" title="Owned Items" />
       <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">
-        Everything here is on the Foundry sheet, and the character sheet’s numbers use it. The Golden Pact, the Bracers of the Dao Pact and the Crystal Dagger are campaign items tied to Zahir. Attunement allows 10.
+        Everything here is on the Foundry sheet, and the character sheet’s numbers use it.
       </p>
       <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px] 2xl:grid-cols-[minmax(0,1fr)_320px]">
         <div class="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">

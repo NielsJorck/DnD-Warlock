@@ -5,15 +5,6 @@ useHead({ title: 'Form of the Lesser Dao — Lucan Beryll' })
 
 const plain = (s: string) => s.split(' (')[0] // "Cold (Sash of Summer)" → "Cold"
 
-const quick = [
-  { label: 'Armor Class', value: String(dao.ac), sub: 'Same as Lucan' },
-  { label: 'Form HP', value: String(dao.hp), sub: 'In front of his own' },
-  { label: 'Attacks', value: '2 × +9', sub: 'Maul, burst or fist' },
-  { label: 'Save DC', value: String(dao.saveDc), sub: 'Strength, or prone' },
-  { label: 'Speed', value: '30', sub: 'Walk, burrow, fly' },
-  { label: 'Darkvision', value: '120', sub: 'ft' }
-]
-
 // Lucan next to the form; `better` marks where the form comes out ahead
 const compare = [
   { label: 'Size', lucan: character.size, form: dao.size },
@@ -44,32 +35,23 @@ const compare = [
     <header class="panel relative overflow-hidden">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_85%_10%,rgba(227,166,64,0.14),transparent_60%)]" aria-hidden="true" />
       <div class="pointer-events-none absolute -right-6 -top-16 font-display text-[240px] leading-none text-topaz/[0.07]" aria-hidden="true">⟁</div>
-      <div class="relative grid gap-8 p-6 sm:p-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,34rem)] xl:items-center">
-        <div>
-          <p class="eyebrow text-topaz">Bracers of the Dao Pact · {{ dao.uses }} / long rest</p>
-          <h1 class="mt-3 font-display text-4xl font-bold leading-[1.05] tracking-wide sm:text-6xl"><span class="text-gilded">Form of the Lesser Dao</span></h1>
-          <p class="mt-3 font-serif text-xl italic text-dim">{{ dao.type }}</p>
-          <div class="mt-5 flex flex-wrap gap-2">
-            <span class="chip border-topaz/40 text-topaz">Homebrew</span>
-            <span class="chip">{{ dao.activation }} to assume</span>
-            <span class="chip">Lasts {{ dao.turns }} turns</span>
-            <span class="chip">No spellcasting</span>
-          </div>
-          <p class="lore mt-6 max-w-2xl">
-            Twice per long rest the Bracers turn Lucan into a Large earth genie for ten turns: a second body with its own hit points, two heavy attacks a turn and a way through solid stone.
-          </p>
-          <div class="mt-6 flex flex-wrap gap-2">
-            <NuxtLink to="/lucan/session#items" class="btn btn-gold px-4 py-2 text-[13px]">Assume it in Session →</NuxtLink>
-            <NuxtLink to="/lucan/items/bracers-of-the-dao-pact" class="btn px-4 py-2 text-[13px]">Bracers of the Dao Pact</NuxtLink>
-          </div>
+      <div class="relative p-6 sm:p-10">
+        <p class="eyebrow text-topaz">Bracers of the Dao Pact · {{ dao.uses }} / long rest</p>
+        <h1 class="mt-3 font-display text-4xl font-bold leading-[1.05] tracking-wide sm:text-6xl"><span class="text-gilded">Form of the Lesser Dao</span></h1>
+        <p class="mt-3 font-serif text-xl italic text-dim">{{ dao.type }}</p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="chip border-topaz/40 text-topaz">Homebrew</span>
+          <span class="chip">{{ dao.activation }} to assume</span>
+          <span class="chip">Lasts {{ dao.turns }} turns</span>
+          <span class="chip">No spellcasting</span>
         </div>
-        <dl class="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-          <div v-for="q in quick" :key="q.label" class="rounded-xl border border-obsidian-600 bg-obsidian-950/70 px-4 py-3">
-            <dt class="eyebrow truncate text-dim">{{ q.label }}</dt>
-            <dd class="stat-num text-3xl">{{ q.value }}</dd>
-            <dd class="truncate text-[11px] text-faint">{{ q.sub }}</dd>
-          </div>
-        </dl>
+        <p class="lore mt-6 max-w-2xl">
+          The Bracers turn Lucan into a Large earth genie: a second body with its own hit points, two heavy attacks a turn and a way through solid stone.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <NuxtLink to="/lucan/session#items" class="btn btn-gold px-4 py-2 text-[13px]">Assume it in Session →</NuxtLink>
+          <NuxtLink to="/lucan/items/bracers-of-the-dao-pact" class="btn px-4 py-2 text-[13px]">Bracers of the Dao Pact</NuxtLink>
+        </div>
       </div>
     </header>
 
@@ -103,7 +85,7 @@ const compare = [
         <div class="p-5 pb-3">
           <p class="eyebrow">Side by side</p>
           <h2 class="heading text-xl">Lucan and the Form</h2>
-          <p class="mt-1 text-[11.5px] text-faint">Saves include the Stone of Good Luck’s +1. Gold marks where the form comes out ahead.</p>
+          <p class="mt-1 text-[11.5px] text-faint">Gold marks where the form comes out ahead.</p>
         </div>
         <table class="w-full text-left text-[12.5px]">
           <thead class="border-y border-obsidian-600 bg-obsidian-950/60 text-[10px] uppercase tracking-[0.14em] text-faint">
