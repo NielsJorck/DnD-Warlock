@@ -54,7 +54,7 @@ Lucan’s pages:
 | `/lucan/items/:slug` | Full item page with rules, caveats and flavor |
 | `/lucan/vessel` | The Genie Vessel: patron features, residence features, rooms with their magic items, house rules |
 | `/lucan/lore` | Lucan’s story, traits, appearance, Zahir ibn Kharum and story hooks |
-| `/lucan/levels` | Level history: each level’s HP, slots, features and choices, with cantrips, spells and invocations counted against the Warlock table, the starting array, every skill pick, and the dated changes to the build. The `Lv` tags on the sheet’s features link here |
+| `/lucan/levels` | Level history: each level’s HP, slots, features and choices, with cantrips, spells and invocations counted against the Warlock table, the starting array and every skill pick. The `Lv` tags on the sheet’s features link here |
 | `/lucan/dm` | For the DM: one table of wishlist items plus the Vessel stores, with allow / discuss / deny verdicts, a version picker for items that come in several versions, notes, the open questions with answer fields, and a button that copies everything as text |
 
 Lucan’s pages used to sit at the root (`/session`, `/spells/hex`…). Those URLs redirect to the pages above, keeping any `?tab=` or `#room`, and items renamed in that time go to their new pages (see `middleware/legacy-redirects.global.ts`).
@@ -77,7 +77,7 @@ For Lucan, in `data/characters/lucan/`:
 - `items.ts`: owned items (`group: 'owned'`, mirroring the Foundry sheet), the wishlist (`variants` lists official versions, `slot` says where it is worn and `slots` sets the limits), mundane gear and Vessel contents (with their room)
 - `vessel.ts`: Vessel features and rooms
 - `lore.ts`: story, appearance, patron, his own house rules and rulings, and the questions for the DM (`dmQuestions`)
-- `levels.ts`: the level history. Levels 1–10 were built at once for the campaign start, so each choice is `fixed` (the rules or notes set its level) or `fitted` (shown at the first level the rules allow). When Lucan gains a level, change its entry from `upcoming` to `played`, add the `date` and the choices (a swapped spell gets `replaces`), add the next upcoming level, and update `character.ts` to match
+- `levels.ts`: the level history. Levels 1–10 were built at once for the campaign start, so each choice sits at the first level the rules allow. When Lucan gains a level, change its entry from `upcoming` to `played`, add the `date` and the choices (a swapped spell gets `replaces`), add the next upcoming level, and update `character.ts` to match
 
 Lucan’s derived numbers (modifiers, saves, spell DC, attack bonus, passives) are calculated in `composables/useCharacter.ts`, so changing an ability score or item bonus updates all his pages.
 

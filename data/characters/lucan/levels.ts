@@ -1,11 +1,9 @@
 // Lucan's build, level by level. Levels 1–10 were built in one go for the campaign
-// start, so only some choices have a level of their own: 'fixed' when the rules or
-// the old notes set it, 'fitted' when it's shown at the first level the rules allow.
+// start, so each choice sits at the first level the rules allow it.
 // Record each new level here as it's gained in play, with the date and the choices.
 
 import type { AbilityKey } from './character'
 
-export type ChoiceBasis = 'fixed' | 'fitted'
 export type ChoiceKind =
   | 'Race'
   | 'Background'
@@ -21,7 +19,6 @@ export type ChoiceKind =
 export interface LevelChoice {
   kind: ChoiceKind
   pick: string
-  basis: ChoiceBasis
   replaces?: string // a swap: the old pick it replaces, so the counts stay the same
   gift?: boolean // given by the DM on top of the normal picks
   to?: string
@@ -75,34 +72,31 @@ export const levels: LevelEntry[] = [
       { name: 'Darkvision 30 ft', note: 'Half-Elf, campaign homebrew' }
     ],
     choices: [
-      { kind: 'Race', pick: 'Half-Elf', basis: 'fixed', note: '+2 CHA, +1 DEX, +1 CON' },
-      { kind: 'Background', pick: 'Guild Artisan', basis: 'fixed', note: 'Jeweler, gemcutter, appraiser' },
-      { kind: 'Patron', pick: 'The Genie (Dao): Zahir ibn Kharum', basis: 'fixed', to: '/lucan/lore' },
-      { kind: 'Feat', pick: 'Spell Savant', basis: 'fixed', note: 'The table’s extra level-1 feat. +1 CHA to 20' },
+      { kind: 'Race', pick: 'Half-Elf', note: '+2 CHA, +1 DEX, +1 CON' },
+      { kind: 'Background', pick: 'Guild Artisan', note: 'Jeweler, gemcutter, appraiser' },
+      { kind: 'Patron', pick: 'The Genie (Dao): Zahir ibn Kharum', to: '/lucan/lore' },
+      { kind: 'Feat', pick: 'Spell Savant', note: 'The table’s extra level-1 feat. +1 CHA to 20' },
       {
         kind: 'Feat',
         pick: 'Prodigy',
-        basis: 'fixed',
         gift: true,
         note: 'Given by the DM on top of the table’s extra feat. Xanathar’s version: Persuasion expertise, Calligrapher’s supplies, Draconic. Its skill pick is unused'
       },
       {
         kind: 'Proficiencies',
         pick: 'Arcana, Deception, History, Insight, Investigation, Persuasion',
-        basis: 'fixed',
         note: 'Skills. Where each comes from is under Skill picks above'
       },
-      { kind: 'Proficiencies', pick: 'Jeweler’s tools, Calligrapher’s supplies', basis: 'fixed', note: 'Tools: Guild Artisan 1, Prodigy 1' },
+      { kind: 'Proficiencies', pick: 'Jeweler’s tools, Calligrapher’s supplies', note: 'Tools: Guild Artisan 1, Prodigy 1' },
       {
         kind: 'Proficiencies',
         pick: 'Common, Elvish, Terran, Dwarvish, Undercommon, Draconic',
-        basis: 'fixed',
         note: 'Languages: Half-Elf 3, Guild Artisan 1, INT bonus 1, Prodigy 1'
       },
-      { kind: 'Cantrip', pick: 'Eldritch Blast', basis: 'fitted', to: spell('eldritch-blast'), note: 'Needed for the level-2 invocations' },
-      { kind: 'Cantrip', pick: 'Mind Sliver', basis: 'fitted', to: spell('mind-sliver') },
-      { kind: 'Spell', pick: 'Armor of Agathys', basis: 'fitted', to: spell('armor-of-agathys') },
-      { kind: 'Spell', pick: 'Hex', basis: 'fitted', to: spell('hex') }
+      { kind: 'Cantrip', pick: 'Eldritch Blast', to: spell('eldritch-blast'), note: 'Needed for the level-2 invocations' },
+      { kind: 'Cantrip', pick: 'Mind Sliver', to: spell('mind-sliver') },
+      { kind: 'Spell', pick: 'Armor of Agathys', to: spell('armor-of-agathys') },
+      { kind: 'Spell', pick: 'Hex', to: spell('hex') }
     ]
   },
   {
@@ -113,8 +107,8 @@ export const levels: LevelEntry[] = [
     table: { cantrips: 2, spellsKnown: 3, slots: 2, slotLevel: 1, invocations: 2 },
     gains: [{ name: 'Eldritch Invocations' }],
     choices: [
-      { kind: 'Invocation', pick: 'Agonizing Blast', basis: 'fitted' },
-      { kind: 'Invocation', pick: 'Repelling Blast', basis: 'fitted' }
+      { kind: 'Invocation', pick: 'Agonizing Blast' },
+      { kind: 'Invocation', pick: 'Repelling Blast' }
     ]
   },
   {
@@ -131,10 +125,10 @@ export const levels: LevelEntry[] = [
       }
     ],
     choices: [
-      { kind: 'Pact boon', pick: 'Pact of the Tome', basis: 'fixed' },
-      { kind: 'Tome cantrips', pick: 'Light, Guidance, Message', basis: 'fixed', note: 'From any class list' },
-      { kind: 'Spell', pick: 'Hold Person', basis: 'fitted', to: spell('hold-person') },
-      { kind: 'Spell', pick: 'Mind Spike', basis: 'fitted', to: spell('mind-spike') }
+      { kind: 'Pact boon', pick: 'Pact of the Tome' },
+      { kind: 'Tome cantrips', pick: 'Light, Guidance, Message', note: 'From any class list' },
+      { kind: 'Spell', pick: 'Hold Person', to: spell('hold-person') },
+      { kind: 'Spell', pick: 'Mind Spike', to: spell('mind-spike') }
     ]
   },
   {
@@ -146,8 +140,8 @@ export const levels: LevelEntry[] = [
     abilities: 'CON 14 → 15',
     gains: [{ name: 'Ability Score Improvement' }],
     choices: [
-      { kind: 'Feat', pick: 'Crusher', basis: 'fixed', note: '+1 CON' },
-      { kind: 'Cantrip', pick: 'Create Bonfire', basis: 'fitted', to: spell('create-bonfire') }
+      { kind: 'Feat', pick: 'Crusher', note: '+1 CON' },
+      { kind: 'Cantrip', pick: 'Create Bonfire', to: spell('create-bonfire') }
     ]
   },
   {
@@ -161,9 +155,9 @@ export const levels: LevelEntry[] = [
       { name: '3rd-level patron spells', note: 'Create Food and Water, Meld into Stone' }
     ],
     choices: [
-      { kind: 'Invocation', pick: 'Grasp of Hadar', basis: 'fitted' },
-      { kind: 'Spell', pick: 'Counterspell', basis: 'fitted', to: spell('counterspell') },
-      { kind: 'Spell', pick: 'Dispel Magic', basis: 'fitted', to: spell('dispel-magic') }
+      { kind: 'Invocation', pick: 'Grasp of Hadar' },
+      { kind: 'Spell', pick: 'Counterspell', to: spell('counterspell') },
+      { kind: 'Spell', pick: 'Dispel Magic', to: spell('dispel-magic') }
     ]
   },
   {
@@ -183,8 +177,8 @@ export const levels: LevelEntry[] = [
     table: { cantrips: 3, spellsKnown: 8, slots: 2, slotLevel: 4, invocations: 4 },
     gains: [{ name: '4th-level patron spells', note: 'Phantasmal Killer, Stone Shape' }],
     choices: [
-      { kind: 'Invocation', pick: 'Book of Ancient Secrets', basis: 'fitted', to: '/lucan/spells?tab=book', note: 'Needs the Tome' },
-      { kind: 'Spell', pick: 'Shadow of Moil', basis: 'fitted', to: spell('shadow-of-moil') }
+      { kind: 'Invocation', pick: 'Book of Ancient Secrets', to: '/lucan/spells?tab=book', note: 'Needs the Tome' },
+      { kind: 'Spell', pick: 'Shadow of Moil', to: spell('shadow-of-moil') }
     ]
   },
   {
@@ -195,7 +189,7 @@ export const levels: LevelEntry[] = [
     table: { cantrips: 3, spellsKnown: 9, slots: 2, slotLevel: 4, invocations: 4 },
     abilities: 'CON 15 → 16',
     gains: [{ name: 'Ability Score Improvement' }],
-    choices: [{ kind: 'Feat', pick: 'Resilient (Constitution)', basis: 'fixed', note: '+1 CON and CON save proficiency' }]
+    choices: [{ kind: 'Feat', pick: 'Resilient (Constitution)', note: '+1 CON and CON save proficiency' }]
   },
   {
     level: 9,
@@ -205,10 +199,10 @@ export const levels: LevelEntry[] = [
     table: { cantrips: 3, spellsKnown: 10, slots: 2, slotLevel: 5, invocations: 5 },
     gains: [{ name: '5th-level patron spells', note: 'Creation, Wall of Stone' }],
     choices: [
-      { kind: 'Invocation', pick: 'Gift of the Protectors', basis: 'fitted', note: 'Needs Warlock 9 and the Tome' },
-      { kind: 'Spell', pick: 'Far Step', basis: 'fitted', to: spell('far-step') },
-      { kind: 'Spell', pick: 'Hold Monster', basis: 'fitted', to: spell('hold-monster') },
-      { kind: 'Spell', pick: 'Synaptic Static', basis: 'fitted', to: spell('synaptic-static') }
+      { kind: 'Invocation', pick: 'Gift of the Protectors', note: 'Needs Warlock 9 and the Tome' },
+      { kind: 'Spell', pick: 'Far Step', to: spell('far-step') },
+      { kind: 'Spell', pick: 'Hold Monster', to: spell('hold-monster') },
+      { kind: 'Spell', pick: 'Synaptic Static', to: spell('synaptic-static') }
     ]
   },
   {
@@ -218,7 +212,7 @@ export const levels: LevelEntry[] = [
     proficiencyBonus: 4,
     table: { cantrips: 4, spellsKnown: 10, slots: 2, slotLevel: 5, invocations: 5 },
     gains: [{ name: 'Sanctuary Vessel', to: '/lucan/vessel' }],
-    choices: [{ kind: 'Cantrip', pick: 'Mage Hand', basis: 'fitted', to: spell('mage-hand') }]
+    choices: [{ kind: 'Cantrip', pick: 'Mage Hand', to: spell('mage-hand') }]
   },
   {
     level: 11,
@@ -250,49 +244,6 @@ export const levels: LevelEntry[] = [
   }
 ]
 
-// Changes made to the level-10 build after it was first written down. The dates are
-// when the change reached this site (or the Codex notes before it).
-export interface Revision {
-  date: string
-  title: string
-  changes: string[]
-}
-
-export const revisions: Revision[] = [
-  {
-    date: 'Before Oct 2026',
-    title: 'Codex notes',
-    changes: ['Mind Sliver replaced Gravity Spike.', 'Far Step taken instead of Dimension Door.']
-  },
-  {
-    date: '2026-10-13',
-    title: 'Character changes',
-    changes: ['Spell Savant (Zman’s 5e Tweaks) replaced Telekinetic as the level-1 bonus feat.', 'Mage Hand replaced Lightning Lure.']
-  },
-  {
-    date: '2026-10-19',
-    title: 'Synced with the Foundry campaign sheet',
-    changes: [
-      'Abilities set to the Foundry sheet: DEX 12 → 14, CON 18 → 16, INT 10 → 12. Max HP 93 → 83.',
-      'Prodigy added: Persuasion expertise, Calligrapher’s supplies and Draconic.',
-      'With INT 12, Undercommon and a third class skill came from the INT rule.',
-      'Hex and Mind Spike added, Banishment dropped. Phantasmal Killer is not treated as known.',
-      'The DM reverted the Agonizing Blast house rule: +CHA on every beam that hits.',
-      'The Golden Pact, Bracers of the Dao Pact and Pact Keeper’s Crystal Dagger replaced the Barrier and Illuminator’s Tattoos, the requested Illusionist’s Bracers and the Rod of the Pact Keeper.'
-    ]
-  },
-  {
-    date: '2026-11-04',
-    title: 'Spells and rituals',
-    changes: [
-      'Scrying dropped, so the chosen spells fit the ten a Warlock 10 knows.',
-      'Drawmij’s Instant Summons and Forbiddance marked as placeholders for level 11, not in the Book of Shadows yet.',
-      'The DM allowed the rituals in the Book of Shadows.',
-      'Phantasmal Killer added to the known spells: the Tome rule makes every Genie and Dao spell known.'
-    ]
-  }
-]
-
 // Every skill proficiency Lucan gets at level 1 and the skill it went to
 export interface SkillPick {
   source: string
@@ -308,6 +259,3 @@ export const skillPicks: SkillPick[] = [
   { source: 'INT 12', rule: 'One from the Warlock list, or a tool', picks: 1, skills: ['History'] },
   { source: 'Prodigy', rule: 'Any one skill', picks: 1, skills: [] }
 ]
-
-// What the record doesn't settle, in case the DM asks
-export const unplaced: { title: string; text: string }[] = []
