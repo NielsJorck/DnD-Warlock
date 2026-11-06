@@ -2,7 +2,7 @@
 
 An interactive character site for D&D 5e. Each character has their own pages under `/<slug>`, and the rules are shared. The group keeps two separate rulesets, one for the 2014 books (plus Tasha’s) and one for the 2024 books, and each character plays by one of them. The first character is **Lucan Beryll**, a level 10 Half-Elf Dao Genie Warlock (Pact of the Tome) on the 2014 rules, at `/lucan`. The second, at `/tempest`, is a concept: **The Storm-Hammer** (a working title until he has a name), a level 10 Hill Dwarf Tempest Cleric of Kord on the 2014 rules and a possible replacement for Lucan.
 
-The 2024 ruleset is a new campaign, the Sword Mountains expedition: level 3, mostly dungeon crawling. Two concepts for it, both working titles until they have names: **The Whisper-Knife**, a Wood Elf Soulknife Rogue at `/soulknife`, and **The Lightless Hunter**, a Human Gloom Stalker Ranger at `/gloom-stalker`.
+The 2024 ruleset is a new campaign, the Sword Mountains expedition: level 3, mostly dungeon crawling. Three concepts for it, all working titles until they have names: **The Whisper-Knife**, a Wood Elf Soulknife Rogue at `/soulknife`; **The Lightless Hunter**, a Human Gloom Stalker Ranger at `/gloom-stalker`; and **The Undertow**, a Bugbear Warrior of the Elements Monk at `/elemental-monk`, whose species comes from Monsters of the Multiverse and needs the DM’s yes.
 
 Built with Nuxt 3, Vue 3 and Tailwind CSS.
 
@@ -73,17 +73,18 @@ The Storm-Hammer’s pages, the same set as Lucan’s (a concept: nothing played
 
 His questions for the DM show on `/rules` under his name until they are answered.
 
-The two 2024 concepts get the same set at level 3, the campaign’s start (nothing played yet, each one’s uncommon item pitched to the DM, no paintings yet: an emblem stands in for the portrait). The Whisper-Knife is a rogue with no spellbook, so **Powers** takes the Spells page’s place:
+The three 2024 concepts get the same set at level 3, the campaign’s start (nothing played yet, each one’s uncommon item pitched to the DM, no paintings yet: an emblem stands in for the portrait). The Whisper-Knife is a rogue and the Undertow a monk, neither with a spellbook, so **Powers** and **Techniques** take the Spells page’s place:
 
 | Route | What’s there |
 | --- | --- |
-| `/soulknife`, `/gloom-stalker` | Character sheet at level 3: vitals and abilities, attacks, defenses, skills and senses, languages and tools, attuned items (the 2024 limit of 3), feats and features |
-| `/soulknife/session`, `/gloom-stalker/session` | Session tracker with the 2024 conditions and Exhaustion. The Whisper-Knife’s tracks psionic dice (Knack and Psychic Whispers roll and spend them), Sneak Attack and the bonus action each turn, Steady Aim, Vex and hiding, and the blades with Sneak Attack dice. The Lightless Hunter’s tracks spell slots, Hunter’s Mark’s free casts and its quarry, Dreadful Strike, the first turn’s ambush, Umbral Sight in darkness, arrows, and concentration saves on damage |
+| `/soulknife`, `/gloom-stalker`, `/elemental-monk` | Character sheet at level 3: vitals and abilities, attacks, defenses, skills and senses, languages and tools, attuned items (the 2024 limit of 3), feats and features |
+| `/soulknife/session`, `/gloom-stalker/session`, `/elemental-monk/session` | Session tracker with the 2024 conditions and Exhaustion. The Whisper-Knife’s tracks psionic dice (Knack and Psychic Whispers roll and spend them), Sneak Attack and the bonus action each turn, Steady Aim, Vex and hiding, and the blades with Sneak Attack dice. The Lightless Hunter’s tracks spell slots, Hunter’s Mark’s free casts and its quarry, Dreadful Strike, the first turn’s ambush, Umbral Sight in darkness, arrows, and concentration saves on damage. The Undertow’s tracks Focus Points, Elemental Attunement with its reach and the element each strike deals (Incapacitated ends it), Flurry, Patient Defense and Step of the Wind, Deflect Attacks and its redirect, Uncanny Metabolism, Tavern Brawler’s push and rerolled 1s, and Surprise Attack until their second turn |
 | `/soulknife/powers`, `/soulknife/powers/:slug` | Psionic powers, the rogue options they choose to use and the Wood Elf spells, ready now or arriving by level 12. Psychic Blades carries how they fight |
+| `/elemental-monk/techniques`, `/elemental-monk/techniques/:slug` | Martial arts and the Focus techniques, the Warrior of the Elements’ features (Elementalism among them), the Bugbear’s traits and Tavern Brawler, ready now or arriving by level 12. Elemental Attunement carries how they fight |
 | `/gloom-stalker/spells`, `/gloom-stalker/spells/:slug` | Spellbook: Hunter’s Mark and the Gloom Stalker spells, Magic Initiate (Druid), the four prepared, candidates and later spells. Hunter’s Mark carries how they fight |
-| `/soulknife/items`, `/gloom-stalker/items` (and `/:slug`) | The starting kit, mundane gear and a gold ledger (the DM’s 200 gp plus the packages’ coins, what was bought and what is left), and a wishlist of other uncommon items to ask for |
-| `/soulknife/lore`, `/gloom-stalker/lore` | A first draft of their story, what’s still to settle, appearance with an art brief for a portrait, why they took the commission, and story hooks |
-| `/soulknife/levels`, `/gloom-stalker/levels` | Levels 1–3 as built, checked against the campaign’s array, and the plan for 4–12 with what’s still to decide |
+| `/soulknife/items`, `/gloom-stalker/items`, `/elemental-monk/items` (and `/:slug`) | The starting kit, mundane gear and a gold ledger (the DM’s 200 gp plus the packages’ coins, what was bought and what is left), and a wishlist of other uncommon items to ask for |
+| `/soulknife/lore`, `/gloom-stalker/lore`, `/elemental-monk/lore` | A first draft of their story, what’s still to settle, appearance with an art brief for a portrait, why they took the commission, and story hooks |
+| `/soulknife/levels`, `/gloom-stalker/levels`, `/elemental-monk/levels` | Levels 1–3 as built, checked against the campaign’s array, and the plan for 4–12 with what’s still to decide |
 
 Their questions for the DM show on `/rules` under the 2024 tab.
 
@@ -96,7 +97,7 @@ Content lives in typed TypeScript files in `data/`.
 For the whole table:
 
 - `data/campaign.ts`: the two rulesets, each with its homebrew, DM rulings, source policy, reference site, rulebook PDF and attunement limit. The 2014 ruleset checks starting scores against the allowed arrays (read from `sourcematerial/standard-arrays.txt`); the 2024 one holds the Sword Mountains campaign’s setup from the DM’s flyer (level 3, gold, the one uncommon item) and its single `startingArray`
-- The rules text paraphrased in `data/` follows the book of each character’s ruleset: 2014 for Lucan and the Storm-Hammer, 2024 for the Whisper-Knife and the Lightless Hunter
+- The rules text paraphrased in `data/` follows the book of each character’s ruleset: 2014 for Lucan and the Storm-Hammer, 2024 for the Whisper-Knife, the Lightless Hunter and the Undertow (whose Bugbear traits follow Monsters of the Multiverse)
 - `data/conditions.ts` and `data/conditions-2024.ts`: the conditions and exhaustion the session pages can mark, in the 2014 and 2024 wording
 - `data/characters/index.ts`: the list of characters. Each entry has the URL slug, the name and tagline in the header, the summary on `/`, the ruleset they play by, the character’s navigation, and their section of `/rules`
 
@@ -124,19 +125,20 @@ For the Storm-Hammer, in `data/characters/tempest/`:
 
 His session tracker is `composables/useTempestTracker.ts` with its panels in `components/tempest/session/`; his spell card and the tactics panel are in `components/tempest/`.
 
-For the Whisper-Knife (`data/characters/soulknife/`) and the Lightless Hunter (`data/characters/gloom-stalker/`), on the 2024 rules:
+For the Whisper-Knife (`data/characters/soulknife/`), the Lightless Hunter (`data/characters/gloom-stalker/`) and the Undertow (`data/characters/elemental-monk/`), on the 2024 rules:
 
-- `index.ts`, `character.ts`, `levels.ts`, `lore.ts` and `tactics.ts` work as the Storm-Hammer’s do. Rename either by changing `name` in `character.ts`; the slugs stay. Levels 4–12 are `upcoming`, with the plan in `pending`
+- `index.ts`, `character.ts`, `levels.ts`, `lore.ts` and `tactics.ts` work as the Storm-Hammer’s do. Rename any of them by changing `name` in `character.ts`; the slugs stay. Levels 4–12 are `upcoming`, with the plan in `pending`
 - `powers.ts` (the Whisper-Knife): every power with its `level` and status (`ready`, `future`), what it costs (a psi die, a daily use, Sneak Attack dice) and when it’s used
+- `techniques.ts` (the Undertow): the same shape as `powers.ts`, with `focus` for what spends Focus Points. The Cloak of Protection’s +1 is counted through `itemBonuses` in `character.ts`
 - `spells.ts` (the Lightless Hunter): statuses `known` (Magic Initiate’s cantrips and Healing Word), `always` (Hunter’s Mark and the Gloom Stalker spells), `prepared`, `candidate` and `future`
 - `items.ts`: the starting kit and wishlist in the same shape as the others’, the mundane gear, and `gold`, the ledger of coins in and spent
-- `nuxt.config.ts` imports `powers.ts`, `spells.ts` and `items.ts` to list their pages, so they import only relative files, never `~/` paths
+- `nuxt.config.ts` imports `powers.ts`, `techniques.ts`, `spells.ts` and `items.ts` to list their pages, so they import only relative files, never `~/` paths
 
-Their trackers are `composables/useSoulknifeTracker.ts` and `composables/useGloomStalkerTracker.ts`, with their panels in `components/soulknife/` and `components/gloom-stalker/` (the emblem that stands in for a portrait is there too).
+Their trackers are `composables/useSoulknifeTracker.ts`, `composables/useGloomStalkerTracker.ts` and `composables/useElementalMonkTracker.ts`, with their panels in `components/soulknife/`, `components/gloom-stalker/` and `components/elemental-monk/` (the emblem that stands in for a portrait is there too). The dice roller’s `rerollOnes` option rolls a 1 on a damage die again, for Tavern Brawler.
 
 Shared by both characters’ data: `data/characters/shared.ts` (ability keys and names, the feature shape, spell schools and level labels) and `data/characters/item-types.ts` (the item shape, slots, versions and source books). `FeatureList` takes a `levels` page for its `Lv` links, `AbilityGrid` a character’s `stats` and casting ability, and `ItemRow` and `AttunementSlots` a character’s items and item pages; they default to Lucan’s.
 
-The session trackers save to the browser’s `localStorage`, under keys that start with the character’s slug (`lucan-tracker-v1`, `tempest-tracker-v1`, `soulknife-tracker-v1`, `gloom-stalker-tracker-v1`). Saves from before there were several characters move over to the new keys the first time they’re read (`utils/storage.ts`).
+The session trackers save to the browser’s `localStorage`, under keys that start with the character’s slug (`lucan-tracker-v1`, `tempest-tracker-v1`, `soulknife-tracker-v1`, `gloom-stalker-tracker-v1`, `elemental-monk-tracker-v1`). Saves from before there were several characters move over to the new keys the first time they’re read (`utils/storage.ts`).
 
 ## Adding a character
 

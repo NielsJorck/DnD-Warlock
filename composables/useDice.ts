@@ -48,7 +48,8 @@ export function useDice() {
 
   // plain: ignore advantage/disadvantage (death saves). advantage: the roll has it from a
   // feature or item, which cancels out against disadvantage from the top bar.
-  function roll(notation: string, label = notation, opts: { plain?: boolean; advantage?: boolean } = {}) {
+  // rerollOnes: damage dice that roll a 1 are rolled once more (Tavern Brawler).
+  function roll(notation: string, label = notation, opts: { plain?: boolean; advantage?: boolean; rerollOnes?: boolean } = {}) {
     const { dice, modifier } = parse(notation)
     const single20 = dice.length === 1 && dice[0].count === 1 && dice[0].sides === 20 && dice[0].sign === 1
     const m: RollMode = opts.plain ? 'normal' : opts.advantage ? (mode.value === 'dis' ? 'normal' : 'adv') : mode.value
@@ -56,9 +57,14 @@ export function useDice() {
     const rolls: number[] = []
     let total = modifier
     let dropped: number | undefined
+    let rerolled = 0
     for (const d of dice) {
       for (let i = 0; i < d.count; i++) {
         let r = die(d.sides)
+        if (opts.rerollOnes && d.sides !== 20 && r === 1) {
+          r = die(d.sides)
+          rerolled++
+        }
         if (twice) {
           const other = die(20)
           const keep = twice === 'adv' ? Math.max(r, other) : Math.min(r, other)
@@ -71,7 +77,7 @@ export function useDice() {
     }
     return push({
       id: nextId++,
-      label: twice ? `${label} · ${twice === 'adv' ? 'advantage' : 'disadvantage'}` : label,
+      label: twice ? `${label} · ${twice === 'adv' ? 'advantage' : 'disadvantage'}` : rerolled ? `${label} · ${rerolled} one${rerolled === 1 ? '' : 's'} rerolled` : label,
       notation,
       rolls,
       modifier,
