@@ -1,6 +1,8 @@
 # Character Codex
 
-An interactive character site for a D&D 5e campaign. Each character has their own pages under `/<slug>`, and the campaign’s rules are shared. The group keeps two separate rulesets, one for the 2014 books (plus Tasha’s) and one for the 2024 books, still being worked out, and each character plays by one of them. The first character is **Lucan Beryll**, a level 10 Half-Elf Dao Genie Warlock (Pact of the Tome) on the 2014 rules, at `/lucan`. The second, at `/tempest`, is a concept: **The Storm-Hammer** (a working title until he has a name), a level 10 Hill Dwarf Tempest Cleric of Kord on the 2014 rules and a possible replacement for Lucan.
+An interactive character site for D&D 5e. Each character has their own pages under `/<slug>`, and the rules are shared. The group keeps two separate rulesets, one for the 2014 books (plus Tasha’s) and one for the 2024 books, and each character plays by one of them. The first character is **Lucan Beryll**, a level 10 Half-Elf Dao Genie Warlock (Pact of the Tome) on the 2014 rules, at `/lucan`. The second, at `/tempest`, is a concept: **The Storm-Hammer** (a working title until he has a name), a level 10 Hill Dwarf Tempest Cleric of Kord on the 2014 rules and a possible replacement for Lucan.
+
+The 2024 ruleset is a new campaign, the Sword Mountains expedition: level 3, mostly dungeon crawling. Two concepts for it, both working titles until they have names: **The Whisper-Knife**, a Wood Elf Soulknife Rogue at `/soulknife`, and **The Lightless Hunter**, a Human Gloom Stalker Ranger at `/gloom-stalker`.
 
 Built with Nuxt 3, Vue 3 and Tailwind CSS.
 
@@ -71,6 +73,20 @@ The Storm-Hammer’s pages, the same set as Lucan’s (a concept: nothing played
 
 His questions for the DM show on `/rules` under his name until they are answered.
 
+The two 2024 concepts get the same set at level 3, the campaign’s start (nothing played yet, each one’s uncommon item pitched to the DM, no paintings yet: an emblem stands in for the portrait). The Whisper-Knife is a rogue with no spellbook, so **Powers** takes the Spells page’s place:
+
+| Route | What’s there |
+| --- | --- |
+| `/soulknife`, `/gloom-stalker` | Character sheet at level 3: vitals and abilities, attacks, defenses, skills and senses, languages and tools, attuned items (the 2024 limit of 3), feats and features |
+| `/soulknife/session`, `/gloom-stalker/session` | Session tracker with the 2024 conditions and Exhaustion. The Whisper-Knife’s tracks psionic dice (Knack and Psychic Whispers roll and spend them), Sneak Attack and the bonus action each turn, Steady Aim, Vex and hiding, and the blades with Sneak Attack dice. The Lightless Hunter’s tracks spell slots, Hunter’s Mark’s free casts and its quarry, Dreadful Strike, the first turn’s ambush, Umbral Sight in darkness, arrows, and concentration saves on damage |
+| `/soulknife/powers`, `/soulknife/powers/:slug` | Psionic powers, the rogue options they choose to use and the Wood Elf spells, ready now or arriving by level 12. Psychic Blades carries how they fight |
+| `/gloom-stalker/spells`, `/gloom-stalker/spells/:slug` | Spellbook: Hunter’s Mark and the Gloom Stalker spells, Magic Initiate (Druid), the four prepared, candidates and later spells. Hunter’s Mark carries how they fight |
+| `/soulknife/items`, `/gloom-stalker/items` (and `/:slug`) | The starting kit, mundane gear and a gold ledger (the DM’s 200 gp plus the packages’ coins, what was bought and what is left), and a wishlist of other uncommon items to ask for |
+| `/soulknife/lore`, `/gloom-stalker/lore` | A first draft of their story, what’s still to settle, appearance with an art brief for a portrait, why they took the commission, and story hooks |
+| `/soulknife/levels`, `/gloom-stalker/levels` | Levels 1–3 as built, checked against the campaign’s array, and the plan for 4–12 with what’s still to decide |
+
+Their questions for the DM show on `/rules` under the 2024 tab.
+
 Lucan’s pages used to sit at the root (`/session`, `/spells/hex`…). Those URLs redirect to the pages above, keeping any `?tab=` or `#room`, and items renamed in that time go to their new pages (see `middleware/legacy-redirects.global.ts`).
 
 ## Editing the content
@@ -79,9 +95,9 @@ Content lives in typed TypeScript files in `data/`.
 
 For the whole table:
 
-- `data/campaign.ts`: the two rulesets, each with its homebrew, DM rulings, source policy, reference site and rulebook PDF, and the allowed starting arrays (read from `sourcematerial/standard-arrays.txt`). The 2024 ruleset is empty until the group agrees on it
-- The rules text paraphrased in `data/` (spells, items, conditions) follows the 2014 books
-- `data/conditions.ts`: the conditions and exhaustion levels the session page can mark
+- `data/campaign.ts`: the two rulesets, each with its homebrew, DM rulings, source policy, reference site, rulebook PDF and attunement limit. The 2014 ruleset checks starting scores against the allowed arrays (read from `sourcematerial/standard-arrays.txt`); the 2024 one holds the Sword Mountains campaign’s setup from the DM’s flyer (level 3, gold, the one uncommon item) and its single `startingArray`
+- The rules text paraphrased in `data/` follows the book of each character’s ruleset: 2014 for Lucan and the Storm-Hammer, 2024 for the Whisper-Knife and the Lightless Hunter
+- `data/conditions.ts` and `data/conditions-2024.ts`: the conditions and exhaustion the session pages can mark, in the 2014 and 2024 wording
 - `data/characters/index.ts`: the list of characters. Each entry has the URL slug, the name and tagline in the header, the summary on `/`, the ruleset they play by, the character’s navigation, and their section of `/rules`
 
 For Lucan, in `data/characters/lucan/`:
@@ -108,15 +124,25 @@ For the Storm-Hammer, in `data/characters/tempest/`:
 
 His session tracker is `composables/useTempestTracker.ts` with its panels in `components/tempest/session/`; his spell card and the tactics panel are in `components/tempest/`.
 
+For the Whisper-Knife (`data/characters/soulknife/`) and the Lightless Hunter (`data/characters/gloom-stalker/`), on the 2024 rules:
+
+- `index.ts`, `character.ts`, `levels.ts`, `lore.ts` and `tactics.ts` work as the Storm-Hammer’s do. Rename either by changing `name` in `character.ts`; the slugs stay. Levels 4–12 are `upcoming`, with the plan in `pending`
+- `powers.ts` (the Whisper-Knife): every power with its `level` and status (`ready`, `future`), what it costs (a psi die, a daily use, Sneak Attack dice) and when it’s used
+- `spells.ts` (the Lightless Hunter): statuses `known` (Magic Initiate’s cantrips and Healing Word), `always` (Hunter’s Mark and the Gloom Stalker spells), `prepared`, `candidate` and `future`
+- `items.ts`: the starting kit and wishlist in the same shape as the others’, the mundane gear, and `gold`, the ledger of coins in and spent
+- `nuxt.config.ts` imports `powers.ts`, `spells.ts` and `items.ts` to list their pages, so they import only relative files, never `~/` paths
+
+Their trackers are `composables/useSoulknifeTracker.ts` and `composables/useGloomStalkerTracker.ts`, with their panels in `components/soulknife/` and `components/gloom-stalker/` (the emblem that stands in for a portrait is there too).
+
 Shared by both characters’ data: `data/characters/shared.ts` (ability keys and names, the feature shape, spell schools and level labels) and `data/characters/item-types.ts` (the item shape, slots, versions and source books). `FeatureList` takes a `levels` page for its `Lv` links, `AbilityGrid` a character’s `stats` and casting ability, and `ItemRow` and `AttunementSlots` a character’s items and item pages; they default to Lucan’s.
 
-The session trackers save to the browser’s `localStorage`, under keys that start with the character’s slug (`lucan-tracker-v1`, `tempest-tracker-v1`). Saves from before there were several characters move over to the new keys the first time they’re read (`utils/storage.ts`).
+The session trackers save to the browser’s `localStorage`, under keys that start with the character’s slug (`lucan-tracker-v1`, `tempest-tracker-v1`, `soulknife-tracker-v1`, `gloom-stalker-tracker-v1`). Saves from before there were several characters move over to the new keys the first time they’re read (`utils/storage.ts`).
 
 ## Adding a character
 
 1. Add `data/characters/<slug>/` with the character’s data and an `index.ts` that exports their entry, and list it in `data/characters/index.ts`. Set the entry’s `ruleset` to `'2014'` or `'2024'`; don’t assume 2014. The header, the character list on `/`, the Rules page and the error page pick it up from there.
 2. Add their pages in `pages/<slug>/`, starting with `index.vue` for the sheet, and link to them from the entry’s `nav`.
-3. Reuse shared components (`FeatureList`, `AbilityGrid`, `ItemRow`, `AttunementSlots`…) where they fit, and build what’s specific to the character for that character. Each character’s session tracker is their own (Lucan’s `useTracker`, the Storm-Hammer’s `useTempestTracker`), as are Lucan’s Vessel and Lesser Dao pages; the dice roller and toasts are shared. A 2024 character needs their own spell, item and condition text: the 2024 books changed many spells and conditions (Exhaustion among them), and what’s in `data/` now is the 2014 wording.
+3. Reuse shared components (`FeatureList`, `AbilityGrid`, `ItemRow`, `AttunementSlots`…) where they fit, and build what’s specific to the character for that character. Each character’s session tracker is their own (Lucan’s `useTracker`, the Storm-Hammer’s `useTempestTracker`), as are Lucan’s Vessel and Lesser Dao pages; the dice roller and toasts are shared. A 2024 character needs their own spell and item text, since the 2024 books changed many of them; the 2024 conditions and Exhaustion are in `data/conditions-2024.ts`. Check the starting scores against the ruleset’s `startingArray` and the attunement against its `attunementLimit`.
 
 ## Layout
 

@@ -2,6 +2,10 @@ import { spells } from './data/characters/lucan/spells'
 import { items } from './data/characters/lucan/items'
 import { spells as tempestSpells } from './data/characters/tempest/spells'
 import { items as tempestItems } from './data/characters/tempest/items'
+import { powers as soulknifePowers } from './data/characters/soulknife/powers'
+import { items as soulknifeItems } from './data/characters/soulknife/items'
+import { spells as gloomStalkerSpells } from './data/characters/gloom-stalker/spells'
+import { items as gloomStalkerItems } from './data/characters/gloom-stalker/items'
 
 // GitHub Pages serves a project site from /<repo>/; the deploy workflow sets
 // NUXT_APP_BASE_URL. Locally it stays '/'.
@@ -49,7 +53,11 @@ export default defineNuxtConfig({
         ...spells.map(s => `/lucan/spells/${s.slug}`),
         ...items.map(i => `/lucan/items/${i.slug}`),
         ...tempestSpells.map(s => `/tempest/spells/${s.slug}`),
-        ...tempestItems.map(i => `/tempest/items/${i.slug}`)
+        ...tempestItems.map(i => `/tempest/items/${i.slug}`),
+        ...soulknifePowers.map(p => `/soulknife/powers/${p.slug}`),
+        ...soulknifeItems.map(i => `/soulknife/items/${i.slug}`),
+        ...gloomStalkerSpells.map(s => `/gloom-stalker/spells/${s.slug}`),
+        ...gloomStalkerItems.map(i => `/gloom-stalker/items/${i.slug}`)
       ]
     }
   }

@@ -6,7 +6,7 @@ useHead({ title: campaign.name })
 
 const contents = (r: Ruleset) => {
   if (!r.homebrew.length && !r.rulings.length && !r.sourcePolicy) return 'in progress, nothing settled yet'
-  const parts = [`${r.homebrew.length} house rules`, `${r.rulings.length} DM rulings`]
+  const parts = [`${r.homebrew.length} ${r.homebrewLabel?.noun ?? 'house rules'}`, `${r.rulings.length} DM rulings`]
   if (r.sourcePolicy) parts.push('the source policy')
   if (r.rulebook) parts.push(r.rulebook.title)
   return `${parts.slice(0, -1).join(', ')} and ${parts.at(-1)}`

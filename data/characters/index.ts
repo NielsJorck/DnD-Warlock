@@ -5,6 +5,8 @@
 import type { CharacterRules, RulesetId } from '../campaign'
 import { lucan } from './lucan'
 import { tempest } from './tempest'
+import { soulknife } from './soulknife'
+import { gloomStalker } from './gloom-stalker'
 
 export interface CharacterNavItem {
   to: string
@@ -26,6 +28,6 @@ export interface CharacterEntry {
   rules?: CharacterRules // the character's own section of /rules
 }
 
-export const characters: CharacterEntry[] = [lucan, tempest]
+export const characters: CharacterEntry[] = [lucan, tempest, soulknife, gloomStalker]
 
 export const characterForPath = (path: string) => characters.find(c => path === `/${c.slug}` || path.startsWith(`/${c.slug}/`))

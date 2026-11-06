@@ -87,6 +87,8 @@ export function groupBySlot(list: Item[], worn: Item[]) {
 export const sourceNames: Record<string, string> = {
   PHB: 'Player’s Handbook',
   DMG: 'Dungeon Master’s Guide',
+  XPHB: 'Player’s Handbook (2024)',
+  XDMG: 'Dungeon Master’s Guide (2024)',
   XGE: 'Xanathar’s Guide to Everything',
   TCE: 'Tasha’s Cauldron of Everything',
   ERLW: 'Eberron: Rising from the Last War',

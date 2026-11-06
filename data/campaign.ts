@@ -38,10 +38,17 @@ export interface Ruleset {
   summary: string
   reference: { label: string; url: string }
   homebrew: HouseRule[]
+  // What `homebrew` is called on the Rules page and the character list, when it isn't homebrew
+  homebrewLabel?: { title: string; noun: string }
   rulings: Ruling[]
   sourcePolicy?: { baseline: string; allowed: string[]; excluded: string[] }
   // A homebrew rulebook, served as-is from public/
   rulebook?: { title: string; version: string; src: string; note: string }
+  // The one array every character uses, highest first, when the ruleset has one;
+  // without it the levels pages check against allowedArrays
+  startingArray?: number[]
+  // How many items a character can be attuned to
+  attunementLimit: number
 }
 
 export const campaign = {
@@ -112,19 +119,37 @@ const rules2014: Ruleset = {
     version: 'v2.0',
     src: '/docs/zmans-5e-tweaks.pdf',
     note: 'The table’s homebrew rulebook for the 2014 Player’s Handbook, made in The Homebrewery. Several of the house rules above come from it.'
-  }
+  },
+  attunementLimit: 10
 }
 
-// Still being worked out by the group: add its homebrew, rulings and source
-// policy here as they're agreed, and set the status to 'In use'.
+// The new campaign, from the DM's "Adventurers Wanted" flyer: a patron's
+// expedition to a long-lost site in the Sword Mountains, mostly dungeon crawling.
+// None of the 2014 homebrew applies here.
 const rules2024: Ruleset = {
   id: '2024',
   name: 'D&D 5e (2024)',
-  status: 'In progress',
-  summary: 'A separate ruleset for the revised 2024 books, which the group is still working out.',
+  status: 'In use',
+  summary:
+    'The Sword Mountains expedition: a patron of some means hires four adventurers to explore a long-lost site and recover the knowledge and craft lost there. Mostly dungeon crawling, little social play. The 2024 Player’s Handbook as written, with none of the 2014 table’s homebrew.',
   reference: { label: '5e.tools', url: 'https://5e.tools/' },
-  homebrew: [],
-  rulings: []
+  homebrew: [
+    { rule: 'Start at level 3', detail: 'Experienced adventurers, a party of four. The campaign could reach level 12 eventually, over years of play.' },
+    { rule: 'Stat array 16, 15, 14, 12, 10, 8', detail: 'Every character assigns the same six scores, then adds the background’s +2 and +1 (or +1 to all three) as the 2024 rules say.' },
+    { rule: 'Background grants an Origin feat', detail: 'As in the 2024 Player’s Handbook.' },
+    { rule: '200 gp to start', detail: 'Per character, after travel expenses, on top of the normal class and background equipment.' },
+    { rule: 'A Potion of Healing', detail: 'Each character starts with one, besides the normal equipment.' },
+    { rule: 'One uncommon magic item', detail: 'Each character starts with one uncommon magic item, which the DM has to approve. No +1 weapons or armor.' }
+  ],
+  homebrewLabel: { title: 'Character Creation', noun: 'character-creation rules' },
+  rulings: [],
+  sourcePolicy: {
+    baseline: '2024 Player’s Handbook',
+    allowed: ['Classes, subclasses, species and backgrounds from the 2024 Player’s Handbook.', 'The starting magic item from the 2024 Dungeon Master’s Guide, with the DM’s approval.'],
+    excluded: ['The 2014 table’s homebrew: extra level-1 feat, starting arrays, INT proficiencies, attunement limit 10 and the rest.', 'Options from other books unless the DM approves them.', '+1 weapons and armor as the starting item.']
+  },
+  startingArray: [16, 15, 14, 12, 10, 8],
+  attunementLimit: 3
 }
 
 export const rulesets: Record<RulesetId, Ruleset> = { '2014': rules2014, '2024': rules2024 }

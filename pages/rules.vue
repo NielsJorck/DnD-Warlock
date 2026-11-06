@@ -72,7 +72,7 @@ const settled = computed(() => current.value.homebrew.length || current.value.ru
       </div>
 
       <section v-if="current.homebrew.length">
-        <SectionHeading title="Homebrew in Effect" />
+        <SectionHeading :title="current.homebrewLabel?.title ?? 'Homebrew in Effect'" />
         <HouseRules :rules="current.homebrew" />
       </section>
 

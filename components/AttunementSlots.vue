@@ -28,6 +28,6 @@ const slots = computed(() => Array.from({ length: max.value }, (_, i) => attuned
         <div v-else class="grid aspect-square place-items-center rounded-xl border border-dashed border-obsidian-500 text-faint/60">◇</div>
       </template>
     </div>
-    <p class="mt-2 text-[11px] text-faint">{{ attuned.length }} / {{ max }} attuned · campaign limit is 10</p>
+    <p class="mt-2 text-[11px] text-faint">{{ attuned.length }} / {{ max }} attuned · the limit at this table</p>
   </div>
 </template>
