@@ -18,7 +18,7 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Character codex for a D&D 5e (2014) campaign.' },
+        { name: 'description', content: 'Character codex for a D&D 5e campaign, played by the 2014 and 2024 rules.' },
         { name: 'theme-color', content: '#0b0a09' },
         // Private campaign notes: keep search engines out
         { name: 'robots', content: 'noindex, nofollow' }

@@ -1,6 +1,6 @@
 # Character Codex
 
-An interactive character site for a D&D 5e 2014 + Tasha’s campaign. Each character has their own pages under `/<slug>`, and the campaign’s rules are shared. The first character is **Lucan Beryll**, a level 10 Half-Elf Dao Genie Warlock (Pact of the Tome), at `/lucan`.
+An interactive character site for a D&D 5e campaign. Each character has their own pages under `/<slug>`, and the campaign’s rules are shared. The group keeps two separate rulesets, one for the 2014 books (plus Tasha’s) and one for the 2024 books, still being worked out, and each character plays by one of them. The first character is **Lucan Beryll**, a level 10 Half-Elf Dao Genie Warlock (Pact of the Tome) on the 2014 rules, at `/lucan`.
 
 Built with Nuxt 3, Vue 3 and Tailwind CSS.
 
@@ -38,8 +38,8 @@ Shared by every character:
 
 | Route | What’s there |
 | --- | --- |
-| `/` | The characters, each with a portrait, a summary and links to their pages, plus a link to the campaign rules |
-| `/rules` | Campaign homebrew, DM rulings and the source policy for the whole table; then a section per character with their own house rules and rulings; and the Zman’s 5e Tweaks rulebook as a PDF in the browser’s viewer (`public/docs/zmans-5e-tweaks.pdf`; phones get open and download buttons) |
+| `/` | The characters, each with a portrait, a summary, their ruleset and links to their pages, plus a link to the campaign rules |
+| `/rules` | A tab per ruleset (2014, 2024). Each has its homebrew, DM rulings and source policy; then a section for each character on it with their own house rules and rulings; and its homebrew rulebook as a PDF in the browser’s viewer (for 2014, Zman’s 5e Tweaks in `public/docs/zmans-5e-tweaks.pdf`; phones get open and download buttons). `?ruleset=2024` opens a tab; without it the page opens on the ruleset of the character last visited |
 
 Lucan’s pages:
 
@@ -64,14 +64,15 @@ Content lives in typed TypeScript files in `data/`.
 
 For the whole table:
 
-- `data/campaign.ts`: campaign homebrew, DM rulings, the source policy, the Zman’s 5e Tweaks PDF, and the allowed starting arrays (read from `sourcematerial/standard-arrays.txt`)
+- `data/campaign.ts`: the two rulesets, each with its homebrew, DM rulings, source policy, reference site and rulebook PDF, and the allowed starting arrays (read from `sourcematerial/standard-arrays.txt`). The 2024 ruleset is empty until the group agrees on it
+- The rules text paraphrased in `data/` (spells, items, conditions) follows the 2014 books
 - `data/conditions.ts`: the conditions and exhaustion levels the session page can mark
-- `data/characters/index.ts`: the list of characters. Each entry has the URL slug, the name and tagline in the header, the summary on `/`, the character’s navigation, and their section of `/rules`
+- `data/characters/index.ts`: the list of characters. Each entry has the URL slug, the name and tagline in the header, the summary on `/`, the ruleset they play by, the character’s navigation, and their section of `/rules`
 
 For Lucan, in `data/characters/lucan/`:
 
 - `index.ts`: his entry in the character list and his navigation
-- `character.ts`: ability scores, AC, proficiencies, feats, invocations, features and tracked resources. The Foundry VTT actor export is the source of truth for these numbers
+- `character.ts`: ruleset (2014), ability scores, AC, proficiencies, feats, invocations, features and tracked resources. The Foundry VTT actor export is the source of truth for these numbers
 - `spells.ts`: every spell with its status (`known`, `book`, `candidate`, `future`)
 - `items.ts`: owned items (`group: 'owned'`, mirroring the Foundry sheet), the wishlist (`variants` lists official versions, `slot` says where it is worn and `slots` sets the limits), mundane gear and Vessel contents (with their room)
 - `vessel.ts`: Vessel features and rooms
@@ -84,9 +85,9 @@ The session tracker saves to the browser’s `localStorage`, under keys that sta
 
 ## Adding a character
 
-1. Add `data/characters/<slug>/` with the character’s data and an `index.ts` that exports their entry, and list it in `data/characters/index.ts`. The header, the character list on `/`, the Rules page and the error page pick it up from there.
+1. Add `data/characters/<slug>/` with the character’s data and an `index.ts` that exports their entry, and list it in `data/characters/index.ts`. Set the entry’s `ruleset` to `'2014'` or `'2024'`; don’t assume 2014. The header, the character list on `/`, the Rules page and the error page pick it up from there.
 2. Add their pages in `pages/<slug>/`, starting with `index.vue` for the sheet, and link to them from the entry’s `nav`.
-3. Reuse shared components (`FeatureList`, `AbilityGrid`, `SpellCard`…) where they fit, and build what’s specific to the character for that character. Lucan’s session tracker, Vessel and Lesser Dao pages, and the composables behind them, are his alone.
+3. Reuse shared components (`FeatureList`, `AbilityGrid`, `SpellCard`…) where they fit, and build what’s specific to the character for that character. Lucan’s session tracker, Vessel and Lesser Dao pages, and the composables behind them, are his alone. A 2024 character needs their own spell, item and condition text: the 2024 books changed many spells and conditions (Exhaustion among them), and what’s in `data/` now is the 2014 wording.
 
 ## Layout
 

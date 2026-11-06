@@ -1,6 +1,8 @@
 // Single source of truth for Lucan's sheet. Derived numbers (modifiers, saves,
 // DC, attack) are computed in composables/useCharacter.ts from these values.
 
+import type { RulesetId } from '../../campaign'
+
 export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha'
 
 export interface Feature {
@@ -26,7 +28,7 @@ export const character = {
   pact: 'Pact of the Tome',
   background: 'Guild Artisan',
   backgroundDetail: 'Jeweler · Gemcutter · Appraiser',
-  ruleset: '2014 5e + Tasha’s',
+  ruleset: '2014' as RulesetId,
   motto: 'A deal made is a deal kept.',
 
   abilities: { str: 8, dex: 14, con: 16, int: 12, wis: 12, cha: 20 } as Record<AbilityKey, number>,

@@ -9,6 +9,7 @@ export const lucan: CharacterEntry = {
   name: character.name,
   tagline: `Dao Genie · Warlock ${character.level}`,
   summary: `Level ${character.level} ${character.race} ${character.className}: ${character.subclass}, ${character.pact}. ${character.identity.summary}`,
+  ruleset: character.ruleset,
   epithet: character.epithet,
   motto: character.motto,
   portrait: appearance.portrait,

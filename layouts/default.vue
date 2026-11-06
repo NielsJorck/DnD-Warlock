@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { campaign } from '~/data/campaign'
+import { rulesPath, rulesets } from '~/data/campaign'
 import { characters, characterForPath, type CharacterNavItem } from '~/data/characters'
 
 const route = useRoute()
@@ -143,7 +143,7 @@ const onSession = computed(() => !!primary.value && route.path.startsWith(primar
     <footer class="border-t border-gold/10">
       <div class="wrap flex flex-wrap items-center justify-between gap-3 py-6 text-[11.5px] text-faint">
         <span>
-          {{ campaign.ruleset }} · <NuxtLink to="/" class="hover:text-gold-light">All characters</NuxtLink>
+          <NuxtLink :to="rulesPath(active.ruleset)" class="hover:text-gold-light">{{ rulesets[active.ruleset].name }} rules</NuxtLink> · <NuxtLink to="/" class="hover:text-gold-light">All characters</NuxtLink>
         </span>
         <span v-if="active.motto" class="font-serif text-sm italic text-dim">“{{ active.motto }}”</span>
       </div>

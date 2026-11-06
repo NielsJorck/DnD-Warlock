@@ -2,6 +2,7 @@
 import { character, lesserDao } from '~/data/characters/lucan/character'
 import { items } from '~/data/characters/lucan/items'
 import { appearance } from '~/data/characters/lucan/lore'
+import { rulesPath, rulesets } from '~/data/campaign'
 
 useHead({ title: 'Lucan Beryll — Character Sheet' })
 
@@ -88,6 +89,7 @@ const sections = [
               <span class="chip border-gold/40 text-gold-light">{{ character.pact }}</span>
               <span class="chip">Patron · {{ character.patron }}</span>
               <span class="chip">{{ character.background }} · {{ character.backgroundDetail }}</span>
+              <NuxtLink :to="rulesPath(character.ruleset)" class="chip transition hover:border-gold/50 hover:text-gold-light">{{ rulesets[character.ruleset].name }} rules</NuxtLink>
             </div>
             <p class="lore mt-4 hidden max-w-2xl sm:block">{{ character.identity.summary }}</p>
           </div>

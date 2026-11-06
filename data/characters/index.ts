@@ -2,7 +2,7 @@
 // data/characters/<slug>/ and its pages in pages/<slug>/. Add a character by
 // adding its folder and listing its entry below.
 
-import type { CharacterRules } from '../campaign'
+import type { CharacterRules, RulesetId } from '../campaign'
 import { lucan } from './lucan'
 
 export interface CharacterNavItem {
@@ -17,6 +17,7 @@ export interface CharacterEntry {
   name: string
   tagline: string // under the name in the header
   summary: string // on the character list
+  ruleset: RulesetId // 2014 or 2024: the rules every number on their pages follows
   epithet?: string
   motto?: string // in the footer while on the character's pages
   portrait?: { src: string; alt: string }
