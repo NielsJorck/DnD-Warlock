@@ -16,10 +16,17 @@ export interface Ruling {
   detail: string
 }
 
+// Asked of the DM and not answered yet; an answer moves it to the rulings
+export interface OpenQuestion {
+  question: string
+  detail: string
+}
+
 // A character's own section of /rules
 export interface CharacterRules {
   houseRules: HouseRule[]
   rulings: Ruling[]
+  questions?: OpenQuestion[]
 }
 
 export type RulesetId = '2014' | '2024'

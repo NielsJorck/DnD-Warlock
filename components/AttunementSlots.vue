@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { character } from '~/data/characters/lucan/character'
-import { items } from '~/data/characters/lucan/items'
+import { items as lucanItems } from '~/data/characters/lucan/items'
+import type { Item } from '~/data/characters/item-types'
 
-const attuned = items.filter(i => i.group === 'owned' && i.attunement)
-const slots = Array.from({ length: character.attunement.max }, (_, i) => attuned[i] ?? null)
+// Lucan's attuned items unless another character's are passed (owned items needing attunement)
+const props = withDefaults(defineProps<{ items?: Item[]; max?: number; base?: string }>(), { base: '/lucan/items' })
+
+const attuned = computed(() => (props.items ?? lucanItems).filter(i => i.group === 'owned' && i.attunement))
+const max = computed(() => props.max ?? character.attunement.max)
+const slots = computed(() => Array.from({ length: max.value }, (_, i) => attuned.value[i] ?? null))
 </script>
 
 <template>
@@ -12,7 +17,7 @@ const slots = Array.from({ length: character.attunement.max }, (_, i) => attuned
       <template v-for="(item, i) in slots" :key="i">
         <NuxtLink
           v-if="item"
-          :to="`/lucan/items/${item.slug}`"
+          :to="`${base}/${item.slug}`"
           class="group relative grid aspect-square place-items-center rounded-xl border border-gold/40 bg-gradient-to-b from-gold/15 to-obsidian-900 text-xl text-gold-light transition hover:shadow-glow"
           :aria-label="item.name"
         >
@@ -23,6 +28,6 @@ const slots = Array.from({ length: character.attunement.max }, (_, i) => attuned
         <div v-else class="grid aspect-square place-items-center rounded-xl border border-dashed border-obsidian-500 text-faint/60">◇</div>
       </template>
     </div>
-    <p class="mt-2 text-[11px] text-faint">{{ attuned.length }} / {{ character.attunement.max }} attuned · campaign limit is 10</p>
+    <p class="mt-2 text-[11px] text-faint">{{ attuned.length }} / {{ max }} attuned · campaign limit is 10</p>
   </div>
 </template>

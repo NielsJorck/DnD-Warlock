@@ -35,7 +35,7 @@ watch(
           <span class="block truncate text-sm font-semibold text-parchment">{{ r.label }}</span>
           <span v-if="r.note !== undefined" class="block text-[11.5px] text-dim">{{ r.note }}</span>
           <span v-else class="block text-[11px] tabular-nums text-faint">
-            {{ r.notation }} · [{{ r.rolls.join(', ') }}<template v-if="r.dropped !== undefined">, <s class="opacity-60">{{ r.dropped }}</s></template>]<template v-if="r.modifier"> {{ signed(r.modifier) }}</template>
+            {{ r.notation }}<template v-if="r.rolls.length"> · [{{ r.rolls.join(', ') }}<template v-if="r.dropped !== undefined">, <s class="opacity-60">{{ r.dropped }}</s></template>]<template v-if="r.modifier"> {{ signed(r.modifier) }}</template></template>
           </span>
           <span v-if="r.crit === 'hit'" class="block text-[11px] font-semibold uppercase tracking-wider text-gold">Natural 20</span>
           <span v-else-if="r.crit === 'miss'" class="block text-[11px] font-semibold uppercase tracking-wider text-ruby">Natural 1</span>

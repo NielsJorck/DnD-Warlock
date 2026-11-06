@@ -46,11 +46,13 @@ export function useDice() {
     return entry
   }
 
-  // plain: ignore advantage/disadvantage (death saves)
-  function roll(notation: string, label = notation, opts: { plain?: boolean } = {}) {
+  // plain: ignore advantage/disadvantage (death saves). advantage: the roll has it from a
+  // feature or item, which cancels out against disadvantage from the top bar.
+  function roll(notation: string, label = notation, opts: { plain?: boolean; advantage?: boolean } = {}) {
     const { dice, modifier } = parse(notation)
     const single20 = dice.length === 1 && dice[0].count === 1 && dice[0].sides === 20 && dice[0].sign === 1
-    const twice = single20 && !opts.plain && mode.value !== 'normal' ? mode.value : undefined
+    const m: RollMode = opts.plain ? 'normal' : opts.advantage ? (mode.value === 'dis' ? 'normal' : 'adv') : mode.value
+    const twice = single20 && m !== 'normal' ? m : undefined
     const rolls: number[] = []
     let total = modifier
     let dropped: number | undefined

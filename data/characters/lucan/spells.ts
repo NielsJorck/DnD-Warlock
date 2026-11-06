@@ -1,17 +1,13 @@
 // Lucan's spell glossary. Rules text is paraphrased from the 2014 sources;
 // "atPact" describes the effect when cast from a 5th-level pact slot.
 
+import type { School } from '../shared'
+
+export { levelLabel, schoolGlyph } from '../shared'
+export type { School } from '../shared'
+
 export type SpellStatus = 'known' | 'book' | 'candidate' | 'future'
 export type SpellAccess = 'Warlock' | 'Pact of the Tome' | 'Genie Patron' | 'Dao Patron' | 'Book of Shadows'
-export type School =
-  | 'Abjuration'
-  | 'Conjuration'
-  | 'Divination'
-  | 'Enchantment'
-  | 'Evocation'
-  | 'Illusion'
-  | 'Necromancy'
-  | 'Transmutation'
 
 export interface Spell {
   slug: string
@@ -42,23 +38,6 @@ export const statusLabels: Record<SpellStatus, string> = {
   book: 'Book of Shadows',
   candidate: 'Candidate',
   future: 'Future'
-}
-
-export const schoolGlyph: Record<School, string> = {
-  Abjuration: '⛨',
-  Conjuration: '✧',
-  Divination: '◉',
-  Enchantment: '♥',
-  Evocation: '✶',
-  Illusion: '◐',
-  Necromancy: '☠',
-  Transmutation: '⟲'
-}
-
-export function levelLabel(level: number, long = false) {
-  if (level === 0) return 'Cantrip'
-  const suffix = ['th', 'st', 'nd', 'rd'][level] ?? 'th'
-  return long ? `${level}${suffix}-level` : `${level}${suffix}`
 }
 
 // Known spells are either picked by the player or granted automatically by the patron.

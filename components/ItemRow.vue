@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { type Item, slots, sourceNames, variantOf } from '~/data/characters/lucan/items'
+import { type Item, slots, sourceNames, variantOf } from '~/data/characters/item-types'
 
-// One line of the Items page: a table row that opens into the full rules
-const props = defineProps<{ item: Item }>()
+// One line of the Items page: a table row that opens into the full rules.
+// base: where the character's item pages live
+const props = withDefaults(defineProps<{ item: Item; base?: string }>(), { base: '/lucan/items' })
 const rarity = computed(() => (props.item.rarity ? rarityTone[props.item.rarity] : null))
 const variant = computed(() => variantOf(props.item))
 const attune = computed(() => (!props.item.attunement ? '' : props.item.attunement.startsWith('Optional') ? 'Optional' : 'Required'))
@@ -96,7 +97,7 @@ const facts = computed(() =>
           </div>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <NuxtLink :to="`/lucan/items/${item.slug}`" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">Item page →</NuxtLink>
+            <NuxtLink :to="`${base}/${item.slug}`" class="chip px-3 py-1 text-xs transition hover:border-gold/50 hover:text-gold-light">Item page →</NuxtLink>
             <NuxtLink v-if="item.see" :to="item.see.to" class="chip border-topaz/40 px-3 py-1 text-xs text-topaz transition hover:border-topaz/70 hover:text-parchment">{{ item.see.label }} →</NuxtLink>
           </div>
         </div>

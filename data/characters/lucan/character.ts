@@ -2,19 +2,10 @@
 // DC, attack) are computed in composables/useCharacter.ts from these values.
 
 import type { RulesetId } from '../../campaign'
+import type { AbilityKey, Feature } from '../shared'
 
-export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha'
-
-export interface Feature {
-  name: string
-  source: string
-  level?: number
-  summary: string
-  detail?: string
-  uses?: string
-  homebrew?: boolean
-  to?: string // the page of the site that covers it in full
-}
+export { abilityNames } from '../shared'
+export type { AbilityKey, Feature } from '../shared'
 
 export const character = {
   name: 'Lucan Beryll',
@@ -268,15 +259,6 @@ export const character = {
       'Is comfortable negotiating with dangerous beings when the terms are clear.'
     ]
   }
-}
-
-export const abilityNames: Record<AbilityKey, string> = {
-  str: 'Strength',
-  dex: 'Dexterity',
-  con: 'Constitution',
-  int: 'Intelligence',
-  wis: 'Wisdom',
-  cha: 'Charisma'
 }
 
 // From the Foundry NPC sheet "Form of the Lesser Dao" (Bracers of the Dao Pact).

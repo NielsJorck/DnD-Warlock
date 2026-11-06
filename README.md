@@ -1,6 +1,6 @@
 # Character Codex
 
-An interactive character site for a D&D 5e campaign. Each character has their own pages under `/<slug>`, and the campaign’s rules are shared. The group keeps two separate rulesets, one for the 2014 books (plus Tasha’s) and one for the 2024 books, still being worked out, and each character plays by one of them. The first character is **Lucan Beryll**, a level 10 Half-Elf Dao Genie Warlock (Pact of the Tome) on the 2014 rules, at `/lucan`.
+An interactive character site for a D&D 5e campaign. Each character has their own pages under `/<slug>`, and the campaign’s rules are shared. The group keeps two separate rulesets, one for the 2014 books (plus Tasha’s) and one for the 2024 books, still being worked out, and each character plays by one of them. The first character is **Lucan Beryll**, a level 10 Half-Elf Dao Genie Warlock (Pact of the Tome) on the 2014 rules, at `/lucan`. The second, at `/tempest`, is a concept: **The Storm-Hammer** (a working title until he has a name), a level 10 Hill Dwarf Tempest Cleric of Kord on the 2014 rules and a possible replacement for Lucan.
 
 Built with Nuxt 3, Vue 3 and Tailwind CSS.
 
@@ -56,6 +56,21 @@ Lucan’s pages:
 | `/lucan/lore` | Lucan’s story, traits, appearance, Zahir ibn Kharum and story hooks |
 | `/lucan/levels` | Level history: each level’s HP, slots, features and choices, with cantrips, spells and invocations counted against the Warlock table, the starting array and every skill pick. The `Lv` tags on the sheet’s features link here |
 
+The Storm-Hammer’s pages, the same set as Lucan’s (a concept: nothing played yet, his gear pitched to the DM):
+
+| Route | What’s there |
+| --- | --- |
+| `/tempest` | Character sheet at level 10: vitals and abilities, attacks, defenses, skills and senses, languages and tools, attuned items, feats and features. The numbers use plain plate and the +1 Amulet of the Devout (`itemBonuses` in his `character.ts`) |
+| `/tempest/session` | Session tracker: a sticky status bar (HP, AC with Shield, initiative with the shield’s advantage, spell slots by level, what is running), slots and class uses, rests, death saves and conditions, rolls with the shield’s and War Caster’s advantage built in, the staff’s storms and his other items, attacks (the staff with Divine Strike, Booming Blade, Spirit Guardians and Spiritual Weapon at the level they were cast, Wrath of the Storm, the Storm Avatar), and every ready spell with a slot-level picker. A Destructive Wrath toggle maxes the next lightning or thunder roll. Taking damage rolls the concentration save with War Caster’s advantage |
+| `/tempest/spells` | Searchable, filterable spellbook (ready, candidates and 6th-level spells to come; level, school, concentration, lightning or thunder, ritual). `?tab=` and `?q=` open a tab or a search |
+| `/tempest/spells/:slug` | Full spell page with what each slot level adds and its dice. Spirit Guardians carries how he fights: the plan and his action, bonus action, reaction and Channel Divinity |
+| `/tempest/items` | His starting kit (with attunement slots) and mundane gear, as rows that open into the rules and the paintings; a wishlist shows when something is on it |
+| `/tempest/items/:slug` | Full item page, with what to ask the DM |
+| `/tempest/lore` | A first draft of his story, what’s still to settle, his appearance, Kord and story hooks |
+| `/tempest/levels` | Level history like Lucan’s, against the Cleric table: HP, slots, prepared spells, Channel Divinity, the starting array and skill picks, feats (Magic Initiate from the Seeker Guild on top) and what’s still to decide |
+
+His questions for the DM show on `/rules` under his name until they are answered.
+
 Lucan’s pages used to sit at the root (`/session`, `/spells/hex`…). Those URLs redirect to the pages above, keeping any `?tab=` or `#room`, and items renamed in that time go to their new pages (see `middleware/legacy-redirects.global.ts`).
 
 ## Editing the content
@@ -81,13 +96,27 @@ For Lucan, in `data/characters/lucan/`:
 
 Lucan’s derived numbers (modifiers, saves, spell DC, attack bonus, passives) are calculated in `composables/useCharacter.ts`, so changing an ability score or item bonus updates all his pages.
 
-The session tracker saves to the browser’s `localStorage`, under keys that start with the character’s slug (`lucan-tracker-v1`). Saves from before there were several characters move over to the new keys the first time they’re read (`utils/storage.ts`).
+For the Storm-Hammer, in `data/characters/tempest/`:
+
+- `index.ts`: his entry in the character list, his navigation and his section of `/rules`. Rename him by changing `name` in `character.ts`; the slug stays `tempest`
+- `character.ts`: ruleset (2014), scores (with the array and the dwarf’s increases), AC, proficiencies, feats and features, the resources the session tracks, and `stats`, the numbers worked out from them
+- `spells.ts`: every spell with its status (`known`, `domain`, `prepared`, `candidate`, `future`), what a higher slot adds, and the dice the session rolls by slot level. `storm` marks lightning or thunder, which Destructive Wrath can max (with two kinds of damage, those dice come first)
+- `items.ts`: his starting kit (`owned`), any wishlist items and mundane gear, in the same shape as Lucan’s. The amulet’s version (+1 for now) is set in `character.ts` as `itemBonuses.spell`
+- `levels.ts`: the level history, built at once to level 10. When he gains a level, change its entry from `upcoming` to `played` as for Lucan
+- `tactics.ts`: how he fights, shown on the Spirit Guardians page
+- `lore.ts`: story draft, what’s still open, appearance and portrait, Kord, hooks, and his house rules, rulings and open questions for the DM. When the DM answers one, move it to `rulings`
+
+His session tracker is `composables/useTempestTracker.ts` with its panels in `components/tempest/session/`; his spell card and the tactics panel are in `components/tempest/`.
+
+Shared by both characters’ data: `data/characters/shared.ts` (ability keys and names, the feature shape, spell schools and level labels) and `data/characters/item-types.ts` (the item shape, slots, versions and source books). `FeatureList` takes a `levels` page for its `Lv` links, `AbilityGrid` a character’s `stats` and casting ability, and `ItemRow` and `AttunementSlots` a character’s items and item pages; they default to Lucan’s.
+
+The session trackers save to the browser’s `localStorage`, under keys that start with the character’s slug (`lucan-tracker-v1`, `tempest-tracker-v1`). Saves from before there were several characters move over to the new keys the first time they’re read (`utils/storage.ts`).
 
 ## Adding a character
 
 1. Add `data/characters/<slug>/` with the character’s data and an `index.ts` that exports their entry, and list it in `data/characters/index.ts`. Set the entry’s `ruleset` to `'2014'` or `'2024'`; don’t assume 2014. The header, the character list on `/`, the Rules page and the error page pick it up from there.
 2. Add their pages in `pages/<slug>/`, starting with `index.vue` for the sheet, and link to them from the entry’s `nav`.
-3. Reuse shared components (`FeatureList`, `AbilityGrid`, `SpellCard`…) where they fit, and build what’s specific to the character for that character. Lucan’s session tracker, Vessel and Lesser Dao pages, and the composables behind them, are his alone. A 2024 character needs their own spell, item and condition text: the 2024 books changed many spells and conditions (Exhaustion among them), and what’s in `data/` now is the 2014 wording.
+3. Reuse shared components (`FeatureList`, `AbilityGrid`, `ItemRow`, `AttunementSlots`…) where they fit, and build what’s specific to the character for that character. Each character’s session tracker is their own (Lucan’s `useTracker`, the Storm-Hammer’s `useTempestTracker`), as are Lucan’s Vessel and Lesser Dao pages; the dice roller and toasts are shared. A 2024 character needs their own spell, item and condition text: the 2024 books changed many spells and conditions (Exhaustion among them), and what’s in `data/` now is the 2014 wording.
 
 ## Layout
 
@@ -101,4 +130,5 @@ Images live in `public/images/`, and the originals of the paintings are kept in 
 
 - **Item paintings on a white background** (the Pact Keeper’s Crystal Dagger): run `node scripts/import-art.mjs art/<name>.original.png public/images/<name>.png [glow hex]`. The script removes the white background, fits the item onto a 600×800 canvas and places it on the site's dark backdrop.
 - **Full paintings** (the portrait and the Genie Vessel ring): save a JPEG copy at quality 85 in `public/images/`. The originals are over 1 MB each, too heavy for a page.
+- **The Storm-Hammer’s paintings** came as WebP and are kept in `art/` as `<name>.original.webp`. The web copies in `public/images/` are WebP at quality 82, at most 1100 px on the long side; the portrait is cropped to 3:4 from the top so the sheet’s frames keep his head.
 - **Drawn illustrations** (the Golden Pact): `node scripts/generate-art.mjs` writes `the-golden-pact.svg`.
