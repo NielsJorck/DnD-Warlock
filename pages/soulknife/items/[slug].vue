@@ -67,14 +67,14 @@ const facts = [
           </ul>
 
           <div v-if="item.forCharacter" class="mt-8 border-t border-obsidian-600 pt-6">
-            <p class="eyebrow mb-2">In their hands</p>
+            <p class="eyebrow mb-2">In his hands</p>
             <p class="lore">{{ item.forCharacter }}</p>
           </div>
         </div>
       </article>
 
       <section class="xl:sticky xl:top-24 xl:self-start">
-        <h2 class="eyebrow mb-3 text-dim">Their other items</h2>
+        <h2 class="eyebrow mb-3 text-dim">His other items</h2>
         <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1">
           <NuxtLink
             v-for="s in siblings"

@@ -32,9 +32,8 @@ const attacks = [
     damage: `${stats.secondBlade.replace('+', ' + ')} psychic`
   },
   { name: 'Sneak Attack', to: '/soulknife/powers/sneak-attack', meta: 'Once per turn · advantage, or an ally next to the target', hit: '—', damage: `+${stats.sneak}` },
-  { name: 'Shortbow', meta: 'Two hands · 80/320 ft · Vex', hit: signed(stats.weaponAttack), damage: `1d6 + ${stats.bladeDamage} piercing` },
-  { name: 'Dagger', meta: 'Melee or thrown 20/60 ft · Light · Nick', hit: signed(stats.weaponAttack), damage: `1d4 + ${stats.bladeDamage} piercing` },
-  { name: 'Shortsword', meta: 'Melee · Light · no mastery picked', hit: signed(stats.weaponAttack), damage: `1d6 + ${stats.bladeDamage} piercing` }
+  { name: 'Daggers', meta: 'Melee or thrown 20/60 ft · Light · Nick: two in one Attack action', hit: signed(stats.weaponAttack), damage: `1d4 + ${stats.bladeDamage} piercing, then 1d4` },
+  { name: 'Shortsword', meta: 'Melee · Light · Vex', hit: signed(stats.weaponAttack), damage: `1d6 + ${stats.bladeDamage} piercing` }
 ]
 
 const attuned = items.filter(i => i.group === 'owned' && i.attunement)
@@ -51,7 +50,7 @@ const sections = [
 
 <template>
   <div>
-    <!-- Who they are, and every number that matters at a glance -->
+    <!-- Who he is, and every number that matters at a glance -->
     <section class="panel relative overflow-hidden">
       <svg class="pointer-events-none absolute -right-20 -top-20 h-[480px] w-[480px] text-amethyst opacity-[0.08]" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="0.7" aria-hidden="true">
         <path d="M60 170 132 46l6-18-16 13-72 121zM140 170 68 46l-6-18 16 13 72 121z" />
@@ -124,7 +123,7 @@ const sections = [
             </tbody>
           </table>
           <p class="mt-2 text-[11.5px] leading-relaxed text-faint">
-            Sneak Attack adds to one Finesse or ranged hit a turn: psychic from a blade. A blade hit gives Vex: advantage on the next attack against that creature. Weapon masteries: Shortbow (Vex) and Dagger (Nick); the blade brings its own Vex.
+            Sneak Attack adds to one Finesse or ranged hit a turn: psychic from a blade. A blade hit gives Vex: advantage on the next attack against that creature. Steel is for whatever is immune to psychic damage, constructs above all. Weapon masteries: Dagger (Nick) and Shortsword (Vex); the blade brings its own Vex.
           </p>
         </section>
 
@@ -142,11 +141,11 @@ const sections = [
           <dl class="mt-3 space-y-1.5 border-t border-obsidian-600 pt-3 text-[13px]">
             <div class="flex gap-3">
               <dt class="w-24 shrink-0 text-faint">Saves</dt>
-              <dd class="text-parchment">Advantage against being charmed <span class="text-faint">(Fey Ancestry)</span>. Magic can’t put them to sleep <span class="text-faint">(Trance)</span>.</dd>
+              <dd class="text-parchment">Advantage against being charmed <span class="text-faint">(Fey Ancestry)</span>. Magic can’t put him to sleep <span class="text-faint">(Trance)</span>.</dd>
             </div>
             <div class="flex gap-3">
               <dt class="w-24 shrink-0 text-faint">Hidden</dt>
-              <dd class="text-parchment">Invisible while hidden: attacks against them at disadvantage, advantage on initiative <span class="text-faint">(Hide, Cunning Action)</span></dd>
+              <dd class="text-parchment">Invisible while hidden: attacks against him at disadvantage, advantage on initiative <span class="text-faint">(Hide, Cunning Action)</span></dd>
             </div>
             <div class="flex gap-3">
               <dt class="w-24 shrink-0 text-faint">Later</dt>

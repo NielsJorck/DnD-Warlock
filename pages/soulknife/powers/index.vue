@@ -10,7 +10,7 @@ const tabs: { id: Tab; label: string; statuses: PowerStatus[]; blurb?: string }[
     id: 'ready',
     label: 'Ready',
     statuses: ['ready'],
-    blurb: 'What they can do at level 3. A rogue has no spellbook: these are the psionic powers, the rogue options they choose each turn, Alert’s swap and the Wood Elf spells, which need no slots.'
+    blurb: 'What he can do at level 3. A rogue has no spellbook: these are the psionic powers, the rogue options he chooses each turn, Alert’s swap and the Wood Elf spells, which need no slots.'
   },
   { id: 'later', label: 'Later', statuses: ['future'], blurb: 'What arrives on the way to level 12, with the level it comes at. Cunning Strike, Uncanny Dodge and Pass without Trace at 5 are the big step.' },
   { id: 'all', label: 'All', statuses: ['ready', 'future'] }

@@ -61,7 +61,7 @@ const jump = [
           <div class="mt-4 space-y-1.5 border-t border-obsidian-600 pt-3 text-[12.5px]">
             <div class="flex justify-between"><span class="text-dim">Armor Class</span><span class="text-parchment">{{ character.ac.total }} · studded leather</span></div>
             <div class="flex justify-between"><span class="text-dim">Stealth</span><span class="text-parchment">Advantage, hood up</span></div>
-            <div class="flex justify-between"><span class="text-dim">Weapons</span><span class="text-parchment">The blades: none to buy</span></div>
+            <div class="flex justify-between"><span class="text-dim">Weapons</span><span class="text-parchment">The blades; steel as backup</span></div>
             <div class="flex justify-between"><span class="text-dim">Gold left</span><span class="text-parchment">{{ coins(goldLeft) }}</span></div>
           </div>
         </div>

@@ -8,7 +8,7 @@ export const soulknife: CharacterEntry = {
   slug: 'soulknife',
   name: character.name,
   tagline: `Soulknife ${character.level} · Concept`,
-  summary: `Level ${character.level} ${character.species} ${character.className}: ${character.subclass}, a ${character.background.toLowerCase()} in it for the payday. ${character.concept} Built for the Sword Mountains expedition, with their uncommon item pitched to the DM.`,
+  summary: `Level ${character.level} ${character.species} ${character.className}: ${character.subclass}, a ${character.background.toLowerCase()} in it for the payday. ${character.concept} Built for the Sword Mountains expedition, with his uncommon item pitched to the DM.`,
   ruleset: character.ruleset,
   epithet: character.epithet,
   motto: character.motto,

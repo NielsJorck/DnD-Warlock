@@ -62,7 +62,7 @@ function deathSave() {
           </div>
         </div>
       </div>
-      <p class="mt-2 text-[11px] leading-relaxed text-faint">A natural 20 brings them back with 1 HP, a natural 1 counts as two failures. Damage while down is a failure; healing clears the saves.</p>
+      <p class="mt-2 text-[11px] leading-relaxed text-faint">A natural 20 brings him back with 1 HP, a natural 1 counts as two failures. Damage while down is a failure; healing clears the saves.</p>
     </div>
 
     <div class="flex flex-wrap gap-1.5">
@@ -82,7 +82,7 @@ function deathSave() {
         <span class="font-semibold text-ruby">{{ c.name }}.</span> {{ c.effect }}
       </li>
     </ul>
-    <p class="mt-2 text-[11px] text-faint">Fey Ancestry: advantage on saves to avoid or end Charmed. Trance: magic can’t put them to sleep.</p>
+    <p class="mt-2 text-[11px] text-faint">Fey Ancestry: advantage on saves to avoid or end Charmed. Trance: magic can’t put him to sleep.</p>
 
     <div class="mt-4 border-t border-obsidian-600 pt-3">
       <div class="flex items-center justify-between gap-3">

@@ -102,7 +102,7 @@ const toggleMode = (m: 'adv' | 'dis') => (mode.value = mode.value === m ? 'norma
 
     <!-- This turn, and what is going on right now -->
     <div class="scrollbar-none -mx-[var(--gutter)] mt-2 flex gap-1.5 overflow-x-auto px-[var(--gutter)] text-[11.5px]">
-      <button type="button" class="chip shrink-0 border-gold/40 text-gold-light transition hover:bg-gold/10" title="The start of their turn: Sneak Attack, the bonus action and the reaction are back, Steady Aim is gone and Vex counts down" @click="nextTurn">Next turn ↻</button>
+      <button type="button" class="chip shrink-0 border-gold/40 text-gold-light transition hover:bg-gold/10" title="The start of his turn: Sneak Attack, the bonus action and the reaction are back, Steady Aim is gone and Vex counts down" @click="nextTurn">Next turn ↻</button>
       <button
         type="button"
         class="chip shrink-0 transition"

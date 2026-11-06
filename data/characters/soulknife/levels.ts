@@ -1,4 +1,4 @@
-// The Whisper-Knife's build, level by level. They start at level 3 with the
+// The Whisper-Knife's build, level by level. He starts at level 3 with the
 // campaign, so levels 1–3 were made at once; levels 4–12 are the plan, with
 // the choices still open under `pending`. When a level is gained in play,
 // change its entry from `upcoming` to `played`, add the date and the choices,
@@ -69,10 +69,10 @@ export const levels: LevelEntry[] = [
       { kind: 'Feat', pick: 'Alert', from: 'Criminal', note: 'Origin feat: +2 to initiative and the swap', to: power('initiative-swap') },
       { kind: 'Proficiencies', pick: 'Acrobatics, Deception, Insight, Investigation, Perception, Sleight of Hand, Stealth', note: 'Skills. Where each comes from is under Skill picks' },
       { kind: 'Expertise', pick: 'Stealth and Perception', note: 'Stealth +8 for scouting, Perception +6 (passive 16) for spotting traps and ambushes' },
-      { kind: 'Weapon Mastery', pick: 'Shortbow (Vex), Dagger (Nick)', note: 'The Psychic Blade brings its own Vex at level 3' },
+      { kind: 'Weapon Mastery', pick: 'Dagger (Nick), Shortsword (Vex)', note: 'Steel for what’s immune to psychic damage: two thrown daggers in one Attack action, or the shortsword’s Vex for Sneak Attack. The Psychic Blade brings its own Vex at level 3' },
       { kind: 'Proficiencies', pick: 'Thieves’ Tools', note: 'From both the Rogue and the Criminal: whether the second can be another tool is a DM question', to: '/rules?ruleset=2024#soulknife' },
       { kind: 'Proficiencies', pick: 'Common, Elvish, Dwarvish, Thieves’ Cant, Goblin', note: 'Languages: Common and two standard ones at creation, Thieves’ Cant and one more from the Rogue' },
-      { kind: 'Proficiencies', pick: 'Wisdom for the Wood Elf spells', note: 'The lineage lets them pick INT, WIS or CHA; WIS 14 is the highest: DC 12, attack +4' }
+      { kind: 'Proficiencies', pick: 'Wisdom for the Wood Elf spells', note: 'The lineage lets him pick INT, WIS or CHA; WIS 14 is the highest: DC 12, attack +4' }
     ]
   },
   {
@@ -91,7 +91,7 @@ export const levels: LevelEntry[] = [
     proficiencyBonus: 2,
     table: { sneakAttack: '2d6', psiDice: '4d6' },
     gains: [
-      { name: 'Steady Aim', to: power('steady-aim'), note: 'Bonus action for advantage, if they haven’t moved' },
+      { name: 'Steady Aim', to: power('steady-aim'), note: 'Bonus action for advantage, if he hasn’t moved' },
       { name: 'Psionic Power', to: '/soulknife/powers', note: 'Four d6s: Psi-Bolstered Knack and Psychic Whispers' },
       { name: 'Psychic Blades', to: power('psychic-blades'), note: '1d6 psychic, thrown 60 ft, Vex; a second blade for 1d4 as a bonus action' },
       { name: 'Longstrider', to: power('longstrider'), note: 'Wood Elf: once per long rest without a slot' },
@@ -120,10 +120,10 @@ export const levels: LevelEntry[] = [
       { name: 'Uncanny Dodge', to: power('uncanny-dodge'), note: 'Reaction: halve a hit' },
       { name: 'Pass without Trace', to: power('pass-without-trace'), note: 'Wood Elf: +10 Stealth for the party, once per long rest' },
       { name: 'Psionic Energy Dice', note: 'd8s, and more of them' },
-      { name: 'Psychic Whispers for three' }
+      { name: 'Psychic Whispers for three', note: 'The whole party of four' }
     ],
     choices: [],
-    pending: ['Buy a Poisoner’s Kit (50 gp) for Cunning Strike’s Poison, unless the Criminal’s Thieves’ Tools became one.']
+    pending: ['Buy a Poisoner’s Kit (50 gp) for Cunning Strike’s Poison: the gold kept at the start covers it.']
   },
   {
     level: 6,
@@ -155,7 +155,7 @@ export const levels: LevelEntry[] = [
     table: { sneakAttack: '4d6', psiDice: '6d8' },
     gains: [{ name: 'Ability Score Improvement' }],
     choices: [],
-    pending: ['Tough (+2 HP a level: 83 here, 123 by level 12) or Lucky (three advantages a day, or disadvantage on an attack against them). The HP shown here and after leaves Tough out.']
+    pending: ['Tough (+2 HP a level: 83 here, 123 by level 12) or Lucky (three advantages a day, or disadvantage on an attack against him). The HP shown here and after leaves Tough out.']
   },
   {
     level: 9,
@@ -166,7 +166,7 @@ export const levels: LevelEntry[] = [
     gains: [
       { name: 'Soul Blades: Homing Strikes', to: power('homing-strikes'), note: 'A missed blade adds a psi die' },
       { name: 'Soul Blades: Psychic Teleportation', to: power('psychic-teleportation'), note: 'Throw a blade and teleport to it' },
-      { name: 'Psychic Whispers for four', note: 'The whole party' }
+      { name: 'Psychic Whispers for four', note: 'Room for a guide or a hireling' }
     ],
     choices: []
   },
@@ -200,11 +200,11 @@ export const levels: LevelEntry[] = [
     table: { sneakAttack: '6d6', psiDice: '8d10' },
     gains: [{ name: 'Ability Score Improvement' }],
     choices: [],
-    pending: ['Lucky, or Speedy (+10 speed, Dash through difficult terrain, opportunity attacks against them at disadvantage).']
+    pending: ['Lucky, or Speedy (+10 speed, Dash through difficult terrain, opportunity attacks against him at disadvantage).']
   }
 ]
 
-// Every skill proficiency they get at level 1 and the skill it went to
+// Every skill proficiency he gets at level 1 and the skill it went to
 export interface SkillPick {
   source: string
   rule: string
@@ -216,5 +216,5 @@ export const skillPicks: SkillPick[] = [
   { source: 'Rogue', rule: 'Four from Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Persuasion, Sleight of Hand and Stealth', picks: 4, skills: ['Acrobatics', 'Insight', 'Investigation', 'Deception'] },
   { source: 'Criminal', rule: 'Sleight of Hand and Stealth', picks: 2, skills: ['Sleight of Hand', 'Stealth'] },
   { source: 'Wood Elf', rule: 'Keen Senses: one of Insight, Perception or Survival', picks: 1, skills: ['Perception'] },
-  { source: 'Expertise', rule: 'Rogue level 1: two of their skill proficiencies at double the bonus', picks: 2, skills: ['Stealth', 'Perception'] }
+  { source: 'Expertise', rule: 'Rogue level 1: two of his skill proficiencies at double the bonus', picks: 2, skills: ['Stealth', 'Perception'] }
 ]

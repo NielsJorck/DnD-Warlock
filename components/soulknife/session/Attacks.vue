@@ -13,16 +13,19 @@ function sneak(type = 'psychic') {
   sneakAttack(crit.value, type)
   crit.value = false
 }
-function weaponDamage(notation: string, label: string) {
-  rollDamage(notation, label, crit.value)
+// A steel hit; the shortsword's Vex gives advantage on the next attack, like a blade's
+function weaponDamage(w: (typeof weapons)[number]) {
+  if (w.vex) state.value.vex = 2
+  rollDamage(w.dice, `${w.name} (${w.type})`, crit.value)
   crit.value = false
 }
 
+// Steel, for whatever shrugs off psychic damage (constructs, mostly)
 const mod = stats.bladeDamage
 const weapons = [
-  { name: 'Shortbow', meta: 'Two hands · 80/320 ft · Vex mastery', dice: `1d6+${mod}`, type: 'piercing' },
-  { name: 'Dagger', meta: 'Melee or thrown 20/60 ft · Light · Nick mastery', dice: `1d4+${mod}`, type: 'piercing' },
-  { name: 'Shortsword', meta: 'Melee · Light · no mastery picked', dice: `1d6+${mod}`, type: 'piercing' }
+  { name: 'Dagger', meta: 'Melee or thrown 20/60 ft · Light · Nick', dice: `1d4+${mod}`, type: 'piercing', vex: false },
+  { name: 'Second dagger', meta: 'Nick: in the same Attack action, after a Light weapon · no DEX to damage', dice: '1d4', type: 'piercing', vex: false },
+  { name: 'Shortsword', meta: 'Melee · Light · Vex: a hit gives advantage on the next attack', dice: `1d6+${mod}`, type: 'piercing', vex: true }
 ]
 </script>
 
@@ -39,7 +42,7 @@ const weapons = [
           class="rounded-lg border px-2.5 py-1.5 text-[12px] transition"
           :class="state.steadyAim ? 'border-jade/60 bg-jade/10 text-jade' : state.bonusUsed ? 'cursor-not-allowed border-obsidian-600 text-faint opacity-60' : 'border-obsidian-600 text-dim hover:text-parchment'"
           :disabled="state.steadyAim || state.bonusUsed"
-          title="Bonus action, only if they haven’t moved this turn: advantage on the next attack, speed 0"
+          title="Bonus action, only if he hasn’t moved this turn: advantage on the next attack, speed 0"
           @click="steadyAim"
         >Steady Aim</button>
         <label class="flex cursor-pointer items-center gap-2 rounded-lg border px-2.5 py-1.5 text-[12px] transition" :class="state.hidden ? 'border-amethyst/60 bg-amethyst/10 text-amethyst' : 'border-obsidian-600 text-dim'" title="Hidden with the Hide action: Invisible, so the next attack has advantage. Attacking ends it">
@@ -82,7 +85,7 @@ const weapons = [
 
     <!-- Other weapons -->
     <div class="p-5">
-      <p class="eyebrow mb-2 text-dim">Other weapons</p>
+      <p class="eyebrow mb-2 text-dim">Steel</p>
       <ul class="divide-y divide-obsidian-600/60">
         <li v-for="w in weapons" :key="w.name" class="flex flex-wrap items-center gap-x-3 gap-y-1.5 py-2">
           <span class="min-w-0 flex-1">
@@ -90,11 +93,13 @@ const weapons = [
             <span class="block text-[11px] text-faint">{{ w.meta }}</span>
           </span>
           <button type="button" class="btn px-2 py-1 text-[11.5px]" @click="attack(stats.weaponAttack, `${w.name} — attack`)">Attack {{ signed(stats.weaponAttack) }}</button>
-          <button type="button" class="btn px-2 py-1 text-[11.5px]" @click="weaponDamage(w.dice, `${w.name} (${w.type})`)">{{ w.dice }}</button>
+          <button type="button" class="btn px-2 py-1 text-[11.5px]" @click="weaponDamage(w)">{{ w.dice }}</button>
           <button type="button" class="btn px-2 py-1 text-[11.5px]" :disabled="state.sneakUsed" @click="sneak(w.type)">+ Sneak</button>
         </li>
       </ul>
-      <p class="mt-2 text-[12px] text-dim">The blades are almost always better: no ammunition, and psychic damage. The bow is for when both hands are full or the DM rules the blades out.</p>
+      <p class="mt-2 text-[12px] text-dim">
+        The blades are almost always better. Steel is for what’s immune to psychic damage, constructs above all: animated armor, flying swords, golems. Two thrown daggers fit in one Attack action and leave the bonus action free; the shortsword’s Vex sets up Sneak Attack up close.
+      </p>
     </div>
   </section>
 </template>

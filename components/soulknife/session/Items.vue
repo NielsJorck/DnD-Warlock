@@ -32,7 +32,7 @@ const triggers = computed<Trigger[]>(() => [
     name: 'Longstrider',
     to: '/soulknife/powers/longstrider',
     when: 'Action',
-    note: state.value.longstrider ? `Speed ${speed.value} for the hour` : 'Wood Elf · +10 ft for 1 hour, on them or a friend',
+    note: state.value.longstrider ? `Speed ${speed.value} for the hour` : 'Wood Elf · +10 ft for 1 hour, on him or a friend',
     label: state.value.longstrider ? 'Active' : 'Cast',
     active: state.value.longstrider,
     disabled: state.value.longstrider || left('longstrider') <= 0,
@@ -55,7 +55,7 @@ const triggers = computed<Trigger[]>(() => [
 
 function toggleHood() {
   state.value.hood = !state.value.hood
-  note(state.value.hood ? 'Hood up' : 'Hood down', state.value.hood ? 'Advantage on Stealth; Perception to spot them at disadvantage' : 'The cloak’s effect is off')
+  note(state.value.hood ? 'Hood up' : 'Hood down', state.value.hood ? 'Advantage on Stealth; Perception to spot him at disadvantage' : 'The cloak’s effect is off')
 }
 </script>
 
@@ -103,7 +103,7 @@ function toggleHood() {
       </li>
     </ul>
     <p class="mt-2 text-[11px] text-faint">
-      Potions and the kit don’t come back on a rest: tick a diamond back when they restock. Thieves’ Tools {{ signed(stats.tools) }} are under Rolls.
+      Potions and the kit don’t come back on a rest: tick a diamond back when he restocks. Thieves’ Tools {{ signed(stats.tools) }} are under Rolls.
     </p>
   </section>
 </template>

@@ -9,7 +9,7 @@ import { abilityOrder, allSkills, modifier, type RollStats } from '~/composables
 import type { AbilityKey, Feature } from '../shared'
 
 export const character = {
-  name: 'The Whisper-Knife', // working title until they have a name
+  name: 'The Whisper-Knife', // working title until he has a name
   epithet: 'The Blade Nobody Sees',
   level: 3,
   species: 'Wood Elf',
@@ -66,8 +66,8 @@ export const character = {
   toolProficiencies: [{ name: 'Thieves’ Tools', source: 'Rogue, and again from the Criminal (a DM question)' }],
   armorWeapons: 'Light armor · simple weapons · martial weapons with Finesse or Light',
   weaponMastery: [
-    { weapon: 'Shortbow', mastery: 'Vex', note: 'A hit gives advantage on the next attack against the target' },
-    { weapon: 'Dagger', mastery: 'Nick', note: 'The Light weapon’s extra attack becomes part of the Attack action' },
+    { weapon: 'Dagger', mastery: 'Nick', note: 'The Light weapon’s extra attack becomes part of the Attack action: two thrown daggers, bonus action free' },
+    { weapon: 'Shortsword', mastery: 'Vex', note: 'A hit gives advantage on the next attack against the target' },
     { weapon: 'Psychic Blade', mastery: 'Vex', note: 'Built into the blade, on top of the two above' }
   ],
 
@@ -76,9 +76,9 @@ export const character = {
       name: 'Alert',
       source: 'Origin feat · Criminal',
       level: 1,
-      summary: 'Proficiency bonus added to initiative: +6. Right after rolling initiative, they can swap it with a willing ally in the same combat.',
+      summary: 'Proficiency bonus added to initiative: +6. Right after rolling initiative, he can swap it with a willing ally in the same combat.',
       detail:
-        'Neither of the two can be incapacitated for the swap. A rogue who scouts ahead wants to act first, and when going first matters more for someone else (the party’s controller, a healer at a dying friend), they hand the high roll over.',
+        'Neither of the two can be incapacitated for the swap. A rogue who scouts ahead wants to act first, and when going first matters more for someone else (the party’s controller, a healer at a dying friend), he hands the high roll over.',
       to: '/soulknife/powers/initiative-swap'
     }
   ] as Feature[],
@@ -104,8 +104,9 @@ export const character = {
       name: 'Weapon Mastery',
       source: 'Rogue',
       level: 1,
-      summary: 'The mastery properties of two kinds of weapons: Shortbow (Vex) and Dagger (Nick). They can change the two after a long rest.',
-      detail: 'The Psychic Blade carries Vex on its own and doesn’t count against the two. Vex: a hit gives advantage on the next attack against that creature before the end of their next turn. Nick: the extra attack from a second Light weapon is made as part of the Attack action instead of the bonus action.'
+      summary: 'The mastery properties of two kinds of weapons: Dagger (Nick) and Shortsword (Vex). He can change the two after a long rest.',
+      detail:
+        'The Psychic Blade carries Vex on its own and doesn’t count against the two. These are for steel, against whatever is immune to psychic damage: constructs above all, such as animated armor, flying swords and golems, which a site of lost craft may well keep. Nick: the extra attack from a second Light weapon comes as part of the Attack action, so he throws two daggers (1d4 + 4, then 1d4) and keeps the bonus action. Vex: a shortsword hit gives advantage on his next attack against that creature before the end of his next turn, which sets up Sneak Attack.'
     },
     {
       name: 'Cunning Action',
@@ -119,7 +120,7 @@ export const character = {
       source: 'Rogue',
       level: 3,
       to: '/soulknife/powers/steady-aim',
-      summary: 'A bonus action gives advantage on the next attack this turn, if they haven’t moved. Speed 0 for the rest of the turn.'
+      summary: 'A bonus action gives advantage on the next attack this turn, if he hasn’t moved. Speed 0 for the rest of the turn.'
     },
     {
       name: 'Psionic Power',
@@ -134,14 +135,14 @@ export const character = {
       source: 'Soulknife',
       level: 3,
       to: '/soulknife/powers/psi-bolstered-knack',
-      summary: 'A failed check with a skill or tool they are proficient in gets a psi die added. The die is spent only if the check then succeeds.'
+      summary: 'A failed check with a skill or tool he is proficient in gets a psi die added. The die is spent only if the check then succeeds.'
     },
     {
       name: 'Psychic Whispers',
       source: 'Soulknife',
       level: 3,
       to: '/soulknife/powers/psychic-whispers',
-      summary: 'Telepathy with up to two creatures they can see, for hours equal to a psi die. The first use after a long rest is free.'
+      summary: 'Telepathy with up to two creatures he can see, for hours equal to a psi die. The first use after a long rest is free.'
     },
     {
       name: 'Psychic Blades',
@@ -163,7 +164,7 @@ export const character = {
     {
       name: 'Trance',
       source: 'Wood Elf',
-      summary: 'They don’t need sleep, and magic can’t put them to sleep. A long rest takes 4 hours of trancelike meditation, during which they stay conscious.',
+      summary: 'He doesn’t need sleep, and magic can’t put him to sleep. A long rest takes 4 hours of trancelike meditation, during which he stays conscious.',
       detail: 'Conscious through the night: a natural last watch while the others sleep.'
     }
   ] as Feature[]

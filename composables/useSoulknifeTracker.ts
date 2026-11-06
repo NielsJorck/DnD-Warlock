@@ -13,7 +13,7 @@ interface SoulknifeState {
   used: Record<string, number>
   sneakUsed: boolean // Sneak Attack this turn
   bonusUsed: boolean // the bonus action this turn
-  reactionUsed: boolean // since the start of their turn
+  reactionUsed: boolean // since the start of his turn
   steadyAim: boolean // advantage on the next attack this turn, speed 0
   vex: number // turns Vex's advantage still lasts: 2 when a blade hits, counted down by Next turn
   hidden: boolean // hidden with the Hide action: Invisible
@@ -216,7 +216,7 @@ export function useSoulknifeTracker() {
     const r = d20(stealth, s.hood ? 'Hide · Stealth · cloak' : 'Hide · Stealth', { advantage: s.hood })
     if (r.total >= 15) {
       s.hidden = true
-      note('Hidden', `Invisible until they attack or make a noise · ${r.total} to find them`)
+      note('Hidden', `Invisible until he attacks or makes a noise · ${r.total} to find him`)
     } else note('Not hidden', `${r.total} against DC 15`)
   }
 
@@ -226,7 +226,7 @@ export function useSoulknifeTracker() {
     s.bonusUsed = true
   }
 
-  // The start of their turn: the turn's uses reset, Steady Aim is gone and Vex counts down
+  // The start of his turn: the turn's uses reset, Steady Aim is gone and Vex counts down
   function nextTurn() {
     const s = state.value
     s.sneakUsed = false

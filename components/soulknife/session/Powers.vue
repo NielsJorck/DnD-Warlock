@@ -40,7 +40,7 @@ const groups = (['bonus', 'action', 'reaction', 'free'] as PowerWhen[])
             <button type="button" class="btn" @click="resolveKnack(false)">Still fails: keep</button>
           </template>
         </div>
-        <p class="mt-2 text-[12px] text-dim">A skill or tool they are proficient in. The die is spent only if the check now succeeds.</p>
+        <p class="mt-2 text-[12px] text-dim">A skill or tool he is proficient in. The die is spent only if the check now succeeds.</p>
       </div>
       <div class="bg-obsidian-900 p-5">
         <div class="flex items-baseline justify-between gap-2">
@@ -53,7 +53,7 @@ const groups = (['bonus', 'action', 'reaction', 'free'] as PowerWhen[])
           </button>
         </div>
         <p class="mt-2 text-[12px] text-dim">
-          {{ state.telepathy ? `Linked for ${state.telepathy} hour${state.telepathy === 1 ? '' : 's'}.` : 'No link.' }} Telepathy with them within a mile; they relay between the others.
+          {{ state.telepathy ? `Linked for ${state.telepathy} hour${state.telepathy === 1 ? '' : 's'}.` : 'No link.' }} Telepathy with him within a mile; he relays between the others.
         </p>
       </div>
     </div>
@@ -68,9 +68,9 @@ const groups = (['bonus', 'action', 'reaction', 'free'] as PowerWhen[])
         <button type="button" class="btn" :disabled="state.bonusUsed" @click="cunning('Dash')">Dash</button>
         <button type="button" class="btn" :disabled="state.bonusUsed" @click="cunning('Disengage')">Disengage</button>
         <button type="button" class="btn border-amethyst/40 text-amethyst hover:border-amethyst" :disabled="state.bonusUsed" title="Rolls Stealth against DC 15; with the hood up, with advantage" @click="cunning('Hide')">Hide <span class="text-faint">DC 15</span></button>
-        <button type="button" class="btn border-jade/40 text-jade hover:border-jade" :disabled="state.bonusUsed || state.steadyAim" title="Only if they haven’t moved this turn" @click="steadyAim">Steady Aim</button>
+        <button type="button" class="btn border-jade/40 text-jade hover:border-jade" :disabled="state.bonusUsed || state.steadyAim" title="Only if he hasn’t moved this turn" @click="steadyAim">Steady Aim</button>
       </div>
-      <p class="mt-2 text-[12px] text-dim">Hide needs heavy obscurement or three-quarters cover, out of every enemy’s sight. Hidden, they are Invisible: the next attack has advantage.</p>
+      <p class="mt-2 text-[12px] text-dim">Hide needs heavy obscurement or three-quarters cover, out of every enemy’s sight. Hidden, he is Invisible: the next attack has advantage.</p>
     </div>
 
     <!-- Everything else that is ready -->

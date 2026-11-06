@@ -48,7 +48,7 @@ useHead({ title: `Story & Payday — ${character.name}` })
         </figure>
         <div class="space-y-5">
           <p v-for="(p, n) in appearance.paragraphs" :key="n" class="lore">{{ p }}</p>
-          <NuxtLink to="/soulknife/items" class="inline-block text-sm text-gold/80 hover:text-gold-light">Their gear →</NuxtLink>
+          <NuxtLink to="/soulknife/items" class="inline-block text-sm text-gold/80 hover:text-gold-light">His gear →</NuxtLink>
         </div>
       </div>
     </section>
@@ -65,7 +65,7 @@ useHead({ title: `Story & Payday — ${character.name}` })
           <figure class="flex flex-col justify-center rounded-2xl border border-amethyst/40 bg-obsidian-950/70 p-6 text-center">
             <span class="font-display text-3xl text-amethyst" aria-hidden="true">◈</span>
             <blockquote class="mt-3 font-display text-xl leading-snug text-gilded">“{{ commission.creed }}”</blockquote>
-            <figcaption class="mt-3 text-[11px] uppercase tracking-[0.2em] text-faint">What they tell themselves</figcaption>
+            <figcaption class="mt-3 text-[11px] uppercase tracking-[0.2em] text-faint">What he tells himself</figcaption>
           </figure>
         </div>
       </div>

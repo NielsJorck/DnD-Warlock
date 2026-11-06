@@ -3,11 +3,11 @@ import { economy, tactics } from '~/data/characters/soulknife/tactics'
 </script>
 
 <template>
-  <!-- How the build fights and works a dungeon, on the Psychic Blades page: the plan and their turn -->
+  <!-- How the build fights and works a dungeon, on the Psychic Blades page: the plan and his turn -->
   <section class="panel overflow-hidden">
     <div class="border-b border-gold/10 px-6 py-4 sm:px-9">
       <p class="eyebrow text-amethyst">The plan around the blades</p>
-      <h2 class="heading mt-1 text-xl">How They Work</h2>
+      <h2 class="heading mt-1 text-xl">How He Works</h2>
     </div>
     <div class="grid gap-px bg-obsidian-600/60 md:grid-cols-2">
       <article v-for="(t, n) in tactics" :key="t.title" class="flex gap-4 bg-obsidian-900 p-5 sm:p-6">
