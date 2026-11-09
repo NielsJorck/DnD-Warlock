@@ -114,7 +114,7 @@ export const levels: LevelEntry[] = [
     gains: [{ name: 'Ability Score Improvement', note: 'Or a feat' }],
     choices: [],
     pending: [
-      'The plan: Sharpshooter, with its +1 DEX (to 19). No disadvantage shooting with an enemy next to them, half and three-quarters cover ignored, no disadvantage at long range. In corridors the first two come up every fight. Skulker at 8 takes DEX the rest of the way to 20.'
+      'The plan: Sharpshooter, with its +1 DEX (to 19). No disadvantage shooting with an enemy next to him, half and three-quarters cover ignored, no disadvantage at long range. In corridors the first two come up every fight. Skulker at 8 takes DEX the rest of the way to 20.'
     ]
   },
   {
@@ -161,7 +161,7 @@ export const levels: LevelEntry[] = [
     gains: [{ name: 'Ability Score Improvement' }],
     choices: [],
     pending: [
-      'The plan: Skulker, with its +1 DEX (to 20). Blindsight 10 ft: they see anything within 10 ft, even if it is invisible or in magical darkness. Advantage on the Stealth check when they Hide in combat, and a miss while hidden doesn’t give away where they are. DEX 20 is +1 to hit and damage, AC 17 and +1 initiative.'
+      'The plan: Skulker, with its +1 DEX (to 20). Blindsight 10 ft: he sees anything within 10 ft, even if it is invisible or in magical darkness. Advantage on the Stealth check when he Hides in combat, and a miss while hidden doesn’t give away where he is. DEX 20 is +1 to hit and damage, AC 17 and +1 initiative.'
     ]
   },
   {

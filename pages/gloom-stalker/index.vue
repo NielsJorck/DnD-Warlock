@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { character, stats } from '~/data/characters/gloom-stalker/character'
+import { appearance } from '~/data/characters/gloom-stalker/lore'
 import { items } from '~/data/characters/gloom-stalker/items'
 import { rulesPath, rulesets } from '~/data/campaign'
 
@@ -39,7 +40,7 @@ const sections = [
 
 <template>
   <div>
-    <!-- Who they are, and every number that matters at a glance -->
+    <!-- Who he is, and every number that matters at a glance -->
     <section class="panel relative overflow-hidden">
       <svg class="pointer-events-none absolute -right-20 -top-20 h-[480px] w-[480px] text-sapphire opacity-[0.08]" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="0.7" aria-hidden="true">
         <path d="M118 30a70 70 0 1 0 0 140a88 88 0 0 1 0-140z" />
@@ -50,7 +51,7 @@ const sections = [
       <div class="relative grid grid-cols-1 gap-6 p-5 sm:p-8 2xl:grid-cols-[minmax(0,1fr)_minmax(0,46rem)] 2xl:items-center">
         <div class="flex items-center gap-5 sm:gap-8">
           <NuxtLink to="/gloom-stalker/lore" class="group block w-24 shrink-0 overflow-hidden rounded-2xl border border-sapphire/40 shadow-panel sm:w-40 lg:w-48" aria-label="Story and appearance">
-            <div class="aspect-[3/4] w-full transition duration-500 group-hover:scale-[1.03]"><GloomStalkerEmblem /></div>
+            <img :src="publicPath(appearance.portrait.src)" :alt="appearance.portrait.alt" class="aspect-[3/4] w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
           </NuxtLink>
           <div class="min-w-0">
             <p class="eyebrow">Level {{ character.level }} {{ character.species }} {{ character.className }} · {{ character.subclass }}</p>
@@ -78,7 +79,7 @@ const sections = [
             </div>
           </dl>
           <AbilityGrid :stats="stats.abilities" highlight="dex" />
-          <p class="text-[10.5px] text-faint">Big numbers are ability checks; gold saves are proficient. Wisdom casts their spells, the Wood Elf’s too. Bow damage includes the Bracers of Archery’s +2, pending the DM.</p>
+          <p class="text-[10.5px] text-faint">Big numbers are ability checks; gold saves are proficient. Wisdom casts his spells, the Wood Elf’s too. Bow damage includes the Bracers of Archery’s +2, pending the DM.</p>
         </div>
       </div>
     </section>
@@ -138,7 +139,7 @@ const sections = [
             </div>
             <div class="flex gap-3">
               <dt class="w-24 shrink-0 text-faint">Charm, sleep</dt>
-              <dd class="text-parchment">Advantage on saves to avoid or end Charmed <span class="text-faint">(Fey Ancestry)</span>; magic can’t put them to sleep <span class="text-faint">(Trance)</span></dd>
+              <dd class="text-parchment">Advantage on saves to avoid or end Charmed <span class="text-faint">(Fey Ancestry)</span>; magic can’t put him to sleep <span class="text-faint">(Trance)</span></dd>
             </div>
             <div class="flex gap-3">
               <dt class="w-24 shrink-0 text-faint">Resistances</dt>

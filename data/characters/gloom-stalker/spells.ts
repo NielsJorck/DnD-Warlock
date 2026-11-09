@@ -25,7 +25,7 @@ export interface Spell {
   source: string // XPHB: the 2024 Player's Handbook
   access: SpellAccess
   status: SpellStatus
-  role: string // a few words on what it does for them
+  role: string // a few words on what it does for him
   summary: string // the spell, paraphrased
   higher?: string // what a higher slot adds
   notes?: string // how it fits the build
@@ -34,7 +34,7 @@ export interface Spell {
   save?: string
   attack?: boolean
   opensAt?: number // character level it becomes castable, for future spells
-  // Dice the session page rolls, by slot level; healing includes their +3
+  // Dice the session page rolls, by slot level; healing includes his +3
   dice?: Partial<Record<number, string>>
 }
 
@@ -127,14 +127,14 @@ export const spells: Spell[] = [
     source: 'XPHB',
     access: 'Favored Enemy',
     status: 'always',
-    role: 'Their quarry: 1d6 force on every hit',
+    role: 'His quarry: 1d6 force on every hit',
     damage: '1d6 force',
     dice: { 1: '1d6' },
     summary:
       'Mark a creature you can see within range as your quarry. Until the spell ends, your attack hits against it deal 1d6 force damage more, and you have advantage on Wisdom (Perception or Survival) checks to find it. If it drops to 0 hit points first, a bonus action moves the mark to another creature you can see within range.',
     higher: 'A 3rd- or 4th-level slot lets concentration last up to 8 hours, a 5th-level one up to 24 hours. The damage doesn’t grow.',
     notes:
-      'Favored Enemy casts it twice a day without a slot (three times from level 5, four from 9). One mark lasts the whole fight and moves from body to body, so it is usually one cast per fight. Force damage is almost never resisted. It is their concentration spell: everything else they could concentrate on competes with it.'
+      'Favored Enemy casts it twice a day without a slot (three times from level 5, four from 9). One mark lasts the whole fight and moves from body to body, so it is usually one cast per fight. Force damage is almost never resisted. It is his concentration spell: everything else he could concentrate on competes with it.'
   },
   {
     slug: 'disguise-self',
@@ -178,7 +178,7 @@ export const spells: Spell[] = [
     summary: 'A creature you touch regains 2d8 + your Wisdom modifier hit points.',
     higher: '+2d8 for each slot level above 1st.',
     notes:
-      'Their only healing besides potions and the Healer’s Kit: an action and a touch, so mostly after the fight, or for an ally fallen next to them. No concentration, so it doesn’t drop Hunter’s Mark.'
+      'His only healing besides potions and the Healer’s Kit: an action and a touch, so mostly after the fight, or for an ally fallen next to him. No concentration, so it doesn’t drop Hunter’s Mark.'
   },
   {
     slug: 'alarm',
@@ -240,7 +240,7 @@ export const spells: Spell[] = [
       'A 20-ft-radius sphere of fog fills a point within range and stays for the duration. Its area is heavily obscured. A wind of at least 10 mph scatters it.',
     higher: 'The radius grows by 20 ft for each slot level above 1st.',
     notes:
-      'The emergency spell: across a corridor, it stops archers and casters seeing the party while everyone pulls back. It costs Hunter’s Mark, since both are concentration. Fog isn’t darkness, so Umbral Sight doesn’t help inside it; anything in it is blinded the same way they are.'
+      'The emergency spell: across a corridor, it stops archers and casters seeing the party while everyone pulls back. It costs Hunter’s Mark, since both are concentration. Fog isn’t darkness, so Umbral Sight doesn’t help inside it; anything in it is blinded the same way he is.'
   },
 
   // ── Candidates: other 1st-level ranger spells ───────────────
@@ -284,7 +284,7 @@ export const spells: Spell[] = [
     status: 'candidate',
     role: 'Ten berries: food, and a hit point each',
     summary: 'Ten magic berries appear in your hand for the duration. A creature can eat one as a bonus action: it regains 1 hit point and is fed for the day.',
-    notes: 'Mostly rations. With no Healing Word of their own, a berry is the cheap way to put a hit point into a dying ally, if the DM lets one be fed to someone who can’t eat it themselves.'
+    notes: 'Mostly rations. With no Healing Word of his own, a berry is the cheap way to put a hit point into a dying ally, if the DM lets one be fed to someone who can’t eat it themselves.'
   },
   {
     slug: 'entangle',
@@ -407,7 +407,7 @@ export const spells: Spell[] = [
     access: 'Ranger',
     status: 'future',
     opensAt: 5,
-    role: 'A spirit beast that fights beside them',
+    role: 'A spirit beast that fights beside him',
     summary:
       'A bestial spirit appears in an unoccupied space within range: Air (flies), Land (climbs) or Water (swims), using the Bestial Spirit stat block, whose numbers scale with the slot. It is an ally that acts right after you in initiative and obeys your commands; without one it only dodges.',
     higher: 'The spirit’s hit points, damage and attacks grow with the slot level.',

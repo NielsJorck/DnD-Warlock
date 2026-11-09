@@ -64,7 +64,7 @@ function deathSave() {
           </div>
         </div>
       </div>
-      <p class="mt-2 text-[11px] leading-relaxed text-faint">A natural 20 brings them back with 1 HP, a natural 1 counts as two failures. Damage while down is a failure; healing clears the saves. A Healer’s Kit stabilizes them without a roll.</p>
+      <p class="mt-2 text-[11px] leading-relaxed text-faint">A natural 20 brings him back with 1 HP, a natural 1 counts as two failures. Damage while down is a failure; healing clears the saves. A Healer’s Kit stabilizes him without a roll.</p>
     </div>
 
     <div class="flex flex-wrap gap-1.5">

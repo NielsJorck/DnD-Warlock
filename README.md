@@ -73,7 +73,7 @@ The Storm-Hammer’s pages, the same set as Lucan’s (a concept: nothing played
 
 His questions for the DM show on `/rules` under his name until they are answered.
 
-The three 2024 concepts get the same set at level 3, the campaign’s start (nothing played yet, each one’s uncommon item pitched to the DM, no paintings yet: an emblem stands in for the portrait). The Whisper-Knife is a rogue and the Undertow a monk, neither with a spellbook, so **Powers** and **Techniques** take the Spells page’s place:
+The three 2024 concepts get the same set at level 3, the campaign’s start (nothing played yet, each one’s uncommon item pitched to the DM; the Lightless Hunter has a painted portrait, and an emblem stands in for the other two’s). The Whisper-Knife is a rogue and the Undertow a monk, neither with a spellbook, so **Powers** and **Techniques** take the Spells page’s place:
 
 | Route | What’s there |
 | --- | --- |
@@ -83,7 +83,7 @@ The three 2024 concepts get the same set at level 3, the campaign’s start (not
 | `/elemental-monk/techniques`, `/elemental-monk/techniques/:slug` | Martial arts and the Focus techniques, the Warrior of the Elements’ features (Elementalism among them), the Bugbear’s traits and Tavern Brawler, ready now or arriving by level 12. Elemental Attunement carries how they fight |
 | `/gloom-stalker/spells`, `/gloom-stalker/spells/:slug` | Spellbook: Hunter’s Mark and the Gloom Stalker spells, the Wood Elf’s lineage spells, the four prepared, candidates and later spells. Hunter’s Mark carries how they fight |
 | `/soulknife/items`, `/gloom-stalker/items`, `/elemental-monk/items` (and `/:slug`) | The starting kit, mundane gear and a gold ledger (the DM’s 200 gp plus the packages’ coins, what was bought and what is left), and a wishlist of other uncommon items to ask for |
-| `/soulknife/lore`, `/gloom-stalker/lore`, `/elemental-monk/lore` | A first draft of their story, what’s still to settle, appearance with an art brief for a portrait, why they took the commission, and story hooks |
+| `/soulknife/lore`, `/gloom-stalker/lore`, `/elemental-monk/lore` | A first draft of their story, what’s still to settle, appearance with a portrait or the art brief for one, why they took the commission, and story hooks |
 | `/soulknife/levels`, `/gloom-stalker/levels`, `/elemental-monk/levels` | Levels 1–3 as built, checked against the campaign’s array, and the plan for 4–12 with what’s still to decide |
 
 Their questions for the DM show on `/rules` under the 2024 tab.
@@ -134,7 +134,7 @@ For the Whisper-Knife (`data/characters/soulknife/`), the Lightless Hunter (`dat
 - `items.ts`: the starting kit and wishlist in the same shape as the others’, the mundane gear, and `gold`, the ledger of coins in and spent
 - `nuxt.config.ts` imports `powers.ts`, `techniques.ts`, `spells.ts` and `items.ts` to list their pages, so they import only relative files, never `~/` paths
 
-Their trackers are `composables/useSoulknifeTracker.ts`, `composables/useGloomStalkerTracker.ts` and `composables/useElementalMonkTracker.ts`, with their panels in `components/soulknife/`, `components/gloom-stalker/` and `components/elemental-monk/` (the emblem that stands in for a portrait is there too). The dice roller’s `rerollOnes` option rolls a 1 on a damage die again, for Tavern Brawler.
+Their trackers are `composables/useSoulknifeTracker.ts`, `composables/useGloomStalkerTracker.ts` and `composables/useElementalMonkTracker.ts`, with their panels in `components/soulknife/`, `components/gloom-stalker/` and `components/elemental-monk/` (the Whisper-Knife’s and the Undertow’s emblems, which stand in for a portrait, are there too). The dice roller’s `rerollOnes` option rolls a 1 on a damage die again, for Tavern Brawler.
 
 Shared by both characters’ data: `data/characters/shared.ts` (ability keys and names, the feature shape, spell schools and level labels) and `data/characters/item-types.ts` (the item shape, slots, versions and source books). `FeatureList` takes a `levels` page for its `Lv` links, `AbilityGrid` a character’s `stats` and casting ability, and `ItemRow` and `AttunementSlots` a character’s items and item pages; they default to Lucan’s.
 
@@ -159,4 +159,5 @@ Images live in `public/images/`, and the originals of the paintings are kept in 
 - **Item paintings on a white background** (the Pact Keeper’s Crystal Dagger): run `node scripts/import-art.mjs art/<name>.original.png public/images/<name>.png [glow hex]`. The script removes the white background, fits the item onto a 600×800 canvas and places it on the site's dark backdrop.
 - **Full paintings** (the portrait and the Genie Vessel ring): save a JPEG copy at quality 85 in `public/images/`. The originals are over 1 MB each, too heavy for a page.
 - **The Storm-Hammer’s paintings** came as WebP and are kept in `art/` as `<name>.original.webp`. The web copies in `public/images/` are WebP at quality 82, at most 1100 px on the long side; the portrait is cropped to 3:4 from the top so the sheet’s frames keep his head.
+- **The Lightless Hunter’s portrait** came as a 3:4 WebP and is kept in `art/` as `the-lightless-hunter.original.webp`. The web copy is WebP at quality 82, 825 × 1100 px.
 - **Drawn illustrations** (the Golden Pact): `node scripts/generate-art.mjs` writes `the-golden-pact.svg`.

@@ -132,7 +132,7 @@ const perHit = [
         <button type="button" class="btn" @click="d20(stats.bladeAttack, 'Scimitar — extra attack (Nick)')">Scimitar <span class="tabular-nums text-faint">{{ signed(bladeHit) }}</span></button>
         <button type="button" class="btn" @click="dmg('1d6', 'Scimitar (slashing) · no modifier on the extra attack')">Hit <span class="tabular-nums text-faint">1d6</span></button>
       </div>
-      <p class="mt-2 text-[12px] text-dim">When something reaches them. The light weapon’s extra attack adds no DEX to damage; Nick makes it part of the Attack action, so the bonus action stays free. Hunter’s Mark and Dreadful Strike work on blades too.</p>
+      <p class="mt-2 text-[12px] text-dim">When something reaches him. The light weapon’s extra attack adds no DEX to damage; Nick makes it part of the Attack action, so the bonus action stays free. Hunter’s Mark and Dreadful Strike work on blades too.</p>
     </div>
 
     <details class="group">

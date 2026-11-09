@@ -11,7 +11,7 @@ import type { AbilityKey, Feature } from '../shared'
 const ruleset: RulesetId = '2024'
 
 export const character = {
-  name: 'The Lightless Hunter', // working title until they have a name
+  name: 'The Lightless Hunter', // working title until he has a name
   epithet: 'Who Waits Where the Torchlight Ends',
   level: 3,
   species: 'Wood Elf',
@@ -59,7 +59,7 @@ export const character = {
   // 2024: Common and two standard languages at creation; neither species nor background adds any
   languages: [
     { name: 'Common', note: 'Every character' },
-    { name: 'Elvish', note: 'Creation: the wood they grew up in' },
+    { name: 'Elvish', note: 'Creation: the wood he grew up in' },
     { name: 'Dwarvish', note: 'Creation: the old roads and delves of the mountains are dwarven' },
     { name: 'Goblin', note: 'Deft Explorer: what is usually living in those delves now' },
     { name: 'Orc', note: 'Deft Explorer: who else holds the Sword Mountains' }
@@ -87,7 +87,7 @@ export const character = {
       level: 1,
       summary: 'Adds the proficiency bonus to initiative. Right after rolling initiative, can swap it with a willing ally’s.',
       detail:
-        'The Criminal’s own feat, kept by choice when the DM freed it. With Dread Ambusher’s Wisdom on top, initiative is +9: they act first in nearly every fight, which is when Ambusher’s Leap and the opening Dreadful Strike matter. The swap hands a high roll to whoever needs to go first instead (a controller with Web), and can’t be used if either of them is incapacitated. Magic Initiate (Druid), for Healing Word and Guidance, was the runner-up.'
+        'The Criminal’s own feat, kept by choice when the DM freed it. With Dread Ambusher’s Wisdom on top, initiative is +9: he acts first in nearly every fight, which is when Ambusher’s Leap and the opening Dreadful Strike matter. The swap hands a high roll to whoever needs to go first instead (a controller with Web), and can’t be used if either of them is incapacitated. Magic Initiate (Druid), for Healing Word and Guidance, was the runner-up.'
     }
   ] as Feature[],
 
@@ -134,16 +134,16 @@ export const character = {
       to: '/gloom-stalker/session#attacks',
       summary: 'Wisdom added to initiative. +10 ft speed on the first turn of each combat. Dreadful Strike: once per turn, a weapon hit deals 2d6 psychic more.',
       detail:
-        'Ambusher’s Leap: at the start of their first turn in each combat their speed rises by 10 ft until the end of that turn, to 45. Dreadful Strike is chosen after the hit, works with the bow or the scimitar, and has as many uses as the Wisdom modifier (3) per long rest. It becomes 2d8 with Stalker’s Flurry at level 11.',
+        'Ambusher’s Leap: at the start of his first turn in each combat his speed rises by 10 ft until the end of that turn, to 45. Dreadful Strike is chosen after the hit, works with the bow or the scimitar, and has as many uses as the Wisdom modifier (3) per long rest. It becomes 2d8 with Stalker’s Flurry at level 11.',
       uses: 'Dreadful Strike 3 / long rest'
     },
     {
       name: 'Umbral Sight',
       source: 'Gloom Stalker',
       level: 3,
-      summary: 'Darkvision 60 ft more, to 120 ft. While entirely in darkness, they are invisible to any creature that relies on darkvision to see them there.',
+      summary: 'Darkvision 60 ft more, to 120 ft. While entirely in darkness, he is invisible to any creature that relies on darkvision to see him there.',
       detail:
-        'Invisible to a creature means its attacks against them have disadvantage and theirs against it have advantage, and it can’t target them with effects that need sight. Most things living in a dungeon see by darkvision, so this is the build’s engine, and at 120 ft they see twice as far into the dark as the goblins and orcs do. It ends the moment light reaches them: a torch sheds bright light for 20 ft and dim light 20 ft beyond, and dim light isn’t darkness. Blindsight, tremorsense, truesight and anything carrying its own light see them normally.'
+        'Invisible to a creature means its attacks against him have disadvantage and his against it have advantage, and it can’t target him with effects that need sight. Most things living in a dungeon see by darkvision, so this is the build’s engine, and at 120 ft he sees twice as far into the dark as the goblins and orcs do. It ends the moment light reaches him: a torch sheds bright light for 20 ft and dim light 20 ft beyond, and dim light isn’t darkness. Blindsight, tremorsense, truesight and anything carrying its own light see him normally.'
     },
     {
       name: 'Gloom Stalker Spells',
@@ -162,14 +162,14 @@ export const character = {
         'Both spells are always prepared, so they take none of the ranger’s prepared picks, and ranger slots can cast them again. Druidcraft’s Fire Play lights or snuffs out a candle, torch or small campfire within 30 ft: the quickest way to put a room back in the dark.',
       uses: 'Longstrider 1 / long rest'
     },
-    { name: 'Darkvision', source: 'Wood Elf', level: 1, summary: '60 ft of their own, which Umbral Sight extends to 120 ft. Dim light as bright, darkness as dim light, in shades of gray.' },
+    { name: 'Darkvision', source: 'Wood Elf', level: 1, summary: '60 ft of his own, which Umbral Sight extends to 120 ft. Dim light as bright, darkness as dim light, in shades of gray.' },
     { name: 'Fey Ancestry', source: 'Wood Elf', level: 1, summary: 'Advantage on saves to avoid or end the Charmed condition.' },
     { name: 'Keen Senses', source: 'Wood Elf', level: 1, summary: 'Proficiency in Perception (one of Insight, Perception or Survival), which Deft Explorer then doubles.' },
     {
       name: 'Trance',
       source: 'Wood Elf',
       level: 1,
-      summary: 'They don’t need sleep, and magic can’t put them to sleep. A long rest takes 4 hours of trancelike meditation, during which they stay conscious.',
+      summary: 'He doesn’t need sleep, and magic can’t put him to sleep. A long rest takes 4 hours of trancelike meditation, during which he stays conscious.',
       detail: 'Conscious through the night, and done resting four hours before the others: the natural last watch in a dungeon camp.'
     }
   ] as Feature[]

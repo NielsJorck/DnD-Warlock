@@ -237,7 +237,7 @@ export function useGloomStalkerTracker() {
     return d20(stats.initiative, 'Initiative · Dread Ambusher, Alert')
   }
 
-  // The start of their next turn: the leap is over, Dreadful Strike is ready again
+  // The start of his next turn: the leap is over, Dreadful Strike is ready again
   function nextTurn() {
     state.value.firstTurn = false
     state.value.dreadfulThisTurn = false

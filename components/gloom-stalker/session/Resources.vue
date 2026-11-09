@@ -114,7 +114,7 @@ function rest(kind: 'short' | 'long') {
       <button type="button" class="btn btn-gold py-2.5" @click="rest('long')">✦ Long rest</button>
     </div>
     <p class="mt-2 text-[10.5px] leading-relaxed text-faint">
-      Nothing of theirs comes back on a short rest; spend Hit Point Dice to heal. A long rest restores HP, every Hit Point Die (2024), slots and daily uses, removes one level of exhaustion and clears conditions. Potions and arrows don’t come back.
+      Nothing of his comes back on a short rest; spend Hit Point Dice to heal. A long rest restores HP, every Hit Point Die (2024), slots and daily uses, removes one level of exhaustion and clears conditions. Potions and arrows don’t come back.
     </p>
   </section>
 </template>

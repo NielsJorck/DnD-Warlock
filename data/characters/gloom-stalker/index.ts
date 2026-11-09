@@ -2,7 +2,7 @@
 
 import type { CharacterEntry } from '..'
 import { character } from './character'
-import { houseRules, questions, rulings } from './lore'
+import { appearance, houseRules, questions, rulings } from './lore'
 
 export const gloomStalker: CharacterEntry = {
   slug: 'gloom-stalker',
@@ -12,7 +12,7 @@ export const gloomStalker: CharacterEntry = {
   ruleset: character.ruleset,
   epithet: character.epithet,
   motto: character.motto,
-  // No portrait yet: the sheet and lore pages show an emblem instead
+  portrait: appearance.portrait,
   nav: [
     { to: '/gloom-stalker', label: 'Sheet', exact: true },
     { to: '/gloom-stalker/session', label: 'Session', primary: true },

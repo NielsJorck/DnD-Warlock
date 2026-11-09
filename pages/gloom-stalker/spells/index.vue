@@ -11,7 +11,7 @@ const tabs: { id: Tab; label: string; statuses: SpellStatus[]; blurb?: string }[
     id: 'ready',
     label: 'Ready',
     statuses: ['known', 'always', 'prepared'],
-    blurb: `What they can cast today: the Wood Elf’s Druidcraft and Longstrider, Hunter’s Mark and Disguise Self (always prepared), and ${stats.prepared} prepared from the ranger list. One prepared spell can be swapped after each long rest.`
+    blurb: `What he can cast today: the Wood Elf’s Druidcraft and Longstrider, Hunter’s Mark and Disguise Self (always prepared), and ${stats.prepared} prepared from the ranger list. One prepared spell can be swapped after each long rest.`
   },
   { id: 'later', label: 'Candidates & future', statuses: ['candidate', 'future'], blurb: 'Other 1st-level ranger spells worth swapping in, and what opens at levels 5 and 9: 2nd- and 3rd-level slots, the Wood Elf’s Pass without Trace, and the Gloom Stalker’s Rope Trick and Fear.' },
   { id: 'all', label: 'All', statuses: ['known', 'always', 'prepared', 'candidate', 'future'] }

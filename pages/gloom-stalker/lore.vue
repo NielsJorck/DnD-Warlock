@@ -40,13 +40,12 @@ useHead({ title: `Story — ${character.name}` })
     <section class="mt-16">
       <SectionHeading title="Appearance" />
       <div class="panel grid gap-8 p-6 sm:p-8 lg:grid-cols-[340px_minmax(0,1fr)]">
-        <figure>
-          <div class="aspect-[3/4] w-full overflow-hidden rounded-2xl border border-sapphire/40"><GloomStalkerEmblem /></div>
-          <figcaption class="mt-2 text-[12px] italic leading-relaxed text-faint">No portrait yet. The art brief for one is kept with the lore data.</figcaption>
+        <figure class="overflow-hidden rounded-2xl border border-sapphire/40">
+          <img :src="publicPath(appearance.portrait.src)" :alt="appearance.portrait.alt" class="aspect-[3/4] w-full object-cover" loading="lazy" />
         </figure>
         <div class="space-y-5">
           <p v-for="(p, n) in appearance.paragraphs" :key="n" class="lore">{{ p }}</p>
-          <NuxtLink to="/gloom-stalker/items" class="inline-block text-sm text-gold/80 hover:text-gold-light">Their gear →</NuxtLink>
+          <NuxtLink to="/gloom-stalker/items" class="inline-block text-sm text-gold/80 hover:text-gold-light">The gear in the painting →</NuxtLink>
         </div>
       </div>
     </section>

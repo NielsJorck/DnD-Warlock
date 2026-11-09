@@ -1,21 +1,21 @@
 // The Lightless Hunter's story, a first draft: a wood elf smuggler of the
 // tunnels under the Sword Mountains who came back alone from the dark. What's
 // still to settle is listed in `open`. Questions for the DM, house rules and
-// rulings are at the bottom and show on /rules. No portrait yet:
-// `portraitPrompt` is the brief for one.
+// rulings are at the bottom and show on /rules. The portrait was made from
+// `portraitPrompt`.
 
 import type { HouseRule, OpenQuestion, Ruling } from '../../campaign'
 
 export const story = {
   paragraphs: [
-    'They were born in the forest at the feet of the Sword Mountains and left it young, for the coast towns and the money that moves along them. The money that pays best stays off the toll roads, and under the mountains run the old dwarven roads: tunnels nobody has mapped, where no patrol will follow and an elf needs no lantern. For years they ran goods through them for whoever paid, and learned every turning.',
-    'Then a run went wrong. A tunnel collapsed behind the crew, and three days followed in the dark with something moving in the passages that could see the smugglers perfectly well, and could not see them at all. They came out alone, with eyes that had learned the deep dark and a habit of standing just past the edge of the lantern light, where whatever is hunting looks for prey and finds nothing.',
+    'He was born in the forest at the feet of the Sword Mountains and left it young, for the coast towns and the money that moves along them. The money that pays best stays off the toll roads, and under the mountains run the old dwarven roads: tunnels nobody has mapped, where no patrol will follow and an elf needs no lantern. For years he ran goods through them for whoever paid, and learned every turning.',
+    'Then a run went wrong. A tunnel collapsed behind the crew, and three days followed in the dark with something moving in the passages that could see the smugglers perfectly well, and could not see him at all. He came out alone, with eyes that had learned the deep dark, hair gone white, and a habit of standing just past the edge of the lantern light, where whatever is hunting looks for prey and finds nothing.',
     'The people who paid for that cargo still want to know where it went, and the watch in two towns knows the face. The patron’s expedition pays well, asks nothing about the past, and goes where neither will follow. A smuggler who brings a party back from a long-lost site has a new name to trade on. One who doesn’t has already been through that once.'
   ],
   open: [
-    'Their name.',
+    'His name.',
     'Who the lost crew were, what they were carrying, and whether the patron’s long-lost site has anything to do with the tunnel that collapsed.',
-    'Where they learned the ranger’s craft and its spells: an old poacher, the wood elves they left behind, or the dark itself.',
+    'Where he learned the ranger’s craft and its spells: an old poacher, the wood elves he left behind, or the dark itself.',
     'What hunted the crew in the tunnels, and whether it is still down there.',
     'Who still wants the lost cargo, and whether the patron knows who they are.'
   ]
@@ -23,29 +23,36 @@ export const story = {
 
 export const appearance = {
   paragraphs: [
-    'A lean wood elf, young by elven reckoning and weathered by mountain wind, with close-cropped dark hair, an old scar along the jaw and pale grey eyes that seem to catch what little light there is.',
-    'They dress for the dark: studded leather dyed charcoal and stitched with nothing that shines, a hooded mantle the color of wet slate, soft-soled boots, and a longbow wrapped in black cord so it never glints. A roll of thieves’ tools and a short crowbar ride at the hip, and a sprig of mistletoe is tied at the quiver strap.',
-    'On their forearms are the Bracers of Archery, dark leather over blackened bronze worked with a crescent moon. They keep to the edge of every lit room without seeming to think about it, and candles near them have a habit of going out.'
+    'A lean wood elf, young by elven reckoning, who came out of the dark changed: gaunt and hollow-cheeked, with ashen grey skin the sun never quite brought back, a thin scar across the cheek and jaw, and hair gone white where it shows under the hood. His pale grey eyes sit in a smeared band of soot and seem to catch what little light there is.',
+    'He dresses for the dark: charcoal studded leather crossed with belts and stitched with nothing that shines, a ragged hooded mantle the color of wet slate, and a dark scarf he pulls up against tunnel dust and down to talk. The longbow rides unstrung across his back beside the quiver, with a sprig of mistletoe tied to its strap. A scimitar, a roll of thieves’ tools and a short crowbar hang at his belt.',
+    'On his forearms are the Bracers of Archery, dark leather over blackened bronze worked with crescent moons. Five knotted cords are tied around his left wrist, one for each of the crew who didn’t come out. He keeps to the edge of every lit room without seeming to think about it, and candles near him have a habit of going out.'
   ],
-  // The art brief for a portrait at /images/the-lightless-hunter.webp (not shown on the site)
+  portrait: {
+    src: '/images/the-lightless-hunter.webp', // original in art/the-lightless-hunter.original.webp
+    alt: 'The Lightless Hunter, a gaunt wood elf in a ragged dark hood before a carved dwarven archway: ashen skin, white hair at the temple, a band of soot across pale grey eyes, a scarf around his neck, crescent-moon bracers, knotted cords on one wrist, a bow and quiver on his back and a hand on the hilt at his hip'
+  },
+  // The prompt the portrait was made from (the candle didn't make it into the painting).
+  // Negative prompt: bow in hand, bowstring, strung bow, bow passing through body, two
+  // bows, extra fingers, extra arms, fire magic, glowing hands, bright lighting, shiny
+  // armor, magic effects, text, watermark
   portraitPrompt:
-    'Painted fantasy portrait, 3:4, head and shoulders to waist. A lean, androgynous wood elf ranger, young by elven reckoning, pointed ears, close-cropped dark hair, a scar along the jaw, pale grey eyes reflecting faint light. Charcoal studded leather, a slate-grey hooded mantle with the hood back, a black-corded longbow over one shoulder, a roll of thieves’ tools at the belt, dark bronze bracers engraved with a crescent moon. They stand in a dwarven tunnel at the edge of distant torchlight, half their face lit warm, half lost in blue-black shadow. Moody chiaroscuro, muted palette, no text.'
+    'Fantasy character portrait, D&D 5e, shown from the knees up, 3:4 portrait orientation. A lean, wiry male wood elf ranger stands in a ruined dwarven tunnel lit only by a single candle, body turned three-quarters toward the viewer, looking straight at the viewer, still and watchful. His deep slate-grey hood is up, shading a gaunt, hollow-cheeked face with high elven cheekbones and ashen, almost grey skin; the tip of a pointed ear shows at the hood’s edge. A thin pale scar runs along his jaw, a band of soot is smeared across his eyes, and a dark scarf is pulled down and bunched loosely around his neck. His eyes glow a faint pale silver, like an animal’s eyes catching light. A single lock of white hair escapes the hood at one temple. He wears matte charcoal studded leather with nothing that shines, a slate-grey hooded mantle falling to mid-thigh, and dark leather bracers over blackened bronze engraved with a crescent moon on both forearms. An unstrung longbow, a straight dark stave wrapped in black cord, is slung across his back with a quiver of arrows; only the top of the stave and the arrow fletchings show above his right shoulder, and a sprig of mistletoe is tied to the quiver strap. His right hand rests on the hilt of a scimitar at his hip, beside a small rolled leather tool case. His left hand is raised beside a candle on a stone ledge, two fingers closing on its flame; five thin knotted cords are tied around that wrist. The last of the flame casts a faint warm glow up across his face and fingers. Behind him a carved dwarven archway recedes into blue-black darkness. Cold blue-black palette with one warm accent, dramatic chiaroscuro, highly detailed digital painting, no text, no watermark.'
 }
 
 // The third section of the lore page: why the Sword Mountains, in the flyer's words
 // "what draws you to the Sword Mountains"
 export const commission = {
   name: 'The Sword Mountains',
-  title: 'Why they took the commission',
+  title: 'Why he took the commission',
   paragraphs: [
-    'The tunnels under the mountains are theirs: every dwarven road, every bolt-hole, every passage that floods in spring. No one else the patron could hire has walked as many of them in the dark, and fewer have come back up from as deep.',
-    'The pay is the obvious reason, and a clean start comes with it: an expedition is a long way from the towns where their face is known. The quieter reason is the collapse. Somewhere under the same mountains are the bones of the crew they lost, the cargo nobody delivered, and whatever saw in the dark that day. A long-lost site, a patron who pays well and three other people who can hold their own: it is the closest thing to a second chance they have been offered.'
+    'The tunnels under the mountains are his: every dwarven road, every bolt-hole, every passage that floods in spring. No one else the patron could hire has walked as many of them in the dark, and fewer have come back up from as deep.',
+    'The pay is the obvious reason, and a clean start comes with it: an expedition is a long way from the towns where his face is known. The quieter reason is the collapse. Somewhere under the same mountains are the bones of the crew he lost, the cargo nobody delivered, and whatever saw in the dark that day. A long-lost site, a patron who pays well and three other people who can hold their own: it is the closest thing to a second chance he has been offered.'
   ],
   creed: 'Walk where the light ends. Wait. Let them come to you.'
 }
 
 export const hooks = [
-  'Marks scratched in the tunnels of the lost site match the ones they left during the three days in the dark.',
+  'Marks scratched in the tunnels of the lost site match the ones he left during the three days in the dark.',
   'The people who paid for the lost cargo hear about the expedition, and send someone after it to learn what the smuggler really saw down there.',
   'Something in the deep levels doesn’t rely on darkvision, and Umbral Sight doesn’t fool it.',
   'One of the lost crew is alive, and isn’t who they were.'
@@ -64,7 +71,7 @@ export const questions: OpenQuestion[] = [
   {
     question: 'Umbral Sight and the party’s light',
     detail:
-      'It only works while they are entirely in darkness. When an ally carries a torch (bright light 20 ft, dim light 20 ft more) or a Light cantrip, their square is lit and the invisibility is off. Is scouting ahead of the light, or the party moving dark where it can, how the DM sees it working? And how will the table know which monsters rely on darkvision, as opposed to blindsight or tremorsense?'
+      'It only works while he is entirely in darkness. When an ally carries a torch (bright light 20 ft, dim light 20 ft more) or a Light cantrip, his square is lit and the invisibility is off. Is scouting ahead of the light, or the party moving dark where it can, how the DM sees it working? And how will the table know which monsters rely on darkvision, as opposed to blindsight or tremorsense?'
   },
   {
     question: 'Druidcraft’s Fire Play on a torch someone is holding?',

@@ -84,7 +84,7 @@ export const items: Item[] = [
       'In the 2024 rules drinking a potion, or administering it to a creature within 5 ft, takes a bonus action.',
       '50 gp each in the Player’s Handbook.'
     ],
-    forCharacter: 'A bonus action means they can still shoot on the turn they drink. It competes with Hunter’s Mark for that bonus action.',
+    forCharacter: 'A bonus action means he can still shoot on the turn he drinks. It competes with Hunter’s Mark for that bonus action.',
     glyph: '⚗'
   },
   {
@@ -99,7 +99,7 @@ export const items: Item[] = [
     effect: 'Silent steps on any surface, and advantage on Stealth checks',
     rules: ['While you wear them, your steps make no sound, whatever the surface you are moving across.', 'You have advantage on Dexterity (Stealth) checks.'],
     forCharacter:
-      'Always on, with nothing to switch on and no attunement. Stealth +6 with advantage takes the 2024 Hide action’s DC 15 from a 60% chance to about 84%. Umbral Sight already hides them in the dark from anything using darkvision, and Pass without Trace adds +10 from level 5, so the boots count most at levels 3 and 4, in lit rooms, and against creatures that don’t see by darkvision. No risk with the DM: nothing like a +1 weapon.',
+      'Always on, with nothing to switch on and no attunement. Stealth +6 with advantage takes the 2024 Hide action’s DC 15 from a 60% chance to about 84%. Umbral Sight already hides him in the dark from anything using darkvision, and Pass without Trace adds +10 from level 5, so the boots count most at levels 3 and 4, in lit rooms, and against creatures that don’t see by darkvision. No risk with the DM: nothing like a +1 weapon.',
     caveat:
       'Only one uncommon item at the start, so this replaces the bracers rather than joining them. The wording here is the 2024 version as D&D Beyond gives it; the older text limited the advantage to checks that rely on moving silently, so confirm the printed 2024 text with the DM.',
     glyph: '⟫'
@@ -114,7 +114,7 @@ export const items: Item[] = [
     slot: 'cloak',
     attunement: 'Required',
     role: 'Stronger stealth than the boots, for an attunement slot and the hood',
-    effect: 'Hood up: Wisdom (Perception) checks to see them have disadvantage, and they have advantage on Stealth checks',
+    effect: 'Hood up: Wisdom (Perception) checks to see him have disadvantage, and he has advantage on Stealth checks',
     rules: [
       'While you wear it with the hood up, Wisdom (Perception) checks made to perceive you have disadvantage, and you have advantage on Dexterity (Stealth) checks.',
       'Pulling the hood up or down takes an action.'

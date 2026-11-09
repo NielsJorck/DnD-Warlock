@@ -1,22 +1,22 @@
 // How the Lightless Hunter fights: the plan in four steps and what each part of
-// their turn is spent on. Shown on the Hunter's Mark spell page.
+// his turn is spent on. Shown on the Hunter's Mark spell page.
 
 export const tactics = [
   {
     title: 'Go first, from the dark',
-    text: 'Initiative +9 (DEX, Dread Ambusher’s WIS and Alert) means they act before nearly everything. Ambusher’s Leap adds 10 ft on that first turn, to 45: move to a dark spot with a line on the target, mark it with Hunter’s Mark as the bonus action, and shoot. A hit with Dreadful Strike is 1d8 + 6, 1d6 force and 2d6 psychic, about 21.'
+    text: 'Initiative +9 (DEX, Dread Ambusher’s WIS and Alert) means he acts before nearly everything. Ambusher’s Leap adds 10 ft on that first turn, to 45: move to a dark spot with a line on the target, mark it with Hunter’s Mark as the bonus action, and shoot. A hit with Dreadful Strike is 1d8 + 6, 1d6 force and 2d6 psychic, about 21.'
   },
   {
     title: 'Stay out of the light',
-    text: 'While they stand entirely in darkness, anything that sees by darkvision can’t see them: their arrows have advantage and its attacks disadvantage. They see 120 ft into the dark, twice as far as the goblins and orcs. It ends the moment light reaches their square. A torch lights 40 ft (dim for the outer 20), and dim light isn’t darkness, so the party’s torch-bearer and a Light cantrip turn it off. Scout ahead of the light, or ask the party to move dark when it can; Druidcraft snuffs a torch, candle or brazier from 30 ft. Blindsight, tremorsense and truesight see them normally.'
+    text: 'While he stands entirely in darkness, anything that sees by darkvision can’t see him: his arrows have advantage and its attacks disadvantage. He sees 120 ft into the dark, twice as far as the goblins and orcs. It ends the moment light reaches his square. A torch lights 40 ft (dim for the outer 20), and dim light isn’t darkness, so the party’s torch-bearer and a Light cantrip turn it off. Scout ahead of the light, or ask the party to move dark when it can; Druidcraft snuffs a torch, candle or brazier from 30 ft. Blindsight, tremorsense and truesight see him normally.'
   },
   {
     title: 'Keep the mark moving',
-    text: 'One Hunter’s Mark lasts the fight: when the target drops, a bonus action moves it on. Two casts a day are free; after that it costs a slot. It is concentration, so taking damage means a Constitution save (DC 10 or half the damage). The longbow’s Slow takes 10 ft off anything it hits; if something reaches them anyway, the scimitar and shortsword attack together with Nick and the bonus action stays free.'
+    text: 'One Hunter’s Mark lasts the fight: when the target drops, a bonus action moves it on. Two casts a day are free; after that it costs a slot. It is concentration, so taking damage means a Constitution save (DC 10 or half the damage). The longbow’s Slow takes 10 ft off anything it hits; if something reaches him anyway, the scimitar and shortsword attack together with Nick and the bonus action stays free.'
   },
   {
     title: 'Rest where nothing can reach',
-    text: 'Dungeons punish resting. At level 3, Alarm as a ritual on the one door, and a Healer’s Kit and Cure Wounds for whoever went down. Trance means four hours of rest, awake throughout: they take the last watch. From level 5, Rope Trick: an hour in a hidden room for up to eight, a safe short rest anywhere with headroom.'
+    text: 'Dungeons punish resting. At level 3, Alarm as a ritual on the one door, and a Healer’s Kit and Cure Wounds for whoever went down. Trance means four hours of rest, awake throughout: he takes the last watch. From level 5, Rope Trick: an hour in a hidden room for up to eight, a safe short rest anywhere with headroom.'
   }
 ]
 
