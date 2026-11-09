@@ -107,10 +107,12 @@ export const items: Item[] = [
     type: 'Wondrous item (boots)',
     slot: 'feet',
     role: 'The cloak’s alternative, with no attunement',
-    effect: 'Silent steps on any surface, and advantage on Stealth checks to move silently',
-    rules: ['While he wears them, his steps make no sound, whatever the surface.', 'He has advantage on Dexterity (Stealth) checks that rely on moving silently.'],
-    forCharacter: 'No attunement, but the advantage covers sound only, where the cloak’s covers every Stealth check and makes him harder to spot.',
-    caveat: 'The 2024 wording of the advantage may be broader or narrower than this; check it before asking.',
+    effect: 'Silent steps on any surface, and advantage on Stealth checks',
+    rules: ['While he wears them, his steps make no sound, whatever the surface he is moving across.', 'He has advantage on Dexterity (Stealth) checks.'],
+    forCharacter:
+      'The same advantage on Stealth as the cloak gives (+8 with advantage), with no attunement and no hood to keep up. What the boots lack is the cloak’s other half: Perception checks to spot him don’t get disadvantage, so a watcher’s passive Perception stays as it is.',
+    caveat:
+      'The wording here is the 2024 version as D&D Beyond gives it. The older text limited the advantage to checks that rely on moving silently, so confirm the printed 2024 text with the DM.',
     glyph: '⟫'
   },
   {
