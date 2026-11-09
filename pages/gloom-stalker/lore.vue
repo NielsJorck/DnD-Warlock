@@ -63,7 +63,7 @@ useHead({ title: `Story — ${character.name}` })
           <figure class="flex flex-col justify-center rounded-2xl border border-sapphire/40 bg-obsidian-950/70 p-6 text-center">
             <span class="font-display text-3xl text-sapphire" aria-hidden="true">☾</span>
             <blockquote class="mt-3 font-display text-xl leading-snug text-gilded">“{{ commission.creed }}”</blockquote>
-            <figcaption class="mt-3 text-[11px] uppercase tracking-[0.2em] text-faint">A guide’s rule for the deep places</figcaption>
+            <figcaption class="mt-3 text-[11px] uppercase tracking-[0.2em] text-faint">A smuggler’s rule for the deep places</figcaption>
           </figure>
         </div>
       </div>

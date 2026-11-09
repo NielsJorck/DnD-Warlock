@@ -14,7 +14,7 @@ const conMod = stats.abilities.con.check
 const pools = [
   { id: 'mark', label: 'Hunter’s Mark, free casts', rest: 'Long rest' },
   { id: 'dreadful', label: 'Dreadful Strike', rest: 'Long rest' },
-  { id: 'healingWord', label: 'Healing Word, free cast', rest: 'Long rest' }
+  { id: 'longstrider', label: 'Longstrider, free cast', rest: 'Long rest' }
 ]
 
 function onConcentration(slug: string) {
@@ -26,7 +26,7 @@ function onConcentration(slug: string) {
 function rest(kind: 'short' | 'long') {
   if (kind === 'short') shortRest()
   else longRest()
-  note(kind === 'short' ? 'Short rest' : 'Long rest', kind === 'short' ? 'Spend Hit Point Dice to heal' : 'HP, Hit Point Dice, slots and daily uses restored · Heroic Inspiration back')
+  note(kind === 'short' ? 'Short rest' : 'Long rest', kind === 'short' ? 'Spend Hit Point Dice to heal' : 'HP, Hit Point Dice, slots and daily uses restored')
 }
 </script>
 
@@ -106,7 +106,7 @@ function rest(kind: 'short' | 'long') {
 
     <label class="mt-3 flex cursor-pointer items-center gap-2 text-[13px] text-dim">
       <input v-model="state.inspiration" type="checkbox" class="h-4 w-4 accent-[#d6a84f]" />
-      Heroic Inspiration <span class="text-[11px] text-faint">· reroll one die · back after each long rest</span>
+      Heroic Inspiration <span class="text-[11px] text-faint">· reroll one die · when the DM gives it</span>
     </label>
 
     <div class="mt-5 grid grid-cols-2 gap-2">
@@ -114,7 +114,7 @@ function rest(kind: 'short' | 'long') {
       <button type="button" class="btn btn-gold py-2.5" @click="rest('long')">✦ Long rest</button>
     </div>
     <p class="mt-2 text-[10.5px] leading-relaxed text-faint">
-      Nothing of theirs comes back on a short rest; spend Hit Point Dice to heal. A long rest restores HP, every Hit Point Die (2024), slots and daily uses, gives Heroic Inspiration back, removes one level of exhaustion and clears conditions. Potions and arrows don’t come back.
+      Nothing of theirs comes back on a short rest; spend Hit Point Dice to heal. A long rest restores HP, every Hit Point Die (2024), slots and daily uses, removes one level of exhaustion and clears conditions. Potions and arrows don’t come back.
     </p>
   </section>
 </template>

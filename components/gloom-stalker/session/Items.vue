@@ -87,7 +87,7 @@ const triggers = computed<Trigger[]>(() => [
             <span class="font-medium text-parchment">Heroic Inspiration</span>
             <span class="ml-1.5 text-[10px] uppercase tracking-wider text-faint">Free</span>
           </div>
-          <div class="truncate text-[11px] text-faint">Reroll any one die right after rolling it · Resourceful gives it back each long rest</div>
+          <div class="truncate text-[11px] text-faint">Reroll any one die right after rolling it · when the DM gives it</div>
         </div>
         <button type="button" class="btn min-w-[4.5rem] px-2 py-1 text-[11.5px]" :class="state.inspiration ? 'border-gold/60 bg-gold/10 text-gold-light' : ''" @click="state.inspiration = !state.inspiration">{{ state.inspiration ? 'Spend' : 'Gain' }}</button>
       </li>
@@ -102,6 +102,6 @@ const triggers = computed<Trigger[]>(() => [
         <span class="chip py-0 text-[10px] text-jade">Attuned</span>
       </li>
     </ul>
-    <p class="mt-2 text-[11px] text-faint">Potions, kit uses and arrows don’t come back on a rest. Caltrops and the climber’s kit are on the Items page.</p>
+    <p class="mt-2 text-[11px] text-faint">Potions, kit uses and arrows don’t come back on a rest. Thieves’ Tools {{ signed(stats.tools) }} are under Rolls; the crowbar, caltrops and climber’s kit are on the Items page.</p>
   </section>
 </template>

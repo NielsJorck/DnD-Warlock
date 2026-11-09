@@ -6,7 +6,7 @@
 
 import type { AbilityKey } from '../shared'
 
-export type ChoiceKind = 'Species' | 'Background' | 'Subclass' | 'Feat' | 'Magic Initiate' | 'Spell' | 'Weapon Mastery' | 'Fighting Style' | 'Expertise' | 'Proficiencies'
+export type ChoiceKind = 'Species' | 'Background' | 'Subclass' | 'Feat' | 'Spell' | 'Weapon Mastery' | 'Fighting Style' | 'Expertise' | 'Proficiencies'
 
 export interface LevelChoice {
   kind: ChoiceKind
@@ -48,28 +48,27 @@ export const levels: LevelEntry[] = [
     table: { prepared: 2, slots: [2], favoredEnemy: 2 },
     startingScores: {
       base: { str: 12, dex: 16, con: 14, int: 10, wis: 15, cha: 8 },
-      increases: [{ source: 'Guide', scores: { dex: 2, wis: 1 } }]
+      increases: [{ source: 'Criminal, by the DM’s ruling', scores: { dex: 2, wis: 1 } }]
     },
     gains: [
       { name: 'Spellcasting', to: '/gloom-stalker/spells', note: 'Wisdom; prepared spells from the ranger list, one swap after each long rest' },
       { name: 'Favored Enemy', to: spell('hunters-mark'), note: 'Hunter’s Mark always prepared, twice a day without a slot' },
       { name: 'Weapon Mastery', note: 'Two kinds of weapon' },
-      { name: 'Human traits', note: 'Resourceful (Heroic Inspiration after each long rest), Skillful, Versatile' }
+      { name: 'Wood Elf traits', note: 'Speed 35, Darkvision 60 ft, Fey Ancestry, Keen Senses, Trance' },
+      { name: 'Druidcraft', to: spell('druidcraft'), note: 'Elven Lineage: a cantrip at will. Fire Play puts out a torch within 30 ft' }
     ],
     choices: [
-      { kind: 'Species', pick: 'Human', note: 'Alert from Versatile and a daily Heroic Inspiration. Umbral Sight gives the darkvision humans lack. Runner-up: Wood Elf (speed 35, free Pass without Trace at 5) without Alert' },
-      { kind: 'Background', pick: 'Guide', to: '/gloom-stalker/lore', note: '+2 DEX, +1 WIS. A guide of the Sword Mountain passes' },
-      { kind: 'Feat', pick: 'Magic Initiate (Druid)', from: 'Guide', to: '/gloom-stalker/spells', note: 'The Guide’s Origin feat. Wisdom casting' },
-      { kind: 'Magic Initiate', pick: 'Guidance', to: spell('guidance'), from: 'Guide' },
-      { kind: 'Magic Initiate', pick: 'Message', to: spell('message'), from: 'Guide' },
-      { kind: 'Magic Initiate', pick: 'Healing Word', to: spell('healing-word'), from: 'Guide', note: 'Once per long rest without a slot, and with ranger slots' },
-      { kind: 'Feat', pick: 'Alert', from: 'Human', note: 'Versatile’s Origin feat: proficiency bonus to initiative, and the initiative swap' },
+      { kind: 'Species', pick: 'Wood Elf', note: 'Speed 35, Darkvision that Umbral Sight takes to 120 ft, Druidcraft, and Longstrider and Pass without Trace free once a day each. Runner-up: Human, for a second Origin feat and a daily Heroic Inspiration' },
+      { kind: 'Species', pick: 'Elven Lineage: Wisdom', from: 'Wood Elf', note: 'The ability for Druidcraft, Longstrider and Pass without Trace: DC 13, the same as the ranger spells' },
+      { kind: 'Species', pick: 'Keen Senses: Perception', from: 'Wood Elf', note: 'One of Insight, Perception or Survival. Deft Explorer doubles it' },
+      { kind: 'Background', pick: 'Criminal', to: '/gloom-stalker/lore', note: '+2 DEX, +1 WIS. The Criminal’s own scores are DEX, CON and INT; the DM lets the increases and the feat go anywhere. A smuggler of the tunnels under the Sword Mountains' },
+      { kind: 'Feat', pick: 'Alert', from: 'Criminal', note: 'The Criminal’s own Origin feat, kept by choice: proficiency bonus to initiative, and the initiative swap. Runner-up: Magic Initiate (Druid), for Healing Word and Guidance' },
       { kind: 'Weapon Mastery', pick: 'Longbow (Slow), Scimitar (Nick)' },
       { kind: 'Spell', pick: 'Cure Wounds', to: spell('cure-wounds') },
       { kind: 'Spell', pick: 'Alarm', to: spell('alarm'), note: 'A ritual: guards the camp in a dungeon' },
-      { kind: 'Proficiencies', pick: 'Athletics, Insight, Investigation, Perception, Stealth, Survival', note: 'Skills. Where each comes from is under Skill picks' },
-      { kind: 'Proficiencies', pick: 'Cartographer’s tools', note: 'Guide' },
-      { kind: 'Proficiencies', pick: 'Common, Dwarvish, Goblin', note: 'Languages: Common and two more at creation' }
+      { kind: 'Proficiencies', pick: 'Athletics, Investigation, Perception, Sleight of Hand, Stealth, Survival', note: 'Skills. Where each comes from is under Skill picks' },
+      { kind: 'Proficiencies', pick: 'Thieves’ Tools', note: 'Criminal' },
+      { kind: 'Proficiencies', pick: 'Common, Elvish, Dwarvish', note: 'Languages: Common and two more at creation' }
     ]
   },
   {
@@ -84,7 +83,7 @@ export const levels: LevelEntry[] = [
     ],
     choices: [
       { kind: 'Expertise', pick: 'Perception', note: 'Deft Explorer: +7, passive 17. Spotting the ambush before springing one' },
-      { kind: 'Proficiencies', pick: 'Orc, Giant', note: 'Deft Explorer’s two languages: who else lives in the Sword Mountains' },
+      { kind: 'Proficiencies', pick: 'Goblin, Orc', note: 'Deft Explorer’s two languages: who lives in the old delves now, and who else holds the Sword Mountains' },
       { kind: 'Fighting Style', pick: 'Archery', note: '+2 to ranged attack rolls' },
       { kind: 'Spell', pick: 'Detect Magic', to: spell('detect-magic'), note: 'A ritual: magic traps and loot' }
     ]
@@ -97,8 +96,9 @@ export const levels: LevelEntry[] = [
     table: { prepared: 4, slots: [3], favoredEnemy: 2 },
     gains: [
       { name: 'Dread Ambusher', to: '/gloom-stalker/session#attacks', note: 'WIS to initiative, +10 ft on the first turn, Dreadful Strike 2d6 psychic three times a day' },
-      { name: 'Umbral Sight', note: 'Darkvision 60 ft, and invisible in darkness to creatures relying on darkvision' },
-      { name: 'Gloom Stalker spells', to: spell('disguise-self'), note: 'Disguise Self, always prepared' }
+      { name: 'Umbral Sight', note: 'Darkvision 60 ft more, to 120 ft, and invisible in darkness to creatures relying on darkvision' },
+      { name: 'Gloom Stalker spells', to: spell('disguise-self'), note: 'Disguise Self, always prepared' },
+      { name: 'Longstrider', to: spell('longstrider'), note: 'Elven Lineage: always prepared, once a day without a slot' }
     ],
     choices: [
       { kind: 'Subclass', pick: 'Gloom Stalker', note: 'Made for dungeons: most of what lives in the dark sees with darkvision. Runner-up: Hunter' },
@@ -127,10 +127,11 @@ export const levels: LevelEntry[] = [
       { name: 'Extra Attack', note: 'Two arrows a turn: the big jump' },
       { name: '2nd-level spells', to: '/gloom-stalker/spells?tab=later' },
       { name: 'Rope Trick', to: spell('rope-trick'), note: 'Gloom Stalker spell, always prepared: a safe short rest anywhere' },
-      { name: 'Favored Enemy', note: 'Hunter’s Mark free three times a day' }
+      { name: 'Favored Enemy', note: 'Hunter’s Mark free three times a day' },
+      { name: 'Pass without Trace', to: spell('pass-without-trace'), note: 'Elven Lineage: always prepared, once a day without a slot. The party’s ambush' }
     ],
     choices: [],
-    pending: ['Two more prepared spells. The plan: Pass without Trace for the party’s ambush, and Spike Growth for the corridor the enemy has to come down.']
+    pending: ['Two more prepared spells. Pass without Trace comes free from the Wood Elf, so the plan is Spike Growth for the corridor the enemy has to come down, and Silence, a ritual too.']
   },
   {
     level: 6,
@@ -149,7 +150,7 @@ export const levels: LevelEntry[] = [
     table: { prepared: 7, slots: [4, 3], favoredEnemy: 3 },
     gains: [{ name: 'Iron Mind', note: 'Proficiency in Wisdom saves' }],
     choices: [],
-    pending: ['One more prepared spell: Silence or Summon Beast if the 200-gp acorn has turned up.']
+    pending: ['One more prepared spell: Summon Beast if the 200-gp acorn has turned up.']
   },
   {
     level: 8,
@@ -216,7 +217,7 @@ export interface SkillPick {
 }
 
 export const skillPicks: SkillPick[] = [
-  { source: 'Ranger', rule: 'Three from Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth and Survival', picks: 3, skills: ['Athletics', 'Insight', 'Investigation'] },
-  { source: 'Guide', rule: 'Stealth and Survival', picks: 2, skills: ['Stealth', 'Survival'] },
-  { source: 'Human (Skillful)', rule: 'Any one skill', picks: 1, skills: ['Perception'] }
+  { source: 'Ranger', rule: 'Three from Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth and Survival', picks: 3, skills: ['Athletics', 'Investigation', 'Survival'] },
+  { source: 'Criminal', rule: 'Sleight of Hand and Stealth', picks: 2, skills: ['Sleight of Hand', 'Stealth'] },
+  { source: 'Wood Elf (Keen Senses)', rule: 'One of Insight, Perception and Survival', picks: 1, skills: ['Perception'] }
 ]

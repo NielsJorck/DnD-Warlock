@@ -22,7 +22,7 @@ const attacks = [
   { name: 'Dreadful Strike', to: '/gloom-stalker/session#attacks', meta: `Once a turn on a weapon hit · ${stats.dreadfulUses} / long rest`, hit: '—', damage: '+2d6 psychic' },
   { name: 'Shortsword', meta: 'Finesse, light · the first blade', hit: signed(stats.bladeAttack), damage: `1d6 + ${stats.bladeDamage} piercing` },
   { name: 'Scimitar', meta: 'Nick: its extra attack is part of the Attack action', hit: signed(stats.bladeAttack), damage: '1d6 slashing, no modifier' },
-  { name: 'Shortbow', meta: 'The spare · 80/320 ft', hit: signed(stats.bowAttack), damage: `1d6 + ${stats.bowDamage} piercing` }
+  { name: 'Dagger ×2', meta: 'Finesse, light · thrown 20/60 ft', hit: signed(stats.bladeAttack), damage: `1d4 + ${stats.bladeDamage} piercing` }
 ]
 
 const attuned = items.filter(i => i.group === 'owned' && i.attunement)
@@ -78,7 +78,7 @@ const sections = [
             </div>
           </dl>
           <AbilityGrid :stats="stats.abilities" highlight="dex" />
-          <p class="text-[10.5px] text-faint">Big numbers are ability checks; gold saves are proficient. Wisdom casts their spells. Bow damage includes the Bracers of Archery’s +2, pending the DM.</p>
+          <p class="text-[10.5px] text-faint">Big numbers are ability checks; gold saves are proficient. Wisdom casts their spells, the Wood Elf’s too. Bow damage includes the Bracers of Archery’s +2, pending the DM.</p>
         </div>
       </div>
     </section>
@@ -137,6 +137,10 @@ const sections = [
               <dd class="text-parchment">Proficient in Strength and Dexterity. Wisdom saves come at level 7 <span class="text-faint">(Iron Mind)</span>.</dd>
             </div>
             <div class="flex gap-3">
+              <dt class="w-24 shrink-0 text-faint">Charm, sleep</dt>
+              <dd class="text-parchment">Advantage on saves to avoid or end Charmed <span class="text-faint">(Fey Ancestry)</span>; magic can’t put them to sleep <span class="text-faint">(Trance)</span></dd>
+            </div>
+            <div class="flex gap-3">
               <dt class="w-24 shrink-0 text-faint">Resistances</dt>
               <dd class="text-dim">None</dd>
             </div>
@@ -164,7 +168,7 @@ const sections = [
           </li>
         </ul>
         <dl class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 border-t border-obsidian-600 pt-3 text-[12.5px]">
-          <div class="flex justify-between gap-2"><dt class="text-faint" title="From Umbral Sight">Darkvision</dt><dd class="tabular-nums text-parchment">{{ character.darkvision }} ft</dd></div>
+          <div class="flex justify-between gap-2"><dt class="text-faint" title="Wood Elf 60 ft, and Umbral Sight 60 ft more">Darkvision</dt><dd class="tabular-nums text-parchment">{{ character.darkvision }} ft</dd></div>
           <div class="flex justify-between gap-2"><dt class="text-faint">Passive Perception</dt><dd class="tabular-nums text-parchment">{{ stats.passive.perception }}</dd></div>
           <div class="flex justify-between gap-2"><dt class="text-faint">Passive Insight</dt><dd class="tabular-nums text-parchment">{{ stats.passive.insight }}</dd></div>
           <div class="flex justify-between gap-2"><dt class="text-faint">Passive Investigation</dt><dd class="tabular-nums text-parchment">{{ stats.passive.investigation }}</dd></div>
@@ -184,7 +188,7 @@ const sections = [
             <div class="flex gap-3">
               <dt class="w-28 shrink-0 text-faint">Tools</dt>
               <dd class="text-parchment">
-                <template v-for="(t, n) in character.toolProficiencies" :key="t.name">{{ n ? ', ' : '' }}<span :title="t.source">{{ t.name }}</span></template>
+                <template v-for="(t, n) in character.toolProficiencies" :key="t.name">{{ n ? ', ' : '' }}<span :title="t.source">{{ t.name }}</span></template> <span class="tabular-nums text-gold-light">{{ signed(stats.tools) }}</span>
               </dd>
             </div>
             <div class="flex gap-3">

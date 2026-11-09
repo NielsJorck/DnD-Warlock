@@ -14,16 +14,18 @@ export const character = {
   name: 'The Lightless Hunter', // working title until they have a name
   epithet: 'Who Waits Where the Torchlight Ends',
   level: 3,
-  species: 'Human',
+  species: 'Wood Elf',
   className: 'Ranger',
   subclass: 'Gloom Stalker',
-  background: 'Guide',
-  backgroundDetail: 'A guide of the Sword Mountain passes',
+  background: 'Criminal',
+  backgroundDetail: 'A smuggler of the tunnels under the Sword Mountains',
   ruleset,
   motto: 'The dark is not empty. It is mine.',
-  concept: 'An ambush archer who goes first and shoots first, and who is invisible in the dark to anything that sees with darkvision.',
+  concept: 'An ambush archer who goes first and shoots first, sees 120 ft into the dark, and is invisible there to anything that relies on darkvision.',
 
-  // The campaign's array 16, 15, 14, 12, 10, 8, then the Guide's +2 DEX and +1 WIS
+  // The campaign's array 16, 15, 14, 12, 10, 8, then +2 DEX and +1 WIS. The
+  // Criminal's own scores are DEX, CON and INT; the DM lets the background's
+  // increases and feat be picked freely (the 2024 rulings in data/campaign.ts).
   baseScores: { str: 12, dex: 16, con: 14, int: 10, wis: 15, cha: 8 } as Record<AbilityKey, number>,
   backgroundIncreases: { dex: 2, wis: 1 } as Partial<Record<AbilityKey, number>>,
   abilities: { str: 12, dex: 18, con: 14, int: 10, wis: 16, cha: 8 } as Record<AbilityKey, number>,
@@ -35,8 +37,8 @@ export const character = {
   maxHp: 28,
   hitDie: 10,
   hitDice: '3d10',
-  speed: 30,
-  darkvision: 60, // from Umbral Sight; humans have none of their own
+  speed: 35, // Wood Elf
+  darkvision: 120, // the Wood Elf's 60 ft, and Umbral Sight adds 60 more
   slots: [3], // 1st level only, until level 5
   attunementMax: rulesets[ruleset].attunementLimit,
 
@@ -54,23 +56,24 @@ export const character = {
     ]
   },
 
+  // 2024: Common and two standard languages at creation; neither species nor background adds any
   languages: [
     { name: 'Common', note: 'Every character' },
+    { name: 'Elvish', note: 'Creation: the wood they grew up in' },
     { name: 'Dwarvish', note: 'Creation: the old roads and delves of the mountains are dwarven' },
-    { name: 'Goblin', note: 'Creation: what is usually living in those delves now' },
-    { name: 'Orc', note: 'Deft Explorer' },
-    { name: 'Giant', note: 'Deft Explorer' }
+    { name: 'Goblin', note: 'Deft Explorer: what is usually living in those delves now' },
+    { name: 'Orc', note: 'Deft Explorer: who else holds the Sword Mountains' }
   ],
 
   skills: [
-    { name: 'Stealth', ability: 'dex', source: 'Guide' },
-    { name: 'Survival', ability: 'wis', source: 'Guide' },
-    { name: 'Perception', ability: 'wis', source: 'Human (Skillful)', expertise: 'Deft Explorer' },
+    { name: 'Sleight of Hand', ability: 'dex', source: 'Criminal' },
+    { name: 'Stealth', ability: 'dex', source: 'Criminal' },
+    { name: 'Perception', ability: 'wis', source: 'Wood Elf (Keen Senses)', expertise: 'Deft Explorer' },
     { name: 'Athletics', ability: 'str', source: 'Ranger' },
-    { name: 'Insight', ability: 'wis', source: 'Ranger' },
-    { name: 'Investigation', ability: 'int', source: 'Ranger' }
+    { name: 'Investigation', ability: 'int', source: 'Ranger' },
+    { name: 'Survival', ability: 'wis', source: 'Ranger' }
   ] as { name: string; ability: AbilityKey; source: string; expertise?: string }[],
-  toolProficiencies: [{ name: 'Cartographer’s tools', source: 'Guide' }],
+  toolProficiencies: [{ name: 'Thieves’ Tools', source: 'Criminal' }],
   armorWeapons: 'Light and medium armor · shields · simple and martial weapons',
   weaponMastery: [
     { weapon: 'Longbow', mastery: 'Slow', effect: 'A hit that deals damage cuts the target’s speed by 10 ft until the start of their next turn' },
@@ -79,22 +82,12 @@ export const character = {
 
   feats: [
     {
-      name: 'Magic Initiate (Druid)',
-      source: 'Origin feat · Guide',
-      level: 1,
-      to: '/gloom-stalker/spells',
-      summary: 'Guidance and Message, and Healing Word once per long rest without a slot. Wisdom casts them: DC 13, attack +5.',
-      detail:
-        'Healing Word can also be cast with ranger slots, since 2024 Magic Initiate lets you use any slots you have. That is the party’s emergency pick-up from 60 ft as a bonus action. Guidance goes on the trap-finder’s and lock-picker’s checks between fights. Message has no spoken part in the 2024 book, so it carries plans in the dark without breaking a hide.',
-      uses: 'Healing Word 1 / long rest'
-    },
-    {
       name: 'Alert',
-      source: 'Origin feat · Human (Versatile)',
+      source: 'Origin feat · Criminal',
       level: 1,
       summary: 'Adds the proficiency bonus to initiative. Right after rolling initiative, can swap it with a willing ally’s.',
       detail:
-        'With Dread Ambusher’s Wisdom on top, initiative is +9: they act first in nearly every fight, which is when Ambusher’s Leap and the opening Dreadful Strike matter. The swap hands a high roll to whoever needs to go first instead (a controller with Web), and can’t be used if either of them is incapacitated.'
+        'The Criminal’s own feat, kept by choice when the DM freed it. With Dread Ambusher’s Wisdom on top, initiative is +9: they act first in nearly every fight, which is when Ambusher’s Leap and the opening Dreadful Strike matter. The swap hands a high roll to whoever needs to go first instead (a controller with Web), and can’t be used if either of them is incapacitated. Magic Initiate (Druid), for Healing Word and Guidance, was the runner-up.'
     }
   ] as Feature[],
 
@@ -126,7 +119,7 @@ export const character = {
       name: 'Deft Explorer',
       source: 'Ranger',
       level: 2,
-      summary: 'Expertise in Perception (+7, passive 17). Two more languages: Orc and Giant.'
+      summary: 'Expertise in Perception (+7, passive 17). Two more languages: Goblin and Orc.'
     },
     {
       name: 'Fighting Style: Archery',
@@ -141,16 +134,16 @@ export const character = {
       to: '/gloom-stalker/session#attacks',
       summary: 'Wisdom added to initiative. +10 ft speed on the first turn of each combat. Dreadful Strike: once per turn, a weapon hit deals 2d6 psychic more.',
       detail:
-        'Ambusher’s Leap: at the start of their first turn in each combat their speed rises by 10 ft until the end of that turn. Dreadful Strike is chosen after the hit, works with the bow or the scimitar, and has as many uses as the Wisdom modifier (3) per long rest. It becomes 2d8 with Stalker’s Flurry at level 11.',
+        'Ambusher’s Leap: at the start of their first turn in each combat their speed rises by 10 ft until the end of that turn, to 45. Dreadful Strike is chosen after the hit, works with the bow or the scimitar, and has as many uses as the Wisdom modifier (3) per long rest. It becomes 2d8 with Stalker’s Flurry at level 11.',
       uses: 'Dreadful Strike 3 / long rest'
     },
     {
       name: 'Umbral Sight',
       source: 'Gloom Stalker',
       level: 3,
-      summary: 'Darkvision 60 ft. While entirely in darkness, they are invisible to any creature that relies on darkvision to see them there.',
+      summary: 'Darkvision 60 ft more, to 120 ft. While entirely in darkness, they are invisible to any creature that relies on darkvision to see them there.',
       detail:
-        'Invisible to a creature means its attacks against them have disadvantage and theirs against it have advantage, and it can’t target them with effects that need sight. Most things living in a dungeon see by darkvision, so this is the build’s engine. It ends the moment light reaches them: a torch sheds bright light for 20 ft and dim light 20 ft beyond, and dim light isn’t darkness. Blindsight, tremorsense, truesight and anything carrying its own light see them normally.'
+        'Invisible to a creature means its attacks against them have disadvantage and theirs against it have advantage, and it can’t target them with effects that need sight. Most things living in a dungeon see by darkvision, so this is the build’s engine, and at 120 ft they see twice as far into the dark as the goblins and orcs do. It ends the moment light reaches them: a torch sheds bright light for 20 ft and dim light 20 ft beyond, and dim light isn’t darkness. Blindsight, tremorsense, truesight and anything carrying its own light see them normally.'
     },
     {
       name: 'Gloom Stalker Spells',
@@ -160,19 +153,24 @@ export const character = {
       summary: 'Always prepared: Disguise Self now, Rope Trick at 5, Fear at 9 (Greater Invisibility at 13, Seeming at 17).'
     },
     {
-      name: 'Resourceful',
-      source: 'Human',
-      summary: 'Heroic Inspiration after every long rest: reroll any one die right after rolling it, and keep the new roll.'
+      name: 'Elven Lineage: Wood Elf',
+      source: 'Wood Elf',
+      level: 1,
+      to: '/gloom-stalker/spells?tab=all&q=wood%20elf',
+      summary: 'Speed 35. Druidcraft at will, Longstrider from level 3 and Pass without Trace from level 5, each once per long rest without a slot. Wisdom casts them: DC 13, attack +5.',
+      detail:
+        'Both spells are always prepared, so they take none of the ranger’s prepared picks, and ranger slots can cast them again. Druidcraft’s Fire Play lights or snuffs out a candle, torch or small campfire within 30 ft: the quickest way to put a room back in the dark.',
+      uses: 'Longstrider 1 / long rest'
     },
+    { name: 'Darkvision', source: 'Wood Elf', level: 1, summary: '60 ft of their own, which Umbral Sight extends to 120 ft. Dim light as bright, darkness as dim light, in shades of gray.' },
+    { name: 'Fey Ancestry', source: 'Wood Elf', level: 1, summary: 'Advantage on saves to avoid or end the Charmed condition.' },
+    { name: 'Keen Senses', source: 'Wood Elf', level: 1, summary: 'Proficiency in Perception (one of Insight, Perception or Survival), which Deft Explorer then doubles.' },
     {
-      name: 'Skillful',
-      source: 'Human',
-      summary: 'Proficiency in one skill: Perception, which Deft Explorer then doubles.'
-    },
-    {
-      name: 'Versatile',
-      source: 'Human',
-      summary: 'An Origin feat of their choice: Alert.'
+      name: 'Trance',
+      source: 'Wood Elf',
+      level: 1,
+      summary: 'They don’t need sleep, and magic can’t put them to sleep. A long rest takes 4 hours of trancelike meditation, during which they stay conscious.',
+      detail: 'Conscious through the night, and done resting four hours before the others: the natural last watch in a dungeon camp.'
     }
   ] as Feature[]
 }
@@ -189,7 +187,7 @@ export interface Resource {
 export const resources: Resource[] = [
   { id: 'mark', name: 'Hunter’s Mark, free casts', max: 2, recharge: 'long', note: 'Favored Enemy: without a slot' },
   { id: 'dreadful', name: 'Dreadful Strike', max: 3, recharge: 'long', note: '2d6 psychic on a weapon hit, once a turn' },
-  { id: 'healingWord', name: 'Healing Word (Magic Initiate)', max: 1, recharge: 'long', note: 'Without a slot' },
+  { id: 'longstrider', name: 'Longstrider (Wood Elf)', max: 1, recharge: 'long', note: 'Without a slot' },
   { id: 'potions', name: 'Potions of Healing', max: 3, recharge: 'none', note: 'Bonus action: 2d4 + 2' },
   { id: 'arrows', name: 'Arrows', max: 60, recharge: 'none', note: 'Half of those shot can be found after a fight' },
   { id: 'healersKit', name: 'Healer’s Kit', max: 10, recharge: 'none', note: 'Stabilize a dying creature' }
@@ -218,8 +216,9 @@ export const stats = {
   ],
   bowAttack: mod('dex') + pb + 2, // Archery fighting style
   bowDamage: mod('dex') + character.itemBonuses.bowDamage,
-  bladeAttack: mod('dex') + pb, // scimitar and shortsword are finesse
+  bladeAttack: mod('dex') + pb, // scimitar, shortsword and daggers are finesse
   bladeDamage: mod('dex'),
+  tools: mod('dex') + pb, // Thieves' Tools
   dreadfulUses: Math.max(1, mod('wis')),
   prepared: 4,
   potion: '2d4+2',

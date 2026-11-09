@@ -135,14 +135,20 @@ const rules2024: Ruleset = {
   reference: { label: '5e.tools', url: 'https://5e.tools/' },
   homebrew: [
     { rule: 'Start at level 3', detail: 'Experienced adventurers, a party of four. The campaign could reach level 12 eventually, over years of play.' },
-    { rule: 'Stat array 16, 15, 14, 12, 10, 8', detail: 'Every character assigns the same six scores, then adds the background’s +2 and +1 (or +1 to all three) as the 2024 rules say.' },
-    { rule: 'Background grants an Origin feat', detail: 'As in the 2024 Player’s Handbook.' },
+    { rule: 'Stat array 16, 15, 14, 12, 10, 8', detail: 'Every character assigns the same six scores, then adds the background’s +2 and +1 (or +1 to all three) as the 2024 rules say, to any scores by the DM’s ruling.' },
+    { rule: 'Background grants an Origin feat', detail: 'As in the 2024 Player’s Handbook, though by the DM’s ruling it can be any Origin feat.' },
     { rule: '200 gp to start', detail: 'Per character, after travel expenses, on top of the normal class and background equipment.' },
     { rule: 'A Potion of Healing', detail: 'Each character starts with one, besides the normal equipment.' },
     { rule: 'One uncommon magic item', detail: 'Each character starts with one uncommon magic item, which the DM has to approve. No +1 weapons or armor.' }
   ],
   homebrewLabel: { title: 'Character Creation', noun: 'character-creation rules' },
-  rulings: [],
+  rulings: [
+    {
+      ruling: 'Background increases and feat chosen freely',
+      detail:
+        'The DM doesn’t tie them to the background: its +2 and +1 (or +1 to all three) can go to any scores, and the Origin feat can be any Origin feat, not just the one the background lists.'
+    }
+  ],
   sourcePolicy: {
     baseline: '2024 Player’s Handbook',
     allowed: ['Classes, subclasses, species and backgrounds from the 2024 Player’s Handbook.', 'The starting magic item from the 2024 Dungeon Master’s Guide, with the DM’s approval.'],

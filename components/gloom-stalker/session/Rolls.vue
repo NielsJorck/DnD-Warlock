@@ -54,6 +54,11 @@ const shown = (n: number) => signed(n - d20Penalty.value)
             <span />
           </li>
           <li class="grid grid-cols-[minmax(0,1fr)_3.5rem_4rem] items-center">
+            <span class="truncate px-2 py-1 font-semibold text-parchment" title="DEX + proficiency: pick a lock or disarm a trap">Thieves’ Tools</span>
+            <button type="button" class="rounded-md py-1 text-center font-semibold tabular-nums text-gold-light transition hover:bg-obsidian-800" title="Roll a Thieves’ Tools check" @click="d20(stats.tools, 'Thieves’ Tools check')">{{ shown(stats.tools) }}</button>
+            <span />
+          </li>
+          <li class="grid grid-cols-[minmax(0,1fr)_3.5rem_4rem] items-center">
             <span class="truncate px-2 py-1 font-semibold text-rose" title="DC 10 or half the damage taken, whichever is higher, up to 30">Concentration</span>
             <span />
             <button
@@ -67,7 +72,7 @@ const shown = (n: number) => signed(n - d20Penalty.value)
             </button>
           </li>
         </ul>
-        <p class="mt-2 text-[11px] text-faint">Proficient in Strength and Dexterity saves; Wisdom saves join at level 7 (Iron Mind).</p>
+        <p class="mt-2 text-[11px] text-faint">Proficient in Strength and Dexterity saves; Wisdom saves join at level 7 (Iron Mind). Advantage on saves to avoid or end Charmed (Fey Ancestry).</p>
       </div>
 
       <div>

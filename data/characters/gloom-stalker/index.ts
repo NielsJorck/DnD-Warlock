@@ -8,7 +8,7 @@ export const gloomStalker: CharacterEntry = {
   slug: 'gloom-stalker',
   name: character.name,
   tagline: `Gloom Stalker ${character.level} · Concept`,
-  summary: `Level ${character.level} ${character.species} ${character.className}: ${character.subclass}, ${character.background.toLowerCase()} of the Sword Mountain passes. ${character.concept} For the Sword Mountains expedition, with one uncommon item pitched to the DM.`,
+  summary: `Level ${character.level} ${character.species} ${character.className}: ${character.subclass}, a ${character.background.toLowerCase()} who smuggled goods through the tunnels under the Sword Mountains. ${character.concept} For the Sword Mountains expedition, with one uncommon item pitched to the DM.`,
   ruleset: character.ruleset,
   epithet: character.epithet,
   motto: character.motto,

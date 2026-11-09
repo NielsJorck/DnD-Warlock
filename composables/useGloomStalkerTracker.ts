@@ -21,7 +21,7 @@ interface GloomStalkerState {
   dark: boolean // entirely in darkness: invisible to creatures relying on darkvision
   dreadfulThisTurn: boolean // Dreadful Strike is once per turn
   shot: number // arrows shot since the last recovery
-  inspiration: boolean // Heroic Inspiration (Resourceful)
+  inspiration: boolean // Heroic Inspiration, when the DM gives it
   deathSaves: { success: number; fail: number }
   conditions: string[]
   exhaustion: number
@@ -29,8 +29,8 @@ interface GloomStalkerState {
 
 const STORAGE_KEY = 'gloom-stalker-tracker-v1'
 
-// Spells that have a free use before a slot: Favored Enemy and Magic Initiate
-const freeUse: Record<string, string> = { 'hunters-mark': 'mark', 'healing-word': 'healingWord' }
+// Spells that have a free use before a slot: Favored Enemy and the Wood Elf's lineage
+const freeUse: Record<string, string> = { 'hunters-mark': 'mark', longstrider: 'longstrider' }
 
 function fresh(): GloomStalkerState {
   return {
@@ -46,7 +46,7 @@ function fresh(): GloomStalkerState {
     dark: false,
     dreadfulThisTurn: false,
     shot: 0,
-    inspiration: true,
+    inspiration: false,
     deathSaves: { success: 0, fail: 0 },
     conditions: [],
     exhaustion: 0
@@ -163,7 +163,7 @@ export function useGloomStalkerTracker() {
     state.value.temp = Math.max(state.value.temp, amount)
   }
 
-  // Free uses left before a slot is needed (Hunter's Mark, Healing Word)
+  // Free uses left before a slot is needed (Hunter's Mark, Longstrider)
   const freeLeft = (spell: Spell) => (freeUse[spell.slug] ? left(freeUse[spell.slug]) : 0)
   const canCast = (spell: Spell, level = spell.level) => spell.level === 0 || freeLeft(spell) > 0 || slotsLeft(level) > 0
 
@@ -264,7 +264,6 @@ export function useGloomStalkerTracker() {
     dropConcentration()
     s.firstTurn = false
     s.dreadfulThisTurn = false
-    s.inspiration = true // Resourceful
     s.deathSaves = { success: 0, fail: 0 }
     s.conditions = []
     s.exhaustion = Math.max(0, s.exhaustion - 1)

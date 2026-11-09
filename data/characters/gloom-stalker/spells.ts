@@ -1,13 +1,14 @@
 // The Lightless Hunter's spells. Rules text is paraphrased from the 2024 Player's
 // Handbook. A ranger prepares a set number of spells from the ranger list and can
 // swap one after each long rest; the `prepared` ones here are the starting four.
+// The Wood Elf's lineage spells (`known`) come on top and are cast with Wisdom.
 // At level 3 there are three 1st-level slots; 2nd-level spells open at level 5.
 // Kept apart from the 2014 spell text Lucan and the Storm-Hammer use.
 
 import type { School } from '../shared'
 
 export type SpellStatus = 'known' | 'always' | 'prepared' | 'candidate' | 'future'
-export type SpellAccess = 'Ranger' | 'Favored Enemy' | 'Gloom Stalker' | 'Magic Initiate'
+export type SpellAccess = 'Ranger' | 'Favored Enemy' | 'Gloom Stalker' | 'Wood Elf'
 
 export interface Spell {
   slug: string
@@ -38,7 +39,7 @@ export interface Spell {
 }
 
 export const statusLabels: Record<SpellStatus, string> = {
-  known: 'Magic Initiate',
+  known: 'Wood Elf',
   always: 'Always prepared',
   prepared: 'Prepared',
   candidate: 'Candidate',
@@ -46,7 +47,7 @@ export const statusLabels: Record<SpellStatus, string> = {
 }
 
 export const statusTone: Record<SpellStatus, string> = {
-  known: 'border-amethyst/50 bg-amethyst/10 text-amethyst',
+  known: 'border-jade/50 bg-jade/10 text-jade',
   always: 'border-sapphire/50 bg-sapphire/10 text-sapphire',
   prepared: 'border-gold/40 text-gold-light',
   candidate: 'border-quartz/40 bg-quartz/10 text-quartz',
@@ -57,10 +58,10 @@ export const accessTone: Record<SpellAccess, string> = {
   Ranger: 'text-gold-light',
   'Favored Enemy': 'text-gold-light',
   'Gloom Stalker': 'text-sapphire',
-  'Magic Initiate': 'text-amethyst'
+  'Wood Elf': 'text-jade'
 }
 
-// Ready to cast today: Magic Initiate's three, the always-prepared ones and the prepared four
+// Ready to cast today: the Wood Elf's two, the always-prepared ones and the prepared four
 export const ready = (s: Spell) => s.status === 'known' || s.status === 'always' || s.status === 'prepared'
 
 // No spoken component: under the 2024 Hide action, casting a spell with a verbal
@@ -68,68 +69,47 @@ export const ready = (s: Spell) => s.status === 'known' || s.status === 'always'
 export const silent = (s: Spell) => !/\bV\b/.test(s.components)
 
 export const spells: Spell[] = [
-  // ── Magic Initiate (Druid), cast with Wisdom ───────────────
+  // ── Wood Elf (Elven Lineage), cast with Wisdom ───────────
   {
-    slug: 'guidance',
-    name: 'Guidance',
-    level: 0,
-    school: 'Divination',
-    castingTime: '1 action',
-    range: 'Touch',
-    components: 'V, S',
-    duration: 'Concentration, up to 1 minute',
-    concentration: true,
-    ritual: false,
-    source: 'XPHB',
-    access: 'Magic Initiate',
-    status: 'known',
-    role: 'A d4 on someone’s skill checks',
-    summary: 'Touch a willing creature and pick a skill. Until the spell ends, it adds 1d4 to every ability check it makes with that skill.',
-    notes:
-      'The 2024 version lasts the whole minute and covers every check with the chosen skill, not just one roll. Between fights it goes on the rogue’s Sleight of Hand at a trapped lock, or their own Perception while searching a room. Concentration, so never in a fight with Hunter’s Mark up.'
-  },
-  {
-    slug: 'message',
-    name: 'Message',
+    slug: 'druidcraft',
+    name: 'Druidcraft',
     level: 0,
     school: 'Transmutation',
     castingTime: '1 action',
-    range: '120 ft',
-    components: 'S, M',
-    material: 'a copper wire',
-    duration: '1 round',
-    concentration: false,
-    ritual: false,
-    source: 'XPHB',
-    access: 'Magic Initiate',
-    status: 'known',
-    role: 'A whisper to one ally, and their reply',
-    summary:
-      'Point at a creature within range and whisper. Only it hears the message, and it can whisper back so that only you hear. It passes around corners and through barriers if you know the target is there, but magical silence, 1 ft of stone, 1 inch of common metal, a thin sheet of lead or 3 ft of wood stops it.',
-    notes:
-      'The 2024 book drops its spoken part, so it doesn’t end a hide: the scout ahead in the dark tells the party what is in the next room without a sound reaching it. An action, though, so it is for before the ambush, not during it.'
-  },
-  {
-    slug: 'healing-word',
-    name: 'Healing Word',
-    level: 1,
-    school: 'Abjuration',
-    castingTime: '1 bonus action',
-    range: '60 ft',
-    components: 'V',
+    range: '30 ft',
+    components: 'V, S',
     duration: 'Instantaneous',
     concentration: false,
     ritual: false,
     source: 'XPHB',
-    access: 'Magic Initiate',
+    access: 'Wood Elf',
     status: 'known',
-    role: 'Get a fallen ally up from 60 ft',
-    heal: true,
-    dice: { 1: '2d4+3', 2: '4d4+3', 3: '6d4+3' },
-    summary: 'A creature you can see within range regains 2d4 + your Wisdom modifier hit points.',
-    higher: '+2d4 for each slot level above 1st.',
+    role: 'Snuff out a torch from 30 ft',
+    summary:
+      'Whispering to the spirits of nature, you make one of these happen within range. Weather Sensor: a tiny, harmless effect that predicts the weather where you are for the next 24 hours. Bloom: a flower blossoms, a seed pod opens or a leaf bud bursts. Sensory Effect: a harmless sensory effect, such as falling leaves, a gentle breeze, an animal’s call or a faint odor, filling a 5-ft cube. Fire Play: you light or snuff out a candle, a torch or a small campfire.',
     notes:
-      'Once per long rest without a slot, then with ranger slots. A bonus action, so it costs no arrow: shoot, then lift whoever dropped. A ranger has no healing at range otherwise. It does compete with Hunter’s Mark for the bonus action, and the 2024 rule allows only one spell with a slot per turn.'
+      'Fire Play is the point for a Gloom Stalker: the brazier in a guard room or the torch on the wall goes out from 30 ft, and the room is dark again, which is where Umbral Sight works. Whether a torch someone is holding counts is a question for the DM. It has a spoken part, so casting it ends a hide: put the light out first, then hide. Sensory Effect makes a noise down the wrong corridor.'
+  },
+  {
+    slug: 'longstrider',
+    name: 'Longstrider',
+    level: 1,
+    school: 'Transmutation',
+    castingTime: '1 action',
+    range: 'Touch',
+    components: 'V, S, M',
+    material: 'a pinch of dirt',
+    duration: '1 hour',
+    concentration: false,
+    ritual: false,
+    source: 'XPHB',
+    access: 'Wood Elf',
+    status: 'known',
+    role: '+10 ft of speed for an hour',
+    summary: 'The creature you touch has its speed increased by 10 ft until the spell ends.',
+    higher: 'One more creature for each slot level above 1st.',
+    notes:
+      'Elven Lineage: always prepared from level 3, once a day without a slot, and with ranger slots after that. No concentration, so it sits under Hunter’s Mark, and an hour covers a dungeon level: speed 45, and 55 on the first turn of a fight with Ambusher’s Leap. Or on the party’s slowest member, so the whole group can keep up with a retreat.'
   },
 
   // ── Always prepared ──────────────────────────────────────────
@@ -198,7 +178,7 @@ export const spells: Spell[] = [
     summary: 'A creature you touch regains 2d8 + your Wisdom modifier hit points.',
     higher: '+2d8 for each slot level above 1st.',
     notes:
-      'About twice what Healing Word gives for the same slot, at the cost of an action and walking over. No concentration, so it doesn’t drop Hunter’s Mark. Mostly an after-the-fight spell when the party has no cleric to spare.'
+      'Their only healing besides potions and the Healer’s Kit: an action and a touch, so mostly after the fight, or for an ally fallen next to them. No concentration, so it doesn’t drop Hunter’s Mark.'
   },
   {
     slug: 'alarm',
@@ -239,7 +219,7 @@ export const spells: Spell[] = [
     summary:
       'For the duration you sense magic within 30 ft. An action shows a faint aura around a visible creature or object that bears magic, and its school of magic if it has one. 1 ft of stone or dirt, 1 inch of common metal, a thin sheet of lead or 3 ft of wood blocks it.',
     notes:
-      'A ritual, so no slot, and 10 minutes of looking at a suspicious door or a hoard. A magical trap shows before anyone touches it. If the party’s caster has it too, swap it for Longstrider or Ensnaring Strike.'
+      'A ritual, so no slot, and 10 minutes of looking at a suspicious door or a hoard. A magical trap shows before anyone touches it. If the party’s caster has it too, swap it for Ensnaring Strike or Entangle.'
   },
   {
     slug: 'fog-cloud',
@@ -288,26 +268,6 @@ export const spells: Spell[] = [
     notes: 'Works with arrows. Concentration, so it replaces Hunter’s Mark: worth it against one big melee creature that has to be kept off the party.'
   },
   {
-    slug: 'longstrider',
-    name: 'Longstrider',
-    level: 1,
-    school: 'Transmutation',
-    castingTime: '1 action',
-    range: 'Touch',
-    components: 'V, S, M',
-    material: 'a pinch of dirt',
-    duration: '1 hour',
-    concentration: false,
-    ritual: false,
-    source: 'XPHB',
-    access: 'Ranger',
-    status: 'candidate',
-    role: '+10 ft of speed for an hour',
-    summary: 'The creature you touch has its speed increased by 10 ft until the spell ends.',
-    higher: 'One more creature for each slot level above 1st.',
-    notes: 'No concentration, so it sits under Hunter’s Mark. An hour covers a dungeon level. With Ambusher’s Leap the first turn is 50 ft.'
-  },
-  {
     slug: 'goodberry',
     name: 'Goodberry',
     level: 1,
@@ -324,7 +284,7 @@ export const spells: Spell[] = [
     status: 'candidate',
     role: 'Ten berries: food, and a hit point each',
     summary: 'Ten magic berries appear in your hand for the duration. A creature can eat one as a bonus action: it regains 1 hit point and is fed for the day.',
-    notes: 'Mostly rations. A berry gets a dying ally up as a bonus action, but Healing Word does that from 60 ft.'
+    notes: 'Mostly rations. With no Healing Word of their own, a berry is the cheap way to put a hit point into a dying ally, if the DM lets one be fed to someone who can’t eat it themselves.'
   },
   {
     slug: 'entangle',
@@ -401,12 +361,12 @@ export const spells: Spell[] = [
     concentration: true,
     ritual: false,
     source: 'XPHB',
-    access: 'Ranger',
+    access: 'Wood Elf',
     status: 'future',
     opensAt: 5,
     role: '+10 to the whole party’s Stealth',
     summary: 'An aura of shadow and silence 30 ft around you. You and your allies in it have +10 on Dexterity (Stealth) checks, leave no tracks, and can’t be tracked except by magic.',
-    notes: 'The party’s ambush: everyone gets into position unseen, then initiative. Concentration, so it ends when Hunter’s Mark goes up on the first turn — which is fine, the ambush has happened by then.'
+    notes: 'Elven Lineage: always prepared from level 5 and once a day without a slot, so it takes none of the ranger’s picks. The party’s ambush: everyone gets into position unseen, then initiative. Concentration, so it ends when Hunter’s Mark goes up on the first turn — which is fine, the ambush has happened by then.'
   },
   {
     slug: 'spike-growth',

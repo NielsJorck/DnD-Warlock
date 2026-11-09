@@ -11,15 +11,15 @@ const tabs: { id: Tab; label: string; statuses: SpellStatus[]; blurb?: string }[
     id: 'ready',
     label: 'Ready',
     statuses: ['known', 'always', 'prepared'],
-    blurb: `What they can cast today: Magic Initiate’s two cantrips and Healing Word, Hunter’s Mark and Disguise Self (always prepared), and ${stats.prepared} prepared from the ranger list. One prepared spell can be swapped after each long rest.`
+    blurb: `What they can cast today: the Wood Elf’s Druidcraft and Longstrider, Hunter’s Mark and Disguise Self (always prepared), and ${stats.prepared} prepared from the ranger list. One prepared spell can be swapped after each long rest.`
   },
-  { id: 'later', label: 'Candidates & future', statuses: ['candidate', 'future'], blurb: 'Other 1st-level ranger spells worth swapping in, and what opens at levels 5 and 9: 2nd- and 3rd-level slots and the Gloom Stalker’s Rope Trick and Fear.' },
+  { id: 'later', label: 'Candidates & future', statuses: ['candidate', 'future'], blurb: 'Other 1st-level ranger spells worth swapping in, and what opens at levels 5 and 9: 2nd- and 3rd-level slots, the Wood Elf’s Pass without Trace, and the Gloom Stalker’s Rope Trick and Fear.' },
   { id: 'all', label: 'All', statuses: ['known', 'always', 'prepared', 'candidate', 'future'] }
 ]
 
 // Ready spells group by where they come from
 const sources: { id: string; title: string; sub: string; match: (s: Spell) => boolean }[] = [
-  { id: 'initiate', title: 'Magic Initiate', sub: `From the Guide · WIS: DC ${stats.spellDc} · Healing Word once a day without a slot`, match: s => s.status === 'known' },
+  { id: 'elf', title: 'Wood Elf', sub: `Elven Lineage · WIS: DC ${stats.spellDc} · Longstrider once a day without a slot`, match: s => s.status === 'known' },
   { id: 'always', title: 'Always prepared', sub: 'Favored Enemy and the Gloom Stalker, on top of the rest', match: s => s.status === 'always' },
   { id: 'prepared', title: 'Prepared', sub: `${stats.prepared} from the ranger list`, match: s => s.status === 'prepared' }
 ]

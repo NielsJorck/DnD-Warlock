@@ -48,7 +48,7 @@ const jump = [
     <section v-if="owned.length" class="mt-10">
       <SectionHeading id="kit" title="Starting Kit" />
       <p class="-mt-2 mb-5 max-w-3xl text-[13px] text-dim">
-        The campaign’s start: the normal Ranger and Guide equipment, 200 gp, a Potion of Healing, and one uncommon magic item the DM approves (no +1 weapons or armor). The Bracers of Archery are the pitch, and the sheet counts them.
+        The campaign’s start: the normal Ranger and Criminal equipment, 200 gp, a Potion of Healing, and one uncommon magic item the DM approves (no +1 weapons or armor). The Bracers of Archery are the pitch, and the sheet counts them.
       </p>
       <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px] 2xl:grid-cols-[minmax(0,1fr)_320px]">
         <div class="panel h-fit overflow-hidden">

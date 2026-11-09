@@ -61,7 +61,7 @@ function onCast(s: Spell) {
 
     <!-- Cantrips -->
     <div v-if="cantrips.length" class="border-b border-obsidian-600/70 px-5 py-4">
-      <p class="eyebrow mb-2 text-dim">Cantrips · at will · Magic Initiate</p>
+      <p class="eyebrow mb-2 text-dim">Cantrip · at will · Wood Elf</p>
       <ul class="grid gap-x-4 gap-y-2 sm:grid-cols-2">
         <li v-for="s in cantrips" :key="s.slug" class="flex min-w-0 items-center gap-2">
           <span class="min-w-0 flex-1">

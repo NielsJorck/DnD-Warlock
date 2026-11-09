@@ -112,7 +112,7 @@ const totalPicks = skillPicks.reduce((sum, p) => sum + p.picks, 0)
                   <p class="mt-2 text-[12.5px] leading-relaxed text-dim">
                     <span v-if="arrayOk" class="text-parchment">The campaign’s array: {{ startArray.join(', ') }}.</span>
                     <span v-else class="text-ruby">{{ startArray.join(', ') }} is not the campaign’s array ({{ campaignArray.join(', ') }}).</span>
-                    Dexterity first, then Wisdom; the background’s +2 and +1 go to the same two. Species give no scores in the 2024 rules.
+                    Dexterity first, then Wisdom; the background’s +2 and +1 go to the same two. The Criminal’s own are DEX, CON and INT, and the DM lets them go anywhere. Species give no scores in the 2024 rules.
                   </p>
                 </div>
 
