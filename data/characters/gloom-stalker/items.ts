@@ -65,7 +65,7 @@ export const items: Item[] = [
     forCharacter:
       'Every arrow is 1d8 + 6. With Extra Attack at level 5 that is +4 a round, and it never runs out the way Dreadful Strike and Hunter’s Mark casts do. The proficiency is wasted on a ranger; the damage is the point. The sheet counts them.',
     caveat:
-      'The campaign allows one uncommon item and rules out +1 weapons and armor. These aren’t a weapon and don’t touch the attack roll, but +2 damage on every arrow is close to what a +1 bow would add, so they need the DM’s clear yes. If not, the Cloak of Elvenkind is the fallback.',
+      'The campaign allows one uncommon item and rules out +1 weapons and armor. These aren’t a weapon and don’t touch the attack roll, but +2 damage on every arrow is close to what a +1 bow would add, so they need the DM’s clear yes. If not, the Boots of Elvenkind are the fallback.',
     glyph: '➶'
   },
   {
@@ -88,6 +88,23 @@ export const items: Item[] = [
     glyph: '⚗'
   },
   {
+    slug: 'boots-of-elvenkind',
+    name: 'Boots of Elvenkind',
+    group: 'wishlist',
+    source: 'XDMG',
+    rarity: 'Uncommon',
+    type: 'Wondrous item (boots)',
+    slot: 'feet',
+    role: 'The fallback if the DM says no to the bracers',
+    effect: 'Silent steps on any surface, and advantage on Stealth checks',
+    rules: ['While you wear them, your steps make no sound, whatever the surface you are moving across.', 'You have advantage on Dexterity (Stealth) checks.'],
+    forCharacter:
+      'Always on, with nothing to switch on and no attunement. Stealth +6 with advantage takes the 2024 Hide action’s DC 15 from a 60% chance to about 84%. Umbral Sight already hides them in the dark from anything using darkvision, and Pass without Trace adds +10 from level 5, so the boots count most at levels 3 and 4, in lit rooms, and against creatures that don’t see by darkvision. No risk with the DM: nothing like a +1 weapon.',
+    caveat:
+      'Only one uncommon item at the start, so this replaces the bracers rather than joining them. The wording here is the 2024 version as D&D Beyond gives it; the older text limited the advantage to checks that rely on moving silently, so confirm the printed 2024 text with the DM.',
+    glyph: '⟫'
+  },
+  {
     slug: 'cloak-of-elvenkind',
     name: 'Cloak of Elvenkind',
     group: 'wishlist',
@@ -96,14 +113,14 @@ export const items: Item[] = [
     type: 'Wondrous item (cloak)',
     slot: 'cloak',
     attunement: 'Required',
-    role: 'The fallback if the DM says no to the bracers',
+    role: 'Stronger stealth than the boots, for an attunement slot and the hood',
     effect: 'Hood up: Wisdom (Perception) checks to see them have disadvantage, and they have advantage on Stealth checks',
     rules: [
       'While you wear it with the hood up, Wisdom (Perception) checks made to perceive you have disadvantage, and you have advantage on Dexterity (Stealth) checks.',
       'Pulling the hood up or down takes an action.'
     ],
     forCharacter:
-      'Umbral Sight covers the dark; the cloak covers everything else, including the creatures that don’t rely on darkvision and the rooms with light. Stealth +6 with advantage before the ambush, and Pass without Trace on top from level 5.',
+      'Umbral Sight covers the dark; the cloak covers everything else, including the creatures that don’t rely on darkvision and the rooms with light. Stealth +6 with advantage like the boots, and watchers roll Perception with disadvantage on top (about −5 to a passive score). The cost is attunement and remembering to have the hood up.',
     caveat: 'Only one uncommon item at the start, so this replaces the bracers rather than joining them. Check the 2024 wording of the hood’s timing.',
     glyph: '◭'
   },
@@ -115,7 +132,7 @@ export const items: Item[] = [
     rarity: 'Uncommon',
     type: 'Wondrous item',
     slot: 'worn',
-    role: 'Every arrow and both bows on one hip',
+    role: 'Every arrow on one hip',
     effect: 'Three compartments: 60 arrows, 18 javelins and 6 long objects such as bows, always weighing 2 lb',
     rules: [
       'Each of its three compartments connects to an extradimensional space: one holds up to sixty arrows or bolts, one up to eighteen javelins, one up to six long objects such as bows, quarterstaffs or spears.',

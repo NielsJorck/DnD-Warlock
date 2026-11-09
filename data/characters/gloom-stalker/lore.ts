@@ -59,7 +59,7 @@ export const rulings: Ruling[] = []
 export const questions: OpenQuestion[] = [
   {
     question: 'Bracers of Archery as the starting uncommon item?',
-    detail: 'Not a +1 weapon, and they don’t touch the attack roll, but +2 damage on every arrow is close to one. If that’s against the spirit of the rule, the fallback is the Cloak of Elvenkind.'
+    detail: 'Not a +1 weapon, and they don’t touch the attack roll, but +2 damage on every arrow is close to one. If that’s against the spirit of the rule, the fallback is the Boots of Elvenkind.'
   },
   {
     question: 'Umbral Sight and the party’s light',
