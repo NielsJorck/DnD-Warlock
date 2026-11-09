@@ -114,7 +114,7 @@ export const levels: LevelEntry[] = [
     gains: [{ name: 'Ability Score Improvement', note: 'Or a feat' }],
     choices: [],
     pending: [
-      'The plan: Sharpshooter, with its +1 DEX (to 19). No disadvantage shooting with an enemy next to them, half and three-quarters cover ignored, no disadvantage at long range. In corridors the first two come up every fight. DEX 20 instead is +1 to hit and damage.'
+      'The plan: Sharpshooter, with its +1 DEX (to 19). No disadvantage shooting with an enemy next to them, half and three-quarters cover ignored, no disadvantage at long range. In corridors the first two come up every fight. Skulker at 8 takes DEX the rest of the way to 20.'
     ]
   },
   {
@@ -160,7 +160,9 @@ export const levels: LevelEntry[] = [
     table: { prepared: 7, slots: [4, 3], favoredEnemy: 3 },
     gains: [{ name: 'Ability Score Improvement' }],
     choices: [],
-    pending: ['The plan: +1 DEX and +1 WIS, to DEX 20 and WIS 17. The bow reaches its best, and the spell DC, initiative and Dreadful Strike uses wait for WIS 18.']
+    pending: [
+      'The plan: Skulker, with its +1 DEX (to 20). Blindsight 10 ft: they see anything within 10 ft, even if it is invisible or in magical darkness. Advantage on the Stealth check when they Hide in combat, and a miss while hidden doesn’t give away where they are. DEX 20 is +1 to hit and damage, AC 17 and +1 initiative.'
+    ]
   },
   {
     level: 9,
@@ -204,7 +206,7 @@ export const levels: LevelEntry[] = [
     table: { prepared: 10, slots: [4, 3, 3], favoredEnemy: 4 },
     gains: [{ name: 'Ability Score Improvement' }],
     choices: [],
-    pending: ['The plan: +1 WIS and +1 CON, to WIS 18 (DC 16, a fourth Dreadful Strike) and CON 15. Tough is the other option.']
+    pending: ['Left open until the campaign gets near it. With DEX at 20, the obvious candidates are +2 WIS (spell DC 16, initiative +1, a fourth Dreadful Strike), War Caster for keeping Hunter’s Mark up, or Tough.']
   }
 ]
 
