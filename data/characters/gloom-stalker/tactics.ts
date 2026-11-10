@@ -16,7 +16,7 @@ export const tactics = [
   },
   {
     title: 'Rest where nothing can reach',
-    text: 'Dungeons punish resting. At level 3, Alarm as a ritual on the one door, and a Healer’s Kit and Cure Wounds for whoever went down. Trance means four hours of rest, awake throughout: he takes the last watch. From level 5, Rope Trick: an hour in a hidden room for up to eight, a safe short rest anywhere with headroom.'
+    text: 'Dungeons punish resting. At level 3, Alarm as a ritual on the one door, Goodberry for the day’s food and a few hit points, and a Healer’s Kit for whoever went down. Trance means four hours of rest, awake throughout: he takes the last watch. From level 5, Rope Trick: an hour in a hidden room for up to eight, a safe short rest anywhere with headroom.'
   }
 ]
 
@@ -29,13 +29,13 @@ export const economy = [
       'Fog Cloud to cut every line of sight and pull back',
       'Hide, or Disengage, to get back into the dark',
       'Druidcraft: snuff out a torch or brazier within 30 ft',
-      'Cure Wounds after the fight'
+      'Goodberry: ten berries for the day, cast after a rest'
     ]
   },
   {
     slot: 'Bonus action',
     note: 'Hunter’s Mark wants it on the first turn and when a target drops; the rest of the time it is free.',
-    items: ['Hunter’s Mark: cast it, or move it to a new target', 'Drink a potion, or give one to an ally within 5 ft']
+    items: ['Hunter’s Mark: cast it, or move it to a new target', 'Drink a potion, or give one to an ally within 5 ft', 'Eat a Goodberry: 1 hit point']
   },
   {
     slot: 'Reaction',

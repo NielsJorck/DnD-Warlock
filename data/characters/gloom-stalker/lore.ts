@@ -79,6 +79,11 @@ export const questions: OpenQuestion[] = [
       'The 2024 cantrip lights or snuffs out “a candle, a torch, or a small campfire” within 30 ft, with no save and nothing about whether it is carried. If it puts out the torch a goblin is holding, the Wood Elf’s cantrip turns the lights off for Umbral Sight once a turn. If only unattended ones, it is still the wall sconces and braziers.'
   },
   {
+    question: 'Goodberry for an ally at 0 hit points?',
+    detail:
+      'The 2024 spell lets a creature take a bonus action to eat a berry and regain 1 hit point, and says nothing about feeding one to someone else. Can he give a berry to an unconscious ally, the way a potion can be given, to get them back up? Goodberry is his one healing spell, so the answer decides whether it does more than feed the party.'
+  },
+  {
     question: 'Entangle on a stone floor?',
     detail: 'The 2024 text grows the plants from the ground in a 20-ft square without saying the ground has to be soil. Does it work in a worked-stone dungeon? It decides whether Entangle is worth preparing.'
   }

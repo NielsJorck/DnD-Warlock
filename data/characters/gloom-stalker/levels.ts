@@ -64,7 +64,7 @@ export const levels: LevelEntry[] = [
       { kind: 'Background', pick: 'Criminal', to: '/gloom-stalker/lore', note: '+2 DEX, +1 WIS. The Criminal’s own scores are DEX, CON and INT; the DM lets the increases and the feat go anywhere. A smuggler of the tunnels under the Sword Mountains' },
       { kind: 'Feat', pick: 'Alert', from: 'Criminal', note: 'The Criminal’s own Origin feat, kept by choice: proficiency bonus to initiative, and the initiative swap. Runner-up: Magic Initiate (Druid), for Healing Word and Guidance' },
       { kind: 'Weapon Mastery', pick: 'Longbow (Slow), Scimitar (Nick)' },
-      { kind: 'Spell', pick: 'Cure Wounds', to: spell('cure-wounds') },
+      { kind: 'Spell', pick: 'Goodberry', to: spell('goodberry'), note: 'Ten berries a day, each a hit point and a day’s food, eaten as a bonus action. Runner-up: Cure Wounds' },
       { kind: 'Spell', pick: 'Alarm', to: spell('alarm'), note: 'A ritual: guards the camp in a dungeon' },
       { kind: 'Proficiencies', pick: 'Athletics, Investigation, Perception, Sleight of Hand, Stealth, Survival', note: 'Skills. Where each comes from is under Skill picks' },
       { kind: 'Proficiencies', pick: 'Thieves’ Tools', note: 'Criminal' },

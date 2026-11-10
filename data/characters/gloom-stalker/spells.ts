@@ -159,26 +159,24 @@ export const spells: Spell[] = [
 
   // ── Prepared: the starting four ──────────────────────────────
   {
-    slug: 'cure-wounds',
-    name: 'Cure Wounds',
+    slug: 'goodberry',
+    name: 'Goodberry',
     level: 1,
-    school: 'Abjuration',
+    school: 'Conjuration',
     castingTime: '1 action',
-    range: 'Touch',
-    components: 'V, S',
-    duration: 'Instantaneous',
+    range: 'Self',
+    components: 'V, S, M',
+    material: 'a sprig of mistletoe',
+    duration: '24 hours',
     concentration: false,
     ritual: false,
     source: 'XPHB',
     access: 'Ranger',
     status: 'prepared',
-    role: 'Real healing, beside Hunter’s Mark',
-    heal: true,
-    dice: { 1: '2d8+3', 2: '4d8+3', 3: '6d8+3' },
-    summary: 'A creature you touch regains 2d8 + your Wisdom modifier hit points.',
-    higher: '+2d8 for each slot level above 1st.',
+    role: 'Ten berries: a hit point and a day’s food each',
+    summary: 'Ten magic berries appear in your hand for the duration. A creature can eat one as a bonus action: it regains 1 hit point and is fed for the day.',
     notes:
-      'His only healing besides potions and the Healer’s Kit: an action and a touch, so mostly after the fight, or for an ally fallen next to him. No concentration, so it doesn’t drop Hunter’s Mark.'
+      'His one healing spell, in place of Cure Wounds. Cast after a long rest, one slot lasts the whole day: ten hit points handed out a berry at a time, and nobody has to carry rations on a long delve. Eating is a bonus action, so a berry costs no one their attack, and there is no concentration to drop Hunter’s Mark. A berry for an ally at 0 hit points would get them back up, if the DM lets one be fed to someone who can’t eat it themselves (asked on the Rules page). It heals far less than Cure Wounds did: the real healing is potions and Hit Point Dice.'
   },
   {
     slug: 'alarm',
@@ -268,23 +266,26 @@ export const spells: Spell[] = [
     notes: 'Works with arrows. Concentration, so it replaces Hunter’s Mark: worth it against one big melee creature that has to be kept off the party.'
   },
   {
-    slug: 'goodberry',
-    name: 'Goodberry',
+    slug: 'cure-wounds',
+    name: 'Cure Wounds',
     level: 1,
-    school: 'Conjuration',
+    school: 'Abjuration',
     castingTime: '1 action',
-    range: 'Self',
-    components: 'V, S, M',
-    material: 'a sprig of mistletoe',
-    duration: '24 hours',
+    range: 'Touch',
+    components: 'V, S',
+    duration: 'Instantaneous',
     concentration: false,
     ritual: false,
     source: 'XPHB',
     access: 'Ranger',
     status: 'candidate',
-    role: 'Ten berries: food, and a hit point each',
-    summary: 'Ten magic berries appear in your hand for the duration. A creature can eat one as a bonus action: it regains 1 hit point and is fed for the day.',
-    notes: 'Mostly rations. With no Healing Word of his own, a berry is the cheap way to put a hit point into a dying ally, if the DM lets one be fed to someone who can’t eat it themselves.'
+    role: 'Real healing: 2d8 + 3 with a touch',
+    heal: true,
+    dice: { 1: '2d8+3', 2: '4d8+3', 3: '6d8+3' },
+    summary: 'A creature you touch regains 2d8 + your Wisdom modifier hit points.',
+    higher: '+2d8 for each slot level above 1st.',
+    notes:
+      'Goodberry took its place. Cure Wounds heals far more for the slot, about 12 against the berries’ 10 spread over a day, and all at once with a touch, without concentration. Worth swapping back in after a long rest when the party is short on healing for the day ahead.'
   },
   {
     slug: 'entangle',
